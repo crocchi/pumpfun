@@ -1,14 +1,27 @@
 {
-    "name": "PumpFun",
-    "version": "1.0.0",
-    "description": "pump fun sniper-v",
-    "main": "index.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-      "cors-anywhere": "0.4.4"
-    }
+  "name": "pump-sniper-bot",
+  "version": "1.0.0",
+  "description": "Sniper bot per Pump.fun su Solana",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "pump.fun",
+    "solana",
+    "sniper-bot",
+    "crypto",
+    "memecoin"
+  ],
+  "author": "crocchi",
+  "license": "MIT",
+  "dependencies": {
+    "@solana/spl-token": "^0.3.8",
+    "@solana/web3.js": "^1.91.0",
+    "axios": "^1.6.8",
+    "bs58": "^5.0.1",
+    "dotenv": "^16.3.1",
+    "ws": "^8.16.0"
   }
+}
