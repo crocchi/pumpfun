@@ -3,7 +3,7 @@ import WebSocket from 'ws';
 const ws = new WebSocket('wss://pumpportal.fun/api/data');
 
 ws.on('open', function open() {
-
+    console.log('📡 Connesso al WebSocket di Pump.fun');
   // Subscribing to token creation events
   let payload = {
       method: "subscribeNewToken", 
