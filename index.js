@@ -62,15 +62,23 @@ ws.on('message', function message(data) {
   try {
     const parsed = JSON.parse(data);
 
-    if (parsed.method === 'newToken') {
-      const token = parsed.data;
-
-      console.log('🚀 Nuovo token creato!');
-      console.log(`🔹 Nome: ${token.tokenName}`);
-      console.log(`🔹 Address: ${token.mint}`);
-      console.log(`🔹 Creatore: ${token.creator}`);
-      console.log(`🔹 Ora: ${new Date(token.timestamp * 1000).toLocaleString()}`);
-
+    // Verifica se è un evento di creazione token
+    if (parsed.txType === 'create') {
+        const token = parsed;
+  
+        console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
+        console.log(`🧠 Mint: ${token.mint}`);
+        console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
+        console.log(`💧 Liquidity in pool: ${token.solInPool} SOL`);
+        console.log(`👤 Creatore: ${token.traderPublicKey}`);
+        console.log(`📦 URI: ${token.uri}`);
+        console.log(`🌊 Pool: ${token.pool}`);
+  
+        // 👇 Esempio di filtro anti-rug semplificato:
+        if (token.solInPool < 0.5 || token.marketCapSol > 100) {
+          console.log("⚠️ Liquidity troppo bassa o market cap sospetto. Skip.");
+          return;
+        }
       // 👉 Qui puoi chiamare la tua funzione `snipeToken(token.mint)`
     }
 
@@ -80,3 +88,21 @@ ws.on('message', function message(data) {
   }
 
 });
+
+
+/*{
+  signature: '5i4GzuYha8LiJwB8VQHEQcH5d1pUV3TMsctcZa3hvLDJCWU3tBwddyi8z8V26R1GU4jrcvzLfNGVtoLUeCWEYRRj',
+  mint: '2bTEEruUggcJh119Q6ygSmgkHbJdyPoE9kd6HWA9pump',
+  traderPublicKey: 'cS623iywjgTbVFB9bBQHbm1GLcWZK2BeH4QgWv6jTPM',
+  txType: 'create',
+  initialBuy: 29584634.770795,
+  solAmount: 0.85060952,
+  bondingCurveKey: 'DA8knqotzcouguCZZJAY9HojgpEHthCHU22MCDrt7uoa',
+  vTokensInBondingCurve: 1043415365.229205,
+  vSolInBondingCurve: 30.850609520139553,
+  marketCapSol: 29.566949604353066,
+  name: 'TRUMPFART - PolitiFi fartstorm!',
+  symbol: 'TRUMPFART',
+  uri: 'https://ipfs.io/ipfs/Qman32r9Sc3dZjw4ibXcFXqCcPvAi5BzrojyusxAFEQdtM',
+  pool: 'pump'
+} */
