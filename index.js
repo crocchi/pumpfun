@@ -2,6 +2,7 @@ import WebSocket from 'ws';
 import http from 'http';
 import { isSafeToken } from './utils.js';
 import { monitorEarlyTrades } from './tradeMonitor.js';
+import { snipeToken } from './snipeToken.js';
 
 
 
