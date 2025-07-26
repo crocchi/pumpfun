@@ -1,4 +1,6 @@
-export async function sniperToken(token) {
+
+
+export async function snipeToken(token) {
 
     console.log(`⚠️  Sniper Bot Buy ${token}.`);
 }
