@@ -56,7 +56,7 @@ export function startHttpServer(port = process.env.PORT || 4000) {
                 const row = document.createElement('tr');
                 const price = (t.solInPool / t.tokensInPool).toFixed(10);
                 const time = new Date(t.timestamp).toLocaleTimeString();
-                const safe = t.safe ? '✅' : '❌';
+                const safe = t.safe ? 'YES' : 'NO';
                 const colorClass = t.safe ? 'good' : 'bad';
 
                 row.innerHTML = \`
