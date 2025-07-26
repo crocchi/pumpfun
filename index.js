@@ -1,4 +1,22 @@
 import WebSocket from 'ws';
+import http from 'http';
+const PORT = process.env.PORT || 4000;
+
+// rimani in ascolto su un server HTTP per rispondere a richieste
+const server = http.createServer((req, res) => {
+    if (req.url === '/') {
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.end('🚀 Pump.fun sniper bot is running');
+    } else {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('404 Not Found');
+    }
+  });
+  
+  server.listen(PORT, () => {
+    console.log(`🌐 HTTP server attivo su http://localhost:${PORT}`);
+  });
+
 
 const ws = new WebSocket('wss://pumpportal.fun/api/data');
 
