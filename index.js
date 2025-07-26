@@ -73,7 +73,7 @@ ws.on('message', async function message(data) {
     if (parsed.txType === 'create') {
         const token = parsed;
 
-        const prezzo = token.solInPool / token.tokensInPool;
+        const prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
 let price=formatPrezzoTokenNoSci(prezzo);
         console.log(`-----------------------------------------------`);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
