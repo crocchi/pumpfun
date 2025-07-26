@@ -67,7 +67,7 @@ ws.on('message', async function message(data) {
 
     const safe = await isSafeToken(parsed);
     if (!safe) {
-        console.log(`⛔ Token ${token.name} scartato per sicurezza.`);
+        console.log(`⛔ Token ${parsed.name} scartato per sicurezza.`);
         return
       }
 
