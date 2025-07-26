@@ -55,6 +55,16 @@ ws.on('message', async function message(data) {
 
     const safe = await isSafeToken(parsed);
     if (!safe) {
+        let token=parsed;
+        logToken({
+            mint: token.mint,
+            name: token.name,
+            symbol: token.symbol,
+            solInPool: token.solInPool,
+            tokensInPool: token.tokensInPool,
+            marketCapSol: token.marketCapSol,
+            safe: false // o false in base ai filtri
+          });
         console.log(`⛔ Token ${parsed.name} scartato per sicurezza.`);
         return
       }
