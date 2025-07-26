@@ -79,7 +79,7 @@ let price=formatPrezzoTokenNoSci(prezzo);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
         console.log(`🧠 Mint: ${token.mint}`);
         console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
-        console.log(`💰 Price: ${price}`);
+        console.log(`💰 Price: ${price} - ${prezzo}`);
         console.log(`💧 Liquidity in pool: ${token.solInPool} SOL`);
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
         console.log(`📦 URI: ${token.uri}`);
