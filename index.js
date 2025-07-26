@@ -68,7 +68,7 @@ ws.on('message', async function message(data) {
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
         console.log(`🧠 Mint: ${token.mint}`);
         console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
-        console.log(`💰 Price: ${t.solInPool / t.tokensInPool.toFixed(10)}`);
+        console.log(`💰 Price: ${token.solInPool / token.tokensInPool.toFixed(10)}`);
         console.log(`💧 Liquidity in pool: ${token.solInPool} SOL`);
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
         console.log(`📦 URI: ${token.uri}`);
