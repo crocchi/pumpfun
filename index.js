@@ -58,7 +58,7 @@ ws.on('open', function open() {
 });
 
 ws.on('message', function message(data) {
-  //console.log(JSON.parse(data));
+  console.log(JSON.parse(data));
   try {
     const parsed = JSON.parse(data);
 
