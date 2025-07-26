@@ -3,7 +3,10 @@ import http from 'http';
 import { isSafeToken } from './utils.js';
 import { monitorEarlyTrades } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
+import { startHttpServer, logToken } from './httpServer.js';
 
+// Avvia HTTP server
+startHttpServer(process.env.PORT);
 
 
 
@@ -78,6 +81,16 @@ ws.on('message', async function message(data) {
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
         const token = parsed;
+        
+        logToken({
+            mint: token.mint,
+            name: token.name,
+            symbol: token.symbol,
+            solInPool: token.solInPool,
+            marketCapSol: token.marketCapSol,
+            timestamp: Math.floor(Date.now() / 1000),
+          });
+
         console.log(`-----------------------------------------------`);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
         console.log(`🧠 Mint: ${token.mint}`);
