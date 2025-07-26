@@ -22,7 +22,12 @@ export function startHttpServer(port = process.env.PORT || 4000) {
     if (req.url === '/tokens') {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(tokenLog, null, 2));
-    } else {
+    }
+    if (req.url === '/') {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('🚀 Pump.fun sniper bot is running');
+        
+      } else {
       res.writeHead(200, { 'Content-Type': 'text/html' });
       res.end(`
         <!doctype html>
