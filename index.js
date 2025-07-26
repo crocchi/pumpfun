@@ -64,11 +64,9 @@ ws.on('message', function message(data) {
   //console.log(JSON.parse(data));
   try {
     const parsed = JSON.parse(data);
-    
+
     const safe = isSafeToken(parsed);
-    if (!safe) {
-      console.log("⛔ Token scartato per sicurezza.");
-    }
+
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
         const token = parsed;
@@ -80,6 +78,9 @@ ws.on('message', function message(data) {
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
         console.log(`📦 URI: ${token.uri}`);
         console.log(`🌊 Pool: ${token.pool}`);
+        if (!safe) {
+            console.log(`⛔ Token ${token.name} scartato per sicurezza.`);
+          }
   
         // 👇 Esempio di filtro anti-rug semplificato:
         if (token.solInPool < 0.5 || token.marketCapSol > 100) {
