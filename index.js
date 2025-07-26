@@ -63,14 +63,6 @@ ws.on('message', async function message(data) {
     if (parsed.txType === 'create') {
         const token = parsed;
 
-        logToken({
-            mint: token.mint,
-            name: token.name,
-            symbol: token.symbol,
-            solInPool: token.solInPool,
-            marketCapSol: token.marketCapSol,
-            timestamp: Math.floor(Date.now() / 1000),
-          });
 
         console.log(`-----------------------------------------------`);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
@@ -83,7 +75,15 @@ ws.on('message', async function message(data) {
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         // 
         await monitorEarlyTrades(token, snipeToken);
-
+        logToken({
+            mint: token.mint,
+            name: token.name,
+            symbol: token.symbol,
+            solInPool: token.solInPool,
+            tokensInPool: token.tokensInPool,
+            marketCapSol: token.marketCapSol,
+            safe: true // o false in base ai filtri
+          });
   
   
         // 👇 Esempio di filtro anti-rug semplificato:
