@@ -70,7 +70,7 @@ ws.on('message', function message(data) {
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
         const token = parsed;
-  
+        console.log(`-----------------------------------------------`);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
         console.log(`🧠 Mint: ${token.mint}`);
         console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
@@ -87,6 +87,7 @@ ws.on('message', function message(data) {
           console.log("⚠️ Liquidity troppo bassa o market cap sospetto. Skip.");
           return;
         }
+        console.log(`-----------------------------------------------`);
       // 👉 Qui puoi chiamare la tua funzione `snipeToken(token.mint)`
     }
 
