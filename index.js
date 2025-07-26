@@ -23,6 +23,12 @@ ws.on('open', function open() {
     }
   ws.send(JSON.stringify(payload));
 
+    //"@solana/spl-token": "^0.3.8",
+    //"@solana/web3.js": "^1.91.0",
+    //"axios": "^1.6.8",
+    //"bs58": "^5.0.1",
+
+
   // Subscribing to trades on tokens
   payload = {
       method: "subscribeTokenTrade",
@@ -34,5 +40,25 @@ ws.on('open', function open() {
 });
 
 ws.on('message', function message(data) {
-  console.log(JSON.parse(data));
+  //console.log(JSON.parse(data));
+  try {
+    const parsed = JSON.parse(data);
+
+    if (parsed.method === 'newToken') {
+      const token = parsed.data;
+
+      console.log('🚀 Nuovo token creato!');
+      console.log(`🔹 Nome: ${token.tokenName}`);
+      console.log(`🔹 Address: ${token.mint}`);
+      console.log(`🔹 Creatore: ${token.creator}`);
+      console.log(`🔹 Ora: ${new Date(token.timestamp * 1000).toLocaleString()}`);
+
+      // 👉 Qui puoi chiamare la tua funzione `snipeToken(token.mint)`
+    }
+
+    // Aggiungi altri tipi di eventi se vuoi
+  } catch (e) {
+    console.error('❌ Errore nel parsing:', e);
+  }
+
 });
