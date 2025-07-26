@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import http from 'http';
-import { isSafeToken } from './utils.js';
+import { isSafeToken, formatPrezzoTokenNoSci } from './utils.js';
 import { monitorEarlyTrades } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken } from './httpServer.js';
@@ -63,12 +63,12 @@ ws.on('message', async function message(data) {
     if (parsed.txType === 'create') {
         const token = parsed;
 
-
+let price=formatPrezzoTokenNoSci(token.solInPool / token.tokensInPool, 10);
         console.log(`-----------------------------------------------`);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
         console.log(`🧠 Mint: ${token.mint}`);
         console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
-        console.log(`💰 Price: ${token.solInPool / token.tokensInPool.toFixed(10)}`);
+        console.log(`💰 Price: ${price}`);
         console.log(`💧 Liquidity in pool: ${token.solInPool} SOL`);
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
         console.log(`📦 URI: ${token.uri}`);

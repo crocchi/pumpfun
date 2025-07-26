@@ -69,3 +69,41 @@ async function fetchMetadata(uri) {
     return null;
   }
 }
+
+
+export function formatPrezzoTokenNoSci(numero, decimali = 18) {
+    if (typeof numero !== 'number' || isNaN(numero)) return '0';
+  
+    if (numero === 0) return '0';
+  
+    // Numero positivo o negativo?
+    const segno = numero < 0 ? '-' : '';
+    numero = Math.abs(numero);
+  
+    // Se è >= 1, usa toFixed classico (max decimali)
+    if (numero >= 1) {
+      return segno + numero.toFixed(decimali).replace(/\.?0+$/, '');
+    }
+  
+    // Per numeri < 1, costruisci stringa senza scientifica
+    const numeroStr = numero.toString();
+  
+    // Es. 0.000000005089
+    // Calcolo quanti zeri dopo virgola prima di un numero diverso da zero
+    const parteDecimale = numeroStr.split('.')[1] || '';
+    let zeriCount = 0;
+    for (const c of parteDecimale) {
+      if (c === '0') zeriCount++;
+      else break;
+    }
+  
+    // Numero di cifre da mostrare dopo gli zeri
+    const cifreDopoZeri = decimali;
+  
+    // Prendo la parte significativa
+    const parteSignificativa = parteDecimale.slice(zeriCount, zeriCount + cifreDopoZeri);
+  
+    // Ricostruisco la stringa
+    return segno + '0.' + '0'.repeat(zeriCount) + parteSignificativa;
+  }
+  
