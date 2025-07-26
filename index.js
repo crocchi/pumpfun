@@ -63,7 +63,8 @@ ws.on('message', async function message(data) {
     if (parsed.txType === 'create') {
         const token = parsed;
 
-let price=formatPrezzoTokenNoSci(token.solInPool / token.tokensInPool, 10);
+        const prezzo = token.solInPool / token.tokensInPool;
+let price=formatPrezzoTokenNoSci(prezzo);
         console.log(`-----------------------------------------------`);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
         console.log(`🧠 Mint: ${token.mint}`);
