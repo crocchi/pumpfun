@@ -1,5 +1,8 @@
 import WebSocket from 'ws';
 import http from 'http';
+import { isSafeToken } from './utils.js';
+
+
 const PORT = process.env.PORT || 4000;
 
 // rimani in ascolto su un server HTTP per rispondere a richieste
@@ -58,10 +61,14 @@ ws.on('open', function open() {
 });
 
 ws.on('message', function message(data) {
-  console.log(JSON.parse(data));
+  //console.log(JSON.parse(data));
   try {
     const parsed = JSON.parse(data);
-
+    
+    const safe = isSafeToken(parsed);
+    if (!safe) {
+      console.log("⛔ Token scartato per sicurezza.");
+    }
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
         const token = parsed;
