@@ -43,6 +43,7 @@ export async function isSafeToken(token) {
     }
 
     // 6. ✅ Controllo metadati (opzionale)
+    /*
     if (token.uri) {
       const meta = await fetchMetadata(token.uri);
       if (!meta || !meta.image || meta.image.includes('base64') || meta.name !== token.name) {
@@ -50,7 +51,7 @@ export async function isSafeToken(token) {
         return false;
       }
     }
-
+*/
     // ✅ Tutto ok!
     return true;
   } catch (err) {
