@@ -1,6 +1,9 @@
 import WebSocket from 'ws';
 import http from 'http';
 import { isSafeToken } from './utils.js';
+import { monitorEarlyTrades } from './tradeMonitor.js';
+
+
 
 
 const PORT = process.env.PORT || 4000;
@@ -82,6 +85,10 @@ ws.on('message', async function message(data) {
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
         console.log(`📦 URI: ${token.uri}`);
         console.log(`🌊 Pool: ${token.pool}`);
+        console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
+        // 
+        await monitorEarlyTrades(token, snipeToken);
+
   
   
         // 👇 Esempio di filtro anti-rug semplificato:
