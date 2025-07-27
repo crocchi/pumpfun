@@ -79,7 +79,9 @@ let price=formatPrezzoTokenNoSci(prezzo);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
         console.log(`🧠 Mint: ${token.mint}`);
         console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
-        console.log(`📈 MarketCap (USD): ${token.marketCapSol/184}`);
+        const solToUsdRate = 180; // Replace with the current SOL to USD conversion rate
+        const marketCapUsd = (token.marketCapSol * solToUsdRate).toFixed(2);
+        console.log(`📈 MarketCap (USD): ${marketCapUsd}`);
         console.log(`💰 Price: ${price} - ${prezzo}`);
         console.log(`💧 Liquidity in pool: ${token.solInPool} SOL`);
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
