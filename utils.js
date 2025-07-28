@@ -1,4 +1,5 @@
 import axios from 'axios';
+let safeProblem = [];
 
 // 🔥 Lista di wallet noti per rugpull (aggiungi i tuoi)
 const blacklist = [
@@ -7,17 +8,20 @@ const blacklist = [
 ];
 
 export async function isSafeToken(token) {
+  safeProblem=[];
   try {
     // 1. ✅ Controllo liquidità
     if (token.solInPool < 0.5 || token.solInPool > 5) {
       console.log("❌ Liquidità fuori range.");
-      return false;
+      safeProblem.push("❌ Liquidità fuori range.");
+      //return false;
     }
 
     // 2. ✅ Controllo market cap
     if (token.marketCapSol < 5 || token.marketCapSol > 100) {
       console.log("❌ Market cap sospetto.");
-      return false;
+      safeProblem.push("❌ Market cap sospetto.")
+      //return false;
     }
 
     // 3. ✅ Dev token share (dev ha ricevuto troppi token)
@@ -25,7 +29,8 @@ export async function isSafeToken(token) {
     const devShare = token.initialBuy / totalTokens;
     if (devShare > 0.15) {
       console.log("❌ Il creatore ha preso troppi token iniziali.");
-      return false;
+      safeProblem.push("❌ Il creatore ha preso troppi token iniziali.")
+      //return false;
     }
 
     // 4. ✅ Simbolo/token name valido
@@ -33,13 +38,15 @@ export async function isSafeToken(token) {
     const nameValid = token.name.length <= 20 && !token.name.includes('💩') && !token.name.includes('http');
     if (!symbolValid || !nameValid) {
       console.log("❌ Nome o simbolo sospetti.");
-      return false;
+      safeProblem.push("❌ Nome o simbolo sospetti.");
+      //return false;
     }
 
     // 5. ✅ Dev non in blacklist
     if (blacklist.includes(token.traderPublicKey)) {
       console.log("❌ Dev è in blacklist.");
-      return false;
+      sasfeProblem.push("❌ Dev è in blacklist.");
+      //return false;
     }
 
     // 6. ✅ Controllo metadati (opzionale)
@@ -53,7 +60,7 @@ export async function isSafeToken(token) {
     }
 */
     // ✅ Tutto ok!
-    return true;
+    return safeProblem
   } catch (err) {
     console.error("Errore nel controllo sicurezza:", err.message);
     return false;
