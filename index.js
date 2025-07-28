@@ -2,7 +2,8 @@ import WebSocket from 'ws';
 import { isSafeToken, formatPrezzoTokenNoSci } from './utils.js';
 import { monitorEarlyTrades } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
-import { startHttpServer, logToken } from './httpServer.js';
+import { startHttpServer, logToken ,updateToken } from './httpServer.js';
+import { MAX_TOKENS_SUBSCRIBED } from './config.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
@@ -72,6 +73,8 @@ ws.on('message', async function message(data) {
 
         const prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
         let price=formatPrezzoTokenNoSci(prezzo);
+
+
         console.log(`-----------------------------------------------`);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
         console.log(`🧠 Mint: ${token.mint}`);
@@ -87,6 +90,7 @@ ws.on('message', async function message(data) {
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         // 
         //await monitorEarlyTrades(token, snipeToken);
+
         logToken({
             mint: token.mint,
             name: token.name,
@@ -94,6 +98,8 @@ ws.on('message', async function message(data) {
             solInPool: token.solInPool,
             tokensInPool: token.tokensInPool,
             marketCapSol: token.marketCapSol,
+            price: price,
+            marketCapUsd: marketCapUsd,
             safe: true // o false in base ai filtri //aggiungi array con filtri
           });
   
@@ -107,17 +113,40 @@ ws.on('message', async function message(data) {
         subscribedTokens.add(token.mint);
       }
 
+// Se superiamo i 40 token, rimuoviamo i più vecchi
+if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
+    const mintToRemove = [...subscribedTokens][0];
+    ws.send(JSON.stringify({
+      method: "unsubscribeTokenTrade",
+      keys: [mintToRemove]
+    }));
+    subscribedTokens.delete(mintToRemove);
+    console.log(`🚫 Unsubscribed da ${mintToRemove} (limite ${MAX_TOKENS_SUBSCRIBED})`);
+  }
+
+
         console.log(`-----------------------------------------------`);
       // 👉 Qui puoi chiamare la tua funzione `snipeToken(token.mint)`
     }
 
      // Eventuale gestione trade
+     // Eventuale gestione trade
      if (parsed.method === 'tokenTrade') {
         const trade = parsed.data;
+        if (trade && trade.mint && trade.solInPool && trade.tokensInPool) {
+          const prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
+          const price = formatPrezzoTokenNoSci(prezzo);
+          const marketCapUsd = (trade.marketCapSol * 180).toFixed(2);
+          //updateToken(trade.mint, price, trade.marketCapSol, marketCapUsd);
+          updateToken(trade.mint, {
+            marketCapSol: trade.marketCapSol,
+            price: prezzo,
+            marketCapUsd: marketCapUsd,
+          });
+        }
+  
         console.log(`📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}`);
-        // Puoi fare media prezzo, calcolo volume ecc.
       }
-
     // Aggiungi altri tipi di eventi se vuoi
   } catch (e) {
     console.error('❌ Errore nel parsing:', e);

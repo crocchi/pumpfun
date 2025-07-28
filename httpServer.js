@@ -5,7 +5,7 @@ let tokenLog = [];
 
 export function logToken(tokenData) {
   tokenLog.unshift({ timestamp: Date.now(), ...tokenData });
-  if (tokenLog.length > 80) tokenLog.pop();
+  if (tokenLog.length > 40) tokenLog.pop();
 }
 
 export function startHttpServer(port = process.env.PORT || 4000) {
@@ -59,7 +59,8 @@ const server = http.createServer(async (req, res) => {
 
                 for (const t of tokens) {
                     const row = document.createElement('tr');
-                    const price = (t.solInPool / t.tokensInPool).toFixed(10);
+                    const price = t.price ? t.price : (t.solInPool / t.tokensInPool).toFixed(10);
+
                     const time = new Date(t.timestamp).toLocaleTimeString();
                     const safe = t.safe ? 'YES' : 'NO';
                     const contractAddress = t.mint || 'N/A';
@@ -125,3 +126,12 @@ const server = http.createServer(async (req, res) => {
     console.log(`🌐 HTTP Server attivo su http://localhost:${port}`);
   });
 }
+
+
+export function updateToken(mint, updates) {
+    const token = tokenLog.find(t => t.mint === mint);
+    if (token) {
+      Object.assign(token, updates);
+    }
+  }
+  
