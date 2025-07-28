@@ -1,5 +1,5 @@
 import Moralis from 'moralis';
-const { MORALIS_API_KEY } = require('./config');
+import MORALIS_API_KEY from './config';
 
 export function checkPrice(addressContract) {
  try {
