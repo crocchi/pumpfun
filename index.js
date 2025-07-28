@@ -65,7 +65,7 @@ ws.on('message', async function message(data) {
             solInPool: token.solInPool,
             tokensInPool: token.tokensInPool,
             marketCapSol: token.marketCapSol,
-            safe: safe // o false in base ai filtri
+            safe: safer // o false in base ai filtri
           });
         console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.`);
         return
