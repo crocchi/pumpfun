@@ -54,7 +54,7 @@ ws.on('message', async function message(data) {
   if(!data) return
   try {
     const parsed = JSON.parse(data);
-    console.log(parsed);
+    //console.log(parsed);
 
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
