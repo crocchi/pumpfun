@@ -53,7 +53,7 @@ ws.on('message', async function message(data) {
   if(!data) return
   try {
     const parsed = JSON.parse(data);
-
+    console.log(parsed);
 
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
@@ -99,6 +99,7 @@ ws.on('message', async function message(data) {
   
            // 👉 Sottoscrizione ai trade del token appena creato
       if (!subscribedTokens.has(token.mint)) {
+        console.log(`🔔 Sottoscrizione ai trade del token ${token.mint}`);
         ws.send(JSON.stringify({
           method: "subscribeTokenTrade",
           keys: [token.mint]
@@ -116,7 +117,7 @@ ws.on('message', async function message(data) {
         console.log(`📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}`);
         // Puoi fare media prezzo, calcolo volume ecc.
       }
-      
+
     // Aggiungi altri tipi di eventi se vuoi
   } catch (e) {
     console.error('❌ Errore nel parsing:', e);
