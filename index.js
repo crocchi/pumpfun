@@ -50,7 +50,7 @@ ws.on('open', function open() {
 });
 
 ws.on('message', async function message(data) {
-  //console.log(JSON.parse(data));
+  console.log(JSON.parse(data));
   if(!data) return
   try {
     const parsed = JSON.parse(data);
@@ -132,6 +132,15 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
      // Eventuale gestione trade
      // Eventuale gestione trade
      if (parsed.method === 'tokenTrade') {
+
+
+
+
+
+
+
+//yooooo controllloooooooo qui
+
         const trade = parsed.data;
         if (trade && trade.mint && trade.solInPool && trade.tokensInPool) {
           const prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
