@@ -1,4 +1,4 @@
-//import Moralis from 'moralis';
+import Moralis from 'moralis';
 import { MORALIS_API_KEY } from './config.js';
 
 console.log("Inizializzazione Moralis con API Key:");
