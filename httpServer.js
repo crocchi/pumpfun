@@ -4,7 +4,7 @@ let tokenLog = [];
 
 export function logToken(tokenData) {
   tokenLog.unshift({ timestamp: Date.now(), ...tokenData });
-  if (tokenLog.length > 50) tokenLog.pop();
+  if (tokenLog.length > 80) tokenLog.pop();
 }
 
 export function startHttpServer(port = process.env.PORT || 4000) {
