@@ -53,7 +53,8 @@ ws.on('message', async function message(data) {
   try {
     const parsed = JSON.parse(data);
 
-    const safe = await isSafeToken(parsed);
+    const safer = isSafeToken(parsed);
+    const safe = safer.length === 0;  
     if (!safe) {
         let token=parsed;
         logToken({
@@ -63,7 +64,7 @@ ws.on('message', async function message(data) {
             solInPool: token.solInPool,
             tokensInPool: token.tokensInPool,
             marketCapSol: token.marketCapSol,
-            safe: false // o false in base ai filtri
+            safe: safe // o false in base ai filtri
           });
         console.log(`⛔ Token ${parsed.name} scartato per sicurezza.`);
         return
