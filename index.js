@@ -98,7 +98,7 @@ ws.on('message', async function message(data) {
             solInPool: token.solInPool,
             tokensInPool: token.tokensInPool,
             marketCapSol: token.marketCapSol,
-            price: price,
+            price: prezzo,
             marketCapUsd: marketCapUsd,
             safe: true // o false in base ai filtri //aggiungi array con filtri
           });

@@ -93,7 +93,7 @@ const server = http.createServer(async (req, res) => {
                 }
             }
 
-            setInterval(load, 5000);
+            setInterval(load, 3000);
             load();
             </script>
         </body>
