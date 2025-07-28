@@ -1,7 +1,7 @@
-import Moralis from 'moralis';
+//import Moralis from 'moralis';
 import { MORALIS_API_KEY } from './config.js';
 
-console.log("Inizializzazione Moralis con API Key:", MORALIS_API_KEY);
+console.log("Inizializzazione Moralis con API Key:");
 Moralis.start({
     apiKey: MORALIS_API_KEY
   });
@@ -9,10 +9,11 @@ Moralis.start({
 export async function checkPrice(addressContract) {
     console.log("Controllo prezzo per:", addressContract);
  try {
-   const response = Moralis.SolApi.token.getTokenPrice({
-     "address": addressContract,
-     "network": "mainnet"
-   });
+
+    const response = await Moralis.SolApi.token.getTokenPrice({
+        network: 'mainnet',
+        address: addressContract,
+      });
 
    console.log(response.raw);
  } catch (e) {
@@ -40,3 +41,4 @@ export async function checkPrice(addressContract) {
   "symbol": "PUMPWICH",
   "isVerifiedContract": false
 } */
+ 
