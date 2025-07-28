@@ -54,7 +54,7 @@ ws.on('message', async function message(data) {
     const parsed = JSON.parse(data);
 
     const safer = isSafeToken(parsed);
-      console.log(safer);
+     // console.log(safer);
     const safe = safer.length === 0;  
     if (!safe) {
         let token=parsed;
