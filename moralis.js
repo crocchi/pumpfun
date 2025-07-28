@@ -6,8 +6,9 @@ Moralis.start({
   });
 
 export async function checkPrice(addressContract) {
+    console.log("Controllo prezzo per:", addressContract);
  try {
-   const response = await Moralis.SolApi.token.getTokenPrice({
+   const response = Moralis.SolApi.token.getTokenPrice({
      "address": addressContract,
      "network": "mainnet"
    });
