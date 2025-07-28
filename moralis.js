@@ -16,11 +16,14 @@ export async function checkPrice(addressContract) {
       });
 
    console.log(response.raw);
- } catch (e) {
-   console.error(e);
- }
-}
+ }  catch (error) {
+    if (error.status === 404 || error.message.includes('Token price not found')) {
+      console.warn(`⚠️ Prezzo non trovato per ${mint}. Token troppo nuovo o non indicizzato.`);
+      return null;
+      }
+   }
 
+}
 /*{
   "tokenAddress": "BtKMyfjQqbSS8vxi85RknpuqqFH7coCUekW9baqPpump",
   "pairAddress": "4ZVCNNU9f73uUpQntYqE4v15ctAKXxUDh6Ys3RmMUcy6",

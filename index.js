@@ -9,6 +9,7 @@ startHttpServer(process.env.PORT);
 
 
 const ws = new WebSocket('wss://pumpportal.fun/api/data');
+const subscribedTokens = new Set();
 
 ws.on('open', function open() {
     console.log('📡 Connesso al WebSocket di Pump.fun');
@@ -49,34 +50,28 @@ ws.on('open', function open() {
 
 ws.on('message', async function message(data) {
   //console.log(JSON.parse(data));
+  if(!data) return
   try {
     const parsed = JSON.parse(data);
 
-    const safer = isSafeToken(parsed);
-     // console.log(safer);
-    const safe = safer.length === 0;  
-    if (!safe) {
-        let token=parsed;
-        logToken({
-            mint: token.mint,
-            name: token.name,
-            symbol: token.symbol,
-            solInPool: token.solInPool,
-            tokensInPool: token.tokensInPool,
-            marketCapSol: token.marketCapSol,
-            safe: safer // o false in base ai filtri
-          });
-        console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.`);
-        console.log(safer);
-        return
-      }
 
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
+
+        const safer = isSafeToken(parsed);
+        // console.log(safer);
+       const safe = safer.length === 0;  
+       if (!safe) {
+
+           console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.`);
+           console.log(safer);
+           return
+         }
+
         const token = parsed;
 
         const prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
-let price=formatPrezzoTokenNoSci(prezzo);
+        let price=formatPrezzoTokenNoSci(prezzo);
         console.log(`-----------------------------------------------`);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
         console.log(`🧠 Mint: ${token.mint}`);
@@ -99,19 +94,29 @@ let price=formatPrezzoTokenNoSci(prezzo);
             solInPool: token.solInPool,
             tokensInPool: token.tokensInPool,
             marketCapSol: token.marketCapSol,
-            safe: true // o false in base ai filtri
+            safe: true // o false in base ai filtri //aggiungi array con filtri
           });
   
-  
-        // 👇 Esempio di filtro anti-rug semplificato:
-        if (token.solInPool < 0.5 || token.marketCapSol > 100) {
-          console.log("⚠️ Liquidity troppo bassa o market cap sospetto. Skip.");
-          return;
-        }
+           // 👉 Sottoscrizione ai trade del token appena creato
+      if (!subscribedTokens.has(token.mint)) {
+        ws.send(JSON.stringify({
+          method: "subscribeTokenTrade",
+          keys: [token.mint]
+        }));
+        subscribedTokens.add(token.mint);
+      }
+
         console.log(`-----------------------------------------------`);
       // 👉 Qui puoi chiamare la tua funzione `snipeToken(token.mint)`
     }
 
+     // Eventuale gestione trade
+     if (parsed.method === 'tokenTrade') {
+        const trade = parsed.data;
+        console.log(`📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}`);
+        // Puoi fare media prezzo, calcolo volume ecc.
+      }
+      
     // Aggiungi altri tipi di eventi se vuoi
   } catch (e) {
     console.error('❌ Errore nel parsing:', e);
