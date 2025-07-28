@@ -50,7 +50,7 @@ ws.on('open', function open() {
 });
 
 ws.on('message', async function message(data) {
-  console.log(JSON.parse(data));
+  //console.log(JSON.parse(data));
   if(!data) return
   try {
     const parsed = JSON.parse(data);
