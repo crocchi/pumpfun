@@ -131,12 +131,8 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
      // Eventuale gestione trade
      // Eventuale gestione trade
-     if (parsed.method === 'tokenTrade') {
 
-
-
-
-
+     if(parsed.txType === 'buy' || parsed.txType === 'sell') {
 
 
 //yooooo controllloooooooo qui
