@@ -7,7 +7,7 @@ const blacklist = [
   '6QsW5rSMYaQTGJxg9UiwmhxEQ7w1DypdN9kfHQuWoobi'
 ];
 
-export async function isSafeToken(token) {
+export function isSafeToken(token) {
   safeProblem=[];
   try {
     // 1. ✅ Controllo liquidità
