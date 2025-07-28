@@ -12,14 +12,14 @@ export function isSafeToken(token) {
   try {
     // 1. ✅ Controllo liquidità
     if (token.solInPool < 0.5 || token.solInPool > 5) {
-      console.log("❌ Liquidità fuori range.");
+      //console.log("❌ Liquidità fuori range.");
       safeProblem.push("❌ Liquidità fuori range.");
       //return false;
     }
 
     // 2. ✅ Controllo market cap
     if (token.marketCapSol < 5 || token.marketCapSol > 100) {
-      console.log("❌ Market cap sospetto.");
+      //console.log("❌ Market cap sospetto.");
       safeProblem.push("❌ Market cap sospetto.")
       //return false;
     }
@@ -28,7 +28,7 @@ export function isSafeToken(token) {
     const totalTokens = token.tokensInPool + token.initialBuy;
     const devShare = token.initialBuy / totalTokens;
     if (devShare > 0.15) {
-      console.log("❌ Il creatore ha preso troppi token iniziali.");
+      //console.log("❌ Il creatore ha preso troppi token iniziali.");
       safeProblem.push("❌ Il creatore ha preso troppi token iniziali.")
       //return false;
     }
@@ -37,14 +37,14 @@ export function isSafeToken(token) {
     const symbolValid = /^[a-zA-Z0-9]{2,12}$/.test(token.symbol);
     const nameValid = token.name.length <= 20 && !token.name.includes('💩') && !token.name.includes('http');
     if (!symbolValid || !nameValid) {
-      console.log("❌ Nome o simbolo sospetti.");
+     // console.log("❌ Nome o simbolo sospetti.");
       safeProblem.push("❌ Nome o simbolo sospetti.");
       //return false;
     }
 
     // 5. ✅ Dev non in blacklist
     if (blacklist.includes(token.traderPublicKey)) {
-      console.log("❌ Dev è in blacklist.");
+     // console.log("❌ Dev è in blacklist.");
       sasfeProblem.push("❌ Dev è in blacklist.");
       //return false;
     }
