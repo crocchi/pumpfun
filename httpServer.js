@@ -84,6 +84,7 @@ const server = http.createServer(async (req, res) => {
                 try {
                     const response = await fetch('/checkPrice?symbol=' + encodeURIComponent(symbol));
                     const data = await response.json();
+                    console.log(data);
                     alert(\`Current price of \${symbol}: \${data.price}\`);
                 } catch (error) {
                     console.error('Error checking price:', error);
