@@ -73,7 +73,7 @@ const server = http.createServer(async (req, res) => {
                     <td class="\${colorClass}">\${safe}</td>
                      <td>\${t.mint}</td>
                     <td>\${time}</td>
-                    <td><button onclick="checkPrice('\${t.symbol}')">Check Price</button></td>
+                    <td><button onclick="checkPrice('\${t.mint}')">Check Price</button></td>
                     \`;
 
                     tbody.appendChild(row);
