@@ -1,6 +1,5 @@
 import 'dotenv/config';
 
-
 module.exports = {
   MORALIS_API_KEY: process.env.MORALIS_API_KEY,
   //RPC_URL: process.env.RPC_URL,
