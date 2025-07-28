@@ -68,6 +68,7 @@ ws.on('message', async function message(data) {
             safe: safer // o false in base ai filtri
           });
         console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.`);
+        console.log(safer);
         return
       }
 
