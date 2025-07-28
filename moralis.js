@@ -1,13 +1,13 @@
 import Moralis from 'moralis';
 import { MORALIS_API_KEY } from './config.js';
 
-export function checkPrice(addressContract) {
+export async function checkPrice(addressContract) {
  try {
-    Moralis.start({
+    await Moralis.start({
      apiKey: MORALIS_API_KEY
    });
 
-   const response = Moralis.SolApi.token.getTokenPrice({
+   const response = await Moralis.SolApi.token.getTokenPrice({
      "address": addressContract,
      "network": "mainnet"
    });
