@@ -127,11 +127,10 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
         console.log(`-----------------------------------------------`);
       // 👉 Qui puoi chiamare la tua funzione `snipeToken(token.mint)`
-    }
 
-     // Eventuale gestione trade
-     // Eventuale gestione trade
+    }// fine if (parsed.txType === 'create')
 
+    // Verifica se è un evento di trade
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
 
 
