@@ -137,7 +137,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
 //yooooo controllloooooooo qui
 
-        const trade = parsed.data;
+        const trade = parsed;
         if (trade && trade.mint && trade.solInPool && trade.tokensInPool) {
           const prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
           const price = formatPrezzoTokenNoSci(prezzo);
