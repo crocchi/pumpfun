@@ -126,17 +126,41 @@ export async function checkMissingSocials(uri) {
       // 🔍 Alcuni token usano direttamente i social nel metadata (senza extensions)
     const extensions = metadata?.extensions || metadata || {};
 
-    const hasAnySocial =
-      typeof extensions.website === 'string' && extensions.website.length > 5 ||
-      typeof extensions.twitter === 'string' && extensions.twitter.length > 5 ||
-      typeof extensions.telegram === 'string' && extensions.telegram.length > 5;
-  
-      if (!hasAnySocial) {
-        return false
+    const hasTwitterOrTelegram =
+    typeof extensions.twitter === 'string' && extensions.twitter.length > 5 ||
+    typeof extensions.telegram === 'string' && extensions.telegram.length > 5;
+
+    if (!hasTwitterOrTelegram) {
+        return false   // '❌ Manca Twitter o Telegram';
       }
+
+   const hasWebsite = typeof extensions.website === 'string' && extensions.website.length > 5;
   
+   if (!hasWebsite) {
+    return false     //'❌ Manca il sito web';
+  }
+
+  const hasDescription = typeof extensions.description === 'string' && extensions.description.length > 20;
+  if (!hasDescription) {
+    return false     //'❌ Manca descrizione o assente';
+  }
+
+
       return true;
     } catch (e) {
       return '⚠️ Impossibile leggere metadata URI';
     }
   }
+  /*
+  Controllo metadati per: {
+  name: '3I/ATLAS',
+  symbol: 'ATLAS',
+  description: '',
+  image: 'https://ipfs.io/ipfs/bafybeibhj43sg4kj7aupbp3llap5dbrv35ika6hmgdjcdwinwffab25dmy',
+  showName: true,
+  createdOn: 'https://pump.fun',
+  twitter: 'https://x.com/nocontextscats/status/1950061928099041554'
+  website: 'https://en.wikipedia.org/wiki/3I/ATLAS'
+   telegram: '',
+}
+  */
