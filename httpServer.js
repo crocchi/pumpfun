@@ -83,8 +83,8 @@ const server = http.createServer(async (req, res) => {
                     <td>\${price}</td>
                     <td>\${t.marketCapSol?.toFixed(2)}</td>
                      
-                   
-                    <td>\${typeof t.marketCapUsd === 'number' ? t.marketCapUsd.toFixed(2) : 'N/A'}</td>
+                    <td>$\${t.marketCapUsd}</td>
+                    
                     <td style="color:\${color}">\${pctText}</td>
                     <td class="\${colorClass}">\${safe}</td>
 
