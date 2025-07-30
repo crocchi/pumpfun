@@ -7,7 +7,7 @@ const blacklist = [
   '6QsW5rSMYaQTGJxg9UiwmhxEQ7w1DypdN9kfHQuWoobi'
 ];
 
-export function isSafeToken(token) {
+export async function isSafeToken(token) {
   safeProblem=[];
   try {
     // 1. ✅ Controllo liquidità
@@ -50,15 +50,17 @@ export function isSafeToken(token) {
     }
 
     // 6. ✅ Controllo metadati (opzionale)
-    /*
+    
     if (token.uri) {
-      const meta = await fetchMetadata(token.uri);
+      const socialCheck = await checkMissingSocials(token.uri);
+      if (!socialCheck) safeProblem.push('❌ Nessun social (website, Twitter o Telegram)');
+      /*
       if (!meta || !meta.image || meta.image.includes('base64') || meta.name !== token.name) {
         console.log("❌ Metadata sospetti o immagine mancante.");
         return false;
-      }
+      }*/
     }
-*/
+
     // ✅ Tutto ok!
     return safeProblem
   } catch (err) {
@@ -114,3 +116,22 @@ export function formatPrezzoTokenNoSci(numero, decimali = 18) {
     return segno + '0.' + '0'.repeat(zeriCount) + parteSignificativa;
   }
   
+//controllo social
+export async function checkMissingSocials(uri) {
+    try {
+      const response = await fetch(uri);
+      const metadata = await response.json();
+      //console.log("Controllo metadati per:", uri);
+      const hasWebsite = !!metadata?.extensions?.website;
+      const hasTwitter = !!metadata?.extensions?.twitter;
+      const hasTelegram = !!metadata?.extensions?.telegram;
+  
+      if (!hasWebsite && !hasTwitter && !hasTelegram) {
+        return false
+      }
+  
+      return true;
+    } catch (e) {
+      return '⚠️ Impossibile leggere metadata URI';
+    }
+  }
