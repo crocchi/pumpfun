@@ -123,11 +123,13 @@ export async function checkMissingSocials(uri) {
       const metadata = await response.json();
       console.log("Controllo metadati per:", metadata);
 
-      const extensions = metadata?.extensions || {};
-      const hasAnySocial =
-        !!extensions.website ||
-        !!extensions.twitter ||
-        !!extensions.telegram;
+      // 🔍 Alcuni token usano direttamente i social nel metadata (senza extensions)
+    const extensions = metadata?.extensions || metadata || {};
+
+    const hasAnySocial =
+      typeof extensions.website === 'string' && extensions.website.length > 5 ||
+      typeof extensions.twitter === 'string' && extensions.twitter.length > 5 ||
+      typeof extensions.telegram === 'string' && extensions.telegram.length > 5;
   
       if (!hasAnySocial) {
         return false
