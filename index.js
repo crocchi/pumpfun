@@ -59,7 +59,7 @@ ws.on('message', async function message(data) {
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
 
-        const safer = isSafeToken(parsed);
+        const safer = await isSafeToken(parsed);
         // console.log(safer);
        const safe = safer.length === 0;  
        if (!safe) {

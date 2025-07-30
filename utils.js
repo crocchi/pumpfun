@@ -45,7 +45,7 @@ export function isSafeToken(token) {
     // 5. ✅ Dev non in blacklist
     if (blacklist.includes(token.traderPublicKey)) {
      // console.log("❌ Dev è in blacklist.");
-      sasfeProblem.push("❌ Dev è in blacklist.");
+      safeProblem.push("❌ Dev è in blacklist.");
       //return false;
     }
 
