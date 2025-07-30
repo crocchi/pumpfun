@@ -150,7 +150,7 @@ const server = http.createServer(async (req, res) => {
 
 export function updateToken(mint, updates) {
     const token = tokenLog.find(t => t.mint === mint);
-    console.log("Aggiornamento token:", mint, updates);
+    //console.log("Aggiornamento token:", mint, updates);
     if (token) {
      // Salva il vecchio marketCapUsd prima di aggiornare
   if (updates.marketCapUsd !== undefined) {
