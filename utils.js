@@ -53,7 +53,7 @@ export async function isSafeToken(token) {
     
     if (token.uri) {
       const socialCheck = await checkMissingSocials(token.uri);
-      if (!socialCheck) safeProblem.push('❌ Nessun social (website, Twitter o Telegram)');
+      //if (!socialCheck) safeProblem.push('❌ Nessun social (website, Twitter o Telegram)');
       /*
       if (!meta || !meta.image || meta.image.includes('base64') || meta.name !== token.name) {
         console.log("❌ Metadata sospetti o immagine mancante.");
@@ -131,18 +131,21 @@ export async function checkMissingSocials(uri) {
     typeof extensions.telegram === 'string' && extensions.telegram.length > 5;
 
     if (!hasTwitterOrTelegram) {
+        safeProblem.push("❌ Manca Twitter o Telegram");
         return false   // '❌ Manca Twitter o Telegram';
       }
 
    const hasWebsite = typeof extensions.website === 'string' && extensions.website.length > 5;
   
    if (!hasWebsite) {
-    return false     //'❌ Manca il sito web';
+    safeProblem.push("❌ Manca il sito web");
+    return false     
   }
 
   const hasDescription = typeof extensions.description === 'string' && extensions.description.length > 20;
   if (!hasDescription) {
-    return false     //'❌ Manca descrizione o assente';
+    safeProblem.push("❌ Descrizione breve o assente");
+    return false     
   }
 
 
