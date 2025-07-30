@@ -100,6 +100,7 @@ ws.on('message', async function message(data) {
             marketCapSol: token.marketCapSol,
             price: prezzo,
             marketCapUsd: marketCapUsd,
+            oldMarketCapUsd:marketCapUsd,
             safe: true // o false in base ai filtri //aggiungi array con filtri
           });
   
