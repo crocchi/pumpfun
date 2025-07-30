@@ -121,12 +121,15 @@ export async function checkMissingSocials(uri) {
     try {
       const response = await fetch(uri);
       const metadata = await response.json();
-      //console.log("Controllo metadati per:", uri);
-      const hasWebsite = !!metadata?.extensions?.website;
-      const hasTwitter = !!metadata?.extensions?.twitter;
-      const hasTelegram = !!metadata?.extensions?.telegram;
+      console.log("Controllo metadati per:", metadata);
+
+      const extensions = metadata?.extensions || {};
+      const hasAnySocial =
+        !!extensions.website ||
+        !!extensions.twitter ||
+        !!extensions.telegram;
   
-      if (!hasWebsite && !hasTwitter && !hasTelegram) {
+      if (!hasAnySocial) {
         return false
       }
   
