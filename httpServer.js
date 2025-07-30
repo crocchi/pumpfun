@@ -68,7 +68,7 @@ const server = http.createServer(async (req, res) => {
 
     const color = pct > 0 ? 'lime' : (pct < 0 ? 'red' : '#ddd');
     const sign = pct > 0 ? '+' : '';
-    const pctText = pct ? \`${sign}${pct.toFixed(2)}%\` : '—';
+    const pctText = pct ? \`\${sign}\${pct.toFixed(2)}%\` : '—';
     const price = t.price ? t.price : (t.solInPool / t.tokensInPool).toFixed(10);
     const time = new Date(t.timestamp).toLocaleTimeString();
     const safe = t.safe ? 'YES' : 'NO'; //t.safe.includes('✅');
