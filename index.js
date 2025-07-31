@@ -151,6 +151,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             marketCapUsd: marketCapUsd,
           });
         }
+        console.log(tradeInfo);
         if (tradeInfo.price > tradeInfo.startPrice * 1.5) { 
             console.log(`📊 vendi ${tradeInfo.name}: 50% gain `);
             ws.send(JSON.stringify({
