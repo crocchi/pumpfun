@@ -199,14 +199,18 @@ export async function checkMissingSocials(uri) {
   */
 
 async function getTwitterFollowers(url) {
+    console.log("Controllo Twitter per:", url);
     try {
-      if (!url.includes('twitter.com')) return 0;
+      // Scarta se è una community o link non standard
+      if (!url.includes('twitter.com') && !url.includes('x.com')) return 0;
+      if (url.includes('/i/')) return 0;
   
-      const usernameMatch = url.match(/twitter\.com\/(#!\/)?@?([^\/\?\s]+)/i);
-      if (!usernameMatch || !usernameMatch[2]) return 0;
+      // Estrai username
+      const match = url.match(/(?:twitter\.com|x\.com)\/(#!\/)?@?([^\/\?\s]+)/i);
+      if (!match || !match[2]) return 0;
   
-      const username = usernameMatch[2];
-  console.log("Controllo followers Twitter per:", username);
+      const username = match[2];
+  
       const response = await axios.get(`https://twitter241.p.rapidapi.com/followers`, {
         params: { user: username, count: 1 },
         headers: {
@@ -214,11 +218,10 @@ async function getTwitterFollowers(url) {
           'x-rapidapi-key': 'd148339df6msh7f81efe03530b3bp14ee7fjsn7d4c5e2f0c36',
         },
       });
-  
-      console.log("Followers Twitter:", response.data);
+  console.log("Risposta Twitter:", response.data);
       return response.data?.followers_count || 0;
     } catch (err) {
-      console.warn('❌ Errore durante la richiesta followers:', err.message);
+      console.warn('❌ Errore follower Twitter:', err.message);
       return 0;
     }
   }
