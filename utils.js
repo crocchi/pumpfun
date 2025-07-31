@@ -212,13 +212,13 @@ async function getTwitterFollowers(url) {
       const username = match[2];
   
       const response = await axios.get(`https://twitter241.p.rapidapi.com/followers`, {
-        params: { user: username, count: 1 },
+        params: { user: username, count: 20 },
         headers: {
           'x-rapidapi-host': 'twitter241.p.rapidapi.com',
           'x-rapidapi-key': 'd148339df6msh7f81efe03530b3bp14ee7fjsn7d4c5e2f0c36',
         },
       });
-  console.log("Risposta Twitter:", response.data);
+  console.log("Risposta Twitter:"+username, response.data);
       return response.data?.followers_count || 0;
     } catch (err) {
       console.warn('❌ Errore follower Twitter:', err.message);
