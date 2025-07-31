@@ -140,7 +140,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
         const trade = parsed;
         if (trade && trade.mint && trade.solInPool && trade.tokensInPool) {
           const prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
-          const price = formatPrezzoTokenNoSci(prezzo);
+         // const price = formatPrezzoTokenNoSci(prezzo);
           const marketCapUsd = (trade.marketCapSol * 180).toFixed(2);
           //updateToken(trade.mint, price, trade.marketCapSol, marketCapUsd);
           updateToken(trade.mint, {

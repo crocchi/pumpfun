@@ -126,6 +126,7 @@ export async function checkMissingSocials(uri) {
       // 🔍 Alcuni token usano direttamente i social nel metadata (senza extensions)
     const extensions = metadata?.extensions || metadata || {};
 
+    // Controllo Twitter e Telegram
     const hasTwitterOrTelegram =
     typeof extensions.twitter === 'string' && extensions.twitter.length > 5 ||
     typeof extensions.telegram === 'string' && extensions.telegram.length > 5;
@@ -135,6 +136,30 @@ export async function checkMissingSocials(uri) {
         return false   // '❌ Manca Twitter o Telegram';
       }
 
+      if (metadata.twitter) {
+        console.log("Controllo Twitter:", metadata.twitter);
+        const followers = await getTwitterFollowers(metadata.twitter);
+        if (followers < 50) { //minimo 50 follower
+          reasons.push(`❌ Solo ${followers} follower su Twitter`);
+        }else {
+          console.log(`✅ ${metadata.twitter} ha ${followers} follower`);
+          safeProblem=[];
+          return true; // Twitter ok
+        }
+      }
+    
+
+      if (!hasTwitterOrTelegram) {
+        safeProblem.push("❌ Manca Twitter o Telegram");
+        return false   // '❌ Manca Twitter o Telegram';
+      }
+
+      //creato su Pump.Fun
+      if (typeof extensions.createdOn === 'string' && extensions.createdOn.includes('pump.fun')) {
+        //safeProblem.push("✅ Creato su Pump.Fun");
+      }//createdOn: 'https://bonk.fun',createdOn: 'https://letsbonk.fun',
+
+      // Controllo sito web
    const hasWebsite = typeof extensions.website === 'string' && extensions.website.length > 5;
   
    if (!hasWebsite) {
@@ -142,7 +167,12 @@ export async function checkMissingSocials(uri) {
     return false     
   }
 
+  //controllo descrizione
   const hasDescription = typeof extensions.description === 'string' && extensions.description.length > 20;
+  if (hasDescription && extensions.description.length > 200) {
+    safeProblem=[];
+    return true; // Descrizione lunga, potrebbe essere interessante... testiamo..
+  }
   if (!hasDescription) {
     safeProblem.push("❌ Descrizione breve o assente");
     return false     
@@ -167,3 +197,28 @@ export async function checkMissingSocials(uri) {
    telegram: '',
 }
   */
+
+async function getTwitterFollowers(url) {
+    try {
+      if (!url.includes('twitter.com')) return 0;
+  
+      const usernameMatch = url.match(/twitter\.com\/(#!\/)?@?([^\/\?\s]+)/i);
+      if (!usernameMatch || !usernameMatch[2]) return 0;
+  
+      const username = usernameMatch[2];
+  
+      const response = await axios.get(`https://twitter241.p.rapidapi.com/followers`, {
+        params: { user: username, count: 1 },
+        headers: {
+          'x-rapidapi-host': 'twitter241.p.rapidapi.com',
+          'x-rapidapi-key': 'd148339df6msh7f81efe03530b3bp14ee7fjsn7d4c5e2f0c36',
+        },
+      });
+  
+      console.log("Followers Twitter:", response.data);
+      return response.data?.followers_count || 0;
+    } catch (err) {
+      console.warn('❌ Errore durante la richiesta followers:', err.message);
+      return 0;
+    }
+  }
