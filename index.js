@@ -148,7 +148,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             price: prezzo,
             marketCapUsd: marketCapUsd,
           }).then(tradeInfo => {
-            if (tradeInfo.price > tradeInfo.startPrice * 1.5) { 
+            if (tradeInfo.price > tradeInfo.startPrice * 2.5) { 
                 console.log(`📊 vendi ${tradeInfo.name}: 50% gain `);
                 ws.send(JSON.stringify({
                     method: "unsubscribeTokenTrade",
