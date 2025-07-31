@@ -136,8 +136,6 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
 
 
-//yooooo controllloooooooo qui
-
         const trade = parsed;
         let tradeInfo;
         if (trade && trade.mint && trade.solInPool && trade.tokensInPool) {
