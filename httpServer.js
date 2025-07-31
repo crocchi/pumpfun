@@ -164,6 +164,7 @@ export function updateToken(mint, updates) {
 
       Object.assign(token, updates);
     }
+    return token
   }
   
   

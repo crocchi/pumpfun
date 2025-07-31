@@ -99,6 +99,7 @@ ws.on('message', async function message(data) {
             tokensInPool: token.tokensInPool,
             marketCapSol: token.marketCapSol,
             price: prezzo,
+            startPrice: prezzo,
             marketCapUsd: marketCapUsd,
             oldMarketCapUsd:marketCapUsd,
             safe: true // o false in base ai filtri //aggiungi array con filtri
@@ -141,15 +142,23 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
         if (trade && trade.mint && trade.solInPool && trade.tokensInPool) {
           const prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
          // const price = formatPrezzoTokenNoSci(prezzo);
-          const marketCapUsd = (trade.marketCapSol * 180).toFixed(2);
+          const marketCapUsd = (trade.marketCapSol * 175).toFixed(2);
           //updateToken(trade.mint, price, trade.marketCapSol, marketCapUsd);
-          updateToken(trade.mint, {
+          let tradeInfo=updateToken(trade.mint, {
             marketCapSol: trade.marketCapSol,
             price: prezzo,
             marketCapUsd: marketCapUsd,
           });
         }
-  
+        if (tradeInfo.price > tradeInfo.startPrice * 1.5) { 
+            console.log(`📊 vendi ${tradeInfo.name}: 50% gain `);
+            ws.send(JSON.stringify({
+                method: "unsubscribeTokenTrade",
+                keys: [trade.mint]
+              }));
+              subscribedTokens.delete(trade.mint);
+              console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
+        }
         console.log(`📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}`);
       }
     // Aggiungi altri tipi di eventi se vuoi

@@ -136,7 +136,7 @@ export async function checkMissingSocials(uri) {
         return false   // '❌ Manca Twitter o Telegram';
       }
 
-      if (metadata.twitter) {
+     /* if (metadata.twitter) {
         console.log("Controllo Twitter:", metadata.twitter);
         const followers = await getTwitterFollowers(metadata.twitter);
         if (followers < 50) { //minimo 50 follower
@@ -146,7 +146,7 @@ export async function checkMissingSocials(uri) {
           safeProblem=[];
           return true; // Twitter ok
         }
-      }
+      }*/
     
 
       if (!hasTwitterOrTelegram) {
