@@ -160,9 +160,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
                   console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
             }
           });
-        }
-        console.log(tradeInfo);
-        
+        }        
         console.log(`📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}`);
       }
     // Aggiungi altri tipi di eventi se vuoi
