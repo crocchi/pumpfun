@@ -206,7 +206,7 @@ async function getTwitterFollowers(url) {
       if (!usernameMatch || !usernameMatch[2]) return 0;
   
       const username = usernameMatch[2];
-  
+  console.log("Controllo followers Twitter per:", username);
       const response = await axios.get(`https://twitter241.p.rapidapi.com/followers`, {
         params: { user: username, count: 1 },
         headers: {
