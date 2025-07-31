@@ -145,22 +145,24 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
          // const price = formatPrezzoTokenNoSci(prezzo);
           const marketCapUsd = (trade.marketCapSol * 175).toFixed(2);
           //updateToken(trade.mint, price, trade.marketCapSol, marketCapUsd);
-         tradeInfo=await updateToken(trade.mint, {
+         updateToken(trade.mint, {
             marketCapSol: trade.marketCapSol,
             price: prezzo,
             marketCapUsd: marketCapUsd,
+          }).then(tradeInfo => {
+            if (tradeInfo.price > tradeInfo.startPrice * 1.5) { 
+                console.log(`📊 vendi ${tradeInfo.name}: 50% gain `);
+                ws.send(JSON.stringify({
+                    method: "unsubscribeTokenTrade",
+                    keys: [trade.mint]
+                  }));
+                  subscribedTokens.delete(trade.mint);
+                  console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
+            }
           });
         }
         console.log(tradeInfo);
-        if (tradeInfo.price > tradeInfo.startPrice * 1.5) { 
-            console.log(`📊 vendi ${tradeInfo.name}: 50% gain `);
-            ws.send(JSON.stringify({
-                method: "unsubscribeTokenTrade",
-                keys: [trade.mint]
-              }));
-              subscribedTokens.delete(trade.mint);
-              console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
-        }
+        
         console.log(`📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}`);
       }
     // Aggiungi altri tipi di eventi se vuoi
