@@ -95,10 +95,11 @@ ws.on('message', async function message(data) {
             mint: token.mint,
             name: token.name,
             symbol: token.symbol,
-            solInPool: token.solInPool,
-            tokensInPool: token.tokensInPool,
+            solInPool: token.solInPool || 0,
+            tokensInPool: token.tokensInPool || 0,
             marketCapSol: token.marketCapSol,
             price: prezzo,
+            trxNum: 0,
             startPrice: prezzo,
             marketCapUsd: marketCapUsd,
             oldMarketCapUsd:marketCapUsd,
@@ -147,6 +148,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             marketCapSol: trade.marketCapSol,
             price: prezzo,
             marketCapUsd: marketCapUsd,
+            trxNum: trade.trxNum+1 ,
           }).then(tradeInfo => {
             if (tradeInfo.price > tradeInfo.startPrice * 3.5) { 
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
