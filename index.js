@@ -70,7 +70,7 @@ ws.on('message', async function message(data) {
          }
 
         const token = parsed;
-
+console.log("Token:", token);
         const prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
         let price=formatPrezzoTokenNoSci(prezzo);
 
