@@ -71,7 +71,7 @@ ws.on('message', async function message(data) {
 
         const token = parsed;
 console.log("Token:", token);
-        const prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
+        const prezzo = (token.solInPool / token.tokensInPool).toFixed(10) || token.vSolInBondingCurve / token.vTokensInBondingCurve;;
         let price=formatPrezzoTokenNoSci(prezzo);
 
 
@@ -95,8 +95,8 @@ console.log("Token:", token);
             mint: token.mint,
             name: token.name,
             symbol: token.symbol,
-            solInPool: token.solInPool || 0,
-            tokensInPool: token.tokensInPool || 0,
+            solInPool: token.solInPool || token.vSolInBondingCurve,
+            tokensInPool: token.tokensInPool || token.vTokensInBondingCurve,
             marketCapSol: token.marketCapSol,
             price: prezzo,
             trxNum: 0,
