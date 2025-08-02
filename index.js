@@ -3,7 +3,7 @@ import { isSafeToken } from './utils.js';
 import { monitorEarlyTrades } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken } from './httpServer.js';
-import { MAX_TOKENS_SUBSCRIBED } from './config.js';
+import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD } from './config.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
@@ -87,7 +87,7 @@ ws.on('message', async function message(data) {
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
         console.log(`🧠 Mint: ${token.mint}`);
         console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
-        const solToUsdRate = 180; // Replace with the current SOL to USD conversion rate
+        const solToUsdRate = SOLANA_USD; // Replace with the current SOL to USD conversion rate
         const marketCapUsd = (token.marketCapSol * solToUsdRate).toFixed(2);
         const totTokens= token.tokensInPool + token.initialBuy;
         console.log(`📈 MarketCap (USD): ${marketCapUsd}`);
@@ -171,7 +171,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             }
           });
         }        
-        console.log(`📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}`);
+        console.log(`📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount}`);
       }
     // Aggiungi altri tipi di eventi se vuoi
   } catch (e) {
