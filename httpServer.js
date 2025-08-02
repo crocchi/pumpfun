@@ -81,7 +81,7 @@ const server = http.createServer(async (req, res) => {
                     <td>\${t.symbol}</td>
                     <td>\${t.name}</td>
                     <td>\${price}</td>
-                    <td>\${t.marketCapSol?.toFixed(2)}</td>
+                    <td>\${t.marketCapSol}</td>
                      
                     <td>$\${t.marketCapUsd}</td>
                     

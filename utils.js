@@ -112,11 +112,6 @@ export async function checkMissingSocials(uri) {
       }*/
     
 
-      if (!hasTwitterOrTelegram) {
-        safeProblem.push("❌ Manca Twitter o Telegram");
-        return false   // '❌ Manca Twitter o Telegram';
-      }
-
       //creato su Pump.Fun
       if (typeof extensions.createdOn === 'string' && extensions.createdOn.includes('pump.fun')) {
         //safeProblem.push("✅ Creato su Pump.Fun");
