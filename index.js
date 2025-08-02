@@ -55,10 +55,19 @@ ws.on('message', async function message(data) {
   try {
     const parsed = JSON.parse(data);
     //console.log(parsed);
-
+    const token = parsed;
+    let prezzo;
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
 
+        //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
+        if (token.solInPool > 0 && token.tokensInPool > 0) {
+            prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
+          } else if (token.vSolInBondingCurve > 0 && token.vTokensInBondingCurve > 0) {
+            prezzo = (token.vSolInBondingCurve / token.vTokensInBondingCurve).toFixed(10);
+          } else {
+            prezzo = null; // o "0.0000000000", o un valore di fallback
+          }
         const safer = await isSafeToken(parsed);
         // console.log(safer);
        const safe = safer.length === 0;  
@@ -69,11 +78,8 @@ ws.on('message', async function message(data) {
            return
          }
 
-        const token = parsed;
-console.log("Token:", token);
-        const prezzo = (token.solInPool / token.tokensInPool).toFixed(10) || token.vSolInBondingCurve / token.vTokensInBondingCurve;;
-        let price=formatPrezzoTokenNoSci(prezzo);
-
+        
+        console.log("Token:", token);
 
         console.log(`-----------------------------------------------`);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
@@ -81,9 +87,11 @@ console.log("Token:", token);
         console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
         const solToUsdRate = 180; // Replace with the current SOL to USD conversion rate
         const marketCapUsd = (token.marketCapSol * solToUsdRate).toFixed(2);
+        const totTokens= token.tokensInPool + token.initialBuy;
         console.log(`📈 MarketCap (USD): ${marketCapUsd}`);
-        console.log(`💰 Price: ${price} - ${prezzo}`);
+        console.log(`💰 Price: ${prezzo}`);
         console.log(`💧 Liquidity in pool: ${token.solInPool} SOL`);
+        console.log(`💧 Tot Tokens:${totTokens}`);
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
         console.log(`📦 URI: ${token.uri}`);
         console.log(`🌊 Pool: ${token.pool}`);
@@ -186,4 +194,22 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
   symbol: 'TRUMPFART',
   uri: 'https://ipfs.io/ipfs/Qman32r9Sc3dZjw4ibXcFXqCcPvAi5BzrojyusxAFEQdtM',
   pool: 'pump'
+
+
+  Token: {
+  signature: '2oX7kmxH1ZbsZC6cWAi32bPKGUx8gRbg1Gj3pdApYhMAnhRKGdWyrANcFf3uds9LX1msX8g68LfnqRBz8ZEphUVF',
+  traderPublicKey: '9ucgA2kLtPHMiDyrpHFpo3dM8ARnjZH8LsTzZLRRYDkp',
+  txType: 'create',
+  mint: 'EZj5APqbQRq3zTBgx69YMxcocNGuoaajEwRkreDabonk',
+  solInPool: 1,
+  tokensInPool: 965806095.367446,
+  initialBuy: 34193904.632554054,
+  solAmount: 1,
+  newTokenBalance: 34193904.632554,
+  marketCapSol: 29.828443281136384,
+  name: 'Bonko Robotics',
+  symbol: 'BONKO',
+  uri: 'https://ipfs.io/ipfs/bafkreiarm4uhc6puyp53mpb7tplwcdznbpwby6nxd7x6ajb3yuqjbnwutu',
+  pool: 'bonk'
+}
 } */

@@ -78,43 +78,6 @@ async function fetchMetadata(uri) {
     return null;
   }
 }
-
-
-export function formatPrezzoTokenNoSci(numero, decimali = 18) {
-    if (typeof numero !== 'number' || isNaN(numero)) return '0';
-  
-    if (numero === 0) return '0';
-  
-    // Numero positivo o negativo?
-    const segno = numero < 0 ? '-' : '';
-    numero = Math.abs(numero);
-  
-    // Se è >= 1, usa toFixed classico (max decimali)
-    if (numero >= 1) {
-      return segno + numero.toFixed(decimali).replace(/\.?0+$/, '');
-    }
-  
-    // Per numeri < 1, costruisci stringa senza scientifica
-    const numeroStr = numero.toString();
-  
-    // Es. 0.000000005089
-    // Calcolo quanti zeri dopo virgola prima di un numero diverso da zero
-    const parteDecimale = numeroStr.split('.')[1] || '';
-    let zeriCount = 0;
-    for (const c of parteDecimale) {
-      if (c === '0') zeriCount++;
-      else break;
-    }
-  
-    // Numero di cifre da mostrare dopo gli zeri
-    const cifreDopoZeri = decimali;
-  
-    // Prendo la parte significativa
-    const parteSignificativa = parteDecimale.slice(zeriCount, zeriCount + cifreDopoZeri);
-  
-    // Ricostruisco la stringa
-    return segno + '0.' + '0'.repeat(zeriCount) + parteSignificativa;
-  }
   
 //controllo social
 export async function checkMissingSocials(uri) {
@@ -159,14 +122,6 @@ export async function checkMissingSocials(uri) {
         //safeProblem.push("✅ Creato su Pump.Fun");
       }//createdOn: 'https://bonk.fun',createdOn: 'https://letsbonk.fun',
 
-      // Controllo sito web
-   const hasWebsite = typeof extensions.website === 'string' && extensions.website.length > 5;
-  
-   if (!hasWebsite) {
-    safeProblem.push("❌ Manca il sito web");
-    return false     
-  }
-
   //controllo descrizione
   const hasDescription = typeof extensions.description === 'string' && extensions.description.length > 20;
   if (hasDescription && extensions.description.length > 200) {
@@ -178,6 +133,13 @@ export async function checkMissingSocials(uri) {
     return false     
   }
 
+        // Controllo sito web
+        const hasWebsite = typeof extensions.website === 'string' && extensions.website.length > 5;
+  
+        if (!hasWebsite) {
+         safeProblem.push("❌ Manca il sito web");
+         return false     
+       }
 
       return true;
     } catch (e) {
