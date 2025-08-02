@@ -1,6 +1,9 @@
 import axios from 'axios';
 let safeProblem = [];
+
 import { checkTokenDistribution } from './utility/checkOwner.js';
+const MAX_CREATOR_SUPPLY_PERCENT = 5; // massimo accettabile per il creator
+const MAX_BURN_PERCENT = 50; // opzionale: es. se >50% burned, è sospetto
 
 // 🔥 Lista di wallet noti per rugpull (aggiungi i tuoi)
 const blacklist = [
@@ -49,6 +52,26 @@ export async function isSafeToken(token) {
       safeProblem.push("❌ Dev è in blacklist.");
       //return false;
     }
+
+
+// Verifica creator / owner balance
+try {
+    const dist = await checkTokenDistribution(token.mint);
+
+    if (dist.ownerPercent > MAX_CREATOR_SUPPLY_PERCENT) {
+      reasons.push(`❌ Creator possiede ${dist.ownerPercent}% della supply`);
+    }
+
+    if ((dist.burned / dist.totalSupply) * 100 > MAX_BURN_PERCENT) {
+      reasons.push(`⚠️ Supply bruciata superiore al ${MAX_BURN_PERCENT}%`);
+    }
+
+    // Puoi loggare anche per debug
+    console.log(`🔍 Distribuzione ${token.name}:`, dist);
+  } catch (err) {
+    console.warn(`⚠️ Errore nel calcolo distribuzione per ${token.mint}`, err.message);
+    reasons.push("❌ Errore nella verifica della distribuzione token");
+  }
 
     // 6. ✅ Controllo metadati (opzionale)
     
