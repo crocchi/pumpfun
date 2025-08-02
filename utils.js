@@ -10,7 +10,7 @@ const blacklist = [
   'FkeYEXAMPLEdGycd3t7asdfsas', 
   '6QsW5rSMYaQTGJxg9UiwmhxEQ7w1DypdN9kfHQuWoobi'
 ];
-
+let cont=0
 export async function isSafeToken(token) {
   safeProblem=[];
   try {
@@ -55,24 +55,26 @@ export async function isSafeToken(token) {
 
 
 // Verifica creator / owner balance
+cont++
+if(cont < 10){
 try {
     const dist = await checkTokenDistribution(token.mint);
 
     if (dist.ownerPercent > MAX_CREATOR_SUPPLY_PERCENT) {
-      reasons.push(`❌ Creator possiede ${dist.ownerPercent}% della supply`);
+        safeProblem.push(`❌ Creator possiede ${dist.ownerPercent}% della supply`);
     }
 
     if ((dist.burned / dist.totalSupply) * 100 > MAX_BURN_PERCENT) {
-      reasons.push(`⚠️ Supply bruciata superiore al ${MAX_BURN_PERCENT}%`);
+        safeProblem.push(`⚠️ Supply bruciata superiore al ${MAX_BURN_PERCENT}%`);
     }
 
     // Puoi loggare anche per debug
     console.log(`🔍 Distribuzione ${token.name}:`, dist);
   } catch (err) {
     console.warn(`⚠️ Errore nel calcolo distribuzione per ${token.mint}`, err.message);
-    reasons.push("❌ Errore nella verifica della distribuzione token");
+    //reasons.push("❌ Errore nella verifica della distribuzione token");
   }
-
+}
     // 6. ✅ Controllo metadati (opzionale)
     
     if (token.uri) {
@@ -138,7 +140,7 @@ export async function checkMissingSocials(uri) {
 
       //creato su Pump.Fun
       if (typeof extensions.createdOn === 'string' && extensions.createdOn.includes('pump.fun')) {
-        //safeProblem.push("✅ Creato su Pump.Fun");
+        //safeProblem.push("✅ Creato su Pump.Fun"); createdOn: 'https://raydium.io/',
       }//createdOn: 'https://bonk.fun',createdOn: 'https://letsbonk.fun',
 
   //controllo descrizione

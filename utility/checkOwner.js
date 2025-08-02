@@ -15,12 +15,13 @@ const BURN_ADDRESSES = [
  * @returns {Promise<object>} - Dati sulla distribuzione.
  */
 export async function checkTokenDistribution(mintAddress) {
+    console.log("Controllo distribuzione per:", mintAddress);
   const mintPubkey = new PublicKey(mintAddress);
 
   // Prendi informazioni sul token
   const mintInfo = await connection.getParsedAccountInfo(mintPubkey);
   const mintData = mintInfo.value?.data?.parsed?.info;
-
+console.log("Mint Data:", mintData);
   if (!mintData) {
     throw new Error(`Impossibile leggere i metadati del mint ${mintAddress}`);
   }
