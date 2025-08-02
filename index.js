@@ -182,7 +182,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             }
           });
         }        
-        console.log(`📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount}`);
+        console.log(`(${trade.name})📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount}`);
       }
     // Aggiungi altri tipi di eventi se vuoi
   } catch (e) {
