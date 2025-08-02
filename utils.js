@@ -1,5 +1,6 @@
 import axios from 'axios';
 let safeProblem = [];
+import { checkTokenDistribution } from './utility/checkOwner.js';
 
 // 🔥 Lista di wallet noti per rugpull (aggiungi i tuoi)
 const blacklist = [
