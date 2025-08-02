@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import axios from 'axios';
 
 export const MORALIS_API_KEY= process.env.MORALIS_API_KEY;
 
@@ -13,10 +14,20 @@ export let SOLANA_USD = 180;
   //SLIPPAGE: parseFloat(process.env.SLIPPAGE),
 
 
-async function fetchSolPrice() {
-  const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
-  const data = await r.json();
-  SOLANA_USD = data.solana.usd;
-}
-setInterval(fetchSolPrice, 300000);
-fetchSolPrice(); // chiamata iniziale
+  async function fetchSolPrice() {
+    try {
+      const response = await axios.get('https://api.coingecko.com/api/v3/simple/price', {
+        params: {
+          ids: 'solana',
+          vs_currencies: 'usd'
+        }
+      });
+      SOLANA_USD = response.data.solana.usd;
+      console.log(`📈 Prezzo SOL aggiornato: $${SOLANA_USD}`);
+    } catch (error) {
+      console.error('❌ Errore durante il fetch del prezzo di SOL:', error.message);
+    }
+  }
+  
+  setInterval(fetchSolPrice, 300_000); // ogni 5 minuti
+  fetchSolPrice(); // chiamata iniziale
