@@ -169,6 +169,17 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
                   subscribedTokens.delete(trade.mint);
                   console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
             }
+
+            if (tradeInfo.trcNum >20 && tradeInfo.price > tradeInfo.startPrice * 1.2) { 
+
+                console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
+                ws.send(JSON.stringify({
+                    method: "unsubscribeTokenTrade",
+                    keys: [trade.mint]
+                  }));
+                  subscribedTokens.delete(trade.mint);
+                  console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
+            }
           });
         }        
         console.log(`📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount}`);
