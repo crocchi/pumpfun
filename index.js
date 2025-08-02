@@ -65,6 +65,8 @@ ws.on('message', async function message(data) {
             prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
           } else if (token.vSolInBondingCurve > 0 && token.vTokensInBondingCurve > 0) {
             prezzo = (token.vSolInBondingCurve / token.vTokensInBondingCurve).toFixed(10);
+            token.solInPool = token.vSolInBondingCurve;
+            token.tokensInPool = token.vTokensInBondingCurve;
           } else {
             prezzo = null; // o "0.0000000000", o un valore di fallback
           }
