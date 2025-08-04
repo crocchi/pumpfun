@@ -1,6 +1,5 @@
 import { Connection, PublicKey } from '@solana/web3.js';
-import { RPC_URL_SOLANA } from './config.js';
-
+import { RPC_URL_SOLANA } from '../config.js';
 
 const connection = new Connection(RPC_URL_SOLANA, 'confirmed');
 

@@ -1,5 +1,5 @@
 import { Connection } from '@solana/web3.js';
-import { RPC_URL_HELIUS } from './config.js';
+import { RPC_URL_HELIUS } from '../config.js';
 
 // Initialize connection to Helius RPC
 const connection = new Connection(RPC_URL_HELIUS);
