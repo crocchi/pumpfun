@@ -39,6 +39,7 @@ const server = http.createServer(async (req, res) => {
                 <tr>
                     <th>Symbol</th>
                     <th>Nome</th>
+                    <th>StartPrice</th>
                     <th>Prezzo</th>
                     <th>MarketCap SOl</th>
                     <th>MarketCap Usd</th>
@@ -80,6 +81,7 @@ const server = http.createServer(async (req, res) => {
                     row.innerHTML = \`
                     <td>\${t.symbol}</td>
                     <td>\${t.name}</td>
+                    <td>\${t.startPrice}</td>
                     <td>\${price}</td>
                     <td>\${t.marketCapSol}</td>
                      

@@ -162,12 +162,13 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
           }).then(tradeInfo => {
             if (tradeInfo.price > tradeInfo.startPrice * 3.5) { 
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
+                subscribedTokens.delete(trade.mint);
+                console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
                 ws.send(JSON.stringify({
                     method: "unsubscribeTokenTrade",
                     keys: [trade.mint]
                   }));
-                  subscribedTokens.delete(trade.mint);
-                  console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
+                  
             }
 
             if (tradeInfo.trcNum >20 && tradeInfo.price > tradeInfo.startPrice * 1.2) { 
