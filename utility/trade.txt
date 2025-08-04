@@ -1,0 +1,66 @@
+Token: {
+  signature: '53mvJJyotVWsTmUnRiCyhKD3Jdkpg9R3Q2kwCioXDPuNmqcyw2eiuZNRbb4j7CAqdzkFmM68ghF6rz9QpKEBZqxQ',
+  mint: '2bDpfJSmf1sAPsfmpK5L7fUaBTWe2TAptWdo8mpGpump',
+  traderPublicKey: 'AFT5o2QmeUcUKDMX5dUHwDvMTWz58FnYG33Pf6tPpEFY',
+  txType: 'create',
+  initialBuy: 0,
+  solAmount: 0,
+  bondingCurveKey: '6b5kcxGuUnEdKVp1rXV3pTSY74J4HCPrM2wNLvnqf3nD',
+  vTokensInBondingCurve: 1073000000,
+  vSolInBondingCurve: 30,
+  marketCapSol: 27.958993476234856,
+  name: 'SolVault Coin',
+  symbol: 'SVC',
+  uri: 'https://ipfs.io/ipfs/bafkreib6q6urvdwbdkboohi3qj53ykhs77xb6elhwwx75fxv7tbifvx4du',
+  pool: 'pump',
+  solInPool: 30,
+  tokensInPool: 1073000000
+}
+-----------------------------------------------
+🚀 Nuovo token: SolVault Coin (SVC)
+🧠 Mint: 2bDpfJSmf1sAPsfmpK5L7fUaBTWe2TAptWdo8mpGpump
+📈 MarketCap (SOL): 27.958993476234856
+📈 MarketCap (USD): 4710.25
+💰 Price: 0.0000000280
+💧 Liquidity in pool: 30 SOL
+💧 Tot Tokens:1073000000
+👤 Creatore: AFT5o2QmeUcUKDMX5dUHwDvMTWz58FnYG33Pf6tPpEFY
+📦 URI: https://ipfs.io/ipfs/bafkreib6q6urvdwbdkboohi3qj53ykhs77xb6elhwwx75fxv7tbifvx4du
+🌊 Pool: pump
+⏱️ Controlla se qualcuno vende troppo presto
+🔔 Sottoscrizione ai trade del token 2bDpfJSmf1sAPsfmpK5L7fUaBTWe2TAptWdo8mpGpump
+
+
+🔎 Rischio per 73jhGV2ihb7pCjWU6VQdq8Rjs3qFb4PybBXWRVZapump: danger (Score: 1990) Low amount of liquidity in the token pool
+Token: {
+  signature: '2JxnxZSY1aYeUdLBfPMmCuQjnRJgEZnSH2QA4VCFQskujci4rKk72xtKwM1z6EtqX7ppepaQGBHveK3o9LKhFobi',
+  mint: '73jhGV2ihb7pCjWU6VQdq8Rjs3qFb4PybBXWRVZapump',
+  traderPublicKey: '3Qo96sBk5ghcCW8EkkFePXVtNmYHNyjJVTCiHe9J2V47',
+  txType: 'create',
+  initialBuy: 177033.491052,
+  solAmount: 0.004950495,
+  bondingCurveKey: '2ugBHqddDT9oMQoyNn24hW3EETcqyan5WLUZcnDUuDE8',
+  vTokensInBondingCurve: 1072822966.508948,
+  vSolInBondingCurve: 30.004950494999974,
+  marketCapSol: 27.96822162806459,
+  name: 'bitcoin blue',
+  symbol: 'BTCBLUE',
+  uri: 'https://ipfs.io/ipfs/bafkreif7bq7e4vkqnmtcz67kjyyaydgtxhstyq3ktxbeag6xxwhbcwnrdi',
+  pool: 'pump',
+  solInPool: 30.004950494999974,
+  tokensInPool: 1072822966.508948
+}
+-----------------------------------------------
+🚀 Nuovo token: bitcoin blue (BTCBLUE)
+🧠 Mint: 73jhGV2ihb7pCjWU6VQdq8Rjs3qFb4PybBXWRVZapump
+📈 MarketCap (SOL): 27.96822162806459
+📈 MarketCap (USD): 4711.81
+💰 Price: 0.0000000280
+💧 Liquidity in pool: 30.004950494999974 SOL
+💧 Tot Tokens:1073000000
+👤 Creatore: 3Qo96sBk5ghcCW8EkkFePXVtNmYHNyjJVTCiHe9J2V47
+📦 URI: https://ipfs.io/ipfs/bafkreif7bq7e4vkqnmtcz67kjyyaydgtxhstyq3ktxbeag6xxwhbcwnrdi
+🌊 Pool: pump
+⏱️ Controlla se qualcuno vende troppo presto
+🔔 Sottoscrizione ai trade del token 73jhGV2ihb7pCjWU6VQdq8Rjs3qFb4PybBXWRVZapump
+-----------------------------------------------
