@@ -6,6 +6,7 @@ import axios from "axios";
  * @returns {Promise<object|null>} - Oggetto con valutazione o null se errore
  */
 export async function checkRugRisk(mint) {
+    const start = performance.now();
   const url = `https://api.rugcheck.xyz/v1/tokens/${mint}/report/summary`;
 
   try {
@@ -17,16 +18,31 @@ export async function checkRugRisk(mint) {
 
     const data = res.data;
     console.log(`RugCheck API risposta per ${mint}:`, data);
-
-    return {
-      riskLevel: data.rugpull_score?.risk_level || "unknown",
-      score: data.rugpull_score?.score || null,
-      scoreColor: data.rugpull_score?.score_color || "#999",
-      supplyLocked: data.token_distribution?.supply_locked,
-      ownerBalance: data.token_distribution?.owner_balance,
-    };
+    const end = performance.now();
+    if (!data || !data.risks) {
+      console.warn(`⚠️ Nessun punteggio rugpull trovato per ${mint}`);
+      return null;
+    }
+    console.log(`⏱️ Tempo di esecuzione: ${(end - start).toFixed(2)} ms`);
+    return data
   } catch (error) {
     console.warn(`⚠️ RugCheck API errore per ${mint}:`, error.response?.data || error.message);
     return null;
   }
 }
+/*RugCheck API risposta per DKeKj1mnYyCs8LcgGnnWhVgDUreetWna2PpNyKxAQuui: {
+  tokenProgram: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
+  tokenType: '',
+  risks: [
+    {
+      name: 'Creator history of rugged tokens',
+      value: '',
+      description: 'Creator has a history of rugging tokens.',
+      score: 120000,
+      level: 'danger'
+    }
+  ],
+  score: 120001,
+  score_normalised: 80,
+  lpLockedPct: 100
+} */

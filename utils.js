@@ -90,6 +90,7 @@ try {
     }
 
     // 7. ✅ Controllo sicurezza rugPull (api rugpull.xyz)
+if(safeProblem.length === 0) {
     const info = await checkRugRisk(token.mint);
     if (info) {
       console.log(`🔎 Rischio per ${token.mint}:`, info.risks[0]?.level, `(Score: ${info.risks[0]?.score})` , info.risks[0]?.description);
@@ -97,6 +98,7 @@ try {
         console.log("⛔ Token rischioso: rugpull possibile.");
       }
     }
+}
     /*
     {
   "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
