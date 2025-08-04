@@ -17,9 +17,9 @@ export async function checkRugRisk(mint) {
     });
 
     const data = res.data;
-    console.log(`RugCheck API risposta per ${mint}:`, data);
+    //console.log(`RugCheck API risposta per ${mint}:`, data);
     const end = performance.now();
-    if (!data || !data.risks) {
+    if (data.risks.length === 0) {
       console.warn(`⚠️ Nessun punteggio rugpull trovato per ${mint}`);
       return null;
     }

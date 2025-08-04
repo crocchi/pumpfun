@@ -94,8 +94,10 @@ if(safeProblem.length === 0) {
     const info = await checkRugRisk(token.mint);
     if (info) {
       console.log(`🔎 Rischio per ${token.mint}:`, info.risks[0]?.level, `(Score: ${info.risks[0]?.score})` , info.risks[0]?.description);
-      if (info.riskLevel === "high") {
+      if (info.risks[0]?.score > 8000) {
         console.log("⛔ Token rischioso: rugpull possibile.");
+        safeProblem.push(`⛔ Token rischioso: rugpull possibile.`);
+
       }
     }
 }

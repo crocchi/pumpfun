@@ -39,7 +39,7 @@ const server = http.createServer(async (req, res) => {
                 <tr>
                     <th>Symbol</th>
                     <th>Nome</th>
-                    <th>StartPrice</th>
+                    <th>Start Price</th>
                     <th>Prezzo</th>
                     <th>MarketCap SOl</th>
                     <th>MarketCap Usd</th>
