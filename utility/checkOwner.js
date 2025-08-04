@@ -16,6 +16,7 @@ const BURN_ADDRESSES = [
  */
 export async function checkTokenDistribution(mintAddress) {
     console.log("Controllo distribuzione per:", mintAddress);
+
   const mintPubkey = new PublicKey(mintAddress);
 
   // Prendi informazioni sul token

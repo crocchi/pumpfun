@@ -57,7 +57,7 @@ export async function isSafeToken(token) {
 
 // Verifica creator / owner balance
 cont++
-if(cont < 5){
+if(cont < 0){
 try {
     const dist = await checkTokenDistribution(token.mint);
 
@@ -76,6 +76,7 @@ try {
     //reasons.push("❌ Errore nella verifica della distribuzione token");
   }
 }
+
     // 6. ✅ Controllo metadati (opzionale)
     
     if (token.uri) {
@@ -91,7 +92,7 @@ try {
     // 7. ✅ Controllo sicurezza rugPull (api rugpull.xyz)
     const info = await checkRugRisk(token.mint);
     if (info) {
-      console.log(`🔎 Rischio per ${mint}:`, info.riskLevel, `(Score: ${info.score})`);
+      console.log(`🔎 Rischio per ${token.mint}:`, info.riskLevel, `(Score: ${info.score})`);
       if (info.riskLevel === "high") {
         console.log("⛔ Token rischioso: rugpull possibile.");
       }
@@ -105,6 +106,7 @@ try {
     return false;
   }
 }
+
 
 async function fetchMetadata(uri) {
   try {
