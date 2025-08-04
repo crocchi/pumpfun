@@ -16,6 +16,7 @@ export async function checkRugRisk(mint) {
     });
 
     const data = res.data;
+    console.log(`RugCheck API risposta per ${mint}:`, data);
 
     return {
       riskLevel: data.rugpull_score?.risk_level || "unknown",

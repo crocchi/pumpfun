@@ -92,11 +92,28 @@ try {
     // 7. ✅ Controllo sicurezza rugPull (api rugpull.xyz)
     const info = await checkRugRisk(token.mint);
     if (info) {
-      console.log(`🔎 Rischio per ${token.mint}:`, info.riskLevel, `(Score: ${info.score})`);
+      console.log(`🔎 Rischio per ${token.mint}:`, info.risks[0].level, `(Score: ${info.risks[0].score})` , info.risks[0].description);
       if (info.riskLevel === "high") {
         console.log("⛔ Token rischioso: rugpull possibile.");
       }
     }
+    /*
+    {
+  "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+  "tokenType": "",
+  "risks": [
+    {
+      "name": "Low Liquidity",
+      "value": "$0.41",
+      "description": "Low amount of liquidity in the token pool",
+      "score": 1990,
+      "level": "danger"
+    }
+  ],
+  "score": 1991,
+  "score_normalised": 29,
+  "lpLockedPct": 0
+} */
 
 
     // ✅ Tutto ok!
@@ -152,12 +169,15 @@ export async function checkMissingSocials(uri) {
     
 
       //creato su Pump.Fun
-      if (typeof extensions.createdOn === 'string' && extensions.createdOn.includes('pump.fun')) {
+      if (typeof extensions.createdOn === 'string' && extensions.createdOn.includes('raydium.launchlab')) {
         //safeProblem.push("✅ Creato su Pump.Fun"); createdOn: 'https://raydium.io/',
-      }//createdOn: 'https://bonk.fun',createdOn: 'https://letsbonk.fun',
+        console.log("✅ Creato su Raydium LaunchLab");
+        safeProblem=[];
+        return true; // Creato su Raydium LaunchLab
+      }//createdOn: 'https://bonk.fun',createdOn: 'https://letsbonk.fun',  createdOn: 'raydium.launchlab',
 
   //controllo descrizione
-  const hasDescription = typeof extensions.description === 'string' && extensions.description.length > 20;
+  const hasDescription = typeof extensions.description === 'string' && extensions.description.length > 14;
   if (hasDescription && extensions.description.length > 200) {
     safeProblem=[];
     return true; // Descrizione lunga, potrebbe essere interessante... testiamo..
