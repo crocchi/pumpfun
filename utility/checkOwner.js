@@ -1,7 +1,8 @@
 import { Connection, PublicKey } from '@solana/web3.js';
+import { RPC_URL_SOLANA } from './config.js';
 
-const RPC_URL = 'https://api.mainnet-beta.solana.com';
-const connection = new Connection(RPC_URL, 'confirmed');
+
+const connection = new Connection(RPC_URL_SOLANA, 'confirmed');
 
 // Indirizzi considerati "burn" (puoi estenderli)
 const BURN_ADDRESSES = [
@@ -22,6 +23,7 @@ export async function checkTokenDistribution(mintAddress) {
   const mintInfo = await connection.getParsedAccountInfo(mintPubkey);
   const mintData = mintInfo.value?.data?.parsed?.info;
 console.log("Mint Data:", mintData);
+console.log("Mint Data:", mintInfo);
   if (!mintData) {
     throw new Error(`Impossibile leggere i metadati del mint ${mintAddress}`);
   }

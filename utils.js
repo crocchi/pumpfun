@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { checkRugRisk } from './utility/rugCheck.js';
 let safeProblem = [];
 
 import { checkTokenDistribution } from './utility/checkOwner.js';
@@ -56,7 +57,7 @@ export async function isSafeToken(token) {
 
 // Verifica creator / owner balance
 cont++
-if(cont < 10){
+if(cont < 5){
 try {
     const dist = await checkTokenDistribution(token.mint);
 
@@ -86,6 +87,16 @@ try {
         return false;
       }*/
     }
+
+    // 7. ✅ Controllo sicurezza rugPull (api rugpull.xyz)
+    const info = await checkRugRisk(token.mint);
+    if (info) {
+      console.log(`🔎 Rischio per ${mint}:`, info.riskLevel, `(Score: ${info.score})`);
+      if (info.riskLevel === "high") {
+        console.log("⛔ Token rischioso: rugpull possibile.");
+      }
+    }
+
 
     // ✅ Tutto ok!
     return safeProblem
