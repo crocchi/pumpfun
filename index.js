@@ -70,7 +70,10 @@ ws.on('message', async function message(data) {
           } else {
             prezzo = null; // o "0.0000000000", o un valore di fallback
           }
+
+
         const safer = await isSafeToken(parsed);
+        
         // console.log(safer);
        const safe = safer.length === 0;  
        if (!safe) {
