@@ -75,8 +75,7 @@ ws.on('message', async function message(data) {
        const safe = safer.length === 0;  
        if (!safe) {
 
-           console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.`);
-           console.log(safer);
+           console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
            return
          }
 
@@ -148,17 +147,18 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
 
         const trade = parsed;
-        let tradeInfo;
+
         if (trade && trade.mint && trade.solInPool && trade.tokensInPool) {
           const prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
          // const price = formatPrezzoTokenNoSci(prezzo);
           const marketCapUsd = (trade.marketCapSol * 175).toFixed(2);
           //updateToken(trade.mint, price, trade.marketCapSol, marketCapUsd);
+          let trxNumm= trade.trxNum++;
          updateToken(trade.mint, {
             marketCapSol: trade.marketCapSol,
             price: prezzo,
             marketCapUsd: marketCapUsd,
-            trxNum: trade.trxNum+1 ,
+            trxNum: trxNumm ,
           }).then(tradeInfo => {
             if (tradeInfo.price > tradeInfo.startPrice * 3.5) { 
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
@@ -171,7 +171,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
                   
             }
 
-            if (tradeInfo.trcNum >20 && tradeInfo.price > tradeInfo.startPrice * 1.2) { 
+            if (tradeInfo.trxNum >10 && tradeInfo.price > tradeInfo.startPrice * 1.2) { 
 
                 console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 ws.send(JSON.stringify({
