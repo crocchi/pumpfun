@@ -46,6 +46,7 @@ const server = http.createServer(async (req, res) => {
                     <th>Variazione %</th>
                     <th>Sicuro</th>
                     <th>Contract</th>
+                    <th>trx</th>
                     <th>Time</th>
                 </tr>
             </thead>
@@ -90,6 +91,7 @@ const server = http.createServer(async (req, res) => {
                     <td class="\${colorClass}">\${safe}</td>
 
                      <td>\${t.mint}</td>
+                     <td>\${t.trxNum}</td>
                     <td>\${time}</td>
                     \`;
 

@@ -144,7 +144,16 @@ export async function checkMissingSocials(uri) {
     try {
       const response = await fetch(uri);
       const metadata = await response.json();
-      console.log("Controllo metadati per:", metadata);
+    console.log("Controllo metadati per:", JSON.stringify(metadata));
+    /**Controllo metadati per: {
+  name: "4chan's Worthless Coin",
+  symbol: 'Worthless',
+  description: 'https://x.com/MostChadDev/status/1952546537697100265',
+  createdOn: 'https://bonk.fun',
+  image: 'https://ipfs.io/ipfs/bafkreicp2a7b3sozfg4c2morqy73dbpixvv2nv2wwmjvgvrx4oede6642i',
+  website: 'https://warosu.org/biz/?task=search2&ghost=false&search_text=worthless+coin&search_subject=&search_username=&search_tripcode=&search_email=&search_filename=&search_datefrom=&search_dateto=&search_media_hash=&search_op=all&search_del=dontcare&search_int=dontcare&search_ord=old&search_capcode=all&search_res=post',
+  twitter: 'https://x.com/MostChadDev/status/1952546537697100265'
+} */
 
       // 🔍 Alcuni token usano direttamente i social nel metadata (senza extensions)
     const extensions = metadata?.extensions || metadata || {};
