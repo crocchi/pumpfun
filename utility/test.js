@@ -51,11 +51,13 @@ wshelius.on('open', () => {
 
 wshelius.on('message', async (data) => {
   const message = JSON.parse(data);
-console.log('Messaggio ricevuto:', message);
+
 
   if (message.method === "logsNotification") {
     const logs = message.params.result.value.logs;
     const signature = message.params.result.value.signature;
+    console.log('Messaggio ricevuto value:', message.params.result.value);
+    console.log('Messaggio ricevuto context:', message.params.result.context);
 
     const isCreate = logs.some(log => log.toLowerCase().includes('create'));
 
