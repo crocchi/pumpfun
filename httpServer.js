@@ -150,7 +150,7 @@ const server = http.createServer(async (req, res) => {
 }
 
 
-export async function updateToken(mint, updates) {
+export async function updateToken(mint, updates,type) {
     const token = tokenLog.find(t => t.mint === mint);
     //console.log("Aggiornamento token:", mint, updates);
     if (token) {
@@ -162,6 +162,11 @@ export async function updateToken(mint, updates) {
     // Puoi anche aggiungere qui altre logiche simili se vuoi tracciare anche il prezzo precedente
     if (updates.price !== undefined) {
         token.oldPrice = token.price ?? updates.price;
+      }
+
+         // incrementa il numero di transazioni 
+    if (type === 'buy' || type === 'sell') {
+        token.trxNum = (token.trxNum || 0) + 1;
       }
 
       Object.assign(token, updates);

@@ -1,5 +1,7 @@
 //import { Connection } from '@solana/web3.js';
+
 import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
+const WebSocket = require('ws');
 
 // Initialize connection to Helius RPC
 /*
@@ -22,59 +24,54 @@ const testConnection = async () => {
 testConnection();
 */
 
-const WebSocket = require('ws');
 
-const ws = new WebSocket(RPC_WS_HELIUS);
+const PUMP_FUN_PROGRAM_ID = 'Fgde3bKtZ8NzjSNLmmSNkSp9mQTXhfj91Wg1ksfK9xrB';
+const LETSBONK_PROGRAM_ID = 'FfYek5vEz23cMkWsdJwG2oa6EphsvXSHrGpdALN4g6W1'
 
-ws.on('open', () => {
-  console.log('Connected to Helius');
-  
-  // Subscribe to account changes
-  /*
-  ws.send(JSON.stringify({
+export const wshelius = new WebSocket(RPC_WS_HELIUS);
+
+wshelius.on('open', () => {
+  console.log('✅ Connesso a Helius WebSocket');
+
+  // Sottoscrizione ai log del programma di Pump.fun
+  wshelius.send(JSON.stringify({
     jsonrpc: "2.0",
     id: 1,
-    method: "accountSubscribe",
+    method: "logsSubscribe",
     params: [
-      "9PejEmViKHgUkVFWN57cNEZnFS4Qo6SzsLj5UPAXfDTF", // Replace with your account
-      { encoding: "jsonParsed", commitment: "confirmed" }
+      {
+        mentions: [PUMP_FUN_PROGRAM_ID]
+      },
+      {
+        commitment: "confirmed"
+      }
     ]
   }));
-*/
-
- // Ascolta tutte le istruzioni del programma pump.fun (cambia se vuoi Orca ecc.)
- ws.send(JSON.stringify({
-  jsonrpc: "2.0",
-  id: 1,
-  method: "logsSubscribe",
-  params: [
-    {
-      mentions: ["Fgde3bKtZ8NzjSNLmmSNkSp9mQTXhfj91Wg1ksfK9xrB"] // Program ID di pump.fun
-    },
-    {
-      commitment: "confirmed"
-    }
-  ]
-}));
-
 });
 
-ws.on('message', (data) => {
+wshelius.on('message', async (data) => {
   const message = JSON.parse(data);
-
-  if (message.method === 'accountNotification') {
-    console.log('Account updated:', message.params.result.value);
-  }
 
   if (message.method === "logsNotification") {
     const logs = message.params.result.value.logs;
-
     const signature = message.params.result.value.signature;
-    console.log(`🧠 TX: ${signature}`);
-    
-    if (logs.some(log => log.includes("create") || log.includes("transfer") || log.includes("sell") || log.includes("buy"))) {
-      console.log("📥 Log sospetto di mint/buy/sell:");
-      logs.forEach(log => console.log("  ", log));
+
+    const isCreate = logs.some(log => log.toLowerCase().includes('create'));
+
+    if (isCreate) {
+      console.log(`🆕 Nuovo token creato su Pump.fun`);
+      console.log(`🔗 TX: https://solscan.io/tx/${signature}`);
+
+      // (opzionale) Puoi ora chiamare l'RPC Helius per recuperare i dettagli della transazione
+      // e determinare l'indirizzo del mint e del creatore.
     }
   }
+});
+
+wshelius.on('error', (err) => {
+  console.error('❌ Errore WebSocket:', err.message);
+});
+
+wshelius.on('close', () => {
+  console.log('🔌 Connessione WebSocket chiusa');
 });

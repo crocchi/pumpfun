@@ -4,6 +4,7 @@ import { monitorEarlyTrades } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD } from './config.js';
+import { wshelius } from './utility/test.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
@@ -73,7 +74,7 @@ ws.on('message', async function message(data) {
 
 
         const safer = await isSafeToken(parsed);
-        
+
         // console.log(safer);
        const safe = safer.length === 0;  
        if (!safe) {
@@ -150,19 +151,19 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
 
         const trade = parsed;
-
+        console.log('trade:',trade);
         if (trade && trade.mint && trade.solInPool && trade.tokensInPool) {
           const prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
          // const price = formatPrezzoTokenNoSci(prezzo);
           const marketCapUsd = (trade.marketCapSol * 175).toFixed(2);
           //updateToken(trade.mint, price, trade.marketCapSol, marketCapUsd);
-          let trxNumm= trade.trxNum++;
+         
          updateToken(trade.mint, {
             marketCapSol: trade.marketCapSol,
             price: prezzo,
             marketCapUsd: marketCapUsd,
-            trxNum: trxNumm ,
-          }).then(tradeInfo => {
+           // trxNum: trxNumm ,
+          },parsed.txType).then(tradeInfo => {
             if (tradeInfo.price > tradeInfo.startPrice * 3.5) { 
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 subscribedTokens.delete(trade.mint);
