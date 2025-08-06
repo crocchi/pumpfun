@@ -1,6 +1,7 @@
 //import { Connection } from '@solana/web3.js';
 
 import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
+import { decodeProgramData , readString } from './decodeSolana.js';
 import WebSocket from 'ws';
 
 // Initialize connection to Helius RPC
@@ -54,12 +55,25 @@ wshelius.on('message', async (data) => {
 
 
   if (message.method === "logsNotification") {
-    const logs = message.params.result.value.logs;
-    const signature = message.params.result.value.signature;
 
+    const { logs, signature } = message.params.result.value;
 
-    const isCreate = logs.some(log => log.includes('Instruction: Create') && log.includes('Instruction: MintTo'));
+    //const isCreate = logs.some(log => log.includes('Instruction: Create'));
 
+    if (logs.some(line => line.includes("Instruction: Create"))) {
+
+      const mintLine = logs.find(line => line.includes("Program data: "));
+      const mint = mintLine?.split("Program data: ")[1];
+      const decoded = decodeProgramData(mint);
+
+      console.log("🆕 Token creato su Pump.fun!");
+      //console.log("🔗 Mint:", mint);
+      console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
+      console.log("📦 Dati del token:", decoded);
+
+      // Qui puoi aggiungere logica per filtri, subscribeTrade, buy/sell, ecc.
+    }
+   /*
     if (isCreate) {
       console.log(`--------------------------`);
       console.log(`🆕 Nuovo token creato su Pump.fun`);
@@ -69,7 +83,7 @@ wshelius.on('message', async (data) => {
     console.log(`--------------------------`);
       // (opzionale) Puoi ora chiamare l'RPC Helius per recuperare i dettagli della transazione
       // e determinare l'indirizzo del mint e del creatore.
-    }
+    }*/
   }
 });
 
@@ -83,6 +97,129 @@ wshelius.on('close', () => {
 
 
 /*
+FRxd4Q8HXV2tSca5hbnUDVkh9BeYGZxaGMYD23mEpump
+ logs: [
+    'Program ComputeBudget111111111111111111111111111111 invoke [1]',
+    'Program ComputeBudget111111111111111111111111111111 success',
+    'Program ComputeBudget111111111111111111111111111111 invoke [1]',
+    'Program ComputeBudget111111111111111111111111111111 success',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P invoke [1]',
+
+    'Program log: Instruction: Create',
+
+    'Program 11111111111111111111111111111111 invoke [2]',
+    'Program 11111111111111111111111111111111 success',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
+
+    'Program log: Instruction: InitializeMint2',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 2780 of 208056 compute units',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+    'Program 11111111111111111111111111111111 invoke [2]',
+    'Program 11111111111111111111111111111111 success',
+    'Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [2]',
+    'Program log: Create',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [3]',
+
+    'Program log: Instruction: GetAccountDataSize',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1595 of 182984 compute units',
+    'Program return: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA pQAAAAAAAAA=',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+    'Program 11111111111111111111111111111111 invoke [3]',
+    'Program 11111111111111111111111111111111 success',
+
+    'Program log: Initialize the associated token account',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [3]',
+
+    'Program log: Instruction: InitializeImmutableOwner',
+    'Program log: Please upgrade to SPL Token 2022 for immutable owner support',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1405 of 176371 compute units',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [3]',
+
+    'Program log: Instruction: InitializeAccount3',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4214 of 172487 compute units',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+    'Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 21990 of 189959 compute units',
+    'Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success',
+    'Program metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s invoke [2]',
+
+    'Program log: IX: Create Metadata Accounts v3',
+    'Program 11111111111111111111111111111111 invoke [3]',
+    'Program 11111111111111111111111111111111 success',
+
+    'Program log: Allocate space for the account',
+    'Program 11111111111111111111111111111111 invoke [3]',
+    'Program 11111111111111111111111111111111 success',
+
+    'Program log: Assign the account to the owning program',
+    'Program 11111111111111111111111111111111 invoke [3]',
+    'Program 11111111111111111111111111111111 success',
+    'Program metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s consumed 36557 of 154843 compute units',
+    'Program metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s success',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
+
+    'Program log: Instruction: MintTo',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4492 of 115668 compute units',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
+
+    'Program log: Instruction: SetAuthority',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 2911 of 108945 compute units',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+    'Program data: G3KpTd7rY3YWAAAAUGlua3kgcHJvbWlzZSBpdCBzZW5kcwUAAABQaW5reVAAAABodHRwczovL2lwZnMuaW8vaXBmcy9iYWZrcmVpZGRiZ3lpdmVyZ29vb200Ym41bWh3NDZieWVuNWpmN3FoM3p4NHhta3VlaWR4bmZ6cTRzedZocrL43v5V1zwkw/jWcjgn/q744/ge2h9rRj170QUfN87HA6TNtnSr6bCx+7fKV8LfU+ASawS4rjvJkAD0IJyolR6tVisW+AxPKuA7CoTanDY9XlTth5djcLuyB9k8lqiVHq1WKxb4DE8q4DsKhNqcNj1eVO2Hl2Nwu7IH2TyWQ06TaAAAAAAAENhH488DAACsI/wGAAAAAHjF+1HRAgAAgMakfo0DAA==',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P invoke [2]',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P consumed 2027 of 99766 compute units',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P success',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P consumed 122557 of 219433 compute units',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P success',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P invoke [1]',
+
+    'Program log: Instruction: ExtendAccount',
+    'Program 11111111111111111111111111111111 invoke [2]',
+    'Program 11111111111111111111111111111111 success',
+    'Program data: YWHXkF2SFnw3zscDpM22dKvpsLH7t8pXwt9T4BJrBLiuO8mQAPQgnKiVHq1WKxb4DE8q4DsKhNqcNj1eVO2Hl2Nwu7IH2TyWUQAAAAAAAACWAAAAAAAAAENOk2gAAAAA',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P invoke [2]',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P consumed 2027 of 87066 compute units',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P success',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P consumed 12029 of 96876 compute units',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P success',
+    'Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]',
+
+    'Program log: CreateIdempotent',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
+    'Program log: Instruction: GetAccountDataSize',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1569 of 76446 compute units',
+    'Program return: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA pQAAAAAAAAA=',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+    'Program 11111111111111111111111111111111 invoke [2]',
+    'Program 11111111111111111111111111111111 success',
+    'Program log: Initialize the associated token account',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
+    'Program log: Instruction: InitializeImmutableOwner',
+    'Program log: Please upgrade to SPL Token 2022 for immutable owner support',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1405 of 69859 compute units',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
+    'Program log: Instruction: InitializeAccount3',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4188 of 65979 compute units',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+    'Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 23339 of 84847 compute units',
+    'Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success',
+    'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P invoke [1]',
+    'Program log: Instruction: Buy',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
+    'Program log: Instruction: Transfer',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4645 of 23511 compute units',
+    'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+    'Program 11111111111111111111111111111111 invoke [2]',
+    'Program 11111111111111111111111111111111 success',
+    ... 10 more items
+  ]
+}
+Messaggio ricevuto context: { slot: 358251629 }
+--------------------------
+
+
 --------------------------
 🆕 Nuovo token creato su Pump.fun
 🔗 TX: https://solscan.io/tx/4fXbZ8G9yxiiHJkUSxqyQbGgEqb2YA7aPsPnPLDF8eZ5XCbnDwA3Asts9qSVnUM3bBVNx4XKHNzEUkgMnyJ4nP3Z
