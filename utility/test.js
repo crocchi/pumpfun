@@ -25,7 +25,7 @@ testConnection();
 */
 
 
-const PUMP_FUN_PROGRAM_ID = 'Fgde3bKtZ8NzjSNLmmSNkSp9mQTXhfj91Wg1ksfK9xrB';
+const PUMP_FUN_PROGRAM_ID = '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';//'Fgde3bKtZ8NzjSNLmmSNkSp9mQTXhfj91Wg1ksfK9xrB';
 const LETSBONK_PROGRAM_ID = 'FfYek5vEz23cMkWsdJwG2oa6EphsvXSHrGpdALN4g6W1'
 
 export const wshelius = new WebSocket(RPC_WS_HELIUS);

@@ -151,7 +151,9 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
 
         const trade = parsed;
+
         console.log('trade:',trade);
+        
         if (trade && trade.mint && trade.solInPool && trade.tokensInPool) {
           const prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
          // const price = formatPrezzoTokenNoSci(prezzo);
@@ -231,5 +233,20 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
   symbol: 'BONKO',
   uri: 'https://ipfs.io/ipfs/bafkreiarm4uhc6puyp53mpb7tplwcdznbpwby6nxd7x6ajb3yuqjbnwutu',
   pool: 'bonk'
+}
+
+trade: {
+  signature: '2FJN336cE5j1FmSztVcw8SfUgJvo6MiiQAjwjknHgotawARa8mML9aabxuHWm81QbhVMe7njCGiZ7NMKQ8L6egiD',
+  mint: '2QUBk6zYvTXESAsZCpzFqDRc6RSih48c2ZP8fzanpump',
+  traderPublicKey: '84fyE6x3cD8wTVbriXTCMRcuEkJjEcBrzqkBWnwxPdg2',
+  txType: 'sell',
+  tokenAmount: 72625,
+  solAmount: 0.0020545,
+  newTokenBalance: 0,
+  bondingCurveKey: 'AQbcTZxAL48NqGnT1TVksMLGXj4ETPqHxVrDKebGg7Zm',
+  vTokensInBondingCurve: 1066756445.497429,
+  vSolInBondingCurve: 30.175585191791168,
+  marketCapSol: 28.287230247500666,
+  pool: 'pump'
 }
 } */
