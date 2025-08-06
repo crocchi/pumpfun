@@ -58,7 +58,7 @@ wshelius.on('message', async (data) => {
     const signature = message.params.result.value.signature;
 
 
-    const isCreate = logs.some(log => log.toLowerCase().includes('Pump: Create'));
+    const isCreate = logs.some(log => log.toLowerCase().includes('Instruction: Create'));
 
     if (isCreate) {
       console.log(`--------------------------`);
