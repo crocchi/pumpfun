@@ -56,15 +56,17 @@ wshelius.on('message', async (data) => {
   if (message.method === "logsNotification") {
     const logs = message.params.result.value.logs;
     const signature = message.params.result.value.signature;
-    console.log('Messaggio ricevuto value:', message.params.result.value);
-    console.log('Messaggio ricevuto context:', message.params.result.context);
+
 
     const isCreate = logs.some(log => log.toLowerCase().includes('create'));
 
     if (isCreate) {
+      console.log(`--------------------------`);
       console.log(`🆕 Nuovo token creato su Pump.fun`);
       console.log(`🔗 TX: https://solscan.io/tx/${signature}`);
-
+    console.log('Messaggio ricevuto value:', message.params.result.value);
+    console.log('Messaggio ricevuto context:', message.params.result.context);
+    console.log(`--------------------------`);
       // (opzionale) Puoi ora chiamare l'RPC Helius per recuperare i dettagli della transazione
       // e determinare l'indirizzo del mint e del creatore.
     }
