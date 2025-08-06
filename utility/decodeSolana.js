@@ -20,43 +20,43 @@ export function readString(buffer, offset) {
   }
 
 export function decodeProgramData(base64) {
-  const buffer = Buffer.from(base64, 'base64');
-  let offset = 0;
-
-  // Skip 8 bytes header/discriminator
-  offset += 8;
-
-  // Read name
-  const nameRes = readString(buffer, offset);
-  const name = nameRes.value;
-  offset += nameRes.bytesRead;
-
-  // Read symbol
-  const symbolRes = readString(buffer, offset);
-  const symbol = symbolRes.value;
-  offset += symbolRes.bytesRead;
-
-  // Read URI
-  const uriRes = readString(buffer, offset);
-  const uri = uriRes.value;
-  offset += uriRes.bytesRead;
-
-  // Read creator (32 bytes pubkey)
-  const creator = bs58.encode(buffer.slice(offset, offset + 32));
-  offset += 32;
-
-  // Read bonding curve (next 32 bytes)
-  const bondingCurve = bs58.encode(buffer.slice(offset, offset + 32));
-  offset += 32;
-
-  return {
-    name,
-    symbol,
-    uri,
-    creator,
-    bondingCurve
-  };
-}
+    const buffer = Buffer.from(base64, 'base64');
+    let offset = 0;
+  
+    // Skip 8 bytes header/discriminator
+    offset += 8;
+  
+    // Read name
+    const nameRes = readString(buffer, offset);
+    const name = nameRes.string;
+    offset = nameRes.offset;
+  
+    // Read symbol
+    const symbolRes = readString(buffer, offset);
+    const symbol = symbolRes.string;
+    offset = symbolRes.offset;
+  
+    // Read URI
+    const uriRes = readString(buffer, offset);
+    const uri = uriRes.string;
+    offset = uriRes.offset;
+  
+    // Read creator (32 bytes pubkey)
+    const creator = bs58.encode(buffer.slice(offset, offset + 32));
+    offset += 32;
+  
+    // Read bonding curve (next 32 bytes)
+    const bondingCurve = bs58.encode(buffer.slice(offset, offset + 32));
+    offset += 32;
+  
+    return {
+      name,
+      symbol,
+      uri,
+      creator,
+      bondingCurve
+    };
+  }
 
 //const decoded = decodeProgramData(base64String);
 //console.log('📦 Decoded Program Data:', decoded);
