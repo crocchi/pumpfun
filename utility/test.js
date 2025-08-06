@@ -64,12 +64,19 @@ wshelius.on('message', async (data) => {
 
       const mintLine = logs.find(line => line.includes("Program data: "));
       const mint = mintLine?.split("Program data: ")[1];
-      const decoded = decodeProgramData(mint);
-
+      let decoded;
+     
+      console.log("------------------------------");
       console.log("🆕 Token creato su Pump.fun!");
       //console.log("🔗 Mint:", mint);
       console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
-      console.log("📦 Dati del token:", decoded);
+      try {
+        decoded = decodeProgramData(mint);
+        console.log("📦 Dati del token:", decoded);
+      } catch (err) {
+        console.error('❌ Failed to decode:', err.message);
+      }
+      console.log("------------------------------");
 
       // Qui puoi aggiungere logica per filtri, subscribeTrade, buy/sell, ecc.
     }
