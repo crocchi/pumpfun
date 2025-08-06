@@ -3,6 +3,7 @@
 import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
 import { decodeProgramData , readString } from './decodeSolana.js';
 import WebSocket from 'ws';
+const attivo = false; // Abilita/disabilita la connessione a Helius
 
 // Initialize connection to Helius RPC
 /*
@@ -30,6 +31,7 @@ const PUMP_FUN_PROGRAM_ID = '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';//'Fgd
 const LETSBONK_PROGRAM_ID = 'FfYek5vEz23cMkWsdJwG2oa6EphsvXSHrGpdALN4g6W1'
 
 export const wshelius = new WebSocket(RPC_WS_HELIUS);
+if(attivo){
 
 wshelius.on('open', () => {
   console.log('✅ Connesso a Helius WebSocket');
@@ -102,7 +104,7 @@ wshelius.on('close', () => {
   console.log('🔌 Connessione WebSocket chiusa');
 });
 
-
+}
 /*
 FRxd4Q8HXV2tSca5hbnUDVkh9BeYGZxaGMYD23mEpump
  logs: [
