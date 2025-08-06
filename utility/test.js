@@ -1,7 +1,7 @@
 //import { Connection } from '@solana/web3.js';
 
 import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
-const WebSocket = require('ws');
+import WebSocket from 'ws';
 
 // Initialize connection to Helius RPC
 /*
