@@ -51,6 +51,7 @@ wshelius.on('open', () => {
 
 wshelius.on('message', async (data) => {
   const message = JSON.parse(data);
+console.log('Messaggio ricevuto:', message);
 
   if (message.method === "logsNotification") {
     const logs = message.params.result.value.logs;
