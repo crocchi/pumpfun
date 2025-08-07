@@ -66,14 +66,14 @@ wshelius.on('message', async (data) => {
   if (message.method === "logsNotification") {
 
     const { logs, signature } = message.params.result.value;
-
+    let decoded;
     //const isCreate = logs.some(log => log.includes('Instruction: Create'));
 
     if (logs.some(line => line.includes("Instruction: Create"))) {
 
       const programData = logs.find(line => line.includes("Program data: "));
       const dataP = programData?.split("Program data: ")[1];
-      let decoded;
+      
      
       console.log("------------------------------");
       console.log("🆕 Token creato su Pump.fun!");
