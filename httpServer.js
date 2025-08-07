@@ -41,6 +41,7 @@ const server = http.createServer(async (req, res) => {
                     <th>Nome</th>
                     <th>Start Price</th>
                     <th>Prezzo</th>
+                    <th>GAIN</th>
                     <th>MarketCap SOl</th>
                     <th>MarketCap Usd</th>
                     <th>Variazione %</th>
@@ -74,6 +75,7 @@ const server = http.createServer(async (req, res) => {
     const time = new Date(t.timestamp).toLocaleTimeString();
     const safe = t.safe ? 'YES' : 'NO'; //t.safe.includes('✅');
     const colorClass = safe ? 'good' : 'bad';
+    const gain = calcolaGuadagno(t.startPrice, price);
     const contractAddress = t.mint || 'N/A';
                     const row = document.createElement('tr');
                     
@@ -83,6 +85,7 @@ const server = http.createServer(async (req, res) => {
                     <td>\${t.name}</td>
                     <td>\${t.startPrice}</td>
                     <td>\${price}</td>
+                    <td>\${gain.toFixed(2)}%</td>
                     <td>\${t.marketCapSol}</td>
                      
                     <td>$\${t.marketCapUsd}</td>
@@ -114,6 +117,12 @@ const server = http.createServer(async (req, res) => {
                 if (!oldValue || oldValue === 0) return 0;
                  return ((newValue - oldValue) / oldValue) * 100;
             }
+                 function calcolaGuadagno(prezzoIniziale, prezzoFinale) {
+                     const percentuale = ((prezzoFinale - prezzoIniziale) / prezzoIniziale) * 100;
+                return percentuale;
+                    }
+
+
 
             setInterval(load, 2000);
             load();
