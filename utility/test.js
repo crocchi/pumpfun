@@ -59,6 +59,7 @@ wshelius.on('open', () => {
 
 });
 let i=0;
+
 wshelius.on('message', async (data) => {
   const message = JSON.parse(data);
 
@@ -67,14 +68,10 @@ wshelius.on('message', async (data) => {
 
     const { logs, signature } = message.params.result.value;
     let decoded;
-    //const isCreate = logs.some(log => log.includes('Instruction: Create'));
 
-    if (logs.some(line => line.includes("Instruction: Create"))) {
-
+    if ( logs.some(line => line.includes("Instruction: InitializeMint2")) && logs.some(line => line.includes("Instruction: Create"))){
       const programData = logs.find(line => line.includes("Program data: "));
       const dataP = programData?.split("Program data: ")[1];
-      
-     
       console.log("------------------------------");
       console.log("🆕 Token creato su Pump.fun!");
       //console.log("🔗 Mint:", mint);
@@ -86,6 +83,12 @@ wshelius.on('message', async (data) => {
         console.error('❌ Failed to decode:', err.message);
       }
       console.log("------------------------------");
+    } 
+     
+      if ( logs.some(line => line.includes("Instruction: Initialize")) && logs.some(line => line.includes("Instruction: InitializeMint2"))){
+        console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun ");
+        console.log(logs)
+      }
 
       // Qui puoi aggiungere logica per filtri, subscribeTrade, buy/sell, ecc.
     }
@@ -106,7 +109,6 @@ wshelius.on('message', async (data) => {
       // (opzionale) Puoi ora chiamare l'RPC Helius per recuperare i dettagli della transazione
       // e determinare l'indirizzo del mint e del creatore.
     }*/
-  }
 });
 
 wshelius.on('error', (err) => {
