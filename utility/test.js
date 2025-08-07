@@ -3,7 +3,7 @@
 import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
 import { decodeProgramData , readString } from './decodeSolana.js';
 import WebSocket from 'ws';
-const attivo = true; // Abilita/disabilita la connessione a Helius
+const attivo = false; // Abilita/disabilita la connessione a Helius
 
 // Initialize connection to Helius RPC
 /*
