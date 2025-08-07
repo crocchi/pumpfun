@@ -27,8 +27,14 @@ testConnection();
 */
 
 
-const PUMP_FUN_PROGRAM_ID = '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';//'Fgde3bKtZ8NzjSNLmmSNkSp9mQTXhfj91Wg1ksfK9xrB';
+const PUMP_FUN_PROGRAM_ID = '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';
 const LETSBONK_PROGRAM_ID = 'FfYek5vEz23cMkWsdJwG2oa6EphsvXSHrGpdALN4g6W1'
+// Lista dei Program ID da monitorare
+const PROGRAM_IDS = [
+  '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P', // pump.fun
+  'LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj',   // Raydium Launchpad (letsbonk.fun)
+  //'11111111111111111111111111111111'              // System Program (esempio)
+];
 
 export const wshelius = new WebSocket(RPC_WS_HELIUS);
 if(attivo){
@@ -36,20 +42,21 @@ if(attivo){
 wshelius.on('open', () => {
   console.log('✅ Connesso a Helius WebSocket');
 
-  // Sottoscrizione ai log del programma di Pump.fun
-  wshelius.send(JSON.stringify({
-    jsonrpc: "2.0",
-    id: 1,
-    method: "logsSubscribe",
-    params: [
-      {
-        mentions: [PUMP_FUN_PROGRAM_ID]
-      },
-      {
-        commitment: "confirmed"
-      }
-    ]
-  }));
+  // Invia una subscription per ogni programma
+  PROGRAM_IDS.forEach((programId, i) => {
+    const msg = {
+      jsonrpc: '2.0',
+      id: i + 1,
+      method: 'logsSubscribe',
+      params: [
+        { mentions: [programId] },
+        { commitment: 'confirmed' }
+      ]
+    };
+    wshelius.send(JSON.stringify(msg));
+  });
+
+
 });
 
 wshelius.on('message', async (data) => {
@@ -64,8 +71,8 @@ wshelius.on('message', async (data) => {
 
     if (logs.some(line => line.includes("Instruction: Create"))) {
 
-      const mintLine = logs.find(line => line.includes("Program data: "));
-      const mint = mintLine?.split("Program data: ")[1];
+      const programData = logs.find(line => line.includes("Program data: "));
+      const dataP = programData?.split("Program data: ")[1];
       let decoded;
      
       console.log("------------------------------");
@@ -73,7 +80,7 @@ wshelius.on('message', async (data) => {
       //console.log("🔗 Mint:", mint);
       console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
       try {
-        decoded = decodeProgramData(mint);
+        decoded = decodeProgramData(dataP);
         console.log("📦 Dati del token:", decoded);
       } catch (err) {
         console.error('❌ Failed to decode:', err.message);
@@ -81,6 +88,10 @@ wshelius.on('message', async (data) => {
       console.log("------------------------------");
 
       // Qui puoi aggiungere logica per filtri, subscribeTrade, buy/sell, ecc.
+    }
+
+    if (logs.some(log => log.includes('Instruction: Buy'))) {
+      console.log('🟢 BUY rilevato!'+decoded.name);
     }
    /*
     if (isCreate) {
