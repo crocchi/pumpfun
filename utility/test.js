@@ -58,7 +58,7 @@ wshelius.on('open', () => {
 
 
 });
-
+let i=0;
 wshelius.on('message', async (data) => {
   const message = JSON.parse(data);
 
@@ -90,8 +90,10 @@ wshelius.on('message', async (data) => {
       // Qui puoi aggiungere logica per filtri, subscribeTrade, buy/sell, ecc.
     }
 
-    if (logs.some(log => log.includes('Instruction: Buy'))) {
+    if (logs.some(log => log.includes('Instruction: Buy')) && i<5) {
+      console.log(logs)
       console.log('🟢 BUY rilevato!');
+      i++
     }
    /*
     if (isCreate) {
