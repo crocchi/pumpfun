@@ -43,7 +43,7 @@ wshelius.on('open', () => {
     method: "logsSubscribe",
     params: [
       {
-        mentions: [PUMP_FUN_PROGRAM_ID,LETSBONK_PROGRAM_ID]
+        mentions: [PUMP_FUN_PROGRAM_ID]
       },
       {
         commitment: "confirmed"
