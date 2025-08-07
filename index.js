@@ -125,10 +125,14 @@ ws.on('message', async function message(data) {
            // 👉 Sottoscrizione ai trade del token appena creato
       if (!subscribedTokens.has(token.mint)) {
         console.log(`🔔 Sottoscrizione ai trade del token ${token.mint}`);
-        ws.send(JSON.stringify({
-          method: "subscribeTokenTrade",
-          keys: [token.mint]
-        }));
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({
+            method: "subscribeTokenTrade",
+            keys: [token.mint]
+          }));
+        } else {
+          console.error(`❌ WebSocket non è aperto. Impossibile sottoscrivere il token ${token.mint}`);
+        }
         subscribedTokens.add(token.mint);
       }
 
