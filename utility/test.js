@@ -85,7 +85,7 @@ wshelius.on('message', async (data) => {
       console.log("------------------------------");
     } 
      
-      if ( logs.some(line => line.includes("Instruction: Initialize")) && logs.some(line => line.includes("Instruction: InitializeMint2"))){
+      if ( logs.some(line => line.includes(PROGRAM_IDS[1])) ){
         const programData = logs.find(line => line.includes("Program data: "));
        const dataP = programData?.split("Program data: ")[1];
         console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun ");
@@ -231,6 +231,7 @@ FRxd4Q8HXV2tSca5hbnUDVkh9BeYGZxaGMYD23mEpump
     'Program log: Initialize the associated token account',
     'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
     'Program log: Instruction: InitializeImmutableOwner',
+
     'Program log: Please upgrade to SPL Token 2022 for immutable owner support',
     'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1405 of 69859 compute units',
     'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
