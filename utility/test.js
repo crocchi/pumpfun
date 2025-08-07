@@ -87,7 +87,8 @@ wshelius.on('message', async (data) => {
      
       if ( logs.some(line => line.includes("Instruction: Initialize")) && logs.some(line => line.includes("Instruction: InitializeMint2"))){
         console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun ");
-        console.log(logs)
+        console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
+        //console.log(logs)
       }
 
       // Qui puoi aggiungere logica per filtri, subscribeTrade, buy/sell, ecc.
