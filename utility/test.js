@@ -85,7 +85,7 @@ wshelius.on('message', async (data) => {
       console.log("------------------------------");
     } 
      
-      if ( logs.some(line => line.includes(PROGRAM_IDS[1])) ){
+      if ( logs.some(line => line.includes(PROGRAM_IDS[1])) && logs.some(line => line.includes("Instruction: InitializeMint2"))){
         const programData = logs.find(line => line.includes("Program data: "));
        const dataP = programData?.split("Program data: ")[1];
         console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun ");
