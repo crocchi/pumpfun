@@ -61,6 +61,9 @@ ws.on('message', async function message(data) {
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
 
+      //QUI INIZIA A CONTROLLARE LE TRX DEL TOKEN...SE VIENE VENDUTO TROPPO PRESTO, LO SCARTA
+      //await monitorEarlyTrades(token, snipeToken);
+
         //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
         if (token.solInPool > 0 && token.tokensInPool > 0) {
             prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
@@ -91,10 +94,10 @@ ws.on('message', async function message(data) {
         console.log(`🧠 Mint: ${token.mint}`);
         console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
         const solToUsdRate = SOLANA_USD; // Replace with the current SOL to USD conversion rate
-        const marketCapUsd = (token.marketCapSol * solToUsdRate).toFixed(2);
+        const marketCapUsd = (token.marketCapSol * SOLANA_USD).toFixed(2);
         const totTokens= token.tokensInPool + token.initialBuy;
         console.log(`📈 MarketCap (USD): ${marketCapUsd}`);
-        console.log(`💰 Price: ${prezzo}`);
+        console.log(`💰 Price SOL: ${prezzo}`);
         console.log(`💧 Liquidity in pool: ${token.solInPool} SOL`);
         console.log(`💧 Tot Tokens:${totTokens}`);
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
@@ -102,7 +105,7 @@ ws.on('message', async function message(data) {
         console.log(`🌊 Pool: ${token.pool}`);
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         // 
-        //await monitorEarlyTrades(token, snipeToken);
+        
 
         logToken({
             mint: token.mint,
@@ -157,7 +160,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
         if (trade && trade.mint && trade.solInPool && trade.tokensInPool) {
           const prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
          // const price = formatPrezzoTokenNoSci(prezzo);
-          const marketCapUsd = (trade.marketCapSol * 175).toFixed(2);
+          const marketCapUsd = (trade.marketCapSol * SOLANA_USD).toFixed(2);
           //updateToken(trade.mint, price, trade.marketCapSol, marketCapUsd);
          
          updateToken(trade.mint, {

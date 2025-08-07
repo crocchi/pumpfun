@@ -3,7 +3,7 @@
 import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
 import { decodeProgramData , readString } from './decodeSolana.js';
 import WebSocket from 'ws';
-const attivo = false; // Abilita/disabilita la connessione a Helius
+const attivo = true; // Abilita/disabilita la connessione a Helius
 
 // Initialize connection to Helius RPC
 /*
@@ -43,7 +43,7 @@ wshelius.on('open', () => {
     method: "logsSubscribe",
     params: [
       {
-        mentions: [PUMP_FUN_PROGRAM_ID]
+        mentions: [PUMP_FUN_PROGRAM_ID,LETSBONK_PROGRAM_ID]
       },
       {
         commitment: "confirmed"
