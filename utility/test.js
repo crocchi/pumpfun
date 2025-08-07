@@ -98,6 +98,10 @@ wshelius.on('message', async (data) => {
         console.log('🟢 BUY rilevato!');
         i++
       }
+
+      if (logs.some(line => line.includes("Instruction: Sell")) && i<5 ) {
+        console.log(`🔴 SELL rilevato: https://solscan.io/tx/${signature}`);
+      }
     }
 
     

@@ -153,6 +153,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     }// fine if (parsed.txType === 'create')
 
+
     // Verifica se è un evento di trade
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
 
@@ -160,7 +161,31 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
         const trade = parsed;
 
         console.log('trade:',trade);
-        
+
+         //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
+         if (trade.solInPool > 0 && trade.tokensInPool > 0) {
+          prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
+        } else if (trade.vSolInBondingCurve > 0 && trade.vTokensInBondingCurve > 0) {
+         // prezzo = (token.vSolInBondingCurve / token.vTokensInBondingCurve).toFixed(10);
+          trade.solInPool = trade.vSolInBondingCurve;
+          trade.tokensInPool = trade.vTokensInBondingCurve;
+        } else {
+          prezzo = null; // o "0.0000000000", o un valore di fallback
+        }
+        /*trade: {
+  signature: '5gps1pMHNVzKXrVZpDUL82BemLXLmaUDC2vE7hruHipdLV1gaJ12dXA7VLkrfxWN3Xk8TPafiAVkEhDyKm94GCNk',
+  mint: '71wWAbjJXJdktxckA9Ux7PuDsVuBzFa68xeWU3aBpump',
+  traderPublicKey: '2UBpKQXowuLNbdjFzQmKMExmA4tDduQoTw8ayVvjngPu',
+  txType: 'buy',
+  tokenAmount: 361368.237917,
+  solAmount: 0.011140727,
+  newTokenBalance: 361368.237917,
+  bondingCurveKey: '2fFiwBDXbJfnuyrbqoHMdsBGJLsjVmzKEXewaTYcxw63',
+  vTokensInBondingCurve: 1021649496.746058,
+  vSolInBondingCurve: 31.507870460979802,
+  marketCapSol: 30.840195743581347,
+  pool: 'pump'
+} */
         if (trade && trade.mint && trade.solInPool && trade.tokensInPool) {
           const prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
          // const price = formatPrezzoTokenNoSci(prezzo);
