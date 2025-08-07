@@ -86,8 +86,17 @@ wshelius.on('message', async (data) => {
     } 
      
       if ( logs.some(line => line.includes("Instruction: Initialize")) && logs.some(line => line.includes("Instruction: InitializeMint2"))){
+        const programData = logs.find(line => line.includes("Program data: "));
+       const dataP = programData?.split("Program data: ")[1];
         console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun ");
         console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
+        try {
+          decoded = decodeProgramData(dataP);
+          console.log("📦 Dati del token:", decoded);
+        } catch (err) {
+          console.error('❌ Failed to decode:', err.message);
+        }
+        console.log("------------------------------");
         //console.log(logs)
       }
 
