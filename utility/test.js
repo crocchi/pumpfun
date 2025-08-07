@@ -91,7 +91,7 @@ wshelius.on('message', async (data) => {
     }
 
     if (logs.some(log => log.includes('Instruction: Buy'))) {
-      console.log('🟢 BUY rilevato!'+decoded.name);
+      console.log('🟢 BUY rilevato!');
     }
    /*
     if (isCreate) {
