@@ -55,7 +55,7 @@ wshelius.on('open', () => {
       method: 'logsSubscribe',
       params: [
         { mentions: [programId] },
-        { commitment: 'confirmed' }
+        { commitment: 'finalized' }
       ]
     };
     wshelius.send(JSON.stringify(msg));
@@ -73,6 +73,13 @@ wshelius.on('message', async (data) => {
 
     const { logs, signature } = message.params.result.value;
     let decoded;
+//// Token creation detection
+/*
+if log_messages.contains("Program log: Create") &&
+log_messages.contains("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj") {
+      console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun");
+      console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
+    }*/
 
     if (mint_token_helius && logs.some(line => line.includes("Instruction: InitializeMint2")) && logs.some(line => line.includes("Instruction: Create"))){
       const programData = logs.find(line => line.includes("Program data: "));
