@@ -1,5 +1,5 @@
 //import { Connection } from '@solana/web3.js';
-
+import fetch from "node-fetch";
 import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
 import { decodeProgramData , readString } from './decodeSolana.js';
 import WebSocket from 'ws';
@@ -443,4 +443,68 @@ New Token: {
   website: 'https://www.myinstants.com/en/instant/whats-wrong-fart-29099/'
 }
 ⛔ Token 'The Wrong Fart' scartato per sicurezza. ["❌ Liquidità fuori range.","❌ Descrizione breve o assente"]
+
+
+
+
+transaction
+[
+  'Program ComputeBudget111111111111111111111111111111 invoke [1]',
+  'Program ComputeBudget111111111111111111111111111111 success',
+  'Program ComputeBudget111111111111111111111111111111 invoke [1]',
+  'Program ComputeBudget111111111111111111111111111111 success',
+  'Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]',
+
+  'Program log: Create',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
+
+  'Program log: Instruction: GetAccountDataSize',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1569 of 100225 compute units',
+  'Program return: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA pQAAAAAAAAA=',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+  'Program 11111111111111111111111111111111 invoke [2]',
+  'Program 11111111111111111111111111111111 success',
+
+  'Program log: Initialize the associated token account',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
+
+  'Program log: Instruction: InitializeImmutableOwner',
+
+  'Program log: Please upgrade to SPL Token 2022 for immutable owner support',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1405 of 93638 compute units',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
+
+  'Program log: Instruction: InitializeAccount3',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4188 of 89756 compute units',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+  'Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 20307 of 105592 compute units',
+  'Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success',
+  'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P invoke [1]',
+
+  'Program log: Instruction: Buy',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]',
+
+  'Program log: Instruction: Transfer',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4645 of 54880 compute units',
+  'Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success',
+  'Program 11111111111111111111111111111111 invoke [2]',
+  'Program 11111111111111111111111111111111 success',
+  'Program 11111111111111111111111111111111 invoke [2]',
+  'Program 11111111111111111111111111111111 success',
+  'Program 11111111111111111111111111111111 invoke [2]',
+  'Program 11111111111111111111111111111111 success',
+  'Program data: vdt/007mYe6MdmWGTS8wbcsGqDhq6n043QoOb3tnX0HE/J0Gqp/BzwHC6wsAAAAAmgKmBfABAAABqPM128RB0S7Z9gI8xeI9mx4D/cOH9FX95ImdZb+kivpEaZZoAAAAAPU3lNIMAAAAo76+8ZkTAgD1i3DWBQAAAKMmrKUIFQEASsL40N1cvJfjKJwZfLUGKlTz2Va5zm5RFfllZ6pcs+ZfAAAAAAAAAOH9HAAAAAAAYk4rsFmDOYB7GGOKabMBDVOmC5Tm9UopoS9xVOykl4QFAAAAAAAAAKGGAQAAAAAA',
+  'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P invoke [2]',
+  'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P consumed 2027 of 38395 compute units',
+  'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P success',
+  'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P consumed 53916 of 85285 compute units',
+  'Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P success',
+  'Program troY36YiPGqMyAYCNbEqYCdN2tb91Zf7bHcQt7KUi61 invoke [1]',
+  'Program log: Instruction: FeeTransfer',
+  'Program 11111111111111111111111111111111 invoke [2]',
+  'Program 11111111111111111111111111111111 success',
+  'Program troY36YiPGqMyAYCNbEqYCdN2tb91Zf7bHcQt7KUi61 consumed 3560 of 31369 compute units',
+  'Program troY36YiPGqMyAYCNbEqYCdN2tb91Zf7bHcQt7KUi61 success'
+]
 */
