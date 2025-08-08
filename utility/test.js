@@ -4,7 +4,7 @@ import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
 import { decodeProgramData , readString } from './decodeSolana.js';
 import WebSocket from 'ws';
 
-export let TARGET_MINT; // Mint del token da monitorare (da impostare se necessario)
+export let target_mint; // Mint del token da monitorare (da impostare se necessario)
 //config debug
 const attivo = true; // Abilita/disabilita la connessione a Helius
 const mint_token_helius =false; // abilita/disabilita il monitoraggio dei token su Pump.fun e raydius
@@ -115,7 +115,7 @@ log_messages.contains("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj") {
           // Estraggo la mint
           const mint = extractMint(tx);
           console.log("Mint:", mint);
-          let mintAddress = TARGET_MINT;
+          let mintAddress = target_mint;
           if (mint === mintAddress) {
               console.log(`🎯 Trovata transazione del token target! Mint: ${mint}`);
               console.log(`📄 TX: https://solscan.io/tx/${signature}`);

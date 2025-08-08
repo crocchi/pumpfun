@@ -4,7 +4,7 @@ import { monitorEarlyTrades } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD } from './config.js';
-import { wshelius, TARGET_MINT } from './utility/test.js';
+import { wshelius, target_mint } from './utility/test.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
@@ -63,7 +63,7 @@ ws.on('message', async function message(data) {
 
       //QUI INIZIA A CONTROLLARE LE TRX DEL TOKEN...SE VIENE VENDUTO TROPPO PRESTO, LO SCARTA
       //await monitorEarlyTrades(token, snipeToken);
-        TARGET_MINT=token.mint; // Imposta il mint del token da monitorare
+      target_mint=token.mint; // Imposta il mint del token da monitorare
         //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
         if (token.solInPool > 0 && token.tokensInPool > 0) {
             prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
