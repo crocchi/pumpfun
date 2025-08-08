@@ -6,7 +6,7 @@ import WebSocket from 'ws';
 
 export let target_mint; // Mint del token da monitorare (da impostare se necessario)
 //config debug
-const attivo = true; // Abilita/disabilita la connessione a Helius
+const attivo = false; // Abilita/disabilita la connessione a Helius
 const mint_token_helius =false; // abilita/disabilita il monitoraggio dei token su Pump.fun e raydius
 
 // Initialize connection to Helius RPC
