@@ -55,7 +55,7 @@ wshelius.on('open', () => {
       method: 'logsSubscribe',
       params: [
         { mentions: [programId] },
-        { commitment: 'finalized' }
+        { commitment: 'finalized',encoding : 'jsonParsed',maxSupportedTransactionVersion: '0' }
       ]
     };
     wshelius.send(JSON.stringify(msg));
