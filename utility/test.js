@@ -162,10 +162,7 @@ async function getTransaction(signature) {
       method: "getTransaction",
       params: [
           signature,
-          {
-              encoding: "jsonParsed",
-              maxSupportedTransactionVersion: 0
-          }
+          { commitment: "finalized"}
       ]
   };
 
