@@ -4,6 +4,8 @@ import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
 import { decodeProgramData , readString } from './decodeSolana.js';
 import WebSocket from 'ws';
 
+export const TARGET_MINT=''; // Mint del token da monitorare (da impostare se necessario)
+
 //config debug
 const attivo = true; // Abilita/disabilita la connessione a Helius
 const mint_token_helius =false; // abilita/disabilita il monitoraggio dei token su Pump.fun e raydius
@@ -106,6 +108,7 @@ wshelius.on('message', async (data) => {
 
           // Estraggo la mint
           const mint = extractMint(tx);
+          console.log("Mint:", mint);
 
           if (mint === TARGET_MINT) {
               console.log(`🎯 Trovata transazione del token target! Mint: ${mint}`);
