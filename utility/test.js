@@ -4,7 +4,7 @@ import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
 import { decodeProgramData , readString } from './decodeSolana.js';
 import WebSocket from 'ws';
 
-export const TARGET_MINT=''; // Mint del token da monitorare (da impostare se necessario)
+export let TARGET_MINT=''; // Mint del token da monitorare (da impostare se necessario)
 
 //config debug
 const attivo = true; // Abilita/disabilita la connessione a Helius
@@ -123,7 +123,7 @@ wshelius.on('message', async (data) => {
       }
 
 
-        console.log(logs)
+       // console.log(logs)
         console.log(`📄 TX: https://solscan.io/tx/${signature}`);
         console.log('🟢 BUY rilevato!');
         i++
@@ -176,6 +176,7 @@ async function getTransaction(signature) {
   });
 
   const data = await res.json();
+  console.log("Dati transazione:", data);
   return data.result;
 }
 
