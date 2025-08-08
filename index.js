@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import { isSafeToken } from './utils.js';
-import { monitorEarlyTrades } from './tradeMonitor.js';
+import { monitorEarlyTrades , tradeMintMonitor,suspiciousSellDetected } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD } from './config.js';
@@ -10,7 +10,7 @@ import { wshelius, target_mint } from './utility/test.js';
 startHttpServer(process.env.PORT);
 
 
-const ws = new WebSocket('wss://pumpportal.fun/api/data');
+export const ws = new WebSocket('wss://pumpportal.fun/api/data');
 const subscribedTokens = new Set();
 
 ws.on('open', function open() {
@@ -62,8 +62,9 @@ ws.on('message', async function message(data) {
     if (parsed.txType === 'create') {
 
       //QUI INIZIA A CONTROLLARE LE TRX DEL TOKEN...SE VIENE VENDUTO TROPPO PRESTO, LO SCARTA
+
       //await monitorEarlyTrades(token, snipeToken);
-      target_mint=token.mint; // Imposta il mint del token da monitorare
+      //target_mint=token.mint; // Imposta il mint del token da monitorare
         //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
         if (token.solInPool > 0 && token.tokensInPool > 0) {
             prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
@@ -85,7 +86,7 @@ ws.on('message', async function message(data) {
            console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
            return
          }
-
+         monitorEarlyTrades(token.mint);
         
         console.log("Token:", token);
 
@@ -154,9 +155,12 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     }// fine if (parsed.txType === 'create')
 
 
+    if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
+      console.log(`⚠️  Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot.`);
+      suspiciousSellDetected = true;
+    }
     // Verifica se è un evento di trade
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
-
 
         const trade = parsed;
 
