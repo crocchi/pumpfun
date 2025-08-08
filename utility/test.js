@@ -4,8 +4,7 @@ import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
 import { decodeProgramData , readString } from './decodeSolana.js';
 import WebSocket from 'ws';
 
-export let TARGET_MINT=''; // Mint del token da monitorare (da impostare se necessario)
-
+export let TARGET_MINT; // Mint del token da monitorare (da impostare se necessario)
 //config debug
 const attivo = true; // Abilita/disabilita la connessione a Helius
 const mint_token_helius =false; // abilita/disabilita il monitoraggio dei token su Pump.fun e raydius
@@ -116,8 +115,8 @@ log_messages.contains("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj") {
           // Estraggo la mint
           const mint = extractMint(tx);
           console.log("Mint:", mint);
-
-          if (mint === TARGET_MINT) {
+          let mintAddress = TARGET_MINT;
+          if (mint === mintAddress) {
               console.log(`🎯 Trovata transazione del token target! Mint: ${mint}`);
               console.log(`📄 TX: https://solscan.io/tx/${signature}`);
               const end = performance.now();
@@ -190,6 +189,8 @@ async function getTransaction(signature) {
 function extractMint(tx) {
   if (!tx) return null;
 
+  console.log("Istruzioni: ",tx.transaction.message.instructions)
+  console.log("PayerWallet: ", tx.transaction.message.accountKeys);
   // 1️⃣ Controllo se c'è tokenTransfers
   if (tx.meta && tx.meta.tokenTransfers && tx.meta.tokenTransfers.length > 0) {
       return tx.meta.tokenTransfers[0].mint;
@@ -518,4 +519,45 @@ transaction
   'Program troY36YiPGqMyAYCNbEqYCdN2tb91Zf7bHcQt7KUi61 consumed 3560 of 31369 compute units',
   'Program troY36YiPGqMyAYCNbEqYCdN2tb91Zf7bHcQt7KUi61 success'
 ]
+
+
+{
+  "jsonrpc": "2.0",
+  "id": "1",
+  "result": {
+    "slot": 430,
+    "transaction": {
+      "message": {
+        "accountKeys": [
+          "3UVYmECPPMZSCqWKfENfuoTv51fTDTWicX9xmBD2euKe"
+        ],
+        "header": {
+          "numReadonlySignedAccounts": 0,
+          "numReadonlyUnsignedAccounts": 3,
+          "numRequiredSignatures": 1
+        },
+        "instructions": [
+          {
+            "accounts": [
+              1
+            ],
+            "data": "37u9WtQpcm6ULa3WRQHmj49EPs4if7o9f1jSRVZpm2dvihR9C8jY4NqEwXUbLwx15HBSNcP1",
+            "programIdIndex": 4
+          }
+        ],
+        "recentBlockhash": "mfcyqEXB3DnHXki6KjjmZck6YjmZLvpAByy2fj4nh6B"
+      },
+      "signatures": [
+        "2nBhEBYYvfaAe16UMNqRHre4YNSskvuYgx3M6E4JP1oDYvZEJHvoPzyUidNgNX5r9sTyN1J9UxtbCXy2rqYcuyuv"
+      ]
+    },
+    "meta": {
+      "err": null,
+      "fee": 5000,
+      "innerInstructions": [
+        {}
+      ]
+    }
+  }
+}
 */
