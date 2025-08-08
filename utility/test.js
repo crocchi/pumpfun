@@ -3,7 +3,10 @@
 import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
 import { decodeProgramData , readString } from './decodeSolana.js';
 import WebSocket from 'ws';
-const attivo = false; // Abilita/disabilita la connessione a Helius
+
+//config debug
+const attivo = true; // Abilita/disabilita la connessione a Helius
+const mint_token_helius =false; // abilita/disabilita il monitoraggio dei token su Pump.fun e raydius
 
 // Initialize connection to Helius RPC
 /*
@@ -69,7 +72,7 @@ wshelius.on('message', async (data) => {
     const { logs, signature } = message.params.result.value;
     let decoded;
 
-    if ( logs.some(line => line.includes("Instruction: InitializeMint2")) && logs.some(line => line.includes("Instruction: Create"))){
+    if (mint_token_helius && logs.some(line => line.includes("Instruction: InitializeMint2")) && logs.some(line => line.includes("Instruction: Create"))){
       const programData = logs.find(line => line.includes("Program data: "));
       const dataP = programData?.split("Program data: ")[1];
       console.log("------------------------------");
@@ -85,7 +88,7 @@ wshelius.on('message', async (data) => {
       console.log("------------------------------");
     } 
      
-      if ( logs.some(line => line.includes(PROGRAM_IDS[1])) && logs.some(line => line.includes("Instruction: InitializeMint2"))){
+      if (mint_token_helius && logs.some(line => line.includes(PROGRAM_IDS[1])) && logs.some(line => line.includes("Instruction: InitializeMint2"))){
 
         console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun ");
         console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
@@ -94,7 +97,31 @@ wshelius.on('message', async (data) => {
 
       // Qui puoi aggiungere logica per filtri, subscribeTrade, buy/sell, ecc.
       if (logs.some(log => log.includes('Instruction: Buy')) && i<5) {
+        console.log(`🟢 BUY rilevato: https://solscan.io/tx/${signature}`);
+        const start = performance.now();
+        try {
+          // Recupera i dettagli della transazione
+          const tx = await getTransaction(signature);
+          console.log("Dettagli transazione:", tx);
+
+          // Estraggo la mint
+          const mint = extractMint(tx);
+
+          if (mint === TARGET_MINT) {
+              console.log(`🎯 Trovata transazione del token target! Mint: ${mint}`);
+              console.log(`📄 TX: https://solscan.io/tx/${signature}`);
+              const end = performance.now();
+              console.log(`⏱️ Tempo di esecuzione: ${(end - start).toFixed(2)} ms`);
+          } else {
+              console.log(`⏭️ Mint ${mint} ignorata`);
+          }
+      } catch (err) {
+          console.error("❌ Errore getTransaction:", err.message);
+      }
+
+
         console.log(logs)
+        console.log(`📄 TX: https://solscan.io/tx/${signature}`);
         console.log('🟢 BUY rilevato!');
         i++
       }
@@ -126,6 +153,50 @@ wshelius.on('close', () => {
   console.log('🔌 Connessione WebSocket chiusa');
 });
 
+}
+
+async function getTransaction(signature) {
+  const body = {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "getTransaction",
+      params: [
+          signature,
+          {
+              encoding: "jsonParsed",
+              maxSupportedTransactionVersion: 0
+          }
+      ]
+  };
+
+  const res = await fetch(RPC_URL_HELIUS, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+  });
+
+  const data = await res.json();
+  return data.result;
+}
+
+function extractMint(tx) {
+  if (!tx) return null;
+
+  // 1️⃣ Controllo se c'è tokenTransfers
+  if (tx.meta && tx.meta.tokenTransfers && tx.meta.tokenTransfers.length > 0) {
+      return tx.meta.tokenTransfers[0].mint;
+  }
+
+  // 2️⃣ Controllo negli innerInstructions
+  if (tx.transaction?.message?.instructions) {
+      for (const ix of tx.transaction.message.instructions) {
+          if (ix.program === "spl-token" && ix.parsed?.info?.mint) {
+              return ix.parsed.info.mint;
+          }
+      }
+  }
+
+  return null;
 }
 /*
 FRxd4Q8HXV2tSca5hbnUDVkh9BeYGZxaGMYD23mEpump

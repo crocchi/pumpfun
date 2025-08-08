@@ -208,7 +208,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
                   }));
                   
             }
-// Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi
+          // Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi
             if (tradeInfo.trxNum >20 && tradeInfo.price > tradeInfo.startPrice * 1.2) { 
 
                 console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
