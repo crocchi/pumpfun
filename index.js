@@ -157,7 +157,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
       console.log(`⚠️  Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot.`);
-      suspiciousSellDetected = true;
+     // suspiciousSellDetected = true;
     }
     // Verifica se è un evento di trade
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
