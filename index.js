@@ -63,8 +63,7 @@ ws.on('message', async function message(data) {
 
       //QUI INIZIA A CONTROLLARE LE TRX DEL TOKEN...SE VIENE VENDUTO TROPPO PRESTO, LO SCARTA
       //await monitorEarlyTrades(token, snipeToken);
-      setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
-      monitorEarlyTrades(token);
+
 
         //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
         if (token.solInPool > 0 && token.tokensInPool > 0) {
@@ -85,12 +84,14 @@ ws.on('message', async function message(data) {
        if (!safe) {
 
            console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
-           monitorEarlyTrades(token , true); // disattiva il monitoraggio se non è sicuro
-           setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
            return
          }
-   
-
+         setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
+         let devBot=await monitorEarlyTrades(token);
+         if (!devBot) {
+         console.log(`✅ Token '${parsed.name}' non sicuro e monitorato per vendite sospette.`);
+         return;
+         }
         
         console.log("Token:", token);
 
