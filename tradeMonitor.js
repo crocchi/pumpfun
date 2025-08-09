@@ -1,10 +1,20 @@
 //import WebSocket from 'ws';
 import { ws } from './index.js';
-const TIME_LIMIT = 10000; // 10 secondi
-export let suspiciousSellDetected = false;
-export let tradeMintMonitor= null;
+const TIME_LIMIT = 2500; // 10 secondi
+
+let suspiciousSellDetected = false;
+let tradeMintMonitor= null;
 
 export async function monitorEarlyTrades(token, snipeCallback) {
+
+  if(snipeCallback){ 
+     ws.send(JSON.stringify({
+    method: "unsubscribeTokenTrade",
+    keys: [token.mint]
+  }));
+   return;
+  }
+ 
 
     const payload = {
       method: 'subscribeTokenTrade',
@@ -38,4 +48,22 @@ export async function monitorEarlyTrades(token, snipeCallback) {
       }
     }, TIME_LIMIT);
   });
+}
+
+//getters and setters for tradeMintMonitor and suspiciousSellDetected
+
+export function getSuspiciousSellDetected() {
+  return suspiciousSellDetected;
+}
+
+export function setSuspiciousSellDetected(value) {
+  suspiciousSellDetected = value;
+}
+
+export function getMintMonitor() {
+  return tradeMintMonitor;
+}
+
+export function setMintMonitor(value) {
+  tradeMintMonitor = value;
 }

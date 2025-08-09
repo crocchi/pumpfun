@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import { isSafeToken } from './utils.js';
-import { monitorEarlyTrades , tradeMintMonitor,suspiciousSellDetected } from './tradeMonitor.js';
+import { monitorEarlyTrades ,setSuspiciousSellDetected , setMintMonitor } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD } from './config.js';
@@ -62,9 +62,10 @@ ws.on('message', async function message(data) {
     if (parsed.txType === 'create') {
 
       //QUI INIZIA A CONTROLLARE LE TRX DEL TOKEN...SE VIENE VENDUTO TROPPO PRESTO, LO SCARTA
-
       //await monitorEarlyTrades(token, snipeToken);
-      //target_mint=token.mint; // Imposta il mint del token da monitorare
+      setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
+      monitorEarlyTrades(token);
+
         //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
         if (token.solInPool > 0 && token.tokensInPool > 0) {
             prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
@@ -77,16 +78,19 @@ ws.on('message', async function message(data) {
           }
 
 
-        const safer = await isSafeToken(parsed);
+        const safer = await isSafeToken(token);
 
         // console.log(safer);
        const safe = safer.length === 0;  
        if (!safe) {
 
            console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
+           monitorEarlyTrades(token , true); // disattiva il monitoraggio se non è sicuro
+           setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
            return
          }
-        // monitorEarlyTrades(token);
+   
+
         
         console.log("Token:", token);
 
@@ -154,10 +158,10 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     }// fine if (parsed.txType === 'create')
 
-
+   let tradeMintMonitor= getMintMonitor();
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
       console.log(`⚠️  Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot.`);
-     // suspiciousSellDetected = true;
+      setSuspiciousSellDetected(true)
     }
     // Verifica se è un evento di trade
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
