@@ -29,15 +29,15 @@ export let SOLANA_USD = 170;
       console.log(`📈 Prezzo SOL aggiornato: $${SOLANA_USD}`);
     } catch (error) {
       console.error('❌ Errore durante il fetch del prezzo di SOL:', error.message);
-      console.error('❌ riprovo tra 10s:');
-      return new Promise((resolve) => {
+      //console.error('❌ riprovo tra 10s:');
+    /*  return new Promise((resolve) => {
           setTimeout(async () => {
             //ws.close();
             fetchSolPrice()
             resolve(true);
             
           }, 10000);
-        });
+        });nn va*/
     }
   }
   

@@ -49,7 +49,7 @@ ws.on('open', function open() {
 
   */
 });
-
+let priceInSol;
 ws.on('message', async function message(data) {
   //console.log(JSON.parse(data));
   if(!data) return
@@ -58,6 +58,7 @@ ws.on('message', async function message(data) {
     //console.log(parsed);
     const token = parsed;
     let prezzo;
+    
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
 
