@@ -167,7 +167,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
    let tradeMintMonitor= getMintMonitor();
    if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
       console.log(`👁️  Nuovo trade di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
-      priceInSol = parsed.solInPool / parsed.tokensInPool;
+      priceInSol = token.solInPool / token.tokensInPool;
       console.log('SOL:',priceInSol);
       setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
       return; // Esci se è un acquisto
