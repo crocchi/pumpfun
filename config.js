@@ -8,7 +8,7 @@ export const RPC_WS_HELIUS = process.env.RPC_WS_HELIUS;
 
 export const MAX_TOKENS_SUBSCRIBED = 40;
 
-export let SOLANA_USD = 180;
+export let SOLANA_USD = 170;
 
 
 //RPC_URL: process.env.RPC_URL,
@@ -29,6 +29,15 @@ export let SOLANA_USD = 180;
       console.log(`📈 Prezzo SOL aggiornato: $${SOLANA_USD}`);
     } catch (error) {
       console.error('❌ Errore durante il fetch del prezzo di SOL:', error.message);
+      console.error('❌ riprovo tra 10s:');
+      return new Promise((resolve) => {
+          setTimeout(async () => {
+            //ws.close();
+            fetchSolPrice()
+            resolve(true);
+            
+          }, 10000);
+        });
     }
   }
   

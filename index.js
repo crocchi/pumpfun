@@ -86,7 +86,7 @@ ws.on('message', async function message(data) {
            console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
            return
          }
-         
+
          setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
          let devBot=await monitorEarlyTrades(token);
          if (!devBot) {
@@ -104,7 +104,7 @@ ws.on('message', async function message(data) {
         const marketCapUsd = (token.marketCapSol * SOLANA_USD).toFixed(2);
         const totTokens= token.tokensInPool + token.initialBuy;
         console.log(`📈 MarketCap (USD): ${marketCapUsd}`);
-        console.log(`💰 Price SOL: ${prezzo}`);
+        console.log(`💰 Price SOL: ${prezzo} -(${priceInSol})`);
         console.log(`💧 Liquidity in pool: ${token.solInPool} SOL`);
         console.log(`💧 Tot Tokens:${totTokens}`);
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
@@ -160,18 +160,28 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     }// fine if (parsed.txType === 'create')
 
+
+    // (parsed.txType === 'BUY')
+    /////// zona monitoraggio 
+    
    let tradeMintMonitor= getMintMonitor();
    if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
       console.log(`👁️  Nuovo trade di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
+      priceInSol = parsed.solInPool / parsed.tokensInPool;
+      console.log('SOL:',priceInSol);
       setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
       return; // Esci se è un acquisto
     }
    
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
       console.log(`⚠️ Token:[${parsed.symbol}] - Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot.`);
+      priceInSol = parsed.solInPool / parsed.tokensInPool;
+      console.log('SOL:',priceInSol);
       setSuspiciousSellDetected(true);
       return; // Esci se è una vendita sospetta
     }
+
+
     // Verifica se è un evento di trade
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
 

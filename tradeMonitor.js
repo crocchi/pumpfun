@@ -1,6 +1,6 @@
 //import WebSocket from 'ws';
 import { ws } from './index.js';
-const TIME_LIMIT = 1200; // 1,5 secondi
+const TIME_LIMIT = 1000; // 1,5 secondi
 
 let suspiciousSellDetected = false;
 let tradeMintMonitor= null;
