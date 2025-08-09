@@ -42,8 +42,8 @@ export async function monitorEarlyTrades(token, snipeCallback) {
             }));
             resolve(false);
       } else {
-        console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
-       // await snipeCallback(token);
+        //console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
+       // await snipeCallback(token); potrei mettere qui l'acquisto
         resolve(true);
       }
     }, TIME_LIMIT);
