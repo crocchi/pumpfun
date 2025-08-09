@@ -159,9 +159,16 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     }// fine if (parsed.txType === 'create')
 
    let tradeMintMonitor= getMintMonitor();
+   if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
+      console.log(`👁️  Nuovo trade di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
+      //setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
+      return; // Esci se è un acquisto
+    }
+   
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
       console.log(`⚠️  Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot.`);
-      setSuspiciousSellDetected(true)
+      setSuspiciousSellDetected(true);
+      return; // Esci se è una vendita sospetta
     }
     // Verifica se è un evento di trade
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
