@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import { isSafeToken } from './utils.js';
-import { monitorEarlyTrades ,setSuspiciousSellDetected , setMintMonitor } from './tradeMonitor.js';
+import { monitorEarlyTrades ,setSuspiciousSellDetected , setMintMonitor , getMintMonitor } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD } from './config.js';
