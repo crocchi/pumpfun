@@ -202,7 +202,9 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             marketCapUsd: marketCapUsd,
            // trxNum: trxNumm ,
           },parsed.txType).then(tradeInfo => {
-            if (tradeInfo.price > tradeInfo.startPrice * 3.5) { 
+            let typesellbuy=0
+            if(parsed.txType === 'buy'){  }
+            if (tradeInfo.price > tradeInfo.startPrice * 3.5 && tradeInfo.trxNum > 2) { 
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 subscribedTokens.delete(trade.mint);
                 console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
