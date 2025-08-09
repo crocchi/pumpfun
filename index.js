@@ -85,6 +85,7 @@ ws.on('message', async function message(data) {
        if (!safe) {
 
            console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
+           console.log(`--------------------------------------`);
            return
          }
 
@@ -168,7 +169,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
    let tradeMintMonitor= getMintMonitor();
    if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
       console.log(`👁️  Nuovo trade di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
-      priceInSol = token.solInPool / token.tokensInPool;
+      priceInSol = (token.solInPool / token.tokensInPool).toFixed(10);
       console.log('SOL:',priceInSol);
       setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
       return; // Esci se è un acquisto
@@ -176,7 +177,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
    
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
       console.log(`⚠️ Token:[${parsed.symbol}] - Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot.`);
-      priceInSol = parsed.solInPool / parsed.tokensInPool;
+      priceInSol = (token.solInPool / token.tokensInPool).toFixed(10);
       console.log('SOL:',priceInSol);
       setSuspiciousSellDetected(true);
       return; // Esci se è una vendita sospetta
