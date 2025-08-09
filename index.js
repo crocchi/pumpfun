@@ -86,7 +86,7 @@ ws.on('message', async function message(data) {
            console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
            return
          }
-         monitorEarlyTrades(token);
+        // monitorEarlyTrades(token);
         
         console.log("Token:", token);
 
