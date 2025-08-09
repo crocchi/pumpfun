@@ -86,6 +86,7 @@ ws.on('message', async function message(data) {
            console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
            return
          }
+         
          setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
          let devBot=await monitorEarlyTrades(token);
          if (!devBot) {
@@ -162,12 +163,12 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
    let tradeMintMonitor= getMintMonitor();
    if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
       console.log(`👁️  Nuovo trade di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
-      //setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
+      setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
       return; // Esci se è un acquisto
     }
    
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
-      console.log(`⚠️  Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot.`);
+      console.log(`⚠️ Token:[${parsed.symbol}] - Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot.`);
       setSuspiciousSellDetected(true);
       return; // Esci se è una vendita sospetta
     }

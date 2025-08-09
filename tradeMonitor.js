@@ -1,6 +1,6 @@
 //import WebSocket from 'ws';
 import { ws } from './index.js';
-const TIME_LIMIT = 2000; // 1,5 secondi
+const TIME_LIMIT = 1200; // 1,5 secondi
 
 let suspiciousSellDetected = false;
 let tradeMintMonitor= null;
@@ -40,10 +40,13 @@ export async function monitorEarlyTrades(token, snipeCallback) {
               method: "unsubscribeTokenTrade",
               keys: [token.mint]
             }));
+            setMintMonitor(null)
             resolve(false);
+            
       } else {
-        //console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
+        console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
        // await snipeCallback(token); potrei mettere qui l'acquisto
+       setMintMonitor(null)
         resolve(true);
       }
     }, TIME_LIMIT);
