@@ -58,6 +58,21 @@ ws.on('message', async function message(data) {
     //console.log(parsed);
     const token = parsed;
     let prezzo;
+
+    const liquidityCheck =async (tk)=>{
+      
+      //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
+      if (token.solInPool > 0 && token.tokensInPool > 0) {
+          prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
+        } else if (token.vSolInBondingCurve > 0 && token.vTokensInBondingCurve > 0) {
+          prezzo = (token.vSolInBondingCurve / token.vTokensInBondingCurve).toFixed(10);
+          token.solInPool = token.vSolInBondingCurve;
+          token.tokensInPool = token.vTokensInBondingCurve;
+        } else {
+          prezzo = null; // o "0.0000000000", o un valore di fallback
+        }
+        return prezzo
+  }
     
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
@@ -66,17 +81,7 @@ ws.on('message', async function message(data) {
       //await monitorEarlyTrades(token, snipeToken);
 
 
-        //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
-        if (token.solInPool > 0 && token.tokensInPool > 0) {
-            prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
-          } else if (token.vSolInBondingCurve > 0 && token.vTokensInBondingCurve > 0) {
-            prezzo = (token.vSolInBondingCurve / token.vTokensInBondingCurve).toFixed(10);
-            token.solInPool = token.vSolInBondingCurve;
-            token.tokensInPool = token.vTokensInBondingCurve;
-          } else {
-            prezzo = null; // o "0.0000000000", o un valore di fallback
-          }
-
+    liquidityCheck()
 
         const safer = await isSafeToken(token);
 
@@ -169,7 +174,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
    let tradeMintMonitor= getMintMonitor();
    if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
       console.log(`👁️  Nuovo trade sol:(${parsed.solAmount}) di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
-      priceInSol = (parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
+      priceInSol = liquidityCheck(parsed) //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
       return; // Esci se è un acquisto
@@ -177,7 +182,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
    
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
       console.log(`⚠️ Token:[${parsed.symbol}] - Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot.`);
-      priceInSol = (parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
+      priceInSol = liquidityCheck()//(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       setSuspiciousSellDetected(true);
       return; // Esci se è una vendita sospetta
