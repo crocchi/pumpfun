@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import { isSafeToken } from './utils.js';
-import { monitorEarlyTrades ,setSuspiciousSellDetected , setMintMonitor , getMintMonitor } from './tradeMonitor.js';
+import { monitorEarlyTrades ,setSuspiciousSellDetected , setMintMonitor , getMintMonitor,getSolAmount, setSolAmount } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD } from './config.js';
@@ -176,7 +176,14 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       console.log(`👁️  Nuovo trade sol:(${parsed.solAmount}) di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
       priceInSol = liquidityCheck(parsed) //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
+      setSolAmount(parsed.solAmount);
+      if(parsed.solAmount < 0.008) {
+        console.log(`❌ Acquisto troppo piccolo (${parsed.solAmount} SOL) per ${parsed.mint}. Ignorato.`);
+        setSuspiciousSellDetected(true);
+        return; // Esci se l'acquisto è troppo piccolo
+      }
       setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
+      console.log('solValueTrx:',getSolAmount());
       return; // Esci se è un acquisto
     }
    
@@ -184,6 +191,12 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       console.log(`⚠️ Token:[${parsed.symbol}] - Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot.`);
       priceInSol = liquidityCheck()//(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
+      setSolAmount(-(parsed.solAmount));
+      if(parsed.solAmount > 0.48) {
+        console.log(`❌ Vendita troppo alta (${parsed.solAmount} SOL) per ${parsed.mint}.`);
+        setSuspiciousSellDetected(true);
+        return; // Esci se l'acquisto è troppo piccolo
+      }
       setSuspiciousSellDetected(true);
       return; // Esci se è una vendita sospetta
     }

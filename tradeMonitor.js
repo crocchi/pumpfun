@@ -1,9 +1,10 @@
 //import WebSocket from 'ws';
 import { ws } from './index.js';
-const TIME_LIMIT = 1000; // 1,5 secondi
+const TIME_LIMIT = 3000; // 1,5 secondi
 
 let suspiciousSellDetected = false;
 let tradeMintMonitor= null;
+let solAmount = 0;
 
 export async function monitorEarlyTrades(token, snipeCallback) {
 
@@ -70,3 +71,13 @@ export function getMintMonitor() {
 export function setMintMonitor(value) {
   tradeMintMonitor = value;
 }
+
+
+export function getSolAmount() {
+  return solAmount;
+}
+
+export function setSolAmount(value) {
+  tradeMintMonitor =+ value;
+}
+
