@@ -78,6 +78,6 @@ export function getSolAmount() {
 }
 
 export function setSolAmount(value) {
-  tradeMintMonitor =+ value;
+  solAmount = solAmount + value;
 }
 
