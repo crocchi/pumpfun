@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Status Token</title>
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+  <h1>Status Token Monitorati</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Nome</th>
+        <th>Prezzo</th>
+        <th>MarketCap USD</th>
+        <th>Variazione</th>
+        <th>Transazioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tokens.forEach(t => { 
+        const pct = t.oldMarketCapUsd ? ((t.marketCapUsd - t.oldMarketCapUsd) / t.oldMarketCapUsd) * 100 : 0;
+      %>
+        <tr>
+          <td><%= t.symbol %></td>
+          <td><%= t.name %></td>
+          <td><%= t.price || (t.solInPool / t.tokensInPool).toFixed(10) %></td>
+          <td>$<%= t.marketCapUsd %></td>
+          <td>
+            <%= pct > 0 ? 'lime' : pct < 0 ? 'red' : '#ddd' %></0>
+          <!--<td style="color:<%= pct > 0 ? 'lime' : pct < 0 ? 'red' : '#ddd' %>"> -->
+            <%= pct > 0 ? '+' : '' %><%= pct.toFixed(2) %>%
+          </td>
+          <td>
+            <button onclick="showTransactions('<%= t.mint %>')">📜 Vedi</button>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="close">&times;</span>
+      <h2>Transazioni Token</h2>
+      <ul id="txList"></ul>
+    </div>
+  </div>
+
+  <script src="/public/script.js"></script>
+</body>
+</html>

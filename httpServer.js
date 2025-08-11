@@ -1,13 +1,70 @@
 import http from 'http';
+import ejs from 'ejs';
+import fs from 'fs';
+import path from 'path';
+import url from 'url';
+import { fileURLToPath } from 'url';
 import { checkPrice } from './moralis.js';
 
 let tokenLog = [];
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export function logToken(tokenData) {
   tokenLog.unshift({ timestamp: Date.now(), ...tokenData });
   if (tokenLog.length > 40) tokenLog.pop();
 }
 
+
+export function startHttpServer(port = 4000) {
+    const server = http.createServer(async (req, res) => {
+      const parsed = url.parse(req.url, true);
+  
+      if (parsed.pathname === '/tokens') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(tokenLog, null, 2));
+      }
+  
+      else if (parsed.pathname === '/status') {
+        const templatePath = path.join(__dirname, 'views', 'status.ejs');
+        const html = await ejs.renderFile(templatePath, { tokens: tokenLog });
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(html);
+      }
+  
+      else if (parsed.pathname === '/transactions') {
+        const mint = parsed.query.mint;
+        const token = tokenLog.find(t => t.mint === mint);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(token ? token.transactions : []));
+      }
+  
+      else if (parsed.pathname.startsWith('/public/')) {
+        // Static files
+        const filePath = path.join(__dirname, parsed.pathname);
+        if (fs.existsSync(filePath)) {
+          const ext = path.extname(filePath).toLowerCase();
+          const type = ext === '.css' ? 'text/css' : 'application/javascript';
+          res.writeHead(200, { 'Content-Type': type });
+          res.end(fs.readFileSync(filePath));
+        } else {
+          res.writeHead(404).end();
+        }
+      }
+  
+      else {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end('<h2>Server attivo</h2><p>Vai su <a href="/status">/status</a></p>');
+      }
+    });
+  
+    server.listen(port, () => {
+      console.log(`🌐 Server attivo su http://localhost:${port}`);
+    });
+  }
+
+
+/*    old client
 export function startHttpServer(port = process.env.PORT || 4000) {
 const server = http.createServer(async (req, res) => {
     if (req.url === '/tokens') {
@@ -156,7 +213,7 @@ const server = http.createServer(async (req, res) => {
   server.listen(port, () => {
     console.log(`🌐 HTTP Server attivo su http://localhost:${port}`);
   });
-}
+}*/
 
 
 export async function updateToken(mint, updates,type) {
@@ -176,6 +233,11 @@ export async function updateToken(mint, updates,type) {
          // incrementa il numero di transazioni 
     if (type === 'buy' || type === 'sell') {
         token.trxNum = (token.trxNum || 0) + 1;
+        token.transactions.push({
+            type,
+            price: updates.price,
+            time: new Date().toLocaleTimeString()
+          });
       }
 
       Object.assign(token, updates);

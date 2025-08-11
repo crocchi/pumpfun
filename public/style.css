@@ -1,0 +1,13 @@
+body { font-family: Arial, sans-serif; background: #111; color: #ddd; padding: 2rem; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 0.5rem; border: 1px solid #444; }
+th { background: #222; }
+tr:nth-child(even) { background: #1a1a1a; }
+button { padding: 0.4rem 0.7rem; background: #333; color: #ddd; border: none; cursor: pointer; }
+button:hover { background: #555; }
+
+/* Modal */
+.modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); }
+.modal-content { background: #222; margin: 10% auto; padding: 20px; width: 50%; border-radius: 8px; }
+#close { float: right; cursor: pointer; font-size: 20px; }
+#close:hover { color: red; }
