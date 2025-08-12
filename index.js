@@ -195,9 +195,11 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       if(parsed.solAmount > 0.48) {
         console.log(`❌ Vendita troppo alta (${parsed.solAmount} SOL) per ${parsed.mint}.`);
         setSuspiciousSellDetected(true);
+           console.log('solValueTrx:',getSolAmount());
         return; // Esci se l'acquisto è troppo piccolo
       }
       setSuspiciousSellDetected(true);
+         console.log('solValueTrx:',getSolAmount());
       return; // Esci se è una vendita sospetta
     }
 
