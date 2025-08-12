@@ -189,7 +189,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     }
    
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
-      console.log(`⚠️ Token:[${parsed.symbol}] - Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot.`);
+      console.log(`⚠️ Token:[${parsed.mint}] - Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot. sol:(${parsed.solAmount})`);
       priceInSol = liquidityCheck()//(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       setSolAmount(-(parsed.solAmount));

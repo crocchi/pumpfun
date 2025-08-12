@@ -11,29 +11,29 @@
       <tr>
         <th>Symbol</th>
         <th>Nome</th>
-        <th>Live Price</th>
         <th>StartPrice</th>
+        <th>Live Price</th>
+        
+        <th>Gain</th>
         <th>MarketCap USD</th>
-        <th>Variazione</th>
-        <th>Transazioni</th>
         <th>Trx Num</th>
+        <th>Transazioni</th>
+        
       </tr>
     </thead>
     <tbody>
       <% tokens.forEach(t => { 
         const pct = t.oldMarketCapUsd ? ((t.marketCapUsd - t.oldMarketCapUsd) / t.oldMarketCapUsd) * 100 : 0;
+        const gain = ((t.price - t.startPrice) / t.startPrice) * 100;
       %>
         <tr>
           <td><%= t.symbol %></td>
           <td><%= t.name %></td>
           <td><%= t.startPrice %></td>
           <td><%= t.price || (t.solInPool / t.tokensInPool).toFixed(10) %></td>
-          <td>$<%= t.marketCapUsd %></td>
-          <td>
-            <%= pct > 0 ? 'lime' : pct < 0 ? 'red' : '#ddd' %></0>
-          <!--<td style="color:<%= pct > 0 ? 'lime' : pct < 0 ? 'red' : '#ddd' %>"> -->
-            <%= pct > 0 ? '+' : '' %><%= pct.toFixed(2) %>%
-          </td>
+          
+           <td><%= gain %>%</td>
+           <td>$<%= t.marketCapUsd %></td>        
           <td><%= t.trxNum %></td>
           <td>
             <button onclick="showTransactions('<%= t.mint %>')">Vedi</button>

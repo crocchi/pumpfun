@@ -144,7 +144,10 @@ export async function checkMissingSocials(uri) {
     try {
       const response = await fetch(uri);
       const metadata = await response.json();
-    console.log("New Token:", metadata);
+    //console.log("New Token:", metadata);
+    console.log(`New Token: Name:${metadata.name}[${metadata.symbol}], Description: ${metadata.description || 'N/A'}`);
+    console.log(`Created on: ${metadata.createdOn || 'N/A'} | Website: ${metadata.website || 'N/A'} | Twitter: ${metadata.twitter || 'N/A'}`);
+    console.log(`telegram: ${metadata.telegram || 'N/A'}`);
     /**Controllo metadati per: {
   name: "4chan's Worthless Coin",
   symbol: 'Worthless',
