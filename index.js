@@ -129,6 +129,7 @@ ws.on('message', async function message(data) {
             tokensInPool: token.tokensInPool || token.vTokensInBondingCurve,
             marketCapSol: token.marketCapSol,
             price: prezzo,
+            transactions:[],
             trxNum: 0,
             startPrice: prezzo,
             marketCapUsd: marketCapUsd,
