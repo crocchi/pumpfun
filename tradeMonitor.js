@@ -41,13 +41,17 @@ export async function monitorEarlyTrades(token, snipeCallback) {
               method: "unsubscribeTokenTrade",
               keys: [token.mint]
             }));
-            setMintMonitor(null)
+            setMintMonitor(null);
+            setSolAmount(0);
+            suspiciousSellDetected = false
             resolve(false);
             
       } else {
         console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
        // await snipeCallback(token); potrei mettere qui l'acquisto
        setMintMonitor(null)
+       setSolAmount(0);
+       suspiciousSellDetected = false;
         resolve(true);
       }
     }, TIME_LIMIT);

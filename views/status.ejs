@@ -11,10 +11,12 @@
       <tr>
         <th>Symbol</th>
         <th>Nome</th>
-        <th>Prezzo</th>
+        <th>Live Price</th>
+        <th>StartPrice</th>
         <th>MarketCap USD</th>
         <th>Variazione</th>
         <th>Transazioni</th>
+        <th>Trx Num</th>
       </tr>
     </thead>
     <tbody>
@@ -24,6 +26,7 @@
         <tr>
           <td><%= t.symbol %></td>
           <td><%= t.name %></td>
+          <td><%= t.startPrice %></td>
           <td><%= t.price || (t.solInPool / t.tokensInPool).toFixed(10) %></td>
           <td>$<%= t.marketCapUsd %></td>
           <td>
@@ -31,8 +34,9 @@
           <!--<td style="color:<%= pct > 0 ? 'lime' : pct < 0 ? 'red' : '#ddd' %>"> -->
             <%= pct > 0 ? '+' : '' %><%= pct.toFixed(2) %>%
           </td>
+          <td><%= t.trxNum %></td>
           <td>
-            <button onclick="showTransactions('<%= t.mint %>')">📜 Vedi</button>
+            <button onclick="showTransactions('<%= t.mint %>')">Vedi</button>
           </td>
         </tr>
       <% }) %>
