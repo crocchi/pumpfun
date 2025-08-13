@@ -87,8 +87,14 @@ export function startHttpServer(port = 4000) {
       }
   
 if (parsed.pathname === '/status' && req.method === 'GET') {
+    /*
+    const templatePath = path.join(__dirname, 'views', 'status.ejs');
+    const html = await ejs.renderFile(templatePath, { tokens: tokenLog });
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(html);*/
+
       const tpl = fs.readFileSync(path.join(__dirname, 'views', 'status.ejs'), 'utf8');
-      const html = ejs.render(tpl, { botOptions });
+      const html = ejs.render(tpl, { tokens: tokenLog , botOptions });
       res.writeHead(200, { 'Content-Type': 'text/html' });
       return res.end(html);
     }
