@@ -26,18 +26,29 @@ async function showTransactions(mint) {
   }
 
   function copyToClipboard(text) {
-    // Crea un elemento di input temporaneo
-    const tempInput = document.createElement('input');
-    tempInput.value = text; // Imposta il valore dell'input al testo da copiare
-    document.body.appendChild(tempInput); // Aggiungi l'input al DOM
-    tempInput.select(); // Seleziona il contenuto dell'input
-    tempInput.setSelectionRange(0, 99999); // Per dispositivi mobili
-    document.execCommand('copy'); // Copia il testo negli appunti
-    document.body.removeChild(tempInput); // Rimuovi l'input temporaneo
-    alert('Contratto copiato negli appunti: ' + text); // Mostra un messaggio di conferma
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          alert('Contratto copiato negli appunti: ' + text);
+        })
+        .catch(err => {
+          console.error('Errore durante la copia negli appunti:', err);
+          alert('Errore durante la copia negli appunti.');
+        });
+    } else {
+      // Fallback per browser che non supportano la Clipboard API
+      const tempInput = document.createElement('input');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      tempInput.setSelectionRange(0, 99999); // Per dispositivi mobili
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      alert('Contratto copiato negli appunti: ' + text);
+    }
   }
   
   // Funzione per aggiornare la pagina ogni 10 secondi
 setInterval(() => {
   location.reload(); // Ricarica la pagina
-}, 10000); // 5000 millisecondi = 5 secondi
+}, 60000); // 5000 millisecondi = 5 secondi

@@ -16,9 +16,11 @@
         
         <th>Gain</th>
         <th>MarketCap USD</th>
+
         <th>Trx Num</th>
-        <th>Transazioni</th>
         <th>Time</th>
+        <th>Transazioni</th>
+        
         <th>Contract</th>
         <th>Pool</th>
 
@@ -46,13 +48,14 @@
           <td><%= t.price || (t.solInPool / t.tokensInPool).toFixed(10) %></td>
 
            <td><%= gain.toFixed(2) %>%</td>
-           <td>$<%= t.marketCapUsd %></td>        
+           <td>$<%= t.marketCapUsd %></td>    
+
           <td><%= t.trxNum %></td>
           <td><%= time %></td>
           <td>
             <button onclick="showTransactions('<%= t.mint %>')">Vedi</button>
           </td>
-          <td> <button onclick="copyToClipboard('<%= t.contract %>')">Copy Contract</button> </td>
+          <td> <button onclick="copyToClipboard('<%= t.mint %>')">Copy Contract</button> </td>
           <td> <%= defiExchange %></td>
         </tr>
       <% }) %>

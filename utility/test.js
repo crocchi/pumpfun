@@ -584,4 +584,35 @@ transaction
     }
   }
 }
+
+
+
+/*
+  // Subscribing to migration events
+  let payload = {
+      method: "subscribeMigration", 
+    }
+  ws.send(JSON.stringify(payload));
+
+  // Subscribing to trades made by accounts
+  payload = {
+      method: "subscribeAccountTrade",
+      keys: ["AArPXm8JatJiuyEffuC1un2Sc835SULa4uQqDcaGpAjV"] // array of accounts to watch
+    }
+  ws.send(JSON.stringify(payload));
+
+    //"@solana/spl-token": "^0.3.8",
+    //"@solana/web3.js": "^1.91.0",
+    //"axios": "^1.6.8",
+    //"bs58": "^5.0.1",
+
+
+  // Subscribing to trades on tokens
+  payload = {
+      method: "subscribeTokenTrade",
+      keys: ["91WNez8D22NwBssQbkzjy4s2ipFrzpmn5hfvWVe2aY5p"] // array of token CAs to watch
+    }
+  ws.send(JSON.stringify(payload));
+
+  
 */
