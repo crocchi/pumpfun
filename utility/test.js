@@ -207,7 +207,31 @@ function extractMint(tx) {
 
   return null;
 }
+
+
+export async function getTopHolders(mintAddress) {
+  const body = {
+    jsonrpc: "2.0",
+    id: 1,
+    method: "getTokenLargestAccounts",
+    params: [
+      mintAddress,
+      { commitment: "finalized" }
+    ]
+  };
+
+  const res = await fetch(RPC_URL_HELIUS, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+
+  const data = await res.json();
+  return data.result.value; // lista dei top 20 holder
+}
+
 /*
+
 FRxd4Q8HXV2tSca5hbnUDVkh9BeYGZxaGMYD23mEpump
  logs: [
     'Program ComputeBudget111111111111111111111111111111 invoke [1]',

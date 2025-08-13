@@ -4,7 +4,7 @@ import { monitorEarlyTrades ,setSuspiciousSellDetected , setMintMonitor , getMin
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD } from './config.js';
-import { wshelius, target_mint } from './utility/test.js';
+import { wshelius, target_mint, getTopHolders } from './utility/test.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
@@ -93,7 +93,9 @@ ws.on('message', async function message(data) {
            console.log(`--------------------------------------`);
            return
          }
-
+         getTopHolders(token.mint)
+         .then(console.log)
+         .catch(console.error);
          /*
          setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
          let devBot=await monitorEarlyTrades(token);
