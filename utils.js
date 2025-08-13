@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { checkRugRisk } from './utility/rugCheck.js';
 let safeProblem = [];
+import { botOptions } from './config.js';
 
 import { checkTokenDistribution } from './utility/checkOwner.js';
 const MAX_CREATOR_SUPPLY_PERCENT = 5; // massimo accettabile per il creator
@@ -15,8 +16,8 @@ let cont=0
 export async function isSafeToken(token) {
   safeProblem=[];
   try {
-    // 1. ✅ Controllo liquidità
-    if (token.solInPool < 0.5 || token.solInPool > 5) {
+    // 1. ✅ Controllo liquidità - minori di 30 SOL esce
+    if (/*token.solInPool < 0.5 || */token.solInPool < 34.00) {
       //console.log("❌ Liquidità fuori range.");
       safeProblem.push("❌ Liquidità fuori range."+`: ${token.solInPool} SOL`);
       //return false;

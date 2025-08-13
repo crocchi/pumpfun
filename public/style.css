@@ -112,3 +112,7 @@ ul#txList {
     cursor: pointer;
 }
 .save-btn:hover { background: green; }
+
+form#botForm {
+    max-width: 40%;
+}
