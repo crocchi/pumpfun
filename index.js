@@ -94,12 +94,13 @@ ws.on('message', async function message(data) {
            return
          }
 
+         /*
          setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
          let devBot=await monitorEarlyTrades(token);
          if (!devBot) {
          console.log(`✅ Token '${parsed.name}' non sicuro e monitorato per vendite sospette.`);
          return;
-         }
+         }*/
          
         console.log("Token:", token);
 
