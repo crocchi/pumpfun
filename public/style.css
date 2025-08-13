@@ -53,3 +53,62 @@ ul#txList {
     overflow-y: scroll;
     max-height: 400px;
 }
+
+.config-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #333;
+    color: #ddd;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    z-index: 1001;
+}
+.config-button:hover { background: #444; }
+
+.config-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(10, 10, 10, 0.98);
+    z-index: 1000;
+    padding: 2rem;
+    color: #ddd;
+    overflow-y: auto;
+}
+.config-overlay.active { display: block; }
+
+.config-overlay h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #444;
+    padding-bottom: 0.5rem;
+}
+.close-config {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.config-input {
+    display: block;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background: #222;
+    border: 1px solid #555;
+    color: #ddd;
+    width: 100%;
+    max-width: 400px;
+}
+.save-btn {
+    background: limegreen;
+    color: #111;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.save-btn:hover { background: green; }

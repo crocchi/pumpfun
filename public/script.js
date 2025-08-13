@@ -25,6 +25,13 @@ async function showTransactions(mint) {
     }
   }
 
+  function openConfig() {
+    document.getElementById("configOverlay").classList.add("active");
+}
+function closeConfig() {
+    document.getElementById("configOverlay").classList.remove("active");
+}
+
   function copyToClipboard(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text)
