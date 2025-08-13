@@ -40,7 +40,7 @@ button:hover { background: #555; }
   .hint { color: var(--muted); font-size:12px; margin-top:8px; }
   table { width: 100%; border-collapse: collapse; }
   th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); font-size: 13px; }
-  th { text-align:left; color:#c2c5ff; background:#10111a; position: sticky; top: 64px; z-index: 1; }
+  th { text-align:left; color:#c2c5ff; background:#10111a; }
   tr:nth-child(even) { background: rgba(255,255,255,.02); }
   .ok { color: var(--ok); }
   .bad { color: var(--bad); }
@@ -57,7 +57,7 @@ ul#txList {
 .config-button {
     position: fixed;
     top: 20px;
-    right: 20px;
+    right: 40px;
     background: #333;
     color: #ddd;
     border: none;
@@ -89,7 +89,7 @@ ul#txList {
 .close-config {
     position: absolute;
     top: 20px;
-    right: 30px;
+    right: 5px;
     font-size: 1.5rem;
     cursor: pointer;
 }
