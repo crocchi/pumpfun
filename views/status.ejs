@@ -18,6 +18,10 @@
         <th>MarketCap USD</th>
         <th>Trx Num</th>
         <th>Transazioni</th>
+        <th>Time</th>
+        <th>Contract</th>
+        <th>Pool</th>
+
         
       </tr>
     </thead>
@@ -25,19 +29,31 @@
       <% tokens.forEach(t => { 
         const pct = t.oldMarketCapUsd ? ((t.marketCapUsd - t.oldMarketCapUsd) / t.oldMarketCapUsd) * 100 : 0;
         const gain = ((t.price - t.startPrice) / t.startPrice) * 100;
+        const time = new Date(t.timestamp).toLocaleTimeString();
+        let defiExchange ;
+        if (t.pool && t.pool.includes('bonk')) {
+          defiExchange = `<a href="https://letsbonk.fun/token/${t.mint}" target="_blank">Apri Pool</a>`;
+        } else if (t.pool && t.pool.includes('pump')) {
+          defiExchange = `<a href="https://pump.fun/coin/${t.mint}" target="_blank">Apri Pool</a>`;
+        } else {
+          defiExchange = 'N/A';
+        }
       %>
         <tr>
           <td><%= t.symbol %></td>
           <td><%= t.name %></td>
           <td><%= t.startPrice %></td>
           <td><%= t.price || (t.solInPool / t.tokensInPool).toFixed(10) %></td>
-          
-           <td><%= gain %>%</td>
+
+           <td><%= gain.toFixed(2) %>%</td>
            <td>$<%= t.marketCapUsd %></td>        
           <td><%= t.trxNum %></td>
+          <td><%= time %></td>
           <td>
             <button onclick="showTransactions('<%= t.mint %>')">Vedi</button>
           </td>
+          <td> <button onclick="copyToClipboard('<%= t.contract %>')">Copy Contract</button> </td>
+          <td> <%= defiExchange %></td>
         </tr>
       <% }) %>
     </tbody>
