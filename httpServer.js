@@ -5,51 +5,99 @@ import path from 'path';
 import url from 'url';
 import { fileURLToPath } from 'url';
 import { checkPrice } from './moralis.js';
+import { botOptions } from './config.js';
 
 let tokenLog = [];
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export function logToken(tokenData) {
   tokenLog.unshift({ timestamp: Date.now(), ...tokenData });
   if (tokenLog.length > 40) tokenLog.pop();
 }
 
+function serveStatic(req, res) {
+    const parsed = url.parse(req.url);
+    const filePath = path.join(__dirname, 'public', decodeURIComponent(parsed.pathname.replace(/^\/public\//, '')));
+    if (!filePath.startsWith(path.join(__dirname, 'public'))) {
+      res.writeHead(403); return res.end('Forbidden');
+    }
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      const ext = path.extname(filePath).toLowerCase();
+      const ct = ext === '.css' ? 'text/css' : ext === '.js' ? 'application/javascript' : 'application/octet-stream';
+      res.writeHead(200, { 'Content-Type': ct });
+      return res.end(fs.readFileSync(filePath));
+    }
+    res.writeHead(404); res.end('Not found');
+  }
+
+
+async function parseBody(req) {
+    return new Promise((resolve, reject) => {
+      let data = '';
+      req.on('data', chunk => (data += chunk));
+      req.on('end', () => {
+        try {
+          const ct = req.headers['content-type'] || '';
+          if (ct.includes('application/json')) resolve(JSON.parse(data || '{}'));
+          else if (ct.includes('application/x-www-form-urlencoded')) {
+            resolve(Object.fromEntries(new URLSearchParams(data)));
+          } else resolve({ raw: data });
+        } catch (e) { reject(e); }
+      });
+    });
+  }
 
 export function startHttpServer(port = 4000) {
     const server = http.createServer(async (req, res) => {
       const parsed = url.parse(req.url, true);
   
-      if (parsed.pathname === '/tokens') {
+    // static
+    if (req.url.startsWith('/public/')) return serveStatic(req, res);
+
+    if (parsed.pathname === '/tokens' && req.method === 'GET') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(tokenLog, null, 2));
+        return res.end(JSON.stringify(tokenLog, null, 2));
       }
   
-      else if (parsed.pathname === '/status') {
-        const templatePath = path.join(__dirname, 'views', 'status.ejs');
-        const html = await ejs.renderFile(templatePath, { tokens: tokenLog });
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(html);
+      if (parsed.pathname === '/bot-options' && req.method === 'GET') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify(botOptions, null, 2));
       }
+
+      if (parsed.pathname === '/bot-options' && req.method === 'POST') {
+        try {
+          const body = await parseBody(req);
+          // coerce & salva
+          if ('quickSellMultiplier' in body) botOptions.quickSellMultiplier = Number(body.quickSellMultiplier) || botOptions.quickSellMultiplier;
+          if ('quickSellMinTrades' in body) botOptions.quickSellMinTrades = Number(body.quickSellMinTrades) || botOptions.quickSellMinTrades;
+          if ('rugpullMaxTrades' in body) botOptions.rugpullMaxTrades = Number(body.rugpullMaxTrades) || botOptions.rugpullMaxTrades;
+          if ('rugpullMinGainMultiplier' in body) botOptions.rugpullMinGainMultiplier = Number(body.rugpullMinGainMultiplier) || botOptions.rugpullMinGainMultiplier;
+          if ('enableTrailing' in body) botOptions.enableTrailing = body.enableTrailing === 'true' || body.enableTrailing === true;
+          if ('trailingPercent' in body) botOptions.trailingPercent = Math.min(0.9, Math.max(0.01, Number(body.trailingPercent))) || botOptions.trailingPercent;
+          if ('clientRefreshMs' in body) botOptions.clientRefreshMs = Math.max(1000, Number(body.clientRefreshMs)) || botOptions.clientRefreshMs;
+  
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ ok: true, botOptions }, null, 2));
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ ok: false, error: e.message }));
+        }
+      }
+  
+if (parsed.pathname === '/status' && req.method === 'GET') {
+      const tpl = fs.readFileSync(path.join(__dirname, 'views', 'status.ejs'), 'utf8');
+      const html = ejs.render(tpl, { botOptions });
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      return res.end(html);
+    }
   
       else if (parsed.pathname === '/transactions') {
         const mint = parsed.query.mint;
         const token = tokenLog.find(t => t.mint === mint);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(token ? token.transactions : []));
-      }
-  
-      else if (parsed.pathname.startsWith('/public/')) {
-        // Static files
-        const filePath = path.join(__dirname, parsed.pathname);
-        if (fs.existsSync(filePath)) {
-          const ext = path.extname(filePath).toLowerCase();
-          const type = ext === '.css' ? 'text/css' : 'application/javascript';
-          res.writeHead(200, { 'Content-Type': type });
-          res.end(fs.readFileSync(filePath));
-        } else {
-          res.writeHead(404).end();
-        }
       }
   
       else {

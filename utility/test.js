@@ -229,6 +229,41 @@ export async function getTopHolders(mintAddress) {
   const data = await res.json();
   return data.result; // lista dei top 20 holder
 }
+/*
+{
+  context: { slot: 359824615, apiVersion: '2.2.7' },
+  value: [
+    {
+      address: 'CWNaJxN3uBz6QNBLeECGUqw3zEForVU8c95twUfKtS56',
+      uiAmount: 995788709.380135,
+      decimals: 6,
+      amount: '995788709380135',
+      uiAmountString: '995788709.380135'
+    },
+    {
+      address: '7yQaQCS5RguoYnuyhNEU8UhmBR3VvkhK7gwuZLTHtn3H',
+      uiAmount: 2946992.584455,
+      decimals: 6,
+      amount: '2946992584455',
+      uiAmountString: '2946992.584455'
+    },
+     {
+      address: '5drk6uBV3kHixzT9JCjL2xjGL7DWHLmootPg4Z8doTQp',
+      uiAmount: 24.530104,
+      decimals: 6,
+      amount: '24530104',
+      uiAmountString: '24.530104'
+    },
+    {
+      address: 'J1CB8zHULiHhDSGRzWH8C7STap9Xk5aiGYhYtUw7zaLo',
+      uiAmount: 0,
+      decimals: 6,
+      amount: '0',
+      uiAmountString: '0'
+    },
+*/
+
+
 
 /*
 

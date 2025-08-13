@@ -59,3 +59,36 @@ function closeConfig() {
 setInterval(() => {
   location.reload(); // Ricarica la pagina
 }, 60000); // 5000 millisecondi = 5 secondi
+
+
+async function saveOptions(e) {
+  e.preventDefault();
+  const payload = {
+    quickSellMultiplier: document.getElementById('quickSellMultiplier').value,
+    quickSellMinTrades: document.getElementById('quickSellMinTrades').value,
+    rugpullMaxTrades: document.getElementById('rugpullMaxTrades').value,
+    rugpullMinGainMultiplier: document.getElementById('rugpullMinGainMultiplier').value,
+    enableTrailing: document.getElementById('enableTrailing').checked,
+    trailingPercent: document.getElementById('trailingPercent').value,
+    clientRefreshMs: document.getElementById('clientRefreshMs').value
+  };
+  const r = await fetch('/bot-options', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+  const data = await r.json();
+  if (data.ok) {
+    refreshMs = data.botOptions.clientRefreshMs;
+  }
+  return false;
+}
+
+async function loadOptions() {
+  const r = await fetch('/bot-options');
+  const o = await r.json();
+  document.getElementById('quickSellMultiplier').value = o.quickSellMultiplier;
+  document.getElementById('quickSellMinTrades').value = o.quickSellMinTrades;
+  document.getElementById('rugpullMaxTrades').value = o.rugpullMaxTrades;
+  document.getElementById('rugpullMinGainMultiplier').value = o.rugpullMinGainMultiplier;
+  document.getElementById('enableTrailing').checked = !!o.enableTrailing;
+  document.getElementById('trailingPercent').value = o.trailingPercent;
+  document.getElementById('clientRefreshMs').value = o.clientRefreshMs;
+  refreshMs = o.clientRefreshMs;
+}

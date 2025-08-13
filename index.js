@@ -155,6 +155,12 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       priceInSol = liquidityCheck(parsed) //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       setSolAmount(parsed.solAmount);
+      let solValueTrx = getSolAmount();
+      if(solValueTrx > 1.50) {//se il volume tra buy e sell e maggiore di 1.50 SOL
+          console.log(`❌ volume alto: (${solValueTrx} SOL) per ${parsed.mint}.`);
+          setSuspiciousSellDetected(false);
+          return
+      }
       if(parsed.solAmount < 0.008) {
         console.log(`❌ Acquisto troppo piccolo (${parsed.solAmount} SOL) per ${parsed.mint}. Ignorato.`);
         setSuspiciousSellDetected(true);
@@ -227,6 +233,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
           },parsed.txType).then(tradeInfo => {
             let typesellbuy=0
             if(parsed.txType === 'buy'){  }
+
             if (tradeInfo.price > tradeInfo.startPrice * 3.5 && tradeInfo.trxNum > 2) { 
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 subscribedTokens.delete(trade.mint);

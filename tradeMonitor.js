@@ -42,7 +42,7 @@ export async function monitorEarlyTrades(token, snipeCallback) {
               keys: [token.mint]
             }));
             setMintMonitor(null);
-            setSolAmount(0);
+            solAmount=0;
             suspiciousSellDetected = false
             resolve(false);
             
@@ -50,7 +50,7 @@ export async function monitorEarlyTrades(token, snipeCallback) {
         console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
        // await snipeCallback(token); potrei mettere qui l'acquisto
        setMintMonitor(null)
-       setSolAmount(0);
+       solAmount=0;
        suspiciousSellDetected = false;
         resolve(true);
       }
@@ -81,7 +81,11 @@ export function getSolAmount() {
   return solAmount;
 }
 
-export function setSolAmount(value) {
+export function setSolAmount(value,reset) {
+  if(reset) {
+    solAmount = 0;
+    return;
+  }
   solAmount = solAmount + value;
 }
 
