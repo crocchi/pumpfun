@@ -227,7 +227,7 @@ export async function getTopHolders(mintAddress) {
   });
 
   const data = await res.json();
-  return data.result.value; // lista dei top 20 holder
+  return data.result; // lista dei top 20 holder
 }
 
 /*

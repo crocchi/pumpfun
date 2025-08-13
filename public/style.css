@@ -12,6 +12,42 @@ button:hover { background: #555; }
 #close { float: right; cursor: pointer; font-size: 20px; }
 #close:hover { color: red; }
 
+:root {
+    --bg: #0c0c0f;
+    --panel: #141418;
+    --panel-2: #101014;
+    --text: #e7e7ea;
+    --muted: #9aa0a6;
+    --accent: #7c88ff;
+    --ok: #7CFC00;
+    --bad: #ff5c5c;
+    --border: #24242b;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu; background: var(--bg); color: var(--text); }
+  header { padding: 16px 24px; border-bottom: 1px solid var(--border); position: sticky; top:0; background: rgba(12,12,15,.85); backdrop-filter: blur(6px); }
+  header h1 { margin: 0; font-size: 18px; letter-spacing: .4px; }
+  .wrap { display: grid; grid-template-columns: 320px 1fr; gap: 16px; padding: 16px; }
+  .card { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--border); border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.35); }
+  .card h2 { margin: 0; padding: 14px 16px; border-bottom:1px solid var(--border); font-size: 14px; color: #cfd2ff; letter-spacing: .3px;}
+  .card .content { padding: 16px; }
+  .row { display:flex; gap:10px; margin-bottom:12px; align-items: center; }
+  .row label { width: 160px; font-size: 13px; color: var(--muted); }
+  .row input[type="number"] { flex:1; padding:8px; border-radius:10px; border:1px solid var(--border); background:#0b0b0e; color: var(--text); }
+  .row input[type="checkbox"] { transform: scale(1.15); }
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px; border:1px solid var(--border); background: #1a1d2a; color: var(--text); cursor:pointer; }
+  .btn:hover { background:#202433; }
+  .hint { color: var(--muted); font-size:12px; margin-top:8px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  th { text-align:left; color:#c2c5ff; background:#10111a; position: sticky; top: 64px; z-index: 1; }
+  tr:nth-child(even) { background: rgba(255,255,255,.02); }
+  .ok { color: var(--ok); }
+  .bad { color: var(--bad); }
+  .chip { padding: 2px 8px; border-radius: 999px; border:1px solid var(--border); background:#0f1120; font-size:11px; }
+  .muted { color: var(--muted); font-size:12px; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .right { text-align:right; }
 /* scroll-Modal */
 ul#txList {
     overflow-y: scroll;

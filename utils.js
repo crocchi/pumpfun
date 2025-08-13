@@ -18,14 +18,14 @@ export async function isSafeToken(token) {
     // 1. ✅ Controllo liquidità
     if (token.solInPool < 0.5 || token.solInPool > 5) {
       //console.log("❌ Liquidità fuori range.");
-      safeProblem.push("❌ Liquidità fuori range.");
+      safeProblem.push("❌ Liquidità fuori range."+`: ${token.solInPool} SOL`);
       //return false;
     }
 
     // 2. ✅ Controllo market cap
     if (token.marketCapSol < 5 || token.marketCapSol > 100) {
       //console.log("❌ Market cap sospetto.");
-      safeProblem.push("❌ Market cap sospetto.")
+      safeProblem.push("❌ Market cap sospetto"+`: ${token.marketCapSol} SOL`);
       //return false;
     }
 

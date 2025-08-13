@@ -15,6 +15,23 @@ export let SOLANA_USD = 170;
   //BUY_AMOUNT_SOL: parseFloat(process.env.BUY_AMOUNT_SOL),
   //TAKE_PROFIT: parseFloat(process.env.TAKE_PROFIT),
   //SLIPPAGE: parseFloat(process.env.SLIPPAGE),
+  export const botOptions = {
+    // vendita rapida
+    quickSellMultiplier: 3.5,     // vendi se price >= startPrice * 3.5 ...
+    quickSellMinTrades: 3,        // ...e almeno 3 trade
+  
+    // protezione "rugpull" basata su activity
+    rugpullMaxTrades: 25,
+    rugpullMinGainMultiplier: 1.2,
+  
+    // trailing sell
+    enableTrailing: true,
+    trailingPercent: 0.15,        // 15% sotto il massimo raggiunto
+  
+    // refresh client
+    clientRefreshMs: 4000
+  };
+
 
 
   async function fetchSolPrice() {
