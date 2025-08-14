@@ -116,3 +116,9 @@ ul#txList {
 form#botForm {
     max-width: 40%;
 }
+
+.separator {
+    height: 2px;
+    background: #444;
+    margin: 1rem 0;
+}

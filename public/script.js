@@ -70,7 +70,10 @@ async function saveOptions(e) {
     rugpullMinGainMultiplier: document.getElementById('rugpullMinGainMultiplier').value,
     enableTrailing: document.getElementById('enableTrailing').checked,
     trailingPercent: document.getElementById('trailingPercent').value,
-    clientRefreshMs: document.getElementById('clientRefreshMs').value
+    clientRefreshMs: document.getElementById('clientRefreshMs').value,
+    liquidityMax: document.getElementById('liquidityMax').value,
+    liquidityMin: document.getElementById('liquidityMin').value,
+    devShare: document.getElementById('devShare').value / 100 // Converti in decimale
   };
   const r = await fetch('/bot-options', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
   const data = await r.json();
@@ -92,5 +95,6 @@ async function loadOptions() {
   document.getElementById('clientRefreshMs').value = o.clientRefreshMs;
   document.getElementById('liquidityMin').value = o.liquidityMin;
   document.getElementById('liquidityMax').value = o.liquidityMax
+  document.getElementById('devShare').value = o.devShare* 100; // Converti in percentuale
   refreshMs = o.clientRefreshMs;
 }

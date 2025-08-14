@@ -19,6 +19,7 @@ export let SOLANA_USD = 170;
     //filtri token
     liquidityMin: 2,
     liquidityMax: 20,
+    devShare:0.15,
 
     // vendita rapida
     quickSellMultiplier: 3.5,     // vendi se price >= startPrice * 3.5 ...

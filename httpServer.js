@@ -70,8 +70,10 @@ export function startHttpServer(port = 4000) {
         try {
           const body = await parseBody(req);
           // coerce & salva
+          
           if ('liquidityMin' in body) botOptions.liquidityMin = Math.max(0, Number(body.liquidityMin)) || botOptions.liquidityMin;
           if ('liquidityMax' in body) botOptions.liquidityMax = Number(body.liquidityMax) || botOptions.liquidityMax;
+          if ('devShare' in body) botOptions.devShare = Math.min(0.5, Math.max(0, Number(body.devShare))) || botOptions.devShare;
           if ('quickSellMultiplier' in body) botOptions.quickSellMultiplier = Number(body.quickSellMultiplier) || botOptions.quickSellMultiplier;
           if ('quickSellMinTrades' in body) botOptions.quickSellMinTrades = Number(body.quickSellMinTrades) || botOptions.quickSellMinTrades;
           if ('rugpullMaxTrades' in body) botOptions.rugpullMaxTrades = Number(body.rugpullMaxTrades) || botOptions.rugpullMaxTrades;

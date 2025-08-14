@@ -33,7 +33,7 @@ export async function isSafeToken(token) {
     // 3. ✅ Dev token share (dev ha ricevuto troppi token)
     const totalTokens = token.tokensInPool + token.initialBuy;
     const devShare = token.initialBuy / totalTokens;
-    if (devShare > 0.15) {
+    if (devShare > botOptions.devShare) {
       //console.log("❌ Il creatore ha preso troppi token iniziali.");
       safeProblem.push("❌ Il creatore ha comprato il"+ ` (${(devShare * 100).toFixed(2)}%) di token iniziali`);
       //return false;
