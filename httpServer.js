@@ -74,6 +74,9 @@ export function startHttpServer(port = 4000) {
           if ('liquidityMin' in body) botOptions.liquidityMin = Math.max(0, Number(body.liquidityMin)) || botOptions.liquidityMin;
           if ('liquidityMax' in body) botOptions.liquidityMax = Number(body.liquidityMax) || botOptions.liquidityMax;
           if ('devShare' in body) botOptions.devShare = Math.min(0.5, Math.max(0, Number(body.devShare))) || botOptions.devShare;
+          if ('marketcapMin' in body) botOptions.marketcapMin = Math.max(0, Number(body.marketcapMin)) || botOptions.marketcapMin;
+          if ('marketcapMax' in body) botOptions.marketcapMax = Math.max(0, Number(body.marketcapMax)) || botOptions.marketcapMax;
+          if ('rugpullxyz' in body) botOptions.rugpullxyz = body.rugpullxyz === 'true' || body.rugpullxyz === true || false;
           if ('quickSellMultiplier' in body) botOptions.quickSellMultiplier = Number(body.quickSellMultiplier) || botOptions.quickSellMultiplier;
           if ('quickSellMinTrades' in body) botOptions.quickSellMinTrades = Number(body.quickSellMinTrades) || botOptions.quickSellMinTrades;
           if ('rugpullMaxTrades' in body) botOptions.rugpullMaxTrades = Number(body.rugpullMaxTrades) || botOptions.rugpullMaxTrades;

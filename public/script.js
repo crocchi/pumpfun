@@ -73,7 +73,10 @@ async function saveOptions(e) {
     clientRefreshMs: document.getElementById('clientRefreshMs').value,
     liquidityMax: document.getElementById('liquidityMax').value,
     liquidityMin: document.getElementById('liquidityMin').value,
-    devShare: document.getElementById('devShare').value / 100 // Converti in decimale
+    devShare: document.getElementById('devShare').value / 100, // Converti in decimale
+    marketcapMin: document.getElementById('marketcapMin').value,
+    marketcapMax: document.getElementById('marketcapMax').value,
+    rugpullxyz: document.getElementById('enablerugpullxyz').checked
   };
   const r = await fetch('/bot-options', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
   const data = await r.json();
@@ -96,5 +99,9 @@ async function loadOptions() {
   document.getElementById('liquidityMin').value = o.liquidityMin;
   document.getElementById('liquidityMax').value = o.liquidityMax
   document.getElementById('devShare').value = o.devShare* 100; // Converti in percentuale
+  document.getElementById('marketcapMin').value = o.marketcapMin;
+  document.getElementById('marketcapMax').value = o.marketcapMax;
+  document.getElementById('enablerugpullxyz').checked = o.rugpullxyz;
+  // Aggiorna la variabile globale refreshMs
   refreshMs = o.clientRefreshMs;
 }

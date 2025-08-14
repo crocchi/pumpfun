@@ -1,6 +1,7 @@
 //import WebSocket from 'ws';
 import { ws } from './index.js';
-const TIME_LIMIT = 3000; // 1,5 secondi
+import { botOptions } from './config.js';
+const TIME_LIMIT = botOptions.time_monitor; // 1,5 secondi
 
 let suspiciousSellDetected = false;
 let tradeMintMonitor= null;
@@ -34,7 +35,7 @@ export async function monitorEarlyTrades(token, snipeCallback) {
     setTimeout(async () => {
       //ws.close();
 
-      if (suspiciousSellDetected || solAmount < 0.01) {
+      if (suspiciousSellDetected || solAmount < botOptions.volumeMin) {
         console.log("⛔ Vendita rilevata troppo presto. Token scartato."+` Volume: (${solAmount} SOL)`);
         
          ws.send(JSON.stringify({
@@ -54,7 +55,7 @@ export async function monitorEarlyTrades(token, snipeCallback) {
        suspiciousSellDetected = false;
         resolve(true);
       }
-    }, TIME_LIMIT);
+    }, botOptions.time_monitor);
   });
 }
 

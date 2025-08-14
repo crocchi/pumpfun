@@ -122,3 +122,9 @@ form#botForm {
     background: #444;
     margin: 1rem 0;
 }
+.hintt {
+    margin: 2rem;
+    color: var(--accent);
+    text-align: center;
+    font-size: 16px;
+}

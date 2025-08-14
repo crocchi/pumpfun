@@ -24,7 +24,7 @@ export async function isSafeToken(token) {
     }
 
     // 2. ✅ Controllo market cap
-    if (token.marketCapSol < 5 || token.marketCapSol > 100) {
+    if (token.marketCapSol < botOptions.marketcapMin || token.marketCapSol > botOptions.marketcapMax) {
       //console.log("❌ Market cap sospetto.");
       safeProblem.push("❌ Market cap sospetto"+`: ${token.marketCapSol} SOL`);
       //return false;
@@ -91,7 +91,7 @@ try {
     }
 
     // 7. ✅ Controllo sicurezza rugPull (api rugpull.xyz)
-if(safeProblem.length === 0) {
+if(safeProblem.length === 0 && botOptions.rugpullxyz) {
     const info = await checkRugRisk(token.mint);
     if (info) {
       console.log(`🔎 Rischio per ${token.mint}:`, info.risks[0]?.level, `(Score: ${info.risks[0]?.score})` , info.risks[0]?.description);
@@ -199,7 +199,8 @@ export async function checkMissingSocials(uri) {
     return true; // Descrizione lunga, potrebbe essere interessante... testiamo..
   }
   if (!hasDescription) {
-    safeProblem.push("❌ Descrizione breve o assente");
+    safeProblem.push("❌ Descrizione breve o assente"+ ` (${extensions.description.length} caratteri)`);
+    
     return false     
   }
 
