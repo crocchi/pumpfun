@@ -234,6 +234,15 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             let typesellbuy=0
             if(parsed.txType === 'buy'){  }
 
+            /*
+            file:///opt/render/project/src/index.js:237
+            if (tradeInfo.price > tradeInfo.startPrice * 3.5 && tradeInfo.trxNum > 2) { 
+                          ^
+TypeError: Cannot read properties of undefined (reading 'price')
+    at file:///opt/render/project/src/index.js:237:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+ */
+if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {
             if (tradeInfo.price > tradeInfo.startPrice * 3.5 && tradeInfo.trxNum > 2) { 
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 subscribedTokens.delete(trade.mint);
@@ -255,9 +264,10 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
                   subscribedTokens.delete(trade.mint);
                   console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
             }
-
+          }else return console.error('❌ Errore nel tradeInfo:', tradeInfo);
             console.log(`(${tradeInfo.name})📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount}`);
           });
+
         }        
         
       }
