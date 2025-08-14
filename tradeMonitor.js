@@ -34,8 +34,8 @@ export async function monitorEarlyTrades(token, snipeCallback) {
     setTimeout(async () => {
       //ws.close();
 
-      if (suspiciousSellDetected) {
-        console.log("⛔ Vendita rilevata troppo presto. Token scartato.");
+      if (suspiciousSellDetected || solAmount < 0.01) {
+        console.log("⛔ Vendita rilevata troppo presto. Token scartato."+` Volume: (${solAmount} SOL)`);
         
          ws.send(JSON.stringify({
               method: "unsubscribeTokenTrade",

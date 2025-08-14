@@ -16,8 +16,8 @@ let cont=0
 export async function isSafeToken(token) {
   safeProblem=[];
   try {
-    // 1. ✅ Controllo liquidità - minori di 30 SOL esce
-    if (/*token.solInPool < 0.5 || */token.solInPool < 34.00) {
+    // 1. ✅ Controllo liquidità min 2 max 20
+    if (token.solInPool < botOptions.liquidityMin+30 || token.solInPool > botOptions.liquidityMax+30 ) {
       //console.log("❌ Liquidità fuori range.");
       safeProblem.push("❌ Liquidità fuori range."+`: ${token.solInPool} SOL`);
       //return false;

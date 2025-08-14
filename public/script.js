@@ -58,7 +58,7 @@ function closeConfig() {
   // Funzione per aggiornare la pagina ogni 10 secondi
 setInterval(() => {
   location.reload(); // Ricarica la pagina
-}, 60000); // 5000 millisecondi = 5 secondi
+}, 120000); // 5000 millisecondi = 5 secondi
 
 
 async function saveOptions(e) {
@@ -90,5 +90,7 @@ async function loadOptions() {
   document.getElementById('enableTrailing').checked = !!o.enableTrailing;
   document.getElementById('trailingPercent').value = o.trailingPercent;
   document.getElementById('clientRefreshMs').value = o.clientRefreshMs;
+  document.getElementById('liquidityMin').value = o.liquidityMin;
+  document.getElementById('liquidityMax').value = o.liquidityMax
   refreshMs = o.clientRefreshMs;
 }

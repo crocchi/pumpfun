@@ -16,6 +16,10 @@ export let SOLANA_USD = 170;
   //TAKE_PROFIT: parseFloat(process.env.TAKE_PROFIT),
   //SLIPPAGE: parseFloat(process.env.SLIPPAGE),
   export const botOptions = {
+    //filtri token
+    liquidityMin: 2,
+    liquidityMax: 20,
+
     // vendita rapida
     quickSellMultiplier: 3.5,     // vendi se price >= startPrice * 3.5 ...
     quickSellMinTrades: 3,        // ...e almeno 3 trade
