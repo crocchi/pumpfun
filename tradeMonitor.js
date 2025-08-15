@@ -38,6 +38,10 @@ export async function monitorEarlyTrades(token, snipeCallback) {
         suspiciousSellDetected = false;
         console.log("⛔ Volume Alto - rimuovi tag false.");
       }
+      if(solAmount < 0.01) {
+        suspiciousSellDetected = true;
+        console.log("⛔ Volume nullo.");
+      }
 
       if (suspiciousSellDetected && solAmount < botOptions.volumeMin) {
         console.log("⛔ Vendita rilevata troppo presto. Token scartato."+` Volume: (${solAmount} SOL)`);

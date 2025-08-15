@@ -96,7 +96,9 @@ ws.on('message', async function message(data) {
         console.log(`🌊 Pool: ${token.pool}`);
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         // 
-        
+        getTopHolders(token.mint)
+        .then(console.log)
+        .catch(console.error);
 
         logToken({
             mint: token.mint,
@@ -231,7 +233,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             marketCapUsd: marketCapUsd,
            // trxNum: trxNumm ,
           },parsed.txType).then(tradeInfo => {
-            let typesellbuy=0
+            
             if(parsed.txType === 'buy'){  }
 
             /*
@@ -242,7 +244,8 @@ TypeError: Cannot read properties of undefined (reading 'price')
     at file:///opt/render/project/src/index.js:237:27
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
  */
-if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {
+if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//fix tradeinfo undefined
+
             if (tradeInfo.price > tradeInfo.startPrice * 3.5 && tradeInfo.trxNum > 2) { 
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 subscribedTokens.delete(trade.mint);
