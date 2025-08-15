@@ -101,7 +101,10 @@ async function loadOptions() {
   document.getElementById('devShare').value = o.devShare* 100; // Converti in percentuale
   document.getElementById('marketcapMin').value = o.marketcapMin;
   document.getElementById('marketcapMax').value = o.marketcapMax;
-  document.getElementById('enablerugpullxyz').checked = !!o.rugpullxyz;
+  if (o.rugpullxyz === 'true' || o.rugpullxyz === true){
+    o.rugpullxyz = true; // Imposta default se non presente
+    document.getElementById('enablerugpullxyz').checked = true;
+  } else {document.getElementById('enablerugpullxyz').checked = false;}
   // Aggiorna la variabile globale refreshMs
   refreshMs = o.clientRefreshMs;
 }

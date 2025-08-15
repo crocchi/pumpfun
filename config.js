@@ -26,7 +26,7 @@ export let SOLANA_USD = 170;
 
     //monitor token
     time_monitor: 3000, // 3 secondi
-    volumeMin: 0.01, // volume minimo in SOL per considerare il token
+    volumeMin: 0.30, // volume minimo in SOL per considerare il token
 
     // vendita rapida
     quickSellMultiplier: 3.5,     // vendi se price >= startPrice * 3.5 ...
