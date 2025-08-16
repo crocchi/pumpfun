@@ -128,3 +128,28 @@ form#botForm {
     text-align: center;
     font-size: 16px;
 }
+
+#botForm .two-column-container {
+    display: flex; /* Use Flexbox for layout */
+    justify-content: center; /* Center the columns horizontally */
+    align-items: flex-start; /* Align items to the start vertically (optional, depends on desired alignment) */
+    width: 100%; /* Occupy the full width of the form */
+    max-width: 800px; /* Set a maximum width for the container (adjust as needed) */
+    margin: 0 auto; /* Center the container block horizontally */
+    gap: 20px; /* Add space between the columns (adjust as needed) */
+  }
+  
+  #botForm .two-column-container > div {
+    flex: 1; /* Make each column take up equal space */
+    padding: 10px; /* Add some padding inside each column */
+    /* Add any other styling for the columns here, e.g., borders, background */
+  }
+  
+  /* Optional: Add media query for responsiveness */
+  @media (max-width: 768px) {
+    #botForm .two-column-container {
+      flex-direction: column; /* Stack columns vertically on smaller screens */
+      align-items: center; /* Center items when stacked */
+    }
+  }
+  
