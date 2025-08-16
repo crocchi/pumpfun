@@ -58,7 +58,7 @@ function closeConfig() {
   // Funzione per aggiornare la pagina ogni 10 secondi
 setInterval(() => {
   location.reload(); // Ricarica la pagina
-}, 120000); // 5000 millisecondi = 5 secondi
+}, 120000000); // 5000 millisecondi = 5 secondi
 
 
 async function saveOptions(e) {
@@ -68,9 +68,9 @@ async function saveOptions(e) {
     quickSellMinTrades: document.getElementById('quickSellMinTrades').value,
     rugpullMaxTrades: document.getElementById('rugpullMaxTrades').value,
     rugpullMinGainMultiplier: document.getElementById('rugpullMinGainMultiplier').value,
-    enableTrailing: document.getElementById('enableTrailing').checked,
-    trailingPercent: document.getElementById('trailingPercent').value,
-    clientRefreshMs: document.getElementById('clientRefreshMs').value,
+   // enableTrailing: document.getElementById('enableTrailing').checked,
+   // trailingPercent: document.getElementById('trailingPercent').value,
+   // clientRefreshMs: document.getElementById('clientRefreshMs').value,
     liquidityMax: document.getElementById('liquidityMax').value,
     liquidityMin: document.getElementById('liquidityMin').value,
     devShare: document.getElementById('devShare').value / 100, // Converti in decimale
@@ -93,9 +93,9 @@ async function loadOptions() {
   document.getElementById('quickSellMinTrades').value = o.quickSellMinTrades;
   document.getElementById('rugpullMaxTrades').value = o.rugpullMaxTrades;
   document.getElementById('rugpullMinGainMultiplier').value = o.rugpullMinGainMultiplier;
-  document.getElementById('enableTrailing').checked = !!o.enableTrailing;
-  document.getElementById('trailingPercent').value = o.trailingPercent;
-  document.getElementById('clientRefreshMs').value = o.clientRefreshMs;
+ // document.getElementById('enableTrailing').checked = !!o.enableTrailing;
+ // document.getElementById('trailingPercent').value = o.trailingPercent;
+  //document.getElementById('clientRefreshMs').value = o.clientRefreshMs;
   document.getElementById('liquidityMin').value = o.liquidityMin;
   document.getElementById('liquidityMax').value = o.liquidityMax
   document.getElementById('devShare').value = o.devShare* 100; // Converti in percentuale
@@ -106,5 +106,5 @@ async function loadOptions() {
     document.getElementById('enablerugpullxyz').checked = true;
   } else {document.getElementById('enablerugpullxyz').checked = false;}
   // Aggiorna la variabile globale refreshMs
-  refreshMs = o.clientRefreshMs;
+  //refreshMs = o.clientRefreshMs;
 }
