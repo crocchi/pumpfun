@@ -87,11 +87,11 @@
       <% tokens.forEach(t => { 
         const pct = t.oldMarketCapUsd ? ((t.marketCapUsd - t.oldMarketCapUsd) / t.oldMarketCapUsd) * 100 : 0;
         const gain = ((t.price - t.startPrice) / t.startPrice) * 100;
-        const time = new Date(t.timestamp).toLocaleTimeString();
+        const time = new Date().toLocaleTimeString();
         let defiExchange ;
-        if (t.pool && t.pool.includes('bonk')) {
+        if (t.mint.includes('bonk')) {
           defiExchange = `<a href="https://letsbonk.fun/token/${t.mint}" target="_blank">Apri Pool</a>`;
-        } else if (t.pool && t.pool.includes('pump')) {
+        } else if (t.mint.includes('pump')) {
           defiExchange = `<a href="https://pump.fun/coin/${t.mint}" target="_blank">Apri Pool</a>`;
         } else {
           defiExchange = 'N/A';

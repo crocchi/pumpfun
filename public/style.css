@@ -113,9 +113,7 @@ ul#txList {
 }
 .save-btn:hover { background: green; }
 
-form#botForm {
-    display: flex; /* Use Flexbox for layout */
-}
+
 
 .separator {
     height: 2px;
