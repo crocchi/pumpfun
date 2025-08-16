@@ -19,7 +19,7 @@
         <h2>Opzioni Bot</h2>
         <div class="content">
     <form id="botForm" onsubmit="return saveOptions(event)">
-      <div>
+      <div class="twoc">
       <div class="two-column-container">
       <div class="hintt">Filtri Token</div>
       <div class="row"><label>Min Liquidity (SOL)</label><input type="number" step="0.10" id="liquidityMin"></div>
@@ -37,20 +37,13 @@
       <div class="separator"></div>
       </div>
       <div class="two-column-container">
-        <div class="hintt">Filtri Token</div>
-        <div class="row"><label>Min Liquidity (SOL)</label><input type="number" step="0.10" id="liquidityMin"></div>
-        <div class="row"><label>Max Liquidity (SOL)</label><input type="number" step="0.10" id="liquidityMax"></div>
-        <div class="row"><label>Dev Share max buy (%)</label><input type="number" step="1" id="devShare"></div>
-        <div class="row"><label>Min Market Cap (SOL)</label><input type="number" step="0.5" id="marketcapMin"></div>
-        <div class="row"><label>Max Market Cap (SOL)</label><input type="number" step="0.5" id="marketcapMax"></div>
-        <div class="row"><label>RugPull.xyz check</label><input type="checkbox" id="enablerugpullxyz"></div>
-        <div class="separator"></div>
+        <div class="hintt">Monitor Token</div>
+        <div class="row"><label>Timer Monitor</label><input type="number" step="0.10" id="timeMonitor"></div>
+        <div class="row"><label>Volume Min (SOL)</label><input type="number" step="0.10" id="liquidityMax"></div>
+       <div class="separator"></div>
         <div class="hintt">Sell</div>
         <div class="row"><label>Quick Sell × start</label><input type="number" step="0.01" id="quickSellMultiplier"></div>
-        <div class="row"><label>Quick Sell min trades</label><input type="number" step="1" id="quickSellMinTrades"></div>
-        <div class="row"><label>Rugpull max trades</label><input type="number" step="1" id="rugpullMaxTrades"></div>
-        <div class="row"><label>Rugpull min gain × start</label><input type="number" step="0.01" id="rugpullMinGainMultiplier"></div>
-        <div class="separator"></div>
+       <div class="separator"></div>
         </div>
 
       </div>
