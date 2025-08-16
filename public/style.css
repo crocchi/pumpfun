@@ -114,7 +114,7 @@ ul#txList {
 .save-btn:hover { background: green; }
 
 form#botForm {
-    max-width: 40%;
+    display: flex; /* Use Flexbox for layout */
 }
 
 .separator {
@@ -130,12 +130,11 @@ form#botForm {
 }
 
 #botForm .two-column-container {
-    display: flex; /* Use Flexbox for layout */
+ 
     justify-content: center; /* Center the columns horizontally */
-    align-items: flex-start; /* Align items to the start vertically (optional, depends on desired alignment) */
-    width: 100%; /* Occupy the full width of the form */
+   width: 100%; /* Occupy the full width of the form */
     max-width: 800px; /* Set a maximum width for the container (adjust as needed) */
-    margin: 0 auto; /* Center the container block horizontally */
+    margin: 0 10px auto; /* Center the container block horizontally */
     gap: 20px; /* Add space between the columns (adjust as needed) */
   }
   
