@@ -8,7 +8,14 @@ import { wshelius, target_mint, getTopHolders } from './utility/test.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
+/*
 
+            COSE DA FARE:
+
+            -TRAILING SELL
+            -HIGHPRICE TOKEN
+
+*/
 
 export const ws = new WebSocket('wss://pumpportal.fun/api/data');
 const subscribedTokens = new Set();
@@ -67,9 +74,6 @@ ws.on('message', async function message(data) {
            console.log(`--------------------------------------`);
            return
          }
-         getTopHolders(token.mint)
-         .then(console.log)
-         .catch(console.error);
         
          setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
          let devBot=await monitorEarlyTrades(token);
@@ -96,9 +100,11 @@ ws.on('message', async function message(data) {
         console.log(`🌊 Pool: ${token.pool}`);
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         // 
+        /*
         getTopHolders(token.mint)
         .then(console.log)
         .catch(console.error);
+        */
 
         logToken({
             mint: token.mint,
