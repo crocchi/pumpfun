@@ -79,7 +79,8 @@ async function saveOptions(e) {
     rugpullxyz: document.getElementById('enablerugpullxyz').checked,
     time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
     volumeMin: document.getElementById('volumeMinMonitor').value,
-    buyAmount: document.getElementById('buyAmount').value
+    buyAmount: document.getElementById('buyAmount').value,
+    maxTrxNumMonitor: document.getElementById('maxTrxNumMonitor').value
   };
   const r = await fetch('/bot-options', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
   const data = await r.json();
@@ -107,6 +108,7 @@ async function loadOptions() {
   document.getElementById('timeMonitor').value = o.time_monitor / 1000; // Converti in secondi
   document.getElementById('volumeMinMonitor').value = o.volumeMin;
   document.getElementById('buyAmount').value = o.buyAmount;
+  document.getElementById('maxTrxNumMonitor').value = o.maxTrxNumMonitor;
   // Imposta il checkbox rugpullxyz
 
   if (o.rugpullxyz === 'true' || o.rugpullxyz === true){

@@ -6,6 +6,7 @@ let TIME_LIMIT = botOptions.time_monitor; // 3 secondi
 let suspiciousSellDetected = false;
 let tradeMintMonitor= null;
 let solAmount = 0;
+let solTrxNumMonitor = 0; // per monitorare il volume delle vendite sospette
 
 export async function monitorEarlyTrades(token, snipeCallback) {
 
@@ -42,6 +43,12 @@ export async function monitorEarlyTrades(token, snipeCallback) {
         suspiciousSellDetected = true;
         console.log("⛔ Volume nullo.");
       }
+      if(solTrxNumMonitor > botOptions.maxTrxNumMonitor) {//se sono più di 4-5 trx ..alloa sn bot--rugpull detc
+        suspiciousSellDetected = true;
+        console.log("⛔ Troppi trade sospetti...Possibiile rugpull Botnet.");
+      }
+
+      
 
       if (suspiciousSellDetected && solAmount < botOptions.volumeMin) {
         console.log("⛔ Vendita rilevata troppo presto. Token scartato."+` Volume: (${solAmount} SOL)`);
@@ -51,7 +58,7 @@ export async function monitorEarlyTrades(token, snipeCallback) {
               keys: [token.mint]
             }));
             setMintMonitor(null);
-            solAmount=0;
+            solAmount=0;solTrxNumMonitor=0;
             suspiciousSellDetected = false
             resolve(false);
             
@@ -59,7 +66,7 @@ export async function monitorEarlyTrades(token, snipeCallback) {
         console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
        // await snipeCallback(token); potrei mettere qui l'acquisto
        setMintMonitor(null)
-       solAmount=0;
+       solAmount=0;solTrxNumMonitor=0;
        suspiciousSellDetected = false;
         resolve(true);
       }
@@ -90,11 +97,13 @@ export function getSolAmount() {
   return solAmount;
 }
 
+
 export function setSolAmount(value,reset) {
   if(reset) {
     solAmount = 0;
     return;
   }
   solAmount = solAmount + value;
+  solTrxNumMonitor++;
 }
 

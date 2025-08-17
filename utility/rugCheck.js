@@ -17,11 +17,11 @@ export async function checkRugRisk(mint) {
     });
 
     const data = res.data;
-    //console.log(`RugCheck API risposta per ${mint}:`, data);
+    console.log(`RugCheck API risposta per ${mint}:`, data);
     const end = performance.now();
     if (data.risks.length === 0) {
       console.warn(`⚠️ Nessun punteggio rugpull trovato per ${mint}`);
-      return null;
+      return false;
     }
     console.log(`⏱️ Tempo di esecuzione: ${(end - start).toFixed(2)} ms`);
     return data
