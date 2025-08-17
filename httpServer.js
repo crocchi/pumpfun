@@ -70,6 +70,7 @@ export function startHttpServer(port = 4000) {
         try {
           const body = await parseBody(req);
           // coerce & salva
+          console.log("Aggiornamento botOptions:", body);
           
           if ('liquidityMin' in body) botOptions.liquidityMin = Math.max(0, Number(body.liquidityMin)) || botOptions.liquidityMin;
           if ('liquidityMax' in body) botOptions.liquidityMax = Number(body.liquidityMax) || botOptions.liquidityMax;
@@ -81,7 +82,7 @@ export function startHttpServer(port = 4000) {
           if ('quickSellMinTrades' in body) botOptions.quickSellMinTrades = Number(body.quickSellMinTrades) || botOptions.quickSellMinTrades;
           if ('rugpullMaxTrades' in body) botOptions.rugpullMaxTrades = Number(body.rugpullMaxTrades) || botOptions.rugpullMaxTrades;
           if ('rugpullMinGainMultiplier' in body) botOptions.rugpullMinGainMultiplier = Number(body.rugpullMinGainMultiplier) || botOptions.rugpullMinGainMultiplier;
-          if ('time_monitor' in body) botOptions.time_monitor = Math.max(1000, Number(body.time_monitor)) || botOptions.time_monitor;
+          if ('time_monitor' in body) botOptions.time_monitor = Number(body.time_monitor) || botOptions.time_monitor;
           if ('volumeMinMonitor' in body) botOptions.volumeMin = Math.max(0, Number(body.volumeMinMonitor)) || botOptions.volumeMin;
           if ('buyAmount' in body) botOptions.buyAmount = Math.max(0, Number(body.buyAmount)) || botOptions.buyAmount;
           

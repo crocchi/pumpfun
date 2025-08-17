@@ -50,7 +50,7 @@ export async function monitorEarlyTrades(token, snipeCallback) {
 
       
 
-      if (suspiciousSellDetected && solAmount < botOptions.volumeMin) {
+      if (suspiciousSellDetected ||/*&&*/ solAmount < botOptions.volumeMin) {
         console.log("⛔ Vendita rilevata troppo presto. Token scartato."+` Volume: (${solAmount} SOL)`);
         
          ws.send(JSON.stringify({
