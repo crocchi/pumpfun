@@ -81,6 +81,11 @@ export function startHttpServer(port = 4000) {
           if ('quickSellMinTrades' in body) botOptions.quickSellMinTrades = Number(body.quickSellMinTrades) || botOptions.quickSellMinTrades;
           if ('rugpullMaxTrades' in body) botOptions.rugpullMaxTrades = Number(body.rugpullMaxTrades) || botOptions.rugpullMaxTrades;
           if ('rugpullMinGainMultiplier' in body) botOptions.rugpullMinGainMultiplier = Number(body.rugpullMinGainMultiplier) || botOptions.rugpullMinGainMultiplier;
+          if ('time_monitor' in body) botOptions.time_monitor = Math.max(1000, Number(body.time_monitor)) || botOptions.time_monitor;
+          if ('volumeMinMonitor' in body) botOptions.volumeMin = Math.max(0, Number(body.volumeMinMonitor)) || botOptions.volumeMin;
+          if ('buyAmount' in body) botOptions.buyAmount = Math.max(0, Number(body.buyAmount)) || botOptions.buyAmount;
+          
+
           if ('enableTrailing' in body) botOptions.enableTrailing = body.enableTrailing === 'true' || body.enableTrailing === true;
           if ('trailingPercent' in body) botOptions.trailingPercent = Math.min(0.9, Math.max(0.01, Number(body.trailingPercent))) || botOptions.trailingPercent;
           if ('clientRefreshMs' in body) botOptions.clientRefreshMs = Math.max(1000, Number(body.clientRefreshMs)) || botOptions.clientRefreshMs;

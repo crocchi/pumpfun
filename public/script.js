@@ -76,7 +76,10 @@ async function saveOptions(e) {
     devShare: document.getElementById('devShare').value / 100, // Converti in decimale
     marketcapMin: document.getElementById('marketcapMin').value,
     marketcapMax: document.getElementById('marketcapMax').value,
-    rugpullxyz: document.getElementById('enablerugpullxyz').checked
+    rugpullxyz: document.getElementById('enablerugpullxyz').checked,
+    time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
+    volumeMin: document.getElementById('volumeMinMonitor').value,
+    buyAmount: document.getElementById('buyAmount').value
   };
   const r = await fetch('/bot-options', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
   const data = await r.json();
@@ -101,6 +104,11 @@ async function loadOptions() {
   document.getElementById('devShare').value = o.devShare* 100; // Converti in percentuale
   document.getElementById('marketcapMin').value = o.marketcapMin;
   document.getElementById('marketcapMax').value = o.marketcapMax;
+  document.getElementById('timeMonitor').value = o.time_monitor / 1000; // Converti in secondi
+  document.getElementById('volumeMinMonitor').value = o.volumeMin;
+  document.getElementById('buyAmount').value = o.buyAmount;
+  // Imposta il checkbox rugpullxyz
+
   if (o.rugpullxyz === 'true' || o.rugpullxyz === true){
     o.rugpullxyz = true; // Imposta default se non presente
     document.getElementById('enablerugpullxyz').checked = true;

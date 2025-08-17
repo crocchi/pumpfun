@@ -1,7 +1,7 @@
 //import WebSocket from 'ws';
 import { ws } from './index.js';
 import { botOptions } from './config.js';
-const TIME_LIMIT = botOptions.time_monitor; // 1,5 secondi
+const TIME_LIMIT = botOptions.time_monitor; // 3 secondi
 
 let suspiciousSellDetected = false;
 let tradeMintMonitor= null;

@@ -3,7 +3,7 @@ import { isSafeToken } from './utils.js';
 import { monitorEarlyTrades ,setSuspiciousSellDetected , setMintMonitor , getMintMonitor,getSolAmount, setSolAmount } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken } from './httpServer.js';
-import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD } from './config.js';
+import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
 
 // Avvia HTTP server
@@ -246,7 +246,7 @@ TypeError: Cannot read properties of undefined (reading 'price')
  */
 if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//fix tradeinfo undefined
 
-            if (tradeInfo.price > tradeInfo.startPrice * 3.5 && tradeInfo.trxNum > 2) { 
+            if (tradeInfo.price > tradeInfo.startPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) { 
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 subscribedTokens.delete(trade.mint);
                 console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
@@ -257,7 +257,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
                   
             }
           // Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi
-            if (tradeInfo.trxNum >35 && tradeInfo.price > tradeInfo.startPrice * 1.2) { 
+            if (tradeInfo.trxNum >botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.startPrice * botOptions.rugpullMinGainMultiplier) { 
 
                 console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 ws.send(JSON.stringify({

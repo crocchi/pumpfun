@@ -27,13 +27,16 @@ export let SOLANA_USD = 170;
     //monitor token
     time_monitor: 3000, // 3 secondi
     volumeMin: 0.10, // volume minimo in SOL per considerare il token
+    
+    //acquisto token
+    buyAmount: 0.05, // quantità di SOL da acquistare
 
     // vendita rapida
     quickSellMultiplier: 3.5,     // vendi se price >= startPrice * 3.5 ...
     quickSellMinTrades: 3,        // ...e almeno 3 trade
   
     // protezione "rugpull" basata su activity
-    rugpullMaxTrades: 25,
+    rugpullMaxTrades: 35,
     rugpullMinGainMultiplier: 1.2,
   
     // trailing sell

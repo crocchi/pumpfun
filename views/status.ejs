@@ -30,19 +30,19 @@
       <div class="row"><label>RugPull.xyz check</label><input type="checkbox" id="enablerugpullxyz"></div>
       <div class="separator"></div>
       <div class="hintt">Sell</div>
-      <div class="row"><label>Quick Sell × start</label><input type="number" step="0.01" id="quickSellMultiplier"></div>
+      <div class="row"><label>Quick Sell × Multiplier</label><input type="number" step="0.01" id="quickSellMultiplier"></div>
       <div class="row"><label>Quick Sell min trades</label><input type="number" step="1" id="quickSellMinTrades"></div>
       <div class="row"><label>Rugpull max trades</label><input type="number" step="1" id="rugpullMaxTrades"></div>
-      <div class="row"><label>Rugpull min gain × start</label><input type="number" step="0.01" id="rugpullMinGainMultiplier"></div>
+      <div class="row"><label>Rugpull min gain × Multiplier</label><input type="number" step="0.01" id="rugpullMinGainMultiplier"></div>
       <div class="separator"></div>
       </div>
       <div class="two-column-container">
         <div class="hintt">Monitor Token</div>
-        <div class="row"><label>Timer Monitor</label><input type="number" step="0.10" id="timeMonitor"></div>
-        <div class="row"><label>Volume Min (SOL)</label><input type="number" step="0.10" id="liquidityMax"></div>
+        <div class="row"><label>Timer Monitor(sec)</label><input type="number" step="0.10" id="timeMonitor"></div>
+        <div class="row"><label>Volume Min (SOL)</label><input type="number" step="0.10" id="volumeMinMonitor"></div>
        <div class="separator"></div>
-        <div class="hintt">Sell</div>
-        <div class="row"><label>Quick Sell × start</label><input type="number" step="0.01" id="quickSellMultiplier"></div>
+        <div class="hintt">Buy Snipe Token</div>
+        <div class="row"><label>Buy Amount: </label><input type="number" step="0.01" id="buyAmount"></div>
        <div class="separator"></div>
         </div>
 
@@ -52,7 +52,6 @@
       <div class="row"><label>Aggiorna client (ms)</label><input type="number" step="100" id="clientRefreshMs"></div> -->
       <div class="row"><button class="btn" type="submit">💾 Salva</button></div>
       <div class="row"><button class="btn" onclick="loadOptions()">Carica</button></div>
-      <div class="hint">Le impostazioni vengono applicate runtime e persistono finché il processo resta attivo.</div>
     </form>
  </div>
 </div>
@@ -87,7 +86,7 @@
       <% tokens.forEach(t => { 
         const pct = t.oldMarketCapUsd ? ((t.marketCapUsd - t.oldMarketCapUsd) / t.oldMarketCapUsd) * 100 : 0;
         const gain = ((t.price - t.startPrice) / t.startPrice) * 100;
-        const time = new Date().toLocaleTimeString();
+        const time = new Date(t.timestamp).toLocaleTimeString();
         let defiExchange ;
         if (t.mint.includes('BONK') || t.mint.includes('bonk')) {
           defiExchange = `<a href="https://letsbonk.fun/token/${t.mint}" target="_blank">Apri Pool</a>`;
