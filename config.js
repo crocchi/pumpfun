@@ -19,7 +19,7 @@ export let SOLANA_USD = 170;
     //filtri token
     liquidityMin: 2,
     liquidityMax: 20,
-    devShare:0.20,
+    devShare:0.26,
     marketcapMin: 5,
     marketcapMax: 100,
     rugpullxyz:true,

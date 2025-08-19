@@ -91,7 +91,7 @@ try {
       }*/
         
         // Quando ricevi i metadati
-const check = await checkMetadataTwitter(token);
+const check = checkMetadataTwitter(token);
 if (check.suspicious) {
   console.log(`⚠️ Twitter non coincide con account twitter, sospetto per ${token.name}: ${check.reasons.join(", ")}`);
   safeProblem.push(`❌ Twitter Check: ${check.reasons.join(", ")}`);
@@ -206,6 +206,7 @@ export async function checkMissingSocials(uri) {
   //controllo descrizione
   const hasDescription = typeof extensions.description === 'string' && extensions.description.length > 14;
   if (hasDescription && extensions.description.length > 200) {
+    console.log("⚠️ Descrizione lunga, potrebbe essere interessante... testiamo..");
     safeProblem=[];
     return true; // Descrizione lunga, potrebbe essere interessante... testiamo..
   }
