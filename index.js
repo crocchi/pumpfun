@@ -170,7 +170,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       let trxNumm = getSolTrx();
       //let priceTrx = priceInSol;
       if(trxNumm > 2 && solValueTrx > 1.00 && trxNumm < 4) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
-        console.log(`❌ RugPull Detect: volume:(${priceTrx} SOL) per ${parsed.mint}.`);
+        console.log(`❌ RugPull Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
         console.log("buy at ",priceInSol+' sol');
       }
         if(solValueTrx > 1.50) {//se il volume tra buy e sell e maggiore di 1.50 SOL

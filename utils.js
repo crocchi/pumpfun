@@ -90,14 +90,6 @@ try {
         return false;
       }*/
         
-        // Quando ricevi i metadati
-const check = checkMetadataTwitter(token);
-if (check.suspicious) {
-  console.log(`⚠️ Twitter non coincide con account twitter, sospetto per ${token.name}: ${check.reasons.join(", ")}`);
-  safeProblem.push(`❌ Twitter Check: ${check.reasons.join(", ")}`);
-  //tokenMetadata.suspiciousMeta = true;
-  //tokenMetadata.metaReasons = check.reasons;
-}
     }
 
     // 7. ✅ Controllo sicurezza rugPull (api rugpull.xyz)
@@ -223,6 +215,15 @@ export async function checkMissingSocials(uri) {
          safeProblem.push("❌ Manca il sito web");
          return false     
        }
+
+       // Quando ricevi i metadati
+const check = checkMetadataTwitter(token);
+if (check.suspicious) {
+  console.log(`⚠️ Twitter non coincide con account twitter, sospetto per ${token.name}: ${check.reasons.join(", ")}`);
+  safeProblem.push(`❌ Twitter Check: ${check.reasons.join(", ")}`);
+  //tokenMetadata.suspiciousMeta = true;
+  //tokenMetadata.metaReasons = check.reasons;
+}
 
       return true;
     } catch (e) {
