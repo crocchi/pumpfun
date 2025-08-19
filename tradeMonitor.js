@@ -97,6 +97,9 @@ export function getSolAmount() {
   return solAmount;
 }
 
+export function getSolTrx() {
+  return solTrxNumMonitor;
+}
 
 export function setSolAmount(value,reset) {
   if(reset) {
