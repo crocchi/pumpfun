@@ -2,6 +2,7 @@ import axios from 'axios';
 import { checkRugRisk } from './utility/rugCheck.js';
 let safeProblem = [];
 import { botOptions } from './config.js';
+import { checkMetadataTwitter } from './utility/twitterCheck.js';
 
 import { checkTokenDistribution } from './utility/checkOwner.js';
 const MAX_CREATOR_SUPPLY_PERCENT = 5; // massimo accettabile per il creator
@@ -88,6 +89,15 @@ try {
         console.log("❌ Metadata sospetti o immagine mancante.");
         return false;
       }*/
+        
+        // Quando ricevi i metadati
+const check = await checkMetadataTwitter(token);
+if (check.suspicious) {
+  console.log(`⚠️ Twitter non coincide con account twitter, sospetto per ${token.name}: ${check.reasons.join(", ")}`);
+  safeProblem.push(`❌ Twitter Check: ${check.reasons.join(", ")}`);
+  //tokenMetadata.suspiciousMeta = true;
+  //tokenMetadata.metaReasons = check.reasons;
+}
     }
 
     // 7. ✅ Controllo sicurezza rugPull (api rugpull.xyz)
@@ -171,6 +181,7 @@ export async function checkMissingSocials(uri) {
         return false   // '❌ Manca Twitter o Telegram';
       }
 
+      
      /* if (metadata.twitter) {
         console.log("Controllo Twitter:", metadata.twitter);
         const followers = await getTwitterFollowers(metadata.twitter);
@@ -200,7 +211,7 @@ export async function checkMissingSocials(uri) {
   }
   if (!hasDescription) {
     safeProblem.push("❌ Descrizione breve o assente"+ ` (${extensions.description.length} caratteri)`);
-    
+
     return false     
   }
 
