@@ -24,17 +24,19 @@ export function checkMetadataTwitter(metadata) {
     const name = (metadata.name || "").toLowerCase();
     const symbol = (metadata.symbol || "").toLowerCase();
 
-    if (metadata.twitter.includes('/i/communities/')) {
-        reasons.push(`Link Twitter non valido: community rilevata (${metadata.twitter})`);
-        console.log("❌ Link Twitter non valido: community rilevata", metadata.twitter);
-      } 
+    
   // https://x.com/i/communities/1958214329238528374
     // Estrai handle da Twitter (se c'è)
     let twitterHandle = null;
     if (metadata.twitter) {
       const match = metadata.twitter.match(/twitter\.com\/([^\/\?]+)/) 
                  || metadata.twitter.match(/x\.com\/([^\/\?]+)/);
-      if (match){twitterHandle = match[1].toLowerCase();} else{
+      if (match){
+        twitterHandle = match[1].toLowerCase();
+      } else if (metadata.twitter.includes('/i/communities/')) {
+        reasons.push(`Link Twitter non valido: community rilevata (${metadata.twitter})`);
+        console.log("❌ Link Twitter non valido: community rilevata", metadata.twitter);
+      } {
         reasons.push(`no-twitter link (${metadata.twitter})`);
         console.log("no-twitter link",metadata.twitter);
       }
