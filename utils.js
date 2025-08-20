@@ -197,7 +197,7 @@ export async function checkMissingSocials(uri) {
 
   //controllo descrizione
   const hasDescription = typeof extensions.description === 'string' && extensions.description.length > 14;
-  if (hasDescription && extensions.description.length > 200) {
+  if (hasDescription && extensions.description.length > 400) {
     console.log("⚠️ Descrizione lunga, potrebbe essere interessante... testiamo..");
     safeProblem=[];
     return true; // Descrizione lunga, potrebbe essere interessante... testiamo..
