@@ -73,7 +73,7 @@ export async function monitorEarlyTrades(token, snipeCallback) {
       }
     }, botOptions.time_monitor);
 
-    monitorEarlyTrades.cancel = () => {
+ /*   monitorEarlyTrades.cancel = () => {
       if (timeoutId) {
         clearTimeout(timeoutId);
         console.log("⏹️ Timer interrotto prima della scadenza.");
@@ -81,8 +81,9 @@ export async function monitorEarlyTrades(token, snipeCallback) {
         resolve(true); // Risolvi la Promise 
         
       }
-    };
-  });
+    };*/
+  });//fine promise
+  
 }
 
 //getters and setters for tradeMintMonitor and suspiciousSellDetected
