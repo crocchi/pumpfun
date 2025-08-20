@@ -46,6 +46,10 @@ export async function monitorEarlyTrades(token, snipeCallback) {
       if(solTrxNumMonitor > botOptions.maxTrxNumMonitor) {//se sono più di 4-5 trx ..alloa sn bot--rugpull detc
         suspiciousSellDetected = true;
         console.log("⛔ Troppi trade sospetti...Possibiile rugpull Botnet.");
+        if(solAmount < 1.20) {
+          console.log("⛔ Volume troppo basso per considerare un rugpull.");
+          suspiciousSellDetected = false;
+        }
       }
 
       
