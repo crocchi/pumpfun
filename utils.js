@@ -218,6 +218,7 @@ export async function checkMissingSocials(uri) {
 
        // Quando ricevi i metadati
 const check = checkMetadataTwitter(metadata);
+console.log("check:",check);
 if (check.suspicious) {
   console.log(`⚠️ Twitter non coincide con account twitter, sospetto per ${token.name}: ${check.reasons.join(", ")}`);
   safeProblem.push(`❌ Twitter Check: ${check.reasons.join(", ")}`);
