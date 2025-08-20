@@ -193,6 +193,12 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       priceInSol = liquidityCheck()//(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       setSolAmount(-(parsed.solAmount));
+      if(parsed.solAmount < 0.007) {
+        console.log(`❌ Vendita troppo piccola (${parsed.solAmount} SOL) per ${parsed.mint}. Ignorato.`);
+        setSuspiciousSellDetected(false);
+        return; // Esci se la vendita è troppo piccola
+
+      }
       if(parsed.solAmount > 0.48) {
         console.log(`❌ Vendita troppo alta (${parsed.solAmount} SOL) per ${parsed.mint}.`);
         setSuspiciousSellDetected(true);
