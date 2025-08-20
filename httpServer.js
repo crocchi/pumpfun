@@ -91,6 +91,7 @@ export function startHttpServer(port = 4000) {
           if ('trailingPercent' in body) botOptions.trailingPercent = Math.min(0.9, Math.max(0.01, Number(body.trailingPercent))) || botOptions.trailingPercent;
           if ('clientRefreshMs' in body) botOptions.clientRefreshMs = Math.max(1000, Number(body.clientRefreshMs)) || botOptions.clientRefreshMs;
   
+          console.log(" botOptions config live:", botOptions);
           res.writeHead(200, { 'Content-Type': 'application/json' });
           return res.end(JSON.stringify({ ok: true, botOptions }, null, 2));
         } catch (e) {
