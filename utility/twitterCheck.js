@@ -17,7 +17,7 @@ export function checkMetadataTwitter(metadata) {
                  || metadata.twitter.match(/x\.com\/([^\/\?]+)/);
       if (match) twitterHandle = match[1].toLowerCase();
     }
-  
+  console.log("twitterHandle",twitterHandle);
     // Se c'è un handle Twitter → deve essere incluso nel name o symbol
     if (twitterHandle) {
       if (!name.includes(twitterHandle) && !symbol.includes(twitterHandle)) {

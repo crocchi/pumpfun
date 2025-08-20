@@ -169,7 +169,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       // apepena il volume supera 1sol..mi ci ficco anke io
       let trxNumm = getSolTrx();
       //let priceTrx = priceInSol;
-      if(trxNumm > 2 && solValueTrx > 1.00 && trxNumm < 4) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
+      if(trxNumm > 2 && solValueTrx > 1.00 && trxNumm < 5) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
         console.log(`❌ RugPull Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
         console.log("buy at ",priceInSol+' sol');
       }
