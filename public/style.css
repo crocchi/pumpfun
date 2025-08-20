@@ -150,6 +150,7 @@ ul#txList {
     }
     .twoc {
         width: 100%;
+        display: block;
     }
     body{
         padding: 0.2rem;
