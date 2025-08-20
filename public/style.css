@@ -87,9 +87,9 @@ ul#txList {
     padding-bottom: 0.5rem;
 }
 .close-config {
-    position: absolute;
+    position: fixed;
     top: 20px;
-    right: 5px;
+    right: 7px;
     font-size: 1.5rem;
     cursor: pointer;
 }
@@ -148,9 +148,14 @@ ul#txList {
       flex-direction: column; /* Stack columns vertically on smaller screens */
       align-items: center; /* Center items when stacked */
     }
+    .twoc {
+        width: 100%;
+    }
+    body{
+        padding: 0.2rem;
+    }
   }
   
   .twoc {
-    display: flex
-;
+    display: flex;
 }

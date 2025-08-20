@@ -3,6 +3,9 @@ import { ws } from './index.js';
 import { botOptions } from './config.js';
 let TIME_LIMIT = botOptions.time_monitor; // 3 secondi
 
+// Mappa per gestire lo stato di ogni token
+const tokenStates = new Map();
+
 let suspiciousSellDetected = false;
 let tradeMintMonitor= null;
 let solAmount = 0;
