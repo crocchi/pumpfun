@@ -73,5 +73,5 @@ export let SOLANA_USD = 180;
     }
   }
   
-  setInterval(fetchSolPrice, 300_000); // ogni 5 minuti
+  setInterval(fetchSolPrice, 3000000); // ogni 5 minuti
   fetchSolPrice(); // chiamata iniziale
