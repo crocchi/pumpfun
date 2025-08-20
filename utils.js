@@ -227,6 +227,12 @@ if (check.suspicious==true || check.suspicious === 'true') {
   return false; // Sospetto
 }
 
+if (check.reasons.length > 0  ) {
+  console.log(`✅ Twitter Check: ${check.reasons.join(", ")}`);
+  safeProblem.push(`❌ Twitter Check: ${check.reasons.join(", ")}`);
+  
+}
+
       return true;
     } catch (e) {
       return '⚠️ Impossibile leggere metadata URI';
