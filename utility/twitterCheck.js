@@ -36,10 +36,7 @@ export function checkMetadataTwitter(metadata) {
       } else if (metadata.twitter.includes('/i/communities/')) {
         reasons.push(`Link Twitter non valido: community rilevata (${metadata.twitter})`);
         console.log("❌ Link Twitter non valido: community rilevata", metadata.twitter);
-      } {
-        reasons.push(`no-twitter link (${metadata.twitter})`);
-        console.log("no-twitter link",metadata.twitter);
-      }
+      } 
     }
   console.log("twitterHandle",twitterHandle);
     // Se c'è un handle Twitter → deve essere incluso nel name o symbol

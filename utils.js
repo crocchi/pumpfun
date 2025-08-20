@@ -219,11 +219,12 @@ export async function checkMissingSocials(uri) {
        // Quando ricevi i metadati
 const check = checkMetadataTwitter(metadata);
 console.log("check:",check);
-if (check.suspicious===true || check.suspicious === 'true') {
+if (check.suspicious==true || check.suspicious === 'true') {
   console.log(`⚠️ Twitter non coincide con account twitter, sospetto per ${token.name}: ${check.reasons.join(", ")}`);
   safeProblem.push(`❌ Twitter Check: ${check.reasons.join(", ")}`);
   //tokenMetadata.suspiciousMeta = true;
   //tokenMetadata.metaReasons = check.reasons;
+  return false; // Sospetto
 }
 
       return true;

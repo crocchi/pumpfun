@@ -8,7 +8,7 @@ export const RPC_WS_HELIUS = process.env.RPC_WS_HELIUS;
 
 export const MAX_TOKENS_SUBSCRIBED = 40;
 
-export let SOLANA_USD = 170;
+export let SOLANA_USD = 180;
 
 
 //RPC_URL: process.env.RPC_URL,
