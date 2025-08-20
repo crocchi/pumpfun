@@ -7,6 +7,7 @@ let suspiciousSellDetected = false;
 let tradeMintMonitor= null;
 let solAmount = 0;
 let solTrxNumMonitor = 0; // per monitorare il volume delle vendite sospette
+let timeoutId; // Variabile per memorizzare l'identificatore del timer
 
 export async function monitorEarlyTrades(token, snipeCallback) {
 
@@ -33,7 +34,7 @@ export async function monitorEarlyTrades(token, snipeCallback) {
 }*/
 
   return new Promise((resolve) => {
-    setTimeout(async () => {
+    timeoutId = setTimeout(async () => {
       //ws.close();
       if(solAmount > 3.0) {
         suspiciousSellDetected = false;
@@ -61,20 +62,26 @@ export async function monitorEarlyTrades(token, snipeCallback) {
               method: "unsubscribeTokenTrade",
               keys: [token.mint]
             }));
-            setMintMonitor(null);
-            solAmount=0;solTrxNumMonitor=0;
-            suspiciousSellDetected = false
+            resetValue()
             resolve(false);
             
       } else {
         console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
        // await snipeCallback(token); potrei mettere qui l'acquisto
-       setMintMonitor(null)
-       solAmount=0;solTrxNumMonitor=0;
-       suspiciousSellDetected = false;
+       resetValue()
         resolve(true);
       }
     }, botOptions.time_monitor);
+
+    monitorEarlyTrades.cancel = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        console.log("⏹️ Timer interrotto prima della scadenza.");
+        resetValue()
+        resolve(true); // Risolvi la Promise 
+        
+      }
+    };
   });
 }
 
@@ -114,3 +121,18 @@ export function setSolAmount(value,reset) {
   solTrxNumMonitor++;
 }
 
+// Funzione per interrompere il timer
+export function cancelMonitor() {
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+    console.log("⏹️ Timer interrotto prima della scadenza.");
+    resetValue()
+  }
+}
+
+export function resetValue() {
+  setMintMonitor(null)
+  solAmount=0;solTrxNumMonitor=0;
+  suspiciousSellDetected = false;
+  timeoutId = null;
+}

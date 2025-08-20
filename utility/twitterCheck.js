@@ -1,6 +1,20 @@
 // metadataFilter.js
 
 /**
+ * 
+ * /*
+  Controllo metadati per: {
+  name: '3I/ATLAS',
+  symbol: 'ATLAS',
+  description: '',
+  image: 'https://ipfs.io/ipfs/bafybeibhj43sg4kj7aupbp3llap5dbrv35ika6hmgdjcdwinwffab25dmy',
+  showName: true,
+  createdOn: 'https://pump.fun',
+  twitter: 'https://x.com/nocontextscats/status/1950061928099041554'
+  website: 'https://en.wikipedia.org/wiki/3I/ATLAS'
+   telegram: '',
+}
+  
  * Controlla se il nome/symbol del token è coerente con i link social dichiarati.
  * @param {Object} metadata - Metadati del token (name, symbol, twitter, website, etc.)
  * @returns {Object} risultato { suspicious: boolean, reasons: string[] }
@@ -20,7 +34,7 @@ export function checkMetadataTwitter(metadata) {
   console.log("twitterHandle",twitterHandle);
     // Se c'è un handle Twitter → deve essere incluso nel name o symbol
     if (twitterHandle) {
-      if (!name.includes(twitterHandle) && !symbol.includes(twitterHandle)) {
+      if (!name.includes(twitterHandle) /*|| !symbol.includes(twitterHandle)*/) {
         reasons.push(`Name/symbol non coerente con Twitter (${twitterHandle})`);
       }
     }

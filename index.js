@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import { isSafeToken } from './utils.js';
-import { monitorEarlyTrades ,setSuspiciousSellDetected , setMintMonitor , getMintMonitor,getSolAmount, setSolAmount,getSolTrx } from './tradeMonitor.js';
+import { monitorEarlyTrades ,setSuspiciousSellDetected , setMintMonitor , getMintMonitor,getSolAmount, setSolAmount,getSolTrx,cancelMonitor } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
@@ -169,9 +169,12 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       // apepena il volume supera 1sol..mi ci ficco anke io
       let trxNumm = getSolTrx();
       //let priceTrx = priceInSol;
-      if(trxNumm > 2 && solValueTrx > 1.00 && trxNumm < 5) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
+      if(trxNumm >= 2 && solValueTrx > 1.00 && trxNumm < 4) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
         console.log(`❌ RugPull Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
-        console.log("buy at ",priceInSol+' sol');
+        console.log("buy at sol: ",priceInSol);
+        //cancelMonitor();
+        monitorEarlyTrades.cancelMonitor();
+        return
       }
         if(solValueTrx > 1.50) {//se il volume tra buy e sell e maggiore di 1.50 SOL
           console.log(`❌ volume alto: (${solValueTrx} SOL) per ${parsed.mint}.`);
