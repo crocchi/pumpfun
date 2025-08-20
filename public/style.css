@@ -126,7 +126,9 @@ ul#txList {
     text-align: center;
     font-size: 16px;
 }
-
+  .twoc {
+    display: flex;
+}
 #botForm .two-column-container {
  
     justify-content: center; /* Center the columns horizontally */
@@ -149,7 +151,6 @@ ul#txList {
       align-items: center; /* Center items when stacked */
     }
     .twoc {
-        width: 100%;
         display: block;
     }
     body{
@@ -157,6 +158,3 @@ ul#txList {
     }
   }
   
-  .twoc {
-    display: flex;
-}
