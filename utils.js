@@ -234,7 +234,8 @@ if (twitterCheck.valid !== true) {
   return false; // Problema con Twitter
 }else if (twitterCheck.valid === true) {
   console.log("✅ Twitter OK:", metadata.twitter);
-  //return true; // Twitter ok
+  safeProblem=[];
+  return true; // Twitter ok
 }
 
       return true;

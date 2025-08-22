@@ -138,7 +138,7 @@ function extractTwitterHandle(url) {
       scoreName: scoreName.toFixed(2),
       scoreSymbol: scoreSymbol.toFixed(2),
       valid: maxScore > 0.5, // soglia regolabile
-      reason: maxScore > 0.5 ? "Match ok" : "Handle non coerente con name/symbol",
+      reason: maxScore > 0.5 ? "Match ok" : "❌ Twitter Handle non coerente con name/symbol",
     };
   }
   
