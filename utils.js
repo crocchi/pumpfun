@@ -217,6 +217,7 @@ export async function checkMissingSocials(uri) {
        }
 
        // Quando ricevi i metadati
+       /*
 const check = checkMetadataTwitter(metadata);
 console.log("check:",check);
 if (check.suspicious==true || check.suspicious === 'true') {
@@ -225,12 +226,14 @@ if (check.suspicious==true || check.suspicious === 'true') {
   //tokenMetadata.suspiciousMeta = true;
   //tokenMetadata.metaReasons = check.reasons;
   return false; // Sospetto
-}
-
-if (check.reasons.length > 0  ) {
-  console.log(`✅ Twitter Check: ${check.reasons.join(", ")}`);
-  safeProblem.push(`❌ Twitter Check: ${check.reasons.join(", ")}`);
-  
+}*/
+const twitterCheck= checkTwitterMatch(metadata);
+if (twitterCheck.valid !== true) {
+  safeProblem.push(twitterCheck.reason);
+  return false; // Problema con Twitter
+}else if (twitterCheck.valid === true) {
+  console.log("✅ Twitter OK:", metadata.twitter);
+  //return true; // Twitter ok
 }
 
       return true;

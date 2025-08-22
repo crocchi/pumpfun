@@ -11,7 +11,66 @@ startHttpServer(process.env.PORT);
 /*
 
             COSE DA FARE:
+ 🧩 Schema logico Sniper Bot
+1. Rilevamento token
 
+✅ Bot intercetta un nuovo token appena lanciato (es. Pump.fun o pool su Raydium).
+
+⏱ Timestamp del lancio = t0.
+
+2. Controlli iniziali (0–5s)
+
+Verifica parametri critici:
+
+Contratto valido e non blacklistato.
+
+Trading abilitato.
+
+Tasse < soglia (es. < 10%).
+
+No funzioni sospette (es. blacklist, limit sell, hidden mint).
+
+❌ Se fallisce → ignora token.
+✅ Se passa → vai a fase 3.
+
+3. Monitoraggio veloce (5–30s)
+
+Osserva il token per un periodo breve, raccogliendo metriche:
+
+Transazioni totali (es. > 20 in 20s).
+
+Numero di holder unici (es. > 10).
+
+Volume (es. > 5 SOL).
+
+Liquidità (stabile o crescente).
+
+Prezzo non collassato (> 70% del prezzo iniziale).
+
+❌ Se i dati non superano le soglie → scarta token.
+✅ Se i dati sono buoni → vai a fase 4.
+
+4. Decisione di acquisto
+
+Condizioni tipiche:
+
+Holders >= 10
+
+Volume >= 5 SOL
+
+Liquidity > 2 SOL e non ritirata
+
+Prezzo ≥ soglia minima (anti-dump)
+
+Se tutte vere → Compra (size predefinita, es. 0.1–0.5 SOL).
+
+5. Gestione della posizione (post-buy)
+
+Attiva subito l’auto-sell:
+
+Take profit dinamico (es. vendi il 50% a x2, il resto a x3 o trailing stop).
+
+Stop loss (es. vendi se prezzo scende sotto -30%).
             -TRAILING SELL
             -HIGHPRICE TOKEN
 
@@ -100,11 +159,14 @@ ws.on('message', async function message(data) {
         console.log(`🌊 Pool: ${token.pool}`);
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         // 
-        /*
+        
         getTopHolders(token.mint)
-        .then(console.log)
+        .then((res)=>{
+          console.log(`👥 Top Holders: ${res.length} holders`)
+          console.log(res);
+        })
         .catch(console.error);
-        */
+        
 
         logToken({
             mint: token.mint,

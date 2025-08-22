@@ -6,6 +6,8 @@ let TIME_LIMIT = botOptions.time_monitor; // 3 secondi
 // Mappa per gestire lo stato di ogni token
 const tokenStates = new Map();
 
+
+
 let suspiciousSellDetected = false;
 let tradeMintMonitor= null;
 let solAmount = 0;
@@ -140,3 +142,89 @@ export function resetValue() {
   suspiciousSellDetected = false;
   timeoutId = null;
 }
+
+
+
+class TokenMonitor {
+  constructor(token) {
+    this.token = token; // Informazioni sul token
+    this.suspiciousSellDetected = false;
+    this.solAmount = 0;
+    this.solTrxNumMonitor = 0;
+    this.timeoutId = null;
+  }
+
+  startMonitor(snipeCallback) {
+    return new Promise((resolve) => {
+      const payload = {
+        method: 'subscribeTokenTrade',
+        keys: [this.token.mint],
+      };
+      ws.send(JSON.stringify(payload));
+      console.log(`👁️  Monitoraggio trade per ${this.token.symbol} (${this.token.mint}) attivo per ${botOptions.time_monitor / 1000}s`);
+
+      this.timeoutId = setTimeout(() => {
+        if (this.solAmount > 3.0) {
+          this.suspiciousSellDetected = false;
+          console.log("⛔ Volume Alto - rimuovi tag false.");
+        }
+        if (this.solAmount < 0.01) {
+          this.suspiciousSellDetected = true;
+          console.log("⛔ Volume nullo.");
+        }
+        if (this.solTrxNumMonitor > botOptions.maxTrxNumMonitor) {
+          this.suspiciousSellDetected = true;
+          console.log("⛔ Troppi trade sospetti...Possibile rugpull Botnet. trx Num:" + this.solTrxNumMonitor);
+          if (this.solAmount < 1.20) {
+            console.log("⛔ Volume troppo basso per considerare un rugpull.");
+            this.suspiciousSellDetected = false;
+          }
+        }
+
+        if (this.suspiciousSellDetected || this.solAmount < botOptions.volumeMin) {
+          console.log("⛔ Vendita rilevata troppo presto. Token scartato." + ` Volume: (${this.solAmount} SOL)`);
+          ws.send(JSON.stringify({
+            method: "unsubscribeTokenTrade",
+            keys: [this.token.mint],
+          }));
+          this.resetValues();
+          resolve(false);
+        } else {
+          console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
+          this.resetValues();
+          resolve(true);
+        }
+      }, botOptions.time_monitor);
+    });
+  }
+
+  cancelMonitor() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      console.log(`⏹️ Timer interrotto per il token ${this.token.mint}.`);
+      this.resetValues();
+    }
+  }
+
+  resetValues() {
+    this.suspiciousSellDetected = false;
+    this.solAmount = 0;
+    this.solTrxNumMonitor = 0;
+    this.timeoutId = null;
+  }
+
+  addSolAmount(value) {
+    this.solAmount += value;
+    this.solTrxNumMonitor++;
+  }
+
+  getSolAmount() {
+    return this.solAmount;
+  }
+
+  getSolTrxNumMonitor() {
+    return this.solTrxNumMonitor;
+  }
+}
+
+export default TokenMonitor;
