@@ -63,9 +63,18 @@ export function checkMetadataTwitter(metadata) {
   
 
   // --- Funzione: estrai handle da URL Twitter/X ---
+// --- Funzione: estrai handle da URL Twitter/X ---
 function extractTwitterHandle(url) {
     try {
-      const match = url.match(/x\.com\/([^/?]+)/) || url.match(/twitter\.com\/([^/?]+)/);
+      const u = new URL(url);
+  
+      // Se è una community o altro che non è un profilo, errore
+      if (u.pathname.startsWith("/i/")) {
+        return null;
+      }
+  
+      // Match normale: /username
+      const match = u.pathname.match(/^\/([^/?]+)/);
       return match ? match[1] : null;
     } catch {
       return null;
