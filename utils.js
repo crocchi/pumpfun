@@ -2,7 +2,7 @@ import axios from 'axios';
 import { checkRugRisk } from './utility/rugCheck.js';
 let safeProblem = [];
 import { botOptions } from './config.js';
-import { checkMetadataTwitter } from './utility/twitterCheck.js';
+import { checkMetadataTwitter,checkTwitterMatch } from './utility/twitterCheck.js';
 
 import { checkTokenDistribution } from './utility/checkOwner.js';
 const MAX_CREATOR_SUPPLY_PERCENT = 5; // massimo accettabile per il creator
@@ -228,6 +228,7 @@ if (check.suspicious==true || check.suspicious === 'true') {
   return false; // Sospetto
 }*/
 const twitterCheck= checkTwitterMatch(metadata);
+console.log("check Twitter:",twitterCheck);
 if (twitterCheck.valid !== true) {
   safeProblem.push(twitterCheck.reason);
   return false; // Problema con Twitter
