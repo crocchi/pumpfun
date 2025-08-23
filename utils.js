@@ -172,19 +172,6 @@ export async function checkMissingSocials(uri) {
         safeProblem.push("❌ Manca Twitter o Telegram");
         return false   // '❌ Manca Twitter o Telegram';
       }
-
-      
-     /* if (metadata.twitter) {
-        console.log("Controllo Twitter:", metadata.twitter);
-        const followers = await getTwitterFollowers(metadata.twitter);
-        if (followers < 50) { //minimo 50 follower
-          reasons.push(`❌ Solo ${followers} follower su Twitter`);
-        }else {
-          console.log(`✅ ${metadata.twitter} ha ${followers} follower`);
-          safeProblem=[];
-          return true; // Twitter ok
-        }
-      }*/
     
 
       //creato su Pump.Fun
@@ -228,7 +215,7 @@ if (check.suspicious==true || check.suspicious === 'true') {
   return false; // Sospetto
 }*/
 const twitterCheck= checkTwitterMatch(metadata);
-console.log("check Twitter:",twitterCheck);
+//console.log("check Twitter:",twitterCheck);
 if (twitterCheck.valid !== true) {
   safeProblem.push(twitterCheck.reason);
   return false; // Problema con Twitter

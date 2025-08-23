@@ -70,7 +70,7 @@ function extractTwitterHandle(url) {
   
       // Se è una community o altro che non è un profilo, errore
       if (u.pathname.startsWith("/i/")) {
-        return null;
+        return { valid: false, reason: "No Twitter community" }
       }
   
       // Match normale: /username
@@ -138,7 +138,7 @@ function extractTwitterHandle(url) {
       scoreName: scoreName.toFixed(2),
       scoreSymbol: scoreSymbol.toFixed(2),
       valid: maxScore > 0.5, // soglia regolabile
-      reason: maxScore > 0.5 ? "Match ok" : "❌ Twitter Handle non coerente con name/symbol",
+      reason: maxScore > 0.5 ? "Match ok" : "❌ X Handle non coerente con name/symbol",
     };
   }
   

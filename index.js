@@ -74,6 +74,8 @@ Stop loss (es. vendi se prezzo scende sotto -30%).
             -TRAILING SELL
             -HIGHPRICE TOKEN
 
+
+            il creatore del token compra il token...rugpull,,,e se lo scambia con i bot
 */
 
 export const ws = new WebSocket('wss://pumpportal.fun/api/data');
