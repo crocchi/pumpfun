@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { checkRugRisk } from './utility/rugCheck.js';
-let safeProblem = [];
+//let safeProblem = [];
 import { botOptions } from './config.js';
 import { checkTwitterMatch } from './utility/twitterCheck.js';
 import { checkWebsiteMatch } from './utility/websiteCheck.js';
@@ -16,7 +16,7 @@ const blacklist = [
 ];
 let cont=0
 export async function isSafeToken(token) {
-  safeProblem=[];
+  let safeProblem=[];
 
   try {
     // 1. ✅ Controllo liquidità min 2 max 20
