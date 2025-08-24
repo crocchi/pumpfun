@@ -132,6 +132,7 @@ export async function isSafeToken(token) {
            //return false     
          }else{
   const websiteCheck= checkWebsiteMatch(metadata);
+  console.log('websitechek:',websiteCheck);
   if (websiteCheck.valid !== true) {
     safeProblem.push(websiteCheck.reason);
     return {

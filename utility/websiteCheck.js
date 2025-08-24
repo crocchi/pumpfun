@@ -48,7 +48,7 @@ async function checkMintInPage(url, mintAddress) {
   
       // Cerca esattamente il mint passato
       const found = html.includes(mintAddress);
-  console.log('check webpage',found)
+  console.log('check webpage'+url,found)
       return found
         ? { found: true, mint: mintAddress }
         : { found: false, reason: "Mint non trovato nella pagina" };
