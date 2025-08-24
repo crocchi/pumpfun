@@ -111,20 +111,20 @@ export async function isSafeToken(token) {
         }//createdOn: 'https://bonk.fun',createdOn: 'https://letsbonk.fun',  createdOn: 'raydium.launchlab',
   
     //controllo descrizione
-    const hasDescription = typeof extensions.description === 'string' && extensions.description.length > 14;
-    if (hasDescription && extensions.description.length > 400) {
+    const hasDescription = typeof metadata.description === 'string' && metadata.description.length > 14;
+    if (hasDescription && metadata.description.length > 400) {
       console.log("⚠️ Descrizione lunga, potrebbe essere interessante... testiamo..");
       safeProblem=[];
       //return true; // Descrizione lunga, potrebbe essere interessante... testiamo..
     }
     if (!hasDescription) {
-      safeProblem.push("❌ Descrizione breve o assente"+ ` (${extensions.description.length} caratteri)`);
+      safeProblem.push("❌ Descrizione breve o assente"+ ` (${metadata.description.length} caratteri)`);
   
       //return false     
     }
   
           // Controllo sito web
-          const hasWebsite = typeof extensions.website === 'string' && extensions.website.length > 5;
+          const hasWebsite = typeof metadata.website === 'string' && metadata.website.length > 5;
     
           if (!hasWebsite) {
            safeProblem.push("❌ Manca il sito web");
