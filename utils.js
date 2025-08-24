@@ -83,6 +83,7 @@ export async function isSafeToken(token) {
         console.log('⚠️ Impossibile leggere metadata URI')
         console.log(metadata,token)
         console.log(e)
+        return
       }
       //console.log("New Token:", metadata);
       console.log(`New Token: Name:${metadata.name}[${metadata.symbol}], Description: ${metadata.description || 'N/A'}`);
@@ -139,11 +140,16 @@ export async function isSafeToken(token) {
     }
   }else if (websiteCheck.valid === true) {
     console.log("✅ Sito OK:", metadata.website);
-    safeProblem=[];
-    return {
-      safeProblem,
-      valid: safeProblem.length === 0, // soglia regolabile
+    
+    if(websiteCheck.finpage.found){
+          console.log('indirizzo contratto trovato nella pagina...')
+          safeProblem=[];
+          return {
+            safeProblem,
+            valid: safeProblem.length === 0, // soglia regolabile
+          }
     }
+   
   }
         }
       
@@ -219,7 +225,7 @@ export async function isSafeToken(token) {
 
 
 
-  
+ /* 
 //controllo social
 export async function checkMissingSocials(uri) {
     try {
@@ -236,7 +242,7 @@ export async function checkMissingSocials(uri) {
   image: 'https://ipfs.io/ipfs/bafkreicp2a7b3sozfg4c2morqy73dbpixvv2nv2wwmjvgvrx4oede6642i',
   website: 'https://warosu.org/biz/?task=search2&ghost=false&search_text=worthless+coin&search_subject=&search_username=&search_tripcode=&search_email=&search_filename=&search_datefrom=&search_dateto=&search_media_hash=&search_op=all&search_del=dontcare&search_int=dontcare&search_ord=old&search_capcode=all&search_res=post',
   twitter: 'https://x.com/MostChadDev/status/1952546537697100265'
-} */
+} 
 
       // 🔍 Alcuni token usano direttamente i social nel metadata (senza extensions)
     const extensions = metadata?.extensions || metadata || {};
