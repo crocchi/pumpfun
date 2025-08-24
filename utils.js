@@ -80,7 +80,7 @@ export async function isSafeToken(token) {
         const response = await fetch(uri);
           metadata = await response.json();
       } catch (e) {
-        console.log('⚠️ Impossibile leggere metadata URI'+uri)
+        console.log('⚠️ Impossibile leggere metadata URI')
         console.log(metadata,token)
         console.log(e)
       }
