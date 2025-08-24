@@ -77,7 +77,7 @@ export async function isSafeToken(token) {
       //const socialCheck = await checkMissingSocials(token.uri);
       let metadata;
       try {
-        const response = await fetch(uri);
+        const response = await fetch(token.uri);
           metadata = await response.json();
       } catch (e) {
         console.log('⚠️ Impossibile leggere metadata URI')
