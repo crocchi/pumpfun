@@ -126,15 +126,12 @@ ws.on('message', async function message(data) {
     liquidityCheck()
 
         const safer = await isSafeToken(token);
+        if (safer.valid !== true) {
+          console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
+          console.log(`--------------------------------------`);
+          return
 
-        // console.log(safer);
-       const safe = safer.length === 0;  
-       if (!safe) {
-
-           console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
-           console.log(`--------------------------------------`);
-           return
-         }
+        }
         
          setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
          let devBot=await monitorEarlyTrades(token);

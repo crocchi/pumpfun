@@ -266,6 +266,28 @@ export async function getTopHolders(mintAddress) {
 
 
 /*
+// Verifica creator / owner balance
+/*
+cont++
+if(cont < 0){
+try {
+    const dist = await checkTokenDistribution(token.mint);
+
+    if (dist.ownerPercent > MAX_CREATOR_SUPPLY_PERCENT) {
+        safeProblem.push(`❌ Creator possiede ${dist.ownerPercent}% della supply`);
+    }
+
+    if ((dist.burned / dist.totalSupply) * 100 > MAX_BURN_PERCENT) {
+        safeProblem.push(`⚠️ Supply bruciata superiore al ${MAX_BURN_PERCENT}%`);
+    }
+
+    // Puoi loggare anche per debug
+    console.log(`🔍 Distribuzione ${token.name}:`, dist);
+  } catch (err) {
+    console.warn(`⚠️ Errore nel calcolo distribuzione per ${token.mint}`, err.message);
+    //reasons.push("❌ Errore nella verifica della distribuzione token");
+  }
+}
 
 FRxd4Q8HXV2tSca5hbnUDVkh9BeYGZxaGMYD23mEpump
  logs: [
