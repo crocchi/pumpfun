@@ -19,7 +19,8 @@ export async function checkWebsiteMatch(metadata) {
     let finpage=await checkMintInPage(metadata.website,metadata.mint)
   
     return {
-      domain,finpage,
+      domain,
+      finpage,
       scoreName: scoreName.toFixed(2),
       scoreSymbol: scoreSymbol.toFixed(2),
       valid: maxScore > 0.5,
@@ -47,7 +48,7 @@ async function checkMintInPage(url, mintAddress) {
   
       // Cerca esattamente il mint passato
       const found = html.includes(mintAddress);
-  
+  console.log('check webpage',found)
       return found
         ? { found: true, mint: mintAddress }
         : { found: false, reason: "Mint non trovato nella pagina" };

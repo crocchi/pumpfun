@@ -75,7 +75,7 @@ function extractTwitterHandle(url) {
   // --- Funzione principale: controllo Twitter ---
   export function checkTwitterMatch(metadata) {
     if (!metadata.twitter) return { valid: false, reason: "No Twitter link" };
-  
+    if(metadata.twitter.includes('/i/'))  return {  valid: false, reason: "No Twitter communy link" };
     const handle = extractTwitterHandle(metadata.twitter);
     if (!handle) return { valid: false, reason: "Invalid Twitter URL" };
   
