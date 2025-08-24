@@ -2,7 +2,8 @@ import axios from 'axios';
 import { checkRugRisk } from './utility/rugCheck.js';
 let safeProblem = [];
 import { botOptions } from './config.js';
-import { checkMetadataTwitter,checkTwitterMatch } from './utility/twitterCheck.js';
+import { checkTwitterMatch } from './utility/twitterCheck.js';
+import { checkWebsiteMatch } from './utility/websiteCheck.js';
 
 import { checkTokenDistribution } from './utility/checkOwner.js';
 const MAX_CREATOR_SUPPLY_PERCENT = 5; // massimo accettabile per il creator
@@ -200,20 +201,20 @@ export async function checkMissingSocials(uri) {
   
         if (!hasWebsite) {
          safeProblem.push("❌ Manca il sito web");
-         return false     
-       }
-
-       // Quando ricevi i metadati
-       /*
-const check = checkMetadataTwitter(metadata);
-console.log("check:",check);
-if (check.suspicious==true || check.suspicious === 'true') {
-  console.log(`⚠️ Twitter non coincide con account twitter, sospetto per ${token.name}: ${check.reasons.join(", ")}`);
-  safeProblem.push(`❌ Twitter Check: ${check.reasons.join(", ")}`);
-  //tokenMetadata.suspiciousMeta = true;
-  //tokenMetadata.metaReasons = check.reasons;
-  return false; // Sospetto
-}*/
+         //return false     
+       }else{
+const websiteCheck= checkWebsiteMatch(metadata);
+if (websiteCheck.valid !== true) {
+  safeProblem.push(websiteCheck.reason);
+  return false; // Problema con sito web
+}else if (websiteCheck.valid === true) {
+  console.log("✅ Sito OK:", metadata.website);
+  safeProblem=[];
+  return true; // sito ok
+}
+      }
+    
+//controllo Twitter
 const twitterCheck= checkTwitterMatch(metadata);
 //console.log("check Twitter:",twitterCheck);
 if (twitterCheck.valid !== true) {
@@ -224,6 +225,7 @@ if (twitterCheck.valid !== true) {
   safeProblem=[];
   return true; // Twitter ok
 }
+
 
       return true;
     } catch (e) {

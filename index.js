@@ -164,7 +164,7 @@ ws.on('message', async function message(data) {
         
         getTopHolders(token.mint)
         .then((resc)=>{
-          console.log(`👥 Top Holders holders`)
+          console.log(`👥 Top Holders`)
           console.log(resc);
         })
         .catch(console.error);
