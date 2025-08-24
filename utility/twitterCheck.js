@@ -37,7 +37,7 @@ function extractTwitterHandle(url) {
   }
   
   // --- Funzione: normalizza testo (minuscole, rimuove simboli/spazi) ---
-  function normalize(str) {
+  export function normalize(str) {
     return str.toLowerCase().replace(/[^a-z0-9]/g, "");
   }
   
@@ -66,7 +66,7 @@ function extractTwitterHandle(url) {
   }
   
   // --- Similarità normalizzata (0 = diverso, 1 = uguale) ---
-  function similarity(a, b) {
+  export function similarity(a, b) {
     if (!a.length && !b.length) return 1;
     const distance = levenshtein(a, b);
     return 1 - distance / Math.max(a.length, b.length);
