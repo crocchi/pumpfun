@@ -15,9 +15,12 @@ export async function checkWebsiteMatch(metadata) {
     const scoreName = similarity(normDomain, normName);
     const scoreSymbol = similarity(normDomain, normSymbol);
     const maxScore = Math.max(scoreName, scoreSymbol);
-
-    let finpage=await checkMintInPage(metadata.website,metadata.mint)
+    let finpage=false;
+    if(maxScore > 0.5){
+      finpage=await checkMintInPage(metadata.website,metadata.mint)
   
+    }
+    
     return {
       domain,
       finpage,

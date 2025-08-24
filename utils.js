@@ -81,8 +81,8 @@ export async function isSafeToken(token) {
           metadata = await response.json();
       } catch (e) {
         console.log('⚠️ Impossibile leggere metadata URI')
-        console.log(metadata,token)
-        console.log(e)
+        //console.log(metadata,token)
+        //console.log(e)
         return
       }
       //console.log("New Token:", metadata);
@@ -131,7 +131,7 @@ export async function isSafeToken(token) {
            safeProblem.push("❌ Manca il sito web");
            //return false     
          }else{
-          
+
   const websiteCheck= await checkWebsiteMatch(metadata);
   console.log('websitechek:',websiteCheck);
   if (websiteCheck.valid !== true) {
