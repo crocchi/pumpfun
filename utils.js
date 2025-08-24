@@ -131,7 +131,8 @@ export async function isSafeToken(token) {
            safeProblem.push("❌ Manca il sito web");
            //return false     
          }else{
-  const websiteCheck= checkWebsiteMatch(metadata);
+          
+  const websiteCheck= await checkWebsiteMatch(metadata);
   console.log('websitechek:',websiteCheck);
   if (websiteCheck.valid !== true) {
     safeProblem.push(websiteCheck.reason);
