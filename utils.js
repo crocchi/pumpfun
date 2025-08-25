@@ -146,6 +146,14 @@ export async function isSafeToken(token) {
 
   const websiteCheck= await checkWebsiteMatch(metadata,token);
   console.log('websitechek:',websiteCheck);
+  if(websiteCheck.finpage.found){
+    console.log('indirizzo contratto trovato nella pagina...')
+    safeProblem=[];
+    return {
+      safeProblem,
+      valid: safeProblem.length === 0, // soglia regolabile
+    }
+}
   if (websiteCheck.valid !== true) {
     safeProblem.push(websiteCheck.reason);
     return {
@@ -154,15 +162,6 @@ export async function isSafeToken(token) {
     }
   }else if (websiteCheck.valid === true) {
     console.log("✅ Sito OK:", metadata.website);
-    
-    if(websiteCheck.finpage.found){
-          console.log('indirizzo contratto trovato nella pagina...')
-          safeProblem=[];
-          return {
-            safeProblem,
-            valid: safeProblem.length === 0, // soglia regolabile
-          }
-    }
    
   }
         }
