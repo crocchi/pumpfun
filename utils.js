@@ -76,15 +76,13 @@ export async function isSafeToken(token) {
     if (token.uri) {
       //const socialCheck = await checkMissingSocials(token.uri);
       let metadata;
-       //console.log("New Token:", metadata);
-       console.log(`New Token: Name:${metadata.name}[${metadata.symbol}], Description: ${metadata.description || 'N/A'}`);
-       console.log(`Created on: ${metadata.createdOn || 'N/A'} | Website: ${metadata.website || 'N/A'} | Twitter: ${metadata.twitter || 'N/A'} telegram: ${metadata.telegram || 'N/A'}`);
-   
+       
       try {
         const response = await fetch(token.uri);
           metadata = await response.json();
       } catch (e) {
-        console.log('⚠️ Impossibile leggere metadata URI')
+        safeProblem.push("⚠️ Impossibile leggere metadata URI");
+        console.log('⚠️ Impossibile leggere metadata URI',e)
         console.log('-------------------')
         //console.log(e)
         return {
@@ -92,7 +90,10 @@ export async function isSafeToken(token) {
           valid: false, // soglia regolabile
         }
       }
-     
+     //console.log("New Token:", metadata);
+       console.log(`New Token: Name:${metadata.name}[${metadata.symbol}], Description: ${metadata.description || 'N/A'}`);
+       console.log(`Created on: ${metadata.createdOn || 'N/A'} | Website: ${metadata.website || 'N/A'} | Twitter: ${metadata.twitter || 'N/A'} telegram: ${metadata.telegram || 'N/A'}`);
+   
       // Controllo se almeno ci sono ...Twitter e Telegram
       const hasTwitterOrTelegram =
       typeof metadata.twitter === 'string' && metadata.twitter.length > 5 ||
