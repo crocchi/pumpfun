@@ -17,7 +17,7 @@ export async function searchTwitter(username, queryPrompt) {
 //const basicTwitterResult = await desearch.basicTwitterSearch({
 const basicTwitterResult = await desearch.twitterSearch({
 
-    query: queryPrompt, //"Whats going on with Bittensor",
+    query: "Whats going on with Bittensor",
     sort: "Top",
     user: username,
     //start_date: "2024-12-01",
@@ -30,7 +30,7 @@ const basicTwitterResult = await desearch.twitterSearch({
     is_image: true,*/
    // min_retweets: 1,
    // min_replies: 1,
-    min_likes: 1,
+   // min_likes: 1,
     count: 10
 
 });
