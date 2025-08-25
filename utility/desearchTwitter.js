@@ -1,6 +1,7 @@
 import Desearch from "desearch-js"
 //import { normalize,similarity } from "../twitterCheck.js";
 import { DESEARCH_API } from '../config.js';
+import axios from 'axios';
 
 const desearch = new Desearch(DESEARCH_API)
 
@@ -35,6 +36,27 @@ const basicTwitterResult = await desearch.twitterSearch({
 
 });
 console.log(basicTwitterResult);
+
+}
+
+
+export async function searchTwitterUser(username) {
+
+    const options = {
+        method: 'GET',
+        //ttps://apis.datura.ai/twitter/user?user=
+        url: `https://api.desearch.ai/twitter?user?user=${username}`,
+        headers: {
+          accept: 'application/json',
+          Authorization: DESEARCH_API
+        }
+      };
+      
+      axios
+        .request(options)
+        .then(res => console.log(res.data))
+        .catch(err => console.error(err));
+
 
 }
 /*
@@ -79,5 +101,8 @@ axios
   .catch((error) =>
     console.error("Error:", error.response?.data || error.message)
   );
+
+
+  
 
     */
