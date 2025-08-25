@@ -14,7 +14,7 @@ console.log(result)
 */
 export async function searchTwitter(username, queryPrompt) {
 
-const basicTwitterResult = await desearch.basicTwitterSearch({
+const basicTwitterResult = await Desearch.basicTwitterSearch({
     query: queryPrompt, //"Whats going on with Bittensor",
     sort: "Top",
     user: username,
