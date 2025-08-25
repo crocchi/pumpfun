@@ -17,7 +17,7 @@ export let SOLANA_USD = 180;
   //SLIPPAGE: parseFloat(process.env.SLIPPAGE),
   export const botOptions = {
     //filtri token
-    liquidityMin: 1.8,
+    liquidityMin: 1.9,
     liquidityMax: 20,
     devShare:0.30,
     marketcapMin: 5,

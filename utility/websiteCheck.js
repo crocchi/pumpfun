@@ -2,7 +2,7 @@
 import { normalize,similarity } from "./twitterCheck.js";
 
 
-export async function checkWebsiteMatch(metadata) {
+export async function checkWebsiteMatch(metadata,token) {
     if (!metadata.website) return { valid: false, reason: "No website link" };
   
     const domain = extractDomain(metadata.website);
@@ -17,7 +17,7 @@ export async function checkWebsiteMatch(metadata) {
     const maxScore = Math.max(scoreName, scoreSymbol);
     let finpage=false;
     if(maxScore > 0.5){
-      finpage=await checkMintInPage(metadata.website,metadata.mint)
+      finpage=await checkMintInPage(metadata.website,token.mint)
   
     }
     

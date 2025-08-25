@@ -22,10 +22,17 @@ export async function isSafeToken(token) {
     // 1. ✅ Controllo liquidità min 2 max 20
     if (token.solInPool < botOptions.liquidityMin+30 || token.solInPool > botOptions.liquidityMax+30 ) {
       //console.log("❌ Liquidità fuori range.");
-      safeProblem.push("❌ Liquidità fuori range."+`: ${token.solInPool} SOL`);
-      return {
-        safeProblem,
-        valid: safeProblem.length === 0, // soglia regolabile
+      safeProblem.push("❌ Liquidità fuori range."+`: ${token.solInPool.toFixed(3)} SOL`);
+     
+      //se la liquidità e bassa molto allora skippa altrimenti...
+      let diffPrice=(botOptions.liquidityMin +30) - token.solInPool;
+      if(diffPrice < 0.6){
+
+      }else{
+        return {
+          safeProblem,
+          valid: safeProblem.length === 0, // soglia regolabile
+        }
       }
     }
 
@@ -137,7 +144,7 @@ export async function isSafeToken(token) {
            //return false     
          }else{
 
-  const websiteCheck= await checkWebsiteMatch(metadata);
+  const websiteCheck= await checkWebsiteMatch(metadata,token);
   console.log('websitechek:',websiteCheck);
   if (websiteCheck.valid !== true) {
     safeProblem.push(websiteCheck.reason);
