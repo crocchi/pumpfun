@@ -78,12 +78,12 @@ export async function isSafeToken(token) {
       let metadata;
        
       try {
-        const response = await fetch(token.uri);
+          const response = await fetch(token.uri);
           metadata = await response.json();
       } catch (e) {
         safeProblem.push("⚠️ Impossibile leggere metadata URI");
-        console.log('⚠️ Impossibile leggere metadata URI',e)
-        console.log('-------------------')
+        //console.log('⚠️ Impossibile leggere metadata URI',e)
+        
         //console.log(e)
         return {
           safeProblem,

@@ -74,10 +74,10 @@ function extractTwitterHandle(url) {
   
   // --- Funzione principale: controllo Twitter ---
   export function checkTwitterMatch(metadata) {
-    if (!metadata.twitter) return { valid: false, reason: "No Twitter link" };
-    if(metadata.twitter.includes('/i/'))  return {  valid: false, reason: "No Twitter communy link" };
+    if (!metadata.twitter) return { valid: false, reason: "⚠️ No Twitter link" };
+    if(metadata.twitter.includes('/i/'))  return {  valid: false, reason: "⚠️ No Twitter communy link" };
     const handle = extractTwitterHandle(metadata.twitter);
-    if (!handle) return { valid: false, reason: "Invalid Twitter URL" };
+    if (!handle) return { valid: false, reason: "⚠️ Invalid Twitter URL" };
   
     const normHandle = normalize(handle);
     const normName = normalize(metadata.name || "");
@@ -93,7 +93,7 @@ function extractTwitterHandle(url) {
       scoreName: scoreName.toFixed(2),
       scoreSymbol: scoreSymbol.toFixed(2),
       valid: maxScore > 0.5, // soglia regolabile
-      reason: maxScore > 0.5 ? "Match ok" : "❌ X Handle non coerente con name/symbol",
+      reason: maxScore > 0.5 ? "Match ok" : "❌ Account X non coerente con name/symbol",
     };
   }
   
