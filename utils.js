@@ -136,18 +136,32 @@ export async function isSafeToken(token) {
       //return false     
     }
   
+
+  
+  //controllo Twitter
+  const twitterCheck= checkTwitterMatch(metadata);
+  //console.log("check Twitter:",twitterCheck);
+  if (twitterCheck.valid !== true) {
+    safeProblem.push(twitterCheck.reason);
+    
+  }else if (twitterCheck.valid === true) {
+    console.log("✅ Twitter OK:", metadata.twitter);
+    //safeProblem=[];
+  }
+
+
           // Controllo sito web
           const hasWebsite = typeof metadata.website === 'string' && metadata.website.length > 5;
     
           if (!hasWebsite) {
            safeProblem.push("❌ Manca il sito web");
            //return false     
-         }else{
+         }else{ //se non manca il sito web...controlla
 
   const websiteCheck= await checkWebsiteMatch(metadata,token);
   console.log('websitechek:',websiteCheck);
   if(websiteCheck.finpage.found){
-    console.log('indirizzo contratto trovato nella pagina...')
+    console.log(' ✅ Indirizzo contratto trovato nella pagina...')
     safeProblem=[];
     return {
       safeProblem,
@@ -162,29 +176,15 @@ export async function isSafeToken(token) {
     }
   }else if (websiteCheck.valid === true) {
     console.log("✅ Sito OK:", metadata.website);
+     if(!websiteCheck.finpage.found){ 
+      safeProblem.push(websiteCheck.finpage.reason);
+      console.log("❌ Contratto token Non trovato nella pagina: ", websiteCheck.finpage.reason);
+     } 
    
-  }
+     }
         }
-      
-  //controllo Twitter
-  const twitterCheck= checkTwitterMatch(metadata);
-  //console.log("check Twitter:",twitterCheck);
-  if (twitterCheck.valid !== true) {
-    safeProblem.push(twitterCheck.reason);
     
-  }else if (twitterCheck.valid === true) {
-    console.log("✅ Twitter OK:", metadata.twitter);
-    safeProblem=[];
-   
-  }
-  
-     
-      //if (!socialCheck) safeProblem.push('❌ Nessun social (website, Twitter o Telegram)');
-      /*
-      if (!meta || !meta.image || meta.image.includes('base64') || meta.name !== token.name) {
-        console.log("❌ Metadata sospetti o immagine mancante.");
-        return false;
-      }*/
+
         
     }
 

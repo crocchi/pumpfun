@@ -76,6 +76,7 @@ function extractTwitterHandle(url) {
   export function checkTwitterMatch(metadata) {
     if (!metadata.twitter) return { valid: false, reason: "⚠️ No Twitter link" };
     if(metadata.twitter.includes('/i/'))  return {  valid: false, reason: "⚠️ No Twitter communy link" };
+    if(metadata.twitter.includes('/status/'))  return {  valid: false, reason: "⚠️ No Twitter status link" };
     const handle = extractTwitterHandle(metadata.twitter);
     if (!handle) return { valid: false, reason: "⚠️ Invalid Twitter URL" };
   
