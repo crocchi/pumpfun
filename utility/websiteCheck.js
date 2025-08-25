@@ -54,7 +54,7 @@ async function checkMintInPage(url, mintAddress) {
   console.log('check webpage'+url,found)
       return found
         ? { found: true, mint: mintAddress }
-        : { found: false, reason: "Mint non trovato nella pagina" };
+        : { found: false, reason: `Mint ${mintAddress} non trovato nella pagina` };
     } catch (err) {
       return { found: false, reason: err.message };
     }

@@ -5,6 +5,7 @@ export const MORALIS_API_KEY= process.env.MORALIS_API_KEY;
 export const RPC_URL_SOLANA = process.env.RPC_URL_SOLANA;
 export const RPC_URL_HELIUS = process.env.RPC_URL_HELIUS;
 export const RPC_WS_HELIUS = process.env.RPC_WS_HELIUS;
+export const DESEARCH_API = process.env.DESEARCH_API;
 
 export const MAX_TOKENS_SUBSCRIBED = 40;
 

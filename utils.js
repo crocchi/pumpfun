@@ -4,6 +4,7 @@ import { checkRugRisk } from './utility/rugCheck.js';
 import { botOptions } from './config.js';
 import { checkTwitterMatch } from './utility/twitterCheck.js';
 import { checkWebsiteMatch } from './utility/websiteCheck.js';
+import { searchTwitter } from './utility/desearchTwitter.js';
 
 import { checkTokenDistribution } from './utility/checkOwner.js';
 const MAX_CREATOR_SUPPLY_PERCENT = 5; // massimo accettabile per il creator
@@ -146,7 +147,10 @@ export async function isSafeToken(token) {
     
   }else if (twitterCheck.valid === true) {
     console.log("✅ Twitter OK:", metadata.twitter);
-    safeProblem=[];
+    safeProblem=[];// aggiungere controllo twitter account profile
+    //account x = twitterCheck.handle
+    //token.mint
+    searchTwitter(twitterCheck.handle , token.mint )
   }
 
 
