@@ -146,7 +146,7 @@ export async function isSafeToken(token) {
     
   }else if (twitterCheck.valid === true) {
     console.log("✅ Twitter OK:", metadata.twitter);
-    //safeProblem=[];
+    safeProblem=[];
   }
 
 
