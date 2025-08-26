@@ -48,11 +48,13 @@ async function checkMintInPage(url, mintAddress) {
       if (!res.ok) throw new Error("Impossibile scaricare la pagina");
   
       const html = await res.text();
-      console.log(` ${mintAddress} `)
-  console.log(html)
+    //  console.log(` ${mintAddress} `)
+ // console.log(html)
 
       // Cerca esattamente il mint passato
-      const found = html.includes(mintAddress);
+      const wordshort = mintAddress.slice(0, 4); // Prendi i primi 4 caratteri del mint address
+      const found = html.includes(mintAddress) || html.includes(wordshort);
+
   console.log('check webpage '+url,found)
       return found
         ? { found: true, mint: mintAddress }
