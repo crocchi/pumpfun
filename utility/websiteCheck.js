@@ -4,7 +4,7 @@ import { normalize,similarity } from "./twitterCheck.js";
 
 export async function checkWebsiteMatch(metadata,token) {
     if (!metadata.website) return { valid: false, reason: "No website link" };
-  
+  if(metadata.website.includes('x.com'))return { valid: false, reason: "No X as website link" };
     const domain = extractDomain(metadata.website);
     if (!domain) return { valid: false, reason: "Invalid website URL" };
   
@@ -17,7 +17,7 @@ export async function checkWebsiteMatch(metadata,token) {
     const maxScore = Math.max(scoreName, scoreSymbol);
     let finpage={ found: false, reason: 'no-check' }
     if(maxScore > 0.3){
-      finpage=await checkMintInPage(metadata.website,token.mint)
+      finpage=await checkMintInPage(metadata.website, token.mint)
   
     }
     
@@ -48,10 +48,12 @@ async function checkMintInPage(url, mintAddress) {
       if (!res.ok) throw new Error("Impossibile scaricare la pagina");
   
       const html = await res.text();
-  
+      console.log(` ${mintAddress} `)
+  console.log(html)
+
       // Cerca esattamente il mint passato
       const found = html.includes(mintAddress);
-  console.log('check webpage'+url,found)
+  console.log('check webpage '+url,found)
       return found
         ? { found: true, mint: mintAddress }
         : { found: false, reason: `Mint ${mintAddress} non trovato nella pagina` };

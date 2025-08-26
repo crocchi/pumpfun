@@ -119,9 +119,6 @@ ws.on('message', async function message(data) {
     // Verifica se è un evento di creazione token
     if (parsed.txType === 'create') {
 
-      //QUI INIZIA A CONTROLLARE LE TRX DEL TOKEN...SE VIENE VENDUTO TROPPO PRESTO, LO SCARTA
-      //await monitorEarlyTrades(token, snipeToken);
-
 
     liquidityCheck()
 
@@ -133,6 +130,9 @@ ws.on('message', async function message(data) {
 
         }
         
+        if(safer.fastBuy){
+
+        }
          setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
          let devBot=await monitorEarlyTrades(token);
          if (!devBot) {

@@ -169,7 +169,8 @@ export async function isSafeToken(token) {
     safeProblem=[];
     return {
       safeProblem,
-      valid: safeProblem.length === 0, // soglia regolabile
+      valid: safeProblem.length === 0,
+      fastBuy:true // soglia regolabile
     }
 }
   if (websiteCheck.valid !== true) {
