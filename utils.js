@@ -11,7 +11,7 @@ const MAX_CREATOR_SUPPLY_PERCENT = 5; // massimo accettabile per il creator
 const MAX_BURN_PERCENT = 50; // opzionale: es. se >50% burned, è sospetto
 
 // 🔥 Lista di wallet noti per rugpull (aggiungi i tuoi)
-const blacklist = [
+const blacklist = [ // o aggiungi dev wallet che hanno creato un token ultimi 20o piuè
   'FkeYEXAMPLEdGycd3t7asdfsas', 
   '6QsW5rSMYaQTGJxg9UiwmhxEQ7w1DypdN9kfHQuWoobi'
 ];
@@ -77,7 +77,10 @@ export async function isSafeToken(token) {
         valid: safeProblem.length === 0, // soglia regolabile
       }
     }
-
+//aggiungi dev wallet,ultimi token creati.cosi un dev se lancia 2 token
+// di seguito viene bloccato
+blacklist.push(token.traderPublicKey);
+if(blacklist.length >= 100){ blacklist.shift() }
 
     // 6. ✅ Controllo metadati (opzionale)
     
@@ -104,8 +107,8 @@ export async function isSafeToken(token) {
    
       // Controllo se almeno ci sono ...Twitter e Telegram
       const hasTwitterOrTelegram =
-      typeof metadata.twitter === 'string' && metadata.twitter.length > 5 ||
-      typeof metadata.telegram === 'string' && metadata.telegram.length > 5;
+      typeof metadata.twitter === 'string' && metadata.twitter?.length > 5 ||
+      typeof metadata.telegram === 'string' && metadata.telegram?.length > 5;
   
       if (!hasTwitterOrTelegram) {
           safeProblem.push("❌ Manca Twitter o Telegram");
@@ -125,7 +128,7 @@ export async function isSafeToken(token) {
         }//createdOn: 'https://bonk.fun',createdOn: 'https://letsbonk.fun',  createdOn: 'raydium.launchlab',
   
     //controllo descrizione
-    const hasDescription = typeof metadata.description === 'string' && metadata.description.length > 14;
+    const hasDescription = typeof metadata.description === 'string' && metadata.description?.length > 14;
     if (hasDescription && metadata.description?.length > 400) {
       console.log("⚠️ Descrizione lunga, potrebbe essere interessante... testiamo..");
       safeProblem=[];
