@@ -287,13 +287,14 @@ export async function returnTokenLog(mint) {
     if (token) {return token}
 }
 
-export async function buyTokenLog(mint,tokenAmount,solAmount) {
+export async function buyTokenLog(mint,tokenAmount,solAmount, price) {
     const token = tokenLog.find(t => t.mint === mint);
     if (token) {
 
       token.buySign.push({
             tokenAmount: tokenAmount,
             solAmount: solAmount,
+            price: price,
             time: new Date().toLocaleTimeString()
           });
     }
