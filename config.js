@@ -6,6 +6,7 @@ export const RPC_URL_SOLANA = process.env.RPC_URL_SOLANA;
 export const RPC_URL_HELIUS = process.env.RPC_URL_HELIUS;
 export const RPC_WS_HELIUS = process.env.RPC_WS_HELIUS;
 export const DESEARCH_API = process.env.DESEARCH_API;
+export const LIGHT_WALLET_API = process.env.LIGHT_WALLET_API;
 
 export const MAX_TOKENS_SUBSCRIBED = 40;
 
@@ -28,9 +29,9 @@ export let SOLANA_USD = 180;
     //monitor token
     time_monitor: 3000, // 3 secondi
     volumeMin: 0.02, // volume minimo in SOL per considerare il token
-    maxTrxNumMonitor:6, // numero massimo di transazioni sospette per considerare il token un rugpull
+    maxTrxNumMonitor:8, // numero massimo di transazioni sospette per considerare il token un rugpull
     //acquisto token
-    buyAmount: 0.05, // quantità di SOL da acquistare
+    buyAmount: 0.02, // quantità di SOL da acquistare
 
     // vendita rapida
     quickSellMultiplier: 3.5,     // vendi se price >= startPrice * 3.5 ...

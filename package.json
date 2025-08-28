@@ -17,11 +17,12 @@
   "author": "crocchi",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.6.8",
-    "dotenv": "^16.3.1",
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.1",
     "ws": "^8.16.0",
     "moralis": "^2.16.0",
-    "@solana/web3.js": "^1.89.2",
+    "@solana/web3.js": "^1.91.0",
+    "@solana/spl-token": "^0.4.13",
     "bs58": "^5.0.0",
     "desearch-js": "^1.0.9",
     "ejs": "^3.1.10"
