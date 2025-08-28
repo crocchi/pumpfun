@@ -282,7 +282,22 @@ const server = http.createServer(async (req, res) => {
     console.log(`🌐 HTTP Server attivo su http://localhost:${port}`);
   });
 }*/
+export async function returnTokenLog(mint) {
+    const token = tokenLog.find(t => t.mint === mint);
+    if (token) {return token}
+}
 
+export async function buyTokenLog(mint,tokenAmount,solAmount) {
+    const token = tokenLog.find(t => t.mint === mint);
+    if (token) {
+
+      token.buySign.push({
+            tokenAmount: tokenAmount,
+            solAmount: solAmount,
+            time: new Date().toLocaleTimeString()
+          });
+    }
+}
 
 export async function updateToken(mint, updates,type) {
     const token = tokenLog.find(t => t.mint === mint);

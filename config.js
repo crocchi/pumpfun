@@ -10,7 +10,7 @@ export const LIGHT_WALLET_API = process.env.LIGHT_WALLET_API;
 
 export const MAX_TOKENS_SUBSCRIBED = 40;
 
-export let SOLANA_USD = 180;
+export let SOLANA_USD = 200;
 
 
 //RPC_URL: process.env.RPC_URL,

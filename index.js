@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import { isSafeToken } from './utils.js';
 import { monitorEarlyTrades ,setSuspiciousSellDetected , setMintMonitor , getMintMonitor,getSolAmount, setSolAmount,getSolTrx,cancelMonitor } from './tradeMonitor.js';
 import { snipeToken } from './snipeToken.js';
-import { startHttpServer, logToken ,updateToken } from './httpServer.js';
+import { startHttpServer, logToken ,updateToken, buyTokenLog } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
 import { buyToken , sellToken } from './utility/lightTrx.js';
@@ -158,8 +158,8 @@ ws.on('message', async function message(data) {
         console.log(`📦 URI: ${token.uri}`);
         console.log(`🌊 Pool: ${token.pool}`);
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
-        buyToken(token.mint)
-        // 
+        let buyTokenSignature=await buyToken(token.mint)
+        // buyTokenLog
         
         getTopHolders(token.mint)
         .then((resc)=>{
@@ -178,6 +178,7 @@ ws.on('message', async function message(data) {
             marketCapSol: token.marketCapSol,
             price: prezzo,
             transactions:[],
+            buySign:[buyTokenSignature],// ci metto le trx
             trxNum: 0,
             startPrice: prezzo,
             marketCapUsd: marketCapUsd,
@@ -216,6 +217,10 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     }// fine if (parsed.txType === 'create')
 
+    //controlla la tua transazione
+    if(parsed.txType === 'buy' && parsed.traderPublicKey === 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'){
+      buyTokenLog(parsed.mint, parsed.tokenAmount , parsed.solAmount)
+    }
 
     // (parsed.txType === 'BUY')
     /////// zona monitoraggio 
@@ -334,9 +339,10 @@ TypeError: Cannot read properties of undefined (reading 'price')
 if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//fix tradeinfo undefined
 
             if (tradeInfo.price > tradeInfo.startPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) { 
-                console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
-                subscribedTokens.delete(trade.mint);
                 sellToken(trade.mint)
+              console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
+                subscribedTokens.delete(trade.mint);
+                
                 console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
                 ws.send(JSON.stringify({
                     method: "unsubscribeTokenTrade",
@@ -346,13 +352,13 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
             }
           // Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi
             if (tradeInfo.trxNum >botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.startPrice * botOptions.rugpullMinGainMultiplier) { 
-
+                 sellToken(trade.mint)
                 console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 ws.send(JSON.stringify({
                     method: "unsubscribeTokenTrade",
                     keys: [trade.mint]
                   }));
-                  sellToken(trade.mint)
+                 
                   subscribedTokens.delete(trade.mint);
                   console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
             }
