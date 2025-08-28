@@ -1,6 +1,10 @@
 import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { getAccount, getAssociatedTokenAddress } from "@solana/spl-token";
 
+/*
+ const { Connection, PublicKey, clusterApiUrl } = await import("@solana/web3.js");
+ const { getAccount, getAssociatedTokenAddress }= await import("@solana/spl-token");
+*/
 // Connessione al cluster mainnet
 const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
 
@@ -49,6 +53,11 @@ async function getSolBalance(walletAddress) {
       lamports: balanceLamports,
       sol: balanceSOL,
     };
+    /*{
+  wallet: 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG',
+  lamports: 120000000,
+  sol: 0.12
+} */
   } catch (err) {
     return { wallet: walletAddress, error: err.message };
   }
@@ -58,5 +67,7 @@ async function getSolBalance(walletAddress) {
 // --- Esempio ---
 (async () => {
   const result = await getTokenBalance(wallet, mint);
+  const solBalance = await getSolBalance(walletAddressmy);
   console.log(result);
+  console.log(solBalance)
 })();

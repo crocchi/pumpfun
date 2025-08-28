@@ -5,6 +5,7 @@ import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
+import { buyToken , sellToken } from './utility/lightTrx.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
@@ -157,6 +158,7 @@ ws.on('message', async function message(data) {
         console.log(`📦 URI: ${token.uri}`);
         console.log(`🌊 Pool: ${token.pool}`);
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
+        buyToken(token.mint)
         // 
         
         getTopHolders(token.mint)
@@ -334,6 +336,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
             if (tradeInfo.price > tradeInfo.startPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) { 
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 subscribedTokens.delete(trade.mint);
+                sellToken(trade.mint)
                 console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
                 ws.send(JSON.stringify({
                     method: "unsubscribeTokenTrade",
@@ -349,6 +352,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
                     method: "unsubscribeTokenTrade",
                     keys: [trade.mint]
                   }));
+                  sellToken(trade.mint)
                   subscribedTokens.delete(trade.mint);
                   console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
             }
