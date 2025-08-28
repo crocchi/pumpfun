@@ -27,8 +27,8 @@ export async function isSafeToken(token) {
      
       //se la liquidità e bassa molto allora skippa altrimenti...
       let diffPrice=(botOptions.liquidityMin +30) - token.solInPool;
-      if(diffPrice < 0.6){
-
+      if(diffPrice < 0.5){
+        console.log('poca differenza liquidità ..skippa problema')
       }else{
         return {
           safeProblem,
@@ -126,7 +126,7 @@ export async function isSafeToken(token) {
   
     //controllo descrizione
     const hasDescription = typeof metadata.description === 'string' && metadata.description.length > 14;
-    if (hasDescription && metadata.description.length > 400) {
+    if (hasDescription && metadata.description?.length > 400) {
       console.log("⚠️ Descrizione lunga, potrebbe essere interessante... testiamo..");
       safeProblem=[];
       //return true; // Descrizione lunga, potrebbe essere interessante... testiamo..
@@ -164,15 +164,7 @@ export async function isSafeToken(token) {
 
   const websiteCheck= await checkWebsiteMatch(metadata,token);
   console.log('websitechek:',websiteCheck);
-  if(websiteCheck.finpage.found){
-    console.log(' ✅ Indirizzo contratto trovato nella pagina...')
-    safeProblem=[];
-    return {
-      safeProblem,
-      valid: safeProblem.length === 0,
-      fastBuy:true // soglia regolabile
-    }
-}
+
   if (websiteCheck.valid !== true) {
     safeProblem.push(websiteCheck.reason);
     return {
@@ -184,7 +176,15 @@ export async function isSafeToken(token) {
      if(!websiteCheck.finpage.found){ 
       safeProblem.push(websiteCheck.finpage.reason);
       console.log("❌ Contratto token Non trovato nella pagina: ", websiteCheck.finpage.reason);
-     } 
+     } else if(websiteCheck.finpage.found){
+        console.log(' ✅ Indirizzo contratto trovato nella pagina...')
+    safeProblem=[];
+    return {
+      safeProblem,
+      valid: safeProblem.length === 0,
+      fastBuy:true // soglia regolabile
+    }
+     }
    
      }
         }

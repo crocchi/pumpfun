@@ -45,7 +45,7 @@ function extractDomain(url) {
 async function checkMintInPage(url, mintAddress) {
     try {
       const res = await fetch(url);
-      if (!res.ok) throw new Error("Impossibile scaricare la pagina");
+      if (!res.ok) return { found: false, reason: 'impossibile scaricare pagina' };
   
       const html = await res.text();
     //  console.log(` ${mintAddress} `)
