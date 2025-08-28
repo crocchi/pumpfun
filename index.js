@@ -225,7 +225,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     if(parsed.txType === 'sell' && parsed.traderPublicKey === 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'){
       priceInSol = liquidityCheck(parsed)
-      buyTokenLog(parsed.mint, parsed.tokenAmount , parsed.solAmount)
+      buyTokenLog(parsed.mint, parsed.tokenAmount , parsed.solAmount , priceInSol)
     }
 
     // (parsed.txType === 'BUY')
