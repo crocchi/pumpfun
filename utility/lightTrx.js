@@ -103,7 +103,7 @@ trade: {
 */
 
 
-export async function sellToken(mintToken , qnt ,sol_or_not=true) {
+export async function sellToken(mintToken ,sol_or_not=false) {
     try {
         let totAmountToSell=returnTokenLog(mintToken)
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
