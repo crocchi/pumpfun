@@ -39,7 +39,7 @@ export let SOLANA_USD = 200;
   
     // protezione "rugpull" basata su activity
     rugpullMaxTrades: 35,
-    rugpullMinGainMultiplier: 1.2,
+    rugpullMinGainMultiplier: 1.3,
   
     // trailing sell
     enableTrailing: true,

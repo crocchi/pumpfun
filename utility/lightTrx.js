@@ -105,7 +105,7 @@ trade: {
 
 export async function sellToken(mintToken ,sol_or_not=false) {
     try {
-        let totAmountToSell=returnTokenLog(mintToken)
+        let totAmountToSell=await returnTokenLog(mintToken)
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
             method: "POST",
             headers: {
@@ -114,7 +114,7 @@ export async function sellToken(mintToken ,sol_or_not=false) {
             body: JSON.stringify({
                 action: "sell",
                 mint: mintToken,
-                amount: totAmountToSell.buySign[1].tokenAmount || AMOUNT_SOL*1.5 ,
+                amount: totAmountToSell.buySign[1].tokenAmount-1 || AMOUNT_SOL*1.5 ,
                 denominatedInSol: sol_or_not, // true = AMOUNT_SOL è in SOL
                 slippage: SLIPPAGE,
                 priorityFee: PRIORITY_FEE,

@@ -219,12 +219,14 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     //controlla la tua transazione
     if(parsed.txType === 'buy' && parsed.traderPublicKey === 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'){
-     priceInSol = liquidityCheck(parsed)
+     priceInSol = liquidityCheck(parsed);
+     console.log(`Acquisto rilevato wallet Bot:`)
       buyTokenLog(parsed.mint, parsed.tokenAmount , parsed.solAmount, priceInSol)
     }
 
     if(parsed.txType === 'sell' && parsed.traderPublicKey === 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'){
-      priceInSol = liquidityCheck(parsed)
+      priceInSol = liquidityCheck(parsed);
+       console.log(`vendita rilevato wallet Bot:`)
       buyTokenLog(parsed.mint, parsed.tokenAmount , parsed.solAmount , priceInSol)
     }
 
