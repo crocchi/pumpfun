@@ -30,11 +30,13 @@ const SLIPPAGE = 10; // % massima slippage
 const PRIORITY_FEE = 0.00005; // SOL per Jito tip / priority fee
 const POOL = "auto"; // "pump", "raydium", ecc.
 const TOKEN_AMOUNT = 0; // QNT di token acquistato
+const demoVersion=botOptions.demoVersion;
 
 // =======================
 // FUNZIONE PRINCIPALE
 // =======================
 export async function buyToken(mintToken) {
+if(demoVersion) return `demo version...no buy`
     try {
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
             method: "POST",
@@ -104,6 +106,7 @@ trade: {
 
 
 export async function sellToken(mintToken ,sol_or_not=false) {
+   if(demoVersion) return `demo version...no sell`
     try {
         let totAmountToSell=await returnTokenLog(mintToken)
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {

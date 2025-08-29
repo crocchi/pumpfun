@@ -126,7 +126,9 @@ ws.on('message', async function message(data) {
         const safer = await isSafeToken(token);
         if (safer.valid !== true) {
           console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
-          console.log(`--------------------------------------`);
+          //console.log(`---Pool:${token.pool}-----MINT:${token.mint}-----`);
+          console.log(token)
+          console.log('--------------------------------------------')
           return
 
         }
@@ -349,7 +351,8 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
 
   //percentuale cambiamento 
   const change = ((tradeInfo.price - tradeInfo.startPrice) / tradeInfo.startPrice) * 100;
-  console.log(`% cambio prezzo: ${change}%`)
+  priceInSol = liquidityCheck(trade) 
+//  console.log(`% cambio prezzo: ${change}%`)
  if (change < -15 ){// se vai meno del -15%
   console.log(`% Sell Off -15%: ${change}%`)
     sellToken(trade.mint);
@@ -380,7 +383,9 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
                   console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
             }
           }else return console.error('❌ Errore nel tradeInfo:', tradeInfo);
-            console.log(`(${tradeInfo.name})📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount}`);
+            //
+            console.log(`(${tradeInfo.name})📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount} price:${priceInSol}`);
+         
           });
 
         }        

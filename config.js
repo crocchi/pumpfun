@@ -19,7 +19,7 @@ export let SOLANA_USD = 200;
   //SLIPPAGE: parseFloat(process.env.SLIPPAGE),
   export const botOptions = {
     //filtri token
-    liquidityMin: 1.8,
+    liquidityMin: 1.7,
     liquidityMax: 20,
     devShare:0.30,
     marketcapMin: 5,
@@ -29,9 +29,10 @@ export let SOLANA_USD = 200;
     //monitor token
     time_monitor: 3000, // 3 secondi
     volumeMin: 0.02, // volume minimo in SOL per considerare il token
-    maxTrxNumMonitor:8, // numero massimo di transazioni sospette per considerare il token un rugpull
+    maxTrxNumMonitor:10, // numero massimo di transazioni sospette per considerare il token un rugpull
     //acquisto token
     buyAmount: 0.025, // quantità di SOL da acquistare
+    demoVersion:true, // non compra o vende
 
     // vendita rapida
     quickSellMultiplier: 3.5,     // vendi se price >= startPrice * 3.5 ...
@@ -39,7 +40,7 @@ export let SOLANA_USD = 200;
   
     // protezione "rugpull" basata su activity
     rugpullMaxTrades: 35,
-    rugpullMinGainMultiplier: 1.3,
+    rugpullMinGainMultiplier: 1.4,
   
     // trailing sell
     enableTrailing: true,
