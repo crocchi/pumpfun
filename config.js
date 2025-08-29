@@ -32,7 +32,7 @@ export let SOLANA_USD = 200;
     maxTrxNumMonitor:10, // numero massimo di transazioni sospette per considerare il token un rugpull
     //acquisto token
     buyAmount: 0.025, // quantità di SOL da acquistare
-    demoVersion:true, // non compra o vende
+    demoVersion:false, // non compra o vende
 
     // vendita rapida
     quickSellMultiplier: 3.5,     // vendi se price >= startPrice * 3.5 ...
