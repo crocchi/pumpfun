@@ -179,6 +179,7 @@ ws.on('message', async function message(data) {
             price: prezzo,
             transactions:[],
             buySign:[buyTokenSignature],// ci metto le trx
+            buyPrice:[],
             trxNum: 0,
             startPrice: prezzo,
             marketCapUsd: marketCapUsd,
@@ -226,7 +227,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     if(parsed.txType === 'sell' && parsed.traderPublicKey === 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'){
       priceInSol = liquidityCheck(parsed);
-       console.log(`vendita rilevato wallet Bot:`)
+       console.log(`vendita rilevata wallet Bot:`)
       buyTokenLog(parsed.mint, parsed.tokenAmount , parsed.solAmount , priceInSol)
     }
 
@@ -345,6 +346,14 @@ TypeError: Cannot read properties of undefined (reading 'price')
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
  */
 if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//fix tradeinfo undefined
+
+  //percentuale cambiamento 
+  const change = ((tradeInfo.price - tradeInfo.startPrice) / tradeInfo.startPrice) * 100;
+  console.log(`% cambio prezzo: ${change}%`)
+ if (change < -15 ){// se vai meno del -15%
+  console.log(`% Sell Off -15%: ${change}%`)
+    sellToken(trade.mint);
+      }
 
             if (tradeInfo.price > tradeInfo.startPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) { 
                 sellToken(trade.mint)
