@@ -163,13 +163,6 @@ ws.on('message', async function message(data) {
         let buyTokenSignature=await buyToken(token.mint)
         // buyTokenLog
         
-        getTopHolders(token.mint)
-        .then((resc)=>{
-          console.log(`👥 Top Holders`)
-          console.log(resc);
-        })
-        .catch(console.error);
-        
 
         logToken({
             mint: token.mint,
@@ -384,7 +377,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
             }
           }else return console.error('❌ Errore nel tradeInfo:', tradeInfo);
             //
-            console.log(`(${tradeInfo.name})📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount} price:${priceInSol}`);
+            console.log(`(${tradeInfo.name})📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount} price:${prezzo}`);
          
           });
 

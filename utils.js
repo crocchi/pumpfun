@@ -80,7 +80,7 @@ export async function isSafeToken(token) {
 //aggiungi dev wallet,ultimi token creati.cosi un dev se lancia 2 token
 // di seguito viene bloccato
 blacklist.push(token.traderPublicKey);
-if(blacklist.length >= 100){ blacklist.shift() }
+if(blacklist.length >= 80){ blacklist.shift() }
 
     // 6. ✅ Controllo metadati (opzionale)
     
@@ -93,12 +93,9 @@ if(blacklist.length >= 100){ blacklist.shift() }
           metadata = await response.json();
       } catch (e) {
         safeProblem.push("⚠️ Impossibile leggere metadata URI");
-        //console.log('⚠️ Impossibile leggere metadata URI',e)
-        
-        //console.log(e)
         return {
           safeProblem,
-          valid: false, // soglia regolabile
+          valid: safeProblem.length === 0, // soglia regolabile
         }
       }
      //console.log("New Token:", metadata);
@@ -111,11 +108,13 @@ if(blacklist.length >= 100){ blacklist.shift() }
       typeof metadata.telegram === 'string' && metadata.telegram?.length > 5;
   
       if (!hasTwitterOrTelegram) {
-          safeProblem.push("❌ Manca Twitter o Telegram");
+          if(botOptions.hasTwitterOrTelegram_filter){
+            safeProblem.push("❌ Manca Twitter o Telegram");
           return {
             safeProblem,
             valid: safeProblem.length === 0, // soglia regolabile
           }
+        }
         }
       
   
@@ -135,7 +134,7 @@ if(blacklist.length >= 100){ blacklist.shift() }
       //return true; // Descrizione lunga, potrebbe essere interessante... testiamo..
     }
     if (!hasDescription) {
-      safeProblem.push("❌ Descrizione breve o assente"+ ` (${metadata.description.length} caratteri)`);
+     if(botOptions.hasDescription_filter) safeProblem.push("❌ Descrizione breve o assente"+ ` (${metadata.description.length} caratteri)`);
   
       //return false     
     }
@@ -146,7 +145,7 @@ if(blacklist.length >= 100){ blacklist.shift() }
   const twitterCheck= checkTwitterMatch(metadata);
   //console.log("check Twitter:",twitterCheck);
   if (twitterCheck.valid !== true) {
-    safeProblem.push(twitterCheck.reason);
+    if(botOptions.hasTwitterOrTelegram_filter)safeProblem.push(twitterCheck.reason);
     
   }else if (twitterCheck.valid === true) {
     console.log("✅ Twitter OK:", metadata.twitter);
@@ -161,20 +160,20 @@ if(blacklist.length >= 100){ blacklist.shift() }
           const hasWebsite = typeof metadata.website === 'string' && metadata.website.length > 5;
     
           if (!hasWebsite) {
-           safeProblem.push("❌ Manca il sito web");
+           if(botOptions.hasWeb_filter) safeProblem.push("❌ Manca il sito web");
            //return false     
          }else{ //se non manca il sito web...controlla
 
   const websiteCheck= await checkWebsiteMatch(metadata,token);
   console.log('websitechek:',websiteCheck);
 
-  if (websiteCheck.valid !== true) {
+  if (websiteCheck.valid !== true && botOptions.hasWebCheck_filter) {
     safeProblem.push(websiteCheck.reason);
     return {
       safeProblem,
       valid: safeProblem.length === 0, // soglia regolabile
     }
-  }else if (websiteCheck.valid === true) {
+  }else if (websiteCheck.valid === true && botOptions.hasWebCheck_filter) {
     console.log("✅ Sito OK:", metadata.website);
      if(!websiteCheck.finpage.found){ 
       safeProblem.push(websiteCheck.finpage.reason);
