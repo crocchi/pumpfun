@@ -87,10 +87,10 @@ export function startHttpServer(port = 4000) {
           if ('buyAmount' in body) botOptions.buyAmount = Math.max(0, Number(body.buyAmount)) || botOptions.buyAmount;
           if ('maxTrxNumMonitor' in body) botOptions.maxTrxNumMonitor = Math.max(1, Number(body.maxTrxNumMonitor)) || botOptions.maxTrxNumMonitor;
 
-          if ('hasWeb_filter' in body) botOptions.hasWeb_filter = body.website === 'true' || body.website === true || false;
-          if ('hasWebCheck_filter' in body) botOptions.hasWebCheck_filter = body.websitecheck === 'true' || body.websitecheck === true || false;
-          if ('hasDescription_filter' in body) botOptions.hasDescription_filter = body.Description === 'true' || body.Description === true || false;
-          if ('hasTwitterOrTelegram_filter' in body) botOptions.hasTwitterOrTelegram_filter = body.TwitterOrTelegram === 'true' || body.TwitterOrTelegram === true || false;
+          if ('hasWeb_filter' in body) botOptions.hasWeb_filter = body.hasWeb_filter === 'true' || body.hasWeb_filter === true || false;
+          if ('hasWebCheck_filter' in body) botOptions.hasWebCheck_filter = body.hasWebCheck_filter === 'true' || body.hasWebCheck_filter === true || false;
+          if ('hasDescription_filter' in body) botOptions.hasDescription_filter = body.hasDescription_filter === 'true' || body.hasDescription_filter === true || false;
+          if ('hasTwitterOrTelegram_filter' in body) botOptions.hasTwitterOrTelegram_filter = body.hasTwitterOrTelegram_filter === 'true' || body.hasTwitterOrTelegram_filter === true || false;
         
           if ('enableTrailing' in body) botOptions.enableTrailing = body.enableTrailing === 'true' || body.enableTrailing === true;
           if ('trailingPercent' in body) botOptions.trailingPercent = Math.min(0.9, Math.max(0.01, Number(body.trailingPercent))) || botOptions.trailingPercent;
