@@ -70,6 +70,7 @@ export function startHttpServer(port = 4000) {
         try {
           const body = await parseBody(req);
           // coerce & salva
+          if(!body.liquidityMin) return
           console.log("Aggiornamento botOptions:", body);
           
           if ('liquidityMin' in body) botOptions.liquidityMin = Math.max(0, Number(body.liquidityMin)) || botOptions.liquidityMin;
