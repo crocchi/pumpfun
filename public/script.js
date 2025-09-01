@@ -80,7 +80,11 @@ async function saveOptions(e) {
     time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
     volumeMin: document.getElementById('volumeMinMonitor').value,
     buyAmount: document.getElementById('buyAmount').value,
-    maxTrxNumMonitor: document.getElementById('maxTrxNumMonitor').value
+    maxTrxNumMonitor: document.getElementById('maxTrxNumMonitor').value,
+    hasWeb_filter: document.getElementById('website').checked,
+    hasWebCheck_filter: document.getElementById('websitecheck').checked,
+    hasDescription_filter: document.getElementById('Description').checked,
+    hasTwitterOrTelegram_filter: document.getElementById('TwitterOrTelegram').checked,
   };
   const r = await fetch('/bot-options', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
   const data = await r.json();
@@ -110,6 +114,10 @@ async function loadOptions() {
   document.getElementById('buyAmount').value = o.buyAmount;
   document.getElementById('maxTrxNumMonitor').value = o.maxTrxNumMonitor;
   // Imposta il checkbox rugpullxyz
+  document.getElementById('website').checked = o.hasWeb_filter;
+  document.getElementById('websitecheck').checked = o.hasWebCheck_filter;
+  document.getElementById('Description').checked = o.hasDescription_filter;
+  document.getElementById('TwitterOrTelegram').checked = o.hasTwitterOrTelegram_filter;
 
   if (o.rugpullxyz === 'true' || o.rugpullxyz === true){
     o.rugpullxyz = true; // Imposta default se non presente
