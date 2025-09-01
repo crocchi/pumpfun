@@ -19,7 +19,9 @@
         <h2>Opzioni Bot</h2>
         <div class="content">
     <form id="botForm" onsubmit="return saveOptions(event)">
+
       <div class="twoc">
+
       <div class="two-column-container">
       <div class="hintt">Filtri Token</div>
       <div class="row"><label>Min Liquidity (SOL)</label><input type="number" step="0.10" id="liquidityMin"></div>
@@ -36,6 +38,7 @@
       <div class="row"><label>Rugpull min gain × Multiplier</label><input type="number" step="0.01" id="rugpullMinGainMultiplier"></div>
       <div class="separator"></div>
       </div>
+
       <div class="two-column-container">
         <div class="hintt">Monitor Token</div>
         <div class="row"><label>Timer Monitor(sec)</label><input type="number" step="0.10" id="timeMonitor"></div>
@@ -47,13 +50,13 @@
        <div class="separator"></div>
         <div class="hintt">Buy Snipe Token</div>
         <div class="row"><label>Buy Amount: </label><input type="number" step="0.01" id="buyAmount"></div>
-       <div class="separator"></div>
-
+       
+        <div class="separator"></div>
         <div class="hintt">Extra filtri Token</div>
-        <div class="row"></div><input type="checkbox" id="website" value="Bike"><label for="website"> haswebsite</label><br></div>
-  <div class="row"></div><input type="checkbox" id="websitecheck" value="websitecheck"><label for="websitecheck"> haswebsite check</label><br></div>
-    <div class="row"></div><input type="checkbox" id="Description" value="Description"><label for="Description"> hasDescription</label><br></div>
-    <div class="row"></div><input type="checkbox" id="TwitterOrTelegram" value="TwitterOrTelegram"><label for="TwitterOrTelegram"> hasTwitterOrTelegram</label><br></div>
+        <div class="row"><input type="checkbox" id="website" value="Bike"><label for="website"> haswebsite</label></div>
+        <div class="row"><input type="checkbox" id="websitecheck" value="websitecheck"><label for="websitecheck"> haswebsite check</label></div>
+        <div class="row"><input type="checkbox" id="Description" value="Description"><label for="Description"> hasDescription</label></div>
+        <div class="row"><input type="checkbox" id="TwitterOrTelegram" value="TwitterOrTelegram"><label for="TwitterOrTelegram"> hasTwitterOrTelegram</label></div>
         </div>
 
       </div>

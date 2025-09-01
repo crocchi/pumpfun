@@ -127,7 +127,7 @@ ws.on('message', async function message(data) {
         if (safer.valid !== true) {
           console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
           //console.log(`---Pool:${token.pool}-----MINT:${token.mint}-----`);
-         // console.log(token)
+         if(!parsed.name) console.log(token)
           console.log('--------------------------------------------')
           return
 
