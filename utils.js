@@ -73,13 +73,16 @@ console.log(token);
     }
 
     // 4. ✅ Simbolo/token name valido
+    if(token.name){ 
     const symbolValid = /^[a-zA-Z0-9]{2,12}$/.test(token.symbol);
     const nameValid = token.name.length <= 20 && !token.name.includes('💩') && !token.name.includes('http');
-    if (!symbolValid || !nameValid) {
+    
+      if (!symbolValid || !nameValid) {
      // console.log("❌ Nome o simbolo sospetti.");
       safeProblem.push("❌ Nome o simbolo sospetti.");
       //return false;
     }
+      }else { token.name='Bonk Token'}
 
     // 5. ✅ Dev non in blacklist
     if (blacklist.includes(token.traderPublicKey)) {
