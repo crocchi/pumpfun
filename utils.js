@@ -247,7 +247,7 @@ if(blacklist.length >= 80){ blacklist.shift() }
       valid: safeProblem.length === 0, // soglia regolabile
     }
   } catch (err) {
-    console.error("Errore nel controllo sicurezza:", err.message);
+    console.error("Errore nel controllo sicurezza:", err);
     return false;
   }
 }
