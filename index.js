@@ -102,8 +102,8 @@ ws.on('message', async function message(data) {
     const token = parsed;
     let prezzo;
 
-    const liquidityCheck =async (tk)=>{
-      
+    const liquidityCheck =async (tok)=>{
+      if(!tok) {tok=token}else token=tok
       //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
       if (token.solInPool > 0 && token.tokensInPool > 0) {
           prezzo = (token.solInPool / token.tokensInPool).toFixed(10);
