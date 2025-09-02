@@ -21,7 +21,17 @@ export async function isSafeToken(token) {
 
   try {
     // 1. ✅ Controllo liquidità min 2 max 20
-    if (token.solInPool < botOptions.liquidityMin+30 || token.solInPool > botOptions.liquidityMax+30 ) {
+    if(token.mint.includes('bonk') || token.mint.includes('BONK') ) {
+      if (token.solInPool < botOptions.liquidityMin || token.solInPool > botOptions.liquidityMax ) {
+        safeProblem.push("❌ Liquidità fuori range."+`: ${token.solInPool.toFixed(3)} SOL`);
+        return {
+          safeProblem,
+          valid: safeProblem.length === 0, // soglia regolabile
+        }
+      }
+      
+    }else if(token.mint.includes('pump') || token.mint.includes('PUMP') ) {
+      if (token.solInPool < botOptions.liquidityMin+30 || token.solInPool > botOptions.liquidityMax+30 ) {
       //console.log("❌ Liquidità fuori range.");
       safeProblem.push("❌ Liquidità fuori range."+`: ${token.solInPool.toFixed(3)} SOL`);
      
@@ -35,6 +45,9 @@ export async function isSafeToken(token) {
           valid: safeProblem.length === 0, // soglia regolabile
         }
       }
+    }
+      
+    
     }
 
     // 2. ✅ Controllo market cap
