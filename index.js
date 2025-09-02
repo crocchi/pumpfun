@@ -142,7 +142,7 @@ ws.on('message', async function message(data) {
          console.log(`✅ Token '${parsed.name}' non sicuro e monitorato per vendite sospette.`);
          return;
          }
-         
+         liquidityCheck()
         console.log("Token:", token);
 
         console.log(`-----------------------------------------------`);
@@ -153,7 +153,7 @@ ws.on('message', async function message(data) {
         const marketCapUsd = (token.marketCapSol * SOLANA_USD).toFixed(2);
         const totTokens= token.tokensInPool + token.initialBuy;
         console.log(`📈 MarketCap (USD): ${marketCapUsd}`);
-        console.log(`💰 Price SOL: ${prezzo} -(${priceInSol})`);
+        console.log(`💰 Price SOL: ${prezzo} `);
         console.log(`💧 Liquidity in pool: ${token.solInPool} SOL`);
         console.log(`💧 Tot Tokens:${totTokens}`);
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
