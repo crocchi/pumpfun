@@ -349,6 +349,98 @@ if (twitterCheck.valid !== true) {
     }
   }
   /*
+{
+  signature: '5tRwAFVg3oWB8T6a1EvbmkgQWJ226GELn1Xx3sgU8CdUeDYSXZSfSzKn5KyKe3zkTrrzXe2P5Gt8Ry9Enf3jRLMx',
+  traderPublicKey: '23QuARJvRDKYy7c9QM8NCVZJSBKy3EALUkzSvf5Gft3U',
+  txType: 'create',
+  mint: 'GyNoic8tMhqmc3dYqUTFRcPisshimwkbqr4bzg8tbonk',
+  solInPool: 3.196085,
+  tokensInPool: 896928787.046794,
+  initialBuy: 103071212.95320594,
+  solAmount: 3.196085,
+  newTokenBalance: 103071212.953206,
+  marketCapSol: 34.215142125083496,
+  pool: 'bonk'
+}
+
+All logs
+Search
+Search
+
+Live tail
+GMT+2
+
+Menu
+
+  txType: 'create',
+  mint: '4PZQHWiB1ayMyviwW4HTErXExd4YDjc7qQdgxtQKbonk',
+  solInPool: 1.48425,
+  tokensInPool: 949537924.511756,
+  initialBuy: 50462075.48824406,
+  solAmount: 1.48425,
+  newTokenBalance: 50462075.488244,
+  marketCapSol: 30.78508646496425,
+  pool: 'bonk'
+}
+--------------------------------------------
+{
+  signature: '5tRwAFVg3oWB8T6a1EvbmkgQWJ226GELn1Xx3sgU8CdUeDYSXZSfSzKn5KyKe3zkTrrzXe2P5Gt8Ry9Enf3jRLMx',
+  traderPublicKey: '23QuARJvRDKYy7c9QM8NCVZJSBKy3EALUkzSvf5Gft3U',
+  txType: 'create',
+  mint: 'GyNoic8tMhqmc3dYqUTFRcPisshimwkbqr4bzg8tbonk',
+  solInPool: 3.196085,
+  tokensInPool: 896928787.046794,
+  initialBuy: 103071212.95320594,
+  solAmount: 3.196085,
+  newTokenBalance: 103071212.953206,
+  marketCapSol: 34.215142125083496,
+  pool: 'bonk'
+}
+Errore nel controllo sicurezza: TypeError: Cannot read properties of undefined (reading 'length')
+    at isSafeToken (file:///opt/render/project/src/utils.js:77:34)
+    at WebSocket.message (file:///opt/render/project/src/index.js:126:29)
+    at WebSocket.emit (node:events:518:28)
+    at Receiver.receiverOnMessage (/opt/render/project/src/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:518:28)
+    at Receiver.dataMessage (/opt/render/project/src/node_modules/ws/lib/receiver.js:596:14)
+    at Receiver.getData (/opt/render/project/src/node_modules/ws/lib/receiver.js:496:10)
+⛔ Token 'undefined' scartato per sicurezza. false
+    at Receiver.startLoop (/opt/render/project/src/node_modules/ws/lib/receiver.js:167:16)
+    at Receiver._write (/opt/render/project/src/node_modules/ws/lib/receiver.js:94:10)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+{
+  signature: '5tRwAFVg3oWB8T6a1EvbmkgQWJ226GELn1Xx3sgU8CdUeDYSXZSfSzKn5KyKe3zkTrrzXe2P5Gt8Ry9Enf3jRLMx',
+  traderPublicKey: '23QuARJvRDKYy7c9QM8NCVZJSBKy3EALUkzSvf5Gft3U',
+  txType: 'create',
+  mint: 'GyNoic8tMhqmc3dYqUTFRcPisshimwkbqr4bzg8tbonk',
+  solInPool: 3.196085,
+  tokensInPool: 896928787.046794,
+  initialBuy: 103071212.95320594,
+  solAmount: 3.196085,
+  newTokenBalance: 103071212.953206,
+  marketCapSol: 34.215142125083496,
+  pool: 'bonk'
+}
+--------------------------------------------
+{
+  signature: '4PKGkxjTjhZc7TY2qsCowNFMaFdJ6mUHLAm21Rcjvnf1gn5ZGU3UVeqDZMxJDULJTKVeTnf7QimYEfmV9YPo2VaF',
+  mint: '6zKK9fvyhyNwAirqj9cnmF6Ne6P8BwawB7tSeKuKpump',
+  traderPublicKey: '4APeSbBwWV63G8VZHrYqgMqaznpd7atQnqz39E8bVGJ8',
+  txType: 'create',
+  initialBuy: 51095238.095239,
+  solAmount: 1.5,
+  bondingCurveKey: 'FKitQ7CvZMe74tRaujvvJZKrqJW6Kud3tys6jyM4FAbc',
+  vTokensInBondingCurve: 1021904761.904761,
+  vSolInBondingCurve: 31.50000000000003,
+  marketCapSol: 30.824790307548987,
+  name: 'KCS',
+  symbol: 'KCS',
+  uri: 'https://rapidlaunch.io/temp/metadata/0df8946c-a978-449e-91dc-a9783731a017.json',
+  pool: 'pump',
+  solInPool: 31.50000000000003,
+  tokensInPool: 1021904761.904761
+}
+  
   Controllo metadati per: {
   name: '3I/ATLAS',
   symbol: 'ATLAS',
