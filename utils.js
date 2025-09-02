@@ -82,7 +82,7 @@ console.log(token);
       safeProblem.push("❌ Nome o simbolo sospetti.");
       //return false;
     }
-      }else { token.name='Bonk Token'}
+      }else { token.name='Bonk '+token.mint.slice(0,4); token.symbol=token.mint.slice(0,4)}
 
     // 5. ✅ Dev non in blacklist
     if (blacklist.includes(token.traderPublicKey)) {
