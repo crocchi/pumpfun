@@ -188,7 +188,7 @@ ws.on('message', async function message(data) {
             tokensInPool: token.tokensInPool || token.vTokensInBondingCurve,
             marketCapSol: token.marketCapSol,
             price: prezzo,
-            transactions:[],
+            transactions:monitor.trxArray,
             buySign:[buyTokenSignature],// ci metto le trx
             buyPrice:priceBuy,
             trxNum: 0,
