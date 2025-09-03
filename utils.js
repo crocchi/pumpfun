@@ -18,7 +18,7 @@ const blacklist = [ // o aggiungi dev wallet che hanno creato un token ultimi 20
 let cont=0
 export async function isSafeToken(token) {
   let safeProblem=[];
-  //console.log(token);
+  console.log(token);
   try {
     // 1. ✅ Controllo liquidità min 2 max 20
     if(token.mint.includes('bonk') || token.mint.includes('BONK') ) {
