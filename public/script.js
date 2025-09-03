@@ -78,7 +78,7 @@ async function saveOptions(e) {
     marketcapMax: document.getElementById('marketcapMax').value,
     rugpullxyz: document.getElementById('enablerugpullxyz').checked,
     time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
-    volumeMin: document.getElementById('volumeMinMonitor').value,
+    volumeMinMonitor: document.getElementById('volumeMinMonitor').value,
     buyAmount: document.getElementById('buyAmount').value,
     maxTrxNumMonitor: document.getElementById('maxTrxNumMonitor').value,
     hasWeb_filter: document.getElementById('website').checked,

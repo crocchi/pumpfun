@@ -84,7 +84,7 @@ export function startHttpServer(port = 4000) {
           if ('rugpullMaxTrades' in body) botOptions.rugpullMaxTrades = Number(body.rugpullMaxTrades) || botOptions.rugpullMaxTrades;
           if ('rugpullMinGainMultiplier' in body) botOptions.rugpullMinGainMultiplier = Number(body.rugpullMinGainMultiplier) || botOptions.rugpullMinGainMultiplier;
           if ('time_monitor' in body) botOptions.time_monitor = Number(body.time_monitor) || botOptions.time_monitor;
-          if ('volumeMinMonitor' in body) botOptions.volumeMin = Math.max(0, Number(body.volumeMinMonitor)) || botOptions.volumeMin;
+          if ('volumeMinMonitor' in body) botOptions.volumeMin = Number(body.volumeMinMonitor) || botOptions.volumeMin;
           if ('buyAmount' in body) botOptions.buyAmount = Math.max(0, Number(body.buyAmount)) || botOptions.buyAmount;
           if ('maxTrxNumMonitor' in body) botOptions.maxTrxNumMonitor = Number(body.maxTrxNumMonitor) || botOptions.maxTrxNumMonitor;
 
