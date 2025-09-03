@@ -157,7 +157,7 @@ export function resetValue() {
   }
 
   startMonitor(snipeCallback) {
-
+return new Promise((resolve) => {
       const payload = {
         method: 'subscribeTokenTrade',
         keys: [this.token.mint],
@@ -190,14 +190,16 @@ export function resetValue() {
             keys: [this.token.mint],
           }));
           this.resetValues();
+          resolve(false);
           return false
         } else {
           console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
           this.resetValues();
+          resolve(true);
           return true
         }
       }, botOptions.time_monitor);
- 
+    });//fine promise
   }
 
   cancelMonitor() {
