@@ -287,6 +287,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
         console.log(`❌ RugPull Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
         console.log("buy at sol: ",priceInSol);
         //cancelMonitor();
+        tokenMonitor.cancelMonitor();
         //monitorEarlyTrades.cancelMonitor();
         return
       }
@@ -411,7 +412,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
 
             if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) { 
                 sellToken(trade.mint)
-              console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
+              console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
                 subscribedTokens.delete(trade.mint);
                 
                 console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
@@ -424,7 +425,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
           // Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi
             if (tradeInfo.trxNum >botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.buyPrice * botOptions.rugpullMinGainMultiplier) { 
                  sellToken(trade.mint)
-                console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
+                console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
                 ws.send(JSON.stringify({
                     method: "unsubscribeTokenTrade",
                     keys: [trade.mint]
