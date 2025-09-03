@@ -330,7 +330,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
         const trade = parsed;
 
-        console.log('trade:',trade);
+      //  console.log('trade:',trade);
 
          //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
          if (trade.solInPool > 0 && trade.tokensInPool > 0) {
