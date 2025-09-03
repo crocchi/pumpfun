@@ -314,6 +314,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       priceInSol = liquidityCheck()//(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       tokenMonitor.addSolAmount(-(parsed.solAmount));
+      tokenMonitor.addVolume(parsed.solAmount);
 
          tokenMonitor.trxArray.push({
             type:parsed.txType,
