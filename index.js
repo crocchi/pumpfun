@@ -178,7 +178,10 @@ ws.on('message', async function message(data) {
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         let buyTokenSignature=await buyToken(token.mint)
         // buyTokenLog
-        
+        getTopHolders(token.mint).then(holders=>{
+          console.log(`👥 Top 5 holders:`)
+          console.log(holders);
+        });
 
         logToken({
             mint: token.mint,
@@ -262,7 +265,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
    // let tradeMintMonitor=getMintMonitor();
    if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
-      console.log(`👁️  Nuovo trade sol:(${parsed.solAmount}) di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
+      console.log(`👁️ Buy Token:[${parsed.name}] sol:(${parsed.solAmount.toFixed(5)}) di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
       priceInSol = liquidityCheck(parsed) //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       //setSolAmount(parsed.solAmount);
@@ -310,7 +313,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     }
    
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
-      console.log(`⚠️ Token:[${parsed.mint}] - Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot. sol:(${parsed.solAmount})`);
+      console.log(`⚠️ Sell Token:[${parsed.name}] sol:(${parsed.solAmount.toFixed(5)})- Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot. sol:(${parsed.solAmount})`);
       priceInSol = liquidityCheck()//(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       tokenMonitor.addSolAmount(-(parsed.solAmount));

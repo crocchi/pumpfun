@@ -25,18 +25,18 @@ const data = await response.json();  // JSON object with tx signature or error(s
 // =======================
 //.   en46wathencqavkre9bp2cvje9q6cturf90jppjk8xd6yrk8dgv38xkpenmmej9paru7gk3k9nb6adu3a4w58t37ett4rg9genn4mduje9b62m1gdhwngm2qct9pyxupchc6rtvf84ykuax92ynkke14medbu70qqad2b689tk68m35b1176khr9cu66x2mdnn72v9g89vkuf8
 const API_KEY = LIGHT_WALLET_API; // ottienila dal Pump.fun portal
-const AMOUNT_SOL = botOptions.buyAmount; // quantità in SOL che vuoi spendere
+//const AMOUNT_SOL = botOptions.buyAmount; // quantità in SOL che vuoi spendere
 const SLIPPAGE = 10; // % massima slippage
 const PRIORITY_FEE = 0.00005; // SOL per Jito tip / priority fee
 const POOL = "auto"; // "pump", "raydium", ecc.
 const TOKEN_AMOUNT = 0; // QNT di token acquistato
-const demoVersion=botOptions.demoVersion;
+//const demoVersion=botOptions.demoVersion;
 
 // =======================
 // FUNZIONE PRINCIPALE
 // =======================
 export async function buyToken(mintToken) {
-if(demoVersion) return `demo version...no buy`
+if(botOptions.demoVersion) return `demo version...no buy`
     try {
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
             method: "POST",
@@ -46,7 +46,7 @@ if(demoVersion) return `demo version...no buy`
             body: JSON.stringify({
                 action: "buy",
                 mint: mintToken,
-                amount: AMOUNT_SOL,
+                amount: botOptions.buyAmount,
                 denominatedInSol: "true", // true = AMOUNT_SOL è in SOL
                 slippage: SLIPPAGE,
                 priorityFee: PRIORITY_FEE,
@@ -117,7 +117,7 @@ export async function sellToken(mintToken ,sol_or_not=false) {
             body: JSON.stringify({
                 action: "sell",
                 mint: mintToken,
-                amount: totAmountToSell.buySign[1].tokenAmount-1 || AMOUNT_SOL*1.5 ,
+                amount: totAmountToSell.buySign[1].tokenAmount-1 || botOptions.buyAmount*1.5 ,
                 denominatedInSol: sol_or_not, // true = AMOUNT_SOL è in SOL
                 slippage: SLIPPAGE,
                 priorityFee: PRIORITY_FEE,
