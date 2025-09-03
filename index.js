@@ -287,9 +287,9 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
         console.log(`❌ RugPull Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
         console.log("buy at sol: ",priceInSol);
         //cancelMonitor();
-        tokenMonitor.cancelMonitor();
+        //tokenMonitor.cancelMonitor();
         //monitorEarlyTrades.cancelMonitor();
-        return
+        //return
       }
         if(solValueTrx > 1.50) {//se il volume tra buy e sell e maggiore di 1.50 SOL
           console.log(`❌ volume alto: (${solValueTrx} SOL) per ${parsed.mint}.`);
