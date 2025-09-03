@@ -166,8 +166,10 @@ ws.on('message', async function message(data) {
         const solToUsdRate = SOLANA_USD; // Replace with the current SOL to USD conversion rate
         const marketCapUsd = (token.marketCapSol * SOLANA_USD).toFixed(2);
         const totTokens= token.tokensInPool + token.initialBuy;
+        let priceBuy=monitor.lastPrice()
         console.log(`📈 MarketCap (USD): ${marketCapUsd}`);
-        console.log(`💰 Price SOL: ${prezzo} `);
+        console.log(`💰 Price SOL Start: ${prezzo} `);
+        console.log(`💰 Price SOL Buy: ${priceBuy} `);   
         console.log(`💧 Liquidity in pool: ${token.solInPool} SOL`);
         console.log(`💧 Tot Tokens:${totTokens}`);
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
@@ -188,7 +190,7 @@ ws.on('message', async function message(data) {
             price: prezzo,
             transactions:[],
             buySign:[buyTokenSignature],// ci metto le trx
-            buyPrice:[],
+            buyPrice:priceBuy,
             trxNum: 0,
             startPrice: prezzo,
             marketCapUsd: marketCapUsd,
@@ -268,6 +270,14 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       tokenMonitor.addVolume(parsed.solAmount);
       let solValueTrx = tokenMonitor.getSolAmount() 
 
+      tokenMonitor.trxArray.push({
+            type:parsed.txType,
+            amount:parsed.solAmount,
+            trader:parsed.traderPublicKey,
+            price: prezzo,
+            time: new Date().toLocaleTimeString()
+          });
+
       //se rugpull, cioè acquistano tanto in pochissimi secondi, 
       // apepena il volume supera 1sol..mi ci ficco anke io
       //let trxNumm = getSolTrx();
@@ -303,6 +313,15 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       priceInSol = liquidityCheck()//(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       tokenMonitor.addSolAmount(-(parsed.solAmount));
+
+         tokenMonitor.trxArray.push({
+            type:parsed.txType,
+            amount:parsed.solAmount,
+            trader:parsed.traderPublicKey,
+            price: prezzo,
+            time: new Date().toLocaleTimeString()
+          });
+
       //setSolAmount(-(parsed.solAmount));
       if(parsed.solAmount < 0.007) {
         console.log(`❌ Vendita troppo piccola (${parsed.solAmount} SOL) per ${parsed.mint}. Ignorato.`);

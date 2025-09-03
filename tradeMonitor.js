@@ -207,6 +207,7 @@ return new Promise((resolve) => {
       clearTimeout(this.timeoutId);
       console.log(`⏹️ Timer interrotto per il token ${this.token.mint}.`);
       this.resetValues();
+      return true
     }
   }
 
@@ -217,6 +218,13 @@ return new Promise((resolve) => {
     this.solTrxNumMonitor = 0;
     this.timeoutId = null;
     */
+  }
+
+  lastPrice(){
+    if(this.trxArray.length>0){
+        return this.trxArray[this.trxArray.length-1].price;
+    }
+    return 0;
   }
 
   addSolAmount(value) {

@@ -117,7 +117,7 @@
           <td><%= t.symbol %></td>
           <td><%= t.name %></td>
           <td><%= t.startPrice %></td>
-          <td><%= t.buySign[0].price || '..' %></td>
+          <td><%= t.buyPrice || '..' %></td>
           <td><%= t.price || (t.solInPool / t.tokensInPool).toFixed(10) %></td>
 
            <td><%= gain.toFixed(2) %>%</td>
