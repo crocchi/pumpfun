@@ -207,6 +207,7 @@ return new Promise((resolve) => {
       clearTimeout(this.timeoutId);
       console.log(`⏹️ Timer interrotto per il token ${this.token.mint}.`);
       this.resetValues();
+      resolve(true);
       return true
     }
   }
