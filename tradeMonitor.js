@@ -144,8 +144,7 @@ export function resetValue() {
 }
 
 
-
-class TokenMonitor {
+ class TokenMonitor {
   constructor(token) {
     this.tradeMonitor = true;
     this.token = token; // Informazioni sul token
@@ -158,7 +157,7 @@ class TokenMonitor {
   }
 
   startMonitor(snipeCallback) {
-    return new Promise((resolve) => {
+
       const payload = {
         method: 'subscribeTokenTrade',
         keys: [this.token.mint],
@@ -178,7 +177,7 @@ class TokenMonitor {
         if (this.solTrxNumMonitor > botOptions.maxTrxNumMonitor) {
           this.suspiciousSellDetected = true;
           console.log("⛔ Troppi trade sospetti...Possibile rugpull Botnet. trx Num:" + this.solTrxNumMonitor);
-          if (this.solAmount < 1.20) {
+          if (this.solAmount < 1.20 && this.solTrxNumMonitor < botOptions.maxTrxNumMonitor*2) {
             console.log("⛔ Volume troppo basso per considerare un rugpull.");
             this.suspiciousSellDetected = false;
           }
@@ -191,14 +190,14 @@ class TokenMonitor {
             keys: [this.token.mint],
           }));
           this.resetValues();
-          resolve(false);
+          return false
         } else {
           console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
           this.resetValues();
-          resolve(true);
+          return true
         }
       }, botOptions.time_monitor);
-    });
+ 
   }
 
   cancelMonitor() {
@@ -211,14 +210,19 @@ class TokenMonitor {
 
   resetValues() {
     this.suspiciousSellDetected = false;
-    this.solAmount = 0;
+    this.tradeMonitor = false;
+    /*this.solAmount = 0;
     this.solTrxNumMonitor = 0;
     this.timeoutId = null;
+    */
   }
 
   addSolAmount(value) {
     this.solAmount += value;
     this.solTrxNumMonitor++;
+  }
+  addVolume(value) {
+    this.volume += value;
   }
 
   getSolAmount() {

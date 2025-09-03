@@ -81,7 +81,6 @@ Stop loss (es. vendi se prezzo scende sotto -30%).
 
 export const ws = new WebSocket('wss://pumpportal.fun/api/data');
 const subscribedTokens = new Set();
-const instances = new Map();
 
 ws.on('open', function open() {
     console.log('📡 Connesso al WebSocket di Pump.fun');
@@ -137,23 +136,12 @@ ws.on('message', async function message(data) {
         if(safer.fastBuy){
 
         }
-
-        const monitor=getInstanceForToken(token)
-        let devbott=await monitor.startMonitor();
-         if (!devbott) {
-         console.log(`✅ Token '${parsed.name}' non sicuro e monitorato per vendite sospette.`);
-         return;
-         }
-
-         /*
          setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
          let devBot=await monitorEarlyTrades(token);
          if (!devBot) {
          console.log(`✅ Token '${parsed.name}' non sicuro e monitorato per vendite sospette.`);
          return;
          }
-*/
-
          liquidityCheck()
         console.log("Token:", token);
 
@@ -239,37 +227,19 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     }
 
     // (parsed.txType === 'BUY')
-    /////////////////////////////
     /////// zona monitoraggio 
-    //////////////////////
-
     
-   let tradeMintMonitor;
-   let tokenMonitor;//getMintMonitor();
-   if (instances.has(parsed.mint)) { // controlla se esiste l'istanza dell'oggetto class
-       tokenMonitor= instances.get(parsed.mint);
-       if(tokenMonitor.tradeMonitor) {
-        tradeMintMonitor=tokenMonitor.token.mint;
-       }else{
-        tradeMintMonitor=null
-       }
-
-   }
-
-   // let tradeMintMonitor=getMintMonitor();
+   let tradeMintMonitor= getMintMonitor();
    if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
       console.log(`👁️  Nuovo trade sol:(${parsed.solAmount}) di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
       priceInSol = liquidityCheck(parsed) //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
-      //setSolAmount(parsed.solAmount);
-      tokenMonitor.addSolAmount(parsed.solAmount);
-      tokenMonitor.addVolume(parsed.solAmount);
-      let solValueTrx = tokenMonitor.getSolAmount() 
+      setSolAmount(parsed.solAmount);
+      let solValueTrx = getSolAmount();
 
       //se rugpull, cioè acquistano tanto in pochissimi secondi, 
       // apepena il volume supera 1sol..mi ci ficco anke io
-      //let trxNumm = getSolTrx();
-      let trxNumm = tokenMonitor.getSolTrxNumMonitor();
+      let trxNumm = getSolTrx();
       //let priceTrx = priceInSol;
       if(trxNumm >= 2 && solValueTrx > 1.00 && trxNumm < 4) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
         console.log(`❌ RugPull Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
@@ -280,19 +250,16 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       }
         if(solValueTrx > 1.50) {//se il volume tra buy e sell e maggiore di 1.50 SOL
           console.log(`❌ volume alto: (${solValueTrx} SOL) per ${parsed.mint}.`);
-          //setSuspiciousSellDetected(false);
-          tokenMonitor.suspiciousSellDetected=false;
+          setSuspiciousSellDetected(false);
           return
       }
       if(parsed.solAmount < 0.008) {
         console.log(`❌ Acquisto troppo piccolo (${parsed.solAmount} SOL) per ${parsed.mint}. Ignorato.`);
-        //setSuspiciousSellDetected(true);
-        tokenMonitor.suspiciousSellDetected=true;
+        setSuspiciousSellDetected(true);
         return; // Esci se l'acquisto è troppo piccolo
       }
-      //setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
-      tokenMonitor.suspiciousSellDetected=false;
-      console.log('solValueTrx:', tokenMonitor.getSolAmount());
+      setSuspiciousSellDetected(false); // resetta il flag di vendita sospetta
+      console.log('solValueTrx:',getSolAmount());
       return; // Esci se è un acquisto
     }
    
@@ -300,25 +267,21 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       console.log(`⚠️ Token:[${parsed.mint}] - Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot. sol:(${parsed.solAmount})`);
       priceInSol = liquidityCheck()//(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
-      tokenMonitor.addSolAmount(-(parsed.solAmount));
-      //setSolAmount(-(parsed.solAmount));
+      setSolAmount(-(parsed.solAmount));
       if(parsed.solAmount < 0.007) {
         console.log(`❌ Vendita troppo piccola (${parsed.solAmount} SOL) per ${parsed.mint}. Ignorato.`);
-        //setSuspiciousSellDetected(false);
-        tokenMonitor.suspiciousSellDetected=false;
+        setSuspiciousSellDetected(false);
         return; // Esci se la vendita è troppo piccola
 
       }
       if(parsed.solAmount > 0.48) {
         console.log(`❌ Vendita troppo alta (${parsed.solAmount} SOL) per ${parsed.mint}.`);
-       // setSuspiciousSellDetected(true);
-        tokenMonitor.suspiciousSellDetected=true;
-        console.log('solValueTrx:',tokenMonitor.getSolAmount());
+        setSuspiciousSellDetected(true);
+           console.log('solValueTrx:',getSolAmount());
         return; // Esci se l'acquisto è troppo piccolo
       }
-      //setSuspiciousSellDetected(true);
-      tokenMonitor.suspiciousSellDetected=true;
-      console.log('solValueTrx:', tokenMonitor.getSolAmount());
+      setSuspiciousSellDetected(true);
+         console.log('solValueTrx:',getSolAmount());
       return; // Esci se è una vendita sospetta
     }
 
@@ -428,17 +391,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
 
 });
 
-function getInstanceForToken(token) {
-  if (!instances.has(token.mint)) {
-    const instance = new TokenMonitor(token);
-    instances.set(token.mint, instance);
 
-    console.log(`Nuova istanza creata per il token ${token.mint}:`, instance);
-  } else {
-    console.log(`Riutilizzo dell'istanza esistente per il token ${token.mint}:`, instances.get(token.mint));
-  }
-  return instances.get(token.mint);
-}
 /*{
   signature: '5i4GzuYha8LiJwB8VQHEQcH5d1pUV3TMsctcZa3hvLDJCWU3tBwddyi8z8V26R1GU4jrcvzLfNGVtoLUeCWEYRRj',
   mint: '2bTEEruUggcJh119Q6ygSmgkHbJdyPoE9kd6HWA9pump',
