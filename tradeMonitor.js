@@ -186,7 +186,7 @@ return new Promise((resolve) => {
         }
 
         if (this.suspiciousSellDetected || this.solAmount < botOptions.volumeMin) {
-          console.log("⛔ Vendita rilevata troppo presto. Token scartato." + ` Volume: (${this.solAmount} SOL)`);
+          console.log(`⛔ Token (${this.token.name}) scartato. ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}`);
           ws.send(JSON.stringify({
             method: "unsubscribeTokenTrade",
             keys: [this.token.mint],
@@ -195,7 +195,7 @@ return new Promise((resolve) => {
           resolve(false);
           return false
         } else {
-          console.log("✅ Nessuna vendita sospetta. Procedo con snipe...");
+          console.log(`✅ Token (${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}... Procedo con snipe...`);
           this.resetValues();
           resolve(true);
           return true
