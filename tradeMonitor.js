@@ -154,10 +154,12 @@ export function resetValue() {
     this.timeoutId = null;
     this.volume = 0;
     this.trxArray = [];
+    this.resolve = null
   }
 
   startMonitor(snipeCallback) {
 return new Promise((resolve) => {
+  this.resolve = resolve;
       const payload = {
         method: 'subscribeTokenTrade',
         keys: [this.token.mint],
@@ -207,7 +209,10 @@ return new Promise((resolve) => {
       clearTimeout(this.timeoutId);
       console.log(`⏹️ Timer interrotto per il token ${this.token.mint}.`);
       this.resetValues();
-      resolve(true);
+       if (this.resolve) {
+      this.resolve(true);
+     // this.resolve = null; // Resetta `resolve` per evitare chiamate multiple
+    }
       return true
     }
   }
