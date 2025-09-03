@@ -147,11 +147,14 @@ export function resetValue() {
 
 class TokenMonitor {
   constructor(token) {
+    this.tradeMonitor = true;
     this.token = token; // Informazioni sul token
     this.suspiciousSellDetected = false;
     this.solAmount = 0;
     this.solTrxNumMonitor = 0;
     this.timeoutId = null;
+    this.volume = 0;
+    this.trxArray = [];
   }
 
   startMonitor(snipeCallback) {

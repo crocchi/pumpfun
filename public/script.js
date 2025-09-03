@@ -86,6 +86,7 @@ async function saveOptions(e) {
     hasDescription_filter: document.getElementById('Description').checked,
     hasTwitterOrTelegram_filter: document.getElementById('TwitterOrTelegram').checked,
     demoVersion: document.getElementById('demoversion').checked,
+    hasTwitterCheck_filter: document.getElementById('TwitterCheck').checked,
   };
   const r = await fetch('/bot-options', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
   const data = await r.json();
@@ -119,6 +120,7 @@ async function loadOptions() {
   document.getElementById('websitecheck').checked = o.hasWebCheck_filter;
   document.getElementById('Description').checked = o.hasDescription_filter;
   document.getElementById('TwitterOrTelegram').checked = o.hasTwitterOrTelegram_filter;
+  document.getElementById('TwitterCheck').checked = o.hasTwitterCheck_filter;
 
   document.getElementById('demoversion').checked = o.demoVersion;
 

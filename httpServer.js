@@ -92,6 +92,7 @@ export function startHttpServer(port = 4000) {
           if ('hasWebCheck_filter' in body) botOptions.hasWebCheck_filter = body.hasWebCheck_filter === 'true' || body.hasWebCheck_filter === true || false;
           if ('hasDescription_filter' in body) botOptions.hasDescription_filter = body.hasDescription_filter === 'true' || body.hasDescription_filter === true || false;
           if ('hasTwitterOrTelegram_filter' in body) botOptions.hasTwitterOrTelegram_filter = body.hasTwitterOrTelegram_filter === 'true' || body.hasTwitterOrTelegram_filter === true || false;
+          if ('hasTwitterCheck_filter' in body) botOptions.hasTwitterCheck_filter = body.hasTwitterCheck_filter === 'true' || body.hasTwitterCheck_filter === true || false;
         
           if ('enableTrailing' in body) botOptions.enableTrailing = body.enableTrailing === 'true' || body.enableTrailing === true;
           if ('trailingPercent' in body) botOptions.trailingPercent = Math.min(0.9, Math.max(0.01, Number(body.trailingPercent))) || botOptions.trailingPercent;

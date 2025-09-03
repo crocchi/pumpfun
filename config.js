@@ -54,6 +54,7 @@ export let SOLANA_USD = 200;
     hasWebCheck_filter: true,
     hasDescription_filter: true,
     hasTwitterOrTelegram_filter: true,
+    hasTwitterCheck_filter: true,
 
   };
 
