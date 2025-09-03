@@ -8,7 +8,7 @@ async function showTransactions(mint) {
     } else {
       txs.forEach(tx => {
         const li = document.createElement('li');
-        li.textContent = `${tx.time} - ${tx.type} @ ${tx.price}`;
+        li.textContent = `${tx.time} - ${tx.type} @ ${tx.price} [${tx.amount || ''} SOL]`;
         list.appendChild(li);
       });
     }

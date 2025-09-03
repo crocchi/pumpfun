@@ -409,7 +409,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
     sellToken(trade.mint);
       }
 
-            if (tradeInfo.price > tradeInfo.startPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) { 
+            if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) { 
                 sellToken(trade.mint)
               console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 subscribedTokens.delete(trade.mint);
@@ -422,7 +422,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
                   
             }
           // Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi
-            if (tradeInfo.trxNum >botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.startPrice * botOptions.rugpullMinGainMultiplier) { 
+            if (tradeInfo.trxNum >botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.buyPrice * botOptions.rugpullMinGainMultiplier) { 
                  sellToken(trade.mint)
                 console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.startPrice} -- sold at  ${tradeInfo.price}`);
                 ws.send(JSON.stringify({
@@ -454,7 +454,7 @@ function getInstanceForToken(token) {
     const instance = new TokenMonitor(token);
     instances.set(token.mint, instance);
 
-    console.log(`Nuova istanza creata per il token ${token.mint}:`, instance);
+    console.log(`Nuova istanza creata per il token ${token.mint}`);
   } else {
     console.log(`Riutilizzo dell'istanza esistente per il token ${token.mint}:`, instances.get(token.mint));
   }
