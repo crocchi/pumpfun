@@ -81,6 +81,7 @@ async function saveOptions(e) {
     volumeMinMonitor: document.getElementById('volumeMinMonitor').value,
     buyAmount: document.getElementById('buyAmount').value,
     maxTrxNumMonitor: document.getElementById('maxTrxNumMonitor').value,
+    minTrxNumMonitor : document.getElementById('minTrxNumMonitor').value,
     hasWeb_filter: document.getElementById('website').checked,
     hasWebCheck_filter: document.getElementById('websitecheck').checked,
     hasDescription_filter: document.getElementById('Description').checked,
@@ -115,6 +116,7 @@ async function loadOptions() {
   document.getElementById('volumeMinMonitor').value = o.volumeMin;
   document.getElementById('buyAmount').value = o.buyAmount;
   document.getElementById('maxTrxNumMonitor').value = o.maxTrxNumMonitor;
+  document.getElementById('minTrxNumMonitor').value = o.minTrxNumMonitor;
   // Imposta il checkbox rugpullxyz
   document.getElementById('website').checked = o.hasWeb_filter;
   document.getElementById('websitecheck').checked = o.hasWebCheck_filter;
