@@ -408,11 +408,11 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//fix tradeinfo undefined
 
   //percentuale cambiamento 
-  const change = ((tradeInfo.price - tradeInfo.startPrice) / tradeInfo.startPrice) * 100;
+  const change = ((tradeInfo.price - tradeInfo.buyPrice) / tradeInfo.buyPrice) * 100;
   priceInSol = liquidityCheck(trade) 
 //  console.log(`% cambio prezzo: ${change}%`)
- if (change < -30 ){// se vai meno del -15%
-  console.log(`% Sell Off -15%: ${change}%`)
+ if (change < botOptions.sellOffPanic ){// se vai meno del -15%
+  console.log(`% Sell Off ${botOptions.sellOffPanic}%: ${change}%`)
     sellToken(trade.mint);
       }
 
