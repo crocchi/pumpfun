@@ -106,7 +106,7 @@ trade: {
 
 
 export async function sellToken(mintToken ,sol_or_not=false) {
-   if(demoVersion) return `demo version...no sell`
+   if(botOptions.demoVersion) return `demo version...no sell`
     try {
         let totAmountToSell=await returnTokenLog(mintToken)
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
