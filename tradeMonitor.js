@@ -174,7 +174,7 @@ return new Promise((resolve) => {
         }
         if (this.solAmount < 0.01) {
           this.suspiciousSellDetected = true;
-          console.log("⛔ Volume nullo.");
+          console.log("⛔ Volume nullo o Negativo...");
         }
         if (this.solTrxNumMonitor > botOptions.maxTrxNumMonitor) {
           this.suspiciousSellDetected = true;
@@ -183,6 +183,10 @@ return new Promise((resolve) => {
             console.log("⛔ Volume troppo basso per considerare un rugpull.");
             this.suspiciousSellDetected = false;
           }
+        }
+        if (this.solTrxNumMonitor > botOptions.minTrxNumMonitor) {
+            console.log(`⛔ Pochi Trade...trx Num:${this.solTrxNumMonitor}`);
+            this.suspiciousSellDetected = true;
         }
 
         if (this.suspiciousSellDetected || this.solAmount < botOptions.volumeMin) {
