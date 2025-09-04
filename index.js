@@ -265,7 +265,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
    // let tradeMintMonitor=getMintMonitor();
    if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
-      console.log(`👁️ Buy Token:[${parsed.name}] sol:(${parsed.solAmount.toFixed(5)}) di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
+      console.log(`👁️ Buy Token:[${parsed.mint.slice(0,4)}] sol:(${parsed.solAmount.toFixed(5)}) di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
       priceInSol = liquidityCheck(parsed) //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       //setSolAmount(parsed.solAmount);
@@ -313,7 +313,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     }
    
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
-      console.log(`⚠️ Sell Token:[${parsed.name}] sol:(${parsed.solAmount.toFixed(5)})- Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot. sol:(${parsed.solAmount})`);
+      console.log(`⚠️ Sell Token:[${parsed.mint.slice(0,4)}] sol:(${parsed.solAmount.toFixed(5)})- Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot. sol:(${parsed.solAmount})`);
       priceInSol = liquidityCheck()//(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       tokenMonitor.addSolAmount(-(parsed.solAmount));
@@ -395,21 +395,14 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             
             if(parsed.txType === 'buy'){  }
 
-            /*
-            file:///opt/render/project/src/index.js:237
-            if (tradeInfo.price > tradeInfo.startPrice * 3.5 && tradeInfo.trxNum > 2) { 
-                          ^
-TypeError: Cannot read properties of undefined (reading 'price')
-    at file:///opt/render/project/src/index.js:237:27
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
- */
+          // LOGICA DI VENDITA AUTOMATICA
 if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//fix tradeinfo undefined
 
   //percentuale cambiamento 
   const change = ((tradeInfo.price - tradeInfo.startPrice) / tradeInfo.startPrice) * 100;
   priceInSol = liquidityCheck(trade) 
 //  console.log(`% cambio prezzo: ${change}%`)
- if (change < -15 ){// se vai meno del -15%
+ if (change < -30 ){// se vai meno del -15%
   console.log(`% Sell Off -15%: ${change}%`)
     sellToken(trade.mint);
       }
@@ -513,4 +506,26 @@ trade: {
   marketCapSol: 28.287230247500666,
   pool: 'pump'
 }
-} */
+}
+
+
+
+{
+  context: { slot: 364492949, apiVersion: '2.2.7' },
+  value: [
+    {
+      address: '3qCPB14jNgBPfTc1YgAbM4jzkcdXzcUsVMrQamDX62ku',
+      uiAmount: 703615951.233887,
+      decimals: 6,
+      amount: '703615951233887',
+      uiAmountString: '703615951.233887'
+    },
+    {
+      address: 'CibGqHsrkmfDSJC1b1iWdQbW63oe3FFCBWeNJVTW7Zdd',
+      uiAmount: 57158783.912416,
+      decimals: 6,
+      amount: '57158783912416',
+      uiAmountString: '57158783.912416'
+    },
+    {
+      address: */
