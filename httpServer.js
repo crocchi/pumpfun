@@ -87,6 +87,7 @@ export function startHttpServer(port = 4000) {
           if ('volumeMinMonitor' in body) botOptions.volumeMin = Number(body.volumeMinMonitor) || botOptions.volumeMin;
           if ('buyAmount' in body) botOptions.buyAmount = Math.max(0, Number(body.buyAmount)) || botOptions.buyAmount;
           if ('maxTrxNumMonitor' in body) botOptions.maxTrxNumMonitor = Number(body.maxTrxNumMonitor) || botOptions.maxTrxNumMonitor;
+          if ('minTrxNumMonitor' in body) botOptions.minTrxNumMonitor = Number(body.minTrxNumMonitor) || botOptions.minTrxNumMonitor;
 
           if ('hasWeb_filter' in body) botOptions.hasWeb_filter = body.hasWeb_filter === 'true' || body.hasWeb_filter === true || false;
           if ('hasWebCheck_filter' in body) botOptions.hasWebCheck_filter = body.hasWebCheck_filter === 'true' || body.hasWebCheck_filter === true || false;
