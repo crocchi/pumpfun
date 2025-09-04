@@ -264,7 +264,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
    // let tradeMintMonitor=getMintMonitor();
    if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
-      console.log(`👁️ Buy Token:[${parsed.mint.slice(0,4)}] sol:(${parsed.solAmount.toFixed(5)}) di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
+      console.log(`👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
       priceInSol = liquidityCheck(parsed) //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       //setSolAmount(parsed.solAmount);
@@ -280,6 +280,13 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             time: new Date().toLocaleTimeString()
           });
 
+          //
+          if(solValueTrx > botOptions.volumeMin && botOptions.netVolumeUpBuy) {//se il volume tra buy e sell e maggiore del netvolume impostato
+          console.log(`🚀[${tokenMonitor.token.name}] 🚀 NetVolume UPPP: (${solValueTrx} SOL) per ${parsed.mint}.`);
+          //setSuspiciousSellDetected(false);
+          tokenMonitor.cancelMonitor();
+          return
+      }
       //se rugpull, cioè acquistano tanto in pochissimi secondi, 
       // apepena il volume supera 1sol..mi ci ficco anke io
       //let trxNumm = getSolTrx();
@@ -312,7 +319,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     }
    
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
-      console.log(`⚠️ Sell Token:[${parsed.mint.slice(0,4)}] sol:(${parsed.solAmount.toFixed(5)})- Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot. sol:(${parsed.solAmount})`);
+      console.log(`⚠️ Sell Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)})- Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot. sol:(${parsed.solAmount})`);
       priceInSol = liquidityCheck()//(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log('SOL:',priceInSol);
       tokenMonitor.addSolAmount(-(parsed.solAmount));

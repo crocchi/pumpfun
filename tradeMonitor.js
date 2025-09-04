@@ -71,6 +71,8 @@ return new Promise((resolve) => {
       clearTimeout(this.timeoutId);
       console.log(`⏹️ Timer interrotto per il token ${this.token.mint}.`);
       this.resetValues();
+      console.log(`✅ Token (${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}... Procedo con snipe...`);
+          
        if (this.resolve) {
       this.resolve(true);
      // this.resolve = null; // Resetta `resolve` per evitare chiamate multiple

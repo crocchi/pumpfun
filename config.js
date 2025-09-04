@@ -28,9 +28,11 @@ export let SOLANA_USD = 200;
 
     //monitor token
     time_monitor: 3000, // 3 secondi
-    volumeMin: 0.02, // volume minimo in SOL per considerare il token
+    volumeMin: 0.1, // volume minimo in SOL per considerare il token
     maxTrxNumMonitor:500, // numero massimo di transazioni sospette per considerare il token un rugpull
     minTrxNumMonitor:60,
+    netVolumeUpBuy:false, // se il volume netto tra buy e sell supera volumeMin allora compra
+
     //acquisto token
     buyAmount: 0.025, // quantità di SOL da acquistare
     demoVersion:true, // (true)non compra/vende - false - on compra/vende

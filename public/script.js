@@ -79,6 +79,7 @@ async function saveOptions(e) {
     rugpullxyz: document.getElementById('enablerugpullxyz').checked,
     time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
     volumeMinMonitor: document.getElementById('volumeMinMonitor').value,
+    netVolumeUpBuy: document.getElementById('netVolumeUpBuy').checked,
     buyAmount: document.getElementById('buyAmount').value,
     maxTrxNumMonitor: document.getElementById('maxTrxNumMonitor').value,
     minTrxNumMonitor : document.getElementById('minTrxNumMonitor').value,
@@ -117,6 +118,7 @@ async function loadOptions() {
   document.getElementById('buyAmount').value = o.buyAmount;
   document.getElementById('maxTrxNumMonitor').value = o.maxTrxNumMonitor;
   document.getElementById('minTrxNumMonitor').value = o.minTrxNumMonitor;
+  document.getElementById('netVolumeUpBuy').checked = o.netVolumeUpBuy;
   // Imposta il checkbox rugpullxyz
   document.getElementById('website').checked = o.hasWeb_filter;
   document.getElementById('websitecheck').checked = o.hasWebCheck_filter;
