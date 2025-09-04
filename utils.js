@@ -48,6 +48,14 @@ export async function isSafeToken(token) {
     }
       
     
+    }else{
+      if (token.solInPool < botOptions.liquidityMin || token.solInPool > botOptions.liquidityMax ) {
+        safeProblem.push("❌ Liquidità fuori range."+`: ${token.solInPool.toFixed(3)} SOL`);
+        return {
+          safeProblem,
+          valid: safeProblem.length === 0, // soglia regolabile
+        }
+      }
     }
 
     // 2. ✅ Controllo market cap
