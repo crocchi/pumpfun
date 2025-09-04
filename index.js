@@ -179,7 +179,7 @@ ws.on('message', async function message(data) {
         // buyTokenLog
         getTopHolders(token.mint).then(holders=>{
           console.log(`👥 Top 5 holders:`)
-          console.log(holders);
+          console.log(`Holders:${holders.value.length}`);
         });
 
         logToken({
@@ -271,7 +271,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       tokenMonitor.addSolAmount(parsed.solAmount);
       tokenMonitor.addVolume(parsed.solAmount);
       let solValueTrx = tokenMonitor.getSolAmount() 
-
+      let trxNumm = tokenMonitor.getSolTrxNumMonitor();
       tokenMonitor.trxArray.push({
             type:parsed.txType,
             amount:parsed.solAmount,
@@ -281,7 +281,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
           });
 
           //
-          if(solValueTrx > botOptions.volumeMin && botOptions.netVolumeUpBuy) {//se il volume tra buy e sell e maggiore del netvolume impostato
+          if(solValueTrx > (botOptions.volumeMin*1.5) && botOptions.netVolumeUpBuy && trxNumm > (botOptions.minTrxNumMonitor/2) ) {//se il volume tra buy e sell e maggiore del netvolume impostato
           console.log(`🚀[${tokenMonitor.token.name}] 🚀 NetVolume UPPP: (${solValueTrx} SOL) per ${parsed.mint}.`);
           //setSuspiciousSellDetected(false);
           tokenMonitor.cancelMonitor();
@@ -290,7 +290,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       //se rugpull, cioè acquistano tanto in pochissimi secondi, 
       // apepena il volume supera 1sol..mi ci ficco anke io
       //let trxNumm = getSolTrx();
-      let trxNumm = tokenMonitor.getSolTrxNumMonitor();
+      
       //let priceTrx = priceInSol;
       if(trxNumm >= 2 && solValueTrx > 1.00 && trxNumm < 4) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
         console.log(`❌ RugPull Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
