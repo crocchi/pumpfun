@@ -105,6 +105,9 @@
       <% tokens.forEach(t => { 
         const pct = t.oldMarketCapUsd ? ((t.marketCapUsd - t.oldMarketCapUsd) / t.oldMarketCapUsd) * 100 : 0;
         const gain = ((t.price - t.buyPrice) / t.buyPrice) * 100;
+        let gainColor;
+        if(gain > 1) gainColor = 'color:green';
+        else if(gain < -1) gainColor = 'color:red';
         const time = new Date(t.timestamp).toLocaleTimeString();
         let defiExchange ;
         if (t.mint.includes('BONK') || t.mint.includes('bonk')) {
@@ -121,8 +124,8 @@
           <td><%= t.startPrice %></td>
           <td><%= t.buyPrice || '..' %></td>
           <td><%= t.price || (t.solInPool / t.tokensInPool).toFixed(10) %></td>
-
-           <td><%= gain.toFixed(2) %>%</td>
+           <td style=<%- gainColor %>><%= gain.toFixed(2) %>%</td>
+          
            <td>$<%= t.marketCapUsd %></td>    
 
           <td><%= t.trxNum %></td>

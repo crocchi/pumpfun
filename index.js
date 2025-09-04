@@ -267,9 +267,9 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
    // let tradeMintMonitor=getMintMonitor();
    if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
-      console.log(`👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) di acquisto per ${parsed.mint} da ${parsed.traderPublicKey}`);
       priceInSol = liquidityCheck(parsed) //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
-      console.log('SOL:',priceInSol);
+      console.log(`👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${priceInSol})  -> from ${parsed.traderPublicKey}`);
+     // console.log('SOL:',priceInSol);
       //setSolAmount(parsed.solAmount);
       tokenMonitor.addSolAmount(parsed.solAmount);
       tokenMonitor.addVolume(parsed.solAmount);
@@ -304,13 +304,13 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
         //return
       }
         if(solValueTrx > 1.50) {//se il volume tra buy e sell e maggiore di 1.50 SOL
-          console.log(`❌ volume alto: (${solValueTrx} SOL) per ${parsed.mint}.`);
+         // console.log(`❌ volume alto: (${solValueTrx} SOL) per ${parsed.mint}.`);
           //setSuspiciousSellDetected(false);
           tokenMonitor.suspiciousSellDetected=false;
           return
       }
       if(parsed.solAmount < 0.008) {
-        console.log(`❌ Acquisto troppo piccolo (${parsed.solAmount} SOL) per ${parsed.mint}. Ignorato.`);
+        //console.log(`❌ Acquisto troppo piccolo (${parsed.solAmount} SOL) per ${parsed.mint}. Ignorato.`);
         //setSuspiciousSellDetected(true);
         tokenMonitor.suspiciousSellDetected=true;
         return; // Esci se l'acquisto è troppo piccolo
@@ -322,9 +322,9 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     }
    
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
-      console.log(`⚠️ Sell Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)})- Vendita precoce da ${parsed.traderPublicKey} – possibile dev bot. sol:(${parsed.solAmount})`);
-      priceInSol = liquidityCheck()//(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
-      console.log('SOL:',priceInSol);
+      priceInSol = liquidityCheck()
+      console.log(`⚠️ Sell Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${priceInSol}) - Vendita precoce da ${parsed.traderPublicKey} – `);
+      //console.log('SOL:',priceInSol);
       tokenMonitor.addSolAmount(-(parsed.solAmount));
       tokenMonitor.addVolume(parsed.solAmount);
 
@@ -338,13 +338,13 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
       //setSolAmount(-(parsed.solAmount));
       if(parsed.solAmount < 0.007) {
-        console.log(`❌ Vendita troppo piccola (${parsed.solAmount} SOL) per ${parsed.mint}. Ignorato.`);
+        //console.log(`❌ Vendita troppo piccola (${parsed.solAmount} SOL) per ${parsed.mint}. Ignorato.`);
         //setSuspiciousSellDetected(false);
         tokenMonitor.suspiciousSellDetected=false;
         return; // Esci se la vendita è troppo piccola
 
       }
-      if(parsed.solAmount > 0.48) {
+      if(parsed.solAmount > 0.5) {
         console.log(`❌ Vendita troppo alta (${parsed.solAmount} SOL) per ${parsed.mint}.`);
        // setSuspiciousSellDetected(true);
         tokenMonitor.suspiciousSellDetected=true;
