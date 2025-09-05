@@ -179,8 +179,8 @@ ws.on('message', async function message(data) {
         // buyTokenLog
         getTopHolders(token.mint).then(holders=>{
           console.log(`👥 Top 5 holders:`)
-          if(holders.value ){ 
-              console.log(`Holders: ${holders.value.length}`);
+          if(holders){ 
+              console.log(`Holders: ${holders?.value.length}`);
           }
           
         });
