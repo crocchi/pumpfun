@@ -1,4 +1,4 @@
-import TokenMonitor from "./tradeMonitor";
+import TokenMonitor from "./tradeMonitor.js";
  
  class TokenLogger extends TokenMonitor{
  constructor(token) {
