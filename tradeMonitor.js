@@ -2,6 +2,7 @@
 import { ws } from './index.js';
 import { botOptions } from './config.js';
 
+
  class TokenMonitor {
   constructor(token) {
     this.tradeMonitor = true;
@@ -12,7 +13,8 @@ import { botOptions } from './config.js';
     this.timeoutId = null;
     this.volume = 0;
     this.trxArray = [];
-    this.resolve = null
+    this.resolve = null;
+    //this.highPrice = 0;//sol
   }
 
   startMonitor(snipeCallback) {

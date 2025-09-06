@@ -108,7 +108,7 @@
         let gainColor;
         if(gain > 1) gainColor = 'color:green';
         else if(gain < -1) gainColor = 'color:red';
-        const time = new Date(t.timestamp).toLocaleTimeString();
+        const time = new Date().toLocaleTimeString();
         let defiExchange ;
         if (t.mint.includes('BONK') || t.mint.includes('bonk')) {
           defiExchange = `<a href="https://bonk.fun/token/${t.mint}" target="_blank">Apri Pool</a>`;

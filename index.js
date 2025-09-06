@@ -82,7 +82,8 @@ Stop loss (es. vendi se prezzo scende sotto -30%).
 
 export const ws = new WebSocket('wss://pumpportal.fun/api/data');
 const subscribedTokens = new Set();
-const instances = new Map();
+const instances = new Map(); // Mappa per memorizzare le istanze di TokenMonitor
+const instancesToken  = new Map(); // Mappa per memorizzare le istanze di TokenLogger
 
 ws.on('open', function open() {
     console.log('📡 Connesso al WebSocket di Pump.fun');
@@ -179,7 +180,7 @@ ws.on('message', async function message(data) {
         // buyTokenLog
         getTopHolders(token.mint).then(holders=>{
           console.log(`👥 Top 5 holders:`)
-          if(holders.value ){ 
+          if(holders.value){ 
               console.log(`Holders: ${holders.value.length}`);
           }
           
@@ -233,6 +234,8 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       // 👉 Qui puoi chiamare la tua funzione `snipeToken(token.mint)`
 
     }// fine if (parsed.txType === 'create')
+
+    
 
     //controlla la tua transazione
     if(parsed.txType === 'buy' && parsed.traderPublicKey === 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'){
@@ -413,7 +416,15 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
 //  console.log(`% cambio prezzo: ${change}%`)
  if (change < botOptions.sellOffPanic ){// se vai meno del -15%
   console.log(`% Sell Off ${botOptions.sellOffPanic}%: ${change}%`)
-    sellToken(trade.mint);
+   subscribedTokens.delete(trade.mint);
+    sellToken(trade.mint);            
+                console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
+                ws.send(JSON.stringify({
+                    method: "unsubscribeTokenTrade",
+                    keys: [trade.mint]
+                  }));
+                  return
+    
       }
 
             if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) { 

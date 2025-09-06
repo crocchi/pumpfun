@@ -36,7 +36,7 @@ export let SOLANA_USD = 200;
     //acquisto token
     buyAmount: 0.025, // quantità di SOL da acquistare
     demoVersion:true, // (true)non compra/vende - false - on compra/vende
-    sellOffPanic: -25, // % vendi se vao oltre -25% dal prezzo di acquisto
+    sellOffPanic: -20, // % vendi se vao oltre -25% dal prezzo di acquisto
 
     // vendita rapida
     quickSellMultiplier: 3.5,     // vendi se price >= startPrice * 3.5 ...
