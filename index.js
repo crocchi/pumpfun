@@ -180,13 +180,9 @@ ws.on('message', async function message(data) {
         // buyTokenLog
         getTopHolders(token.mint).then(holders=>{
           console.log(`👥 Top 5 holders:`)
-<<<<<<< HEAD
-          if(holders.value){ 
-              console.log(`Holders: ${holders.value.length}`);
-=======
+
           if(holders){ 
               console.log(`Holders: ${holders?.value.length}`);
->>>>>>> 2a3537249a21b90210c35f8d39d7bc4ad87b28a8
           }
           
         });
@@ -240,7 +236,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     }// fine if (parsed.txType === 'create')
 
-    
+
 
     //controlla la tua transazione
     if(parsed.txType === 'buy' && parsed.traderPublicKey === 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'){
