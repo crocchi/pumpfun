@@ -84,7 +84,7 @@ Stop loss (es. vendi se prezzo scende sotto -30%).
 export const ws = new WebSocket('wss://pumpportal.fun/api/data');
 const subscribedTokens = new Set();
 const instances = new Map(); // Mappa per memorizzare le istanze di TokenMonitor
-const instancesToken  = new Map(); // Mappa per memorizzare le istanze di TokenLogger
+export const instancesToken  = new Map(); // Mappa per memorizzare le istanze di TokenLogger
 
 ws.on('open', function open() {
     console.log('📡 Connesso al WebSocket di Pump.fun');
@@ -250,7 +250,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     }// fine if (parsed.txType === 'create')
 
-    
+
 
 
     //controlla la tua transazione
@@ -490,7 +490,8 @@ function getInstanceForToken(token , type='monitor' ) {
     instancesToken.set(token.mint, instance);
 
     console.log(`Nuova istanzaToken creata per ${token.mint}`);
-  } else if (instancesToken.has(token.mint) && type==='tokenLogger') {
+  }
+  if (instancesToken.has(token.mint) && type==='tokenLogger') {
     console.log(`Riutilizzo dell'istanzaToken esistente per il ${token.mint}:`, instancesToken.get(token.mint));
     return instancesToken.get(token.mint);
   }
@@ -501,7 +502,9 @@ function getInstanceForToken(token , type='monitor' ) {
     instances.set(token.mint, instance);
 
     console.log(`Nuova istanza creata per il token ${token.mint}`);
-  } else if (instances.has(token.mint) && type==='monitor'){
+  }
+  
+  if (instances.has(token.mint) && type==='monitor'){
     console.log(`Riutilizzo dell'istanza esistente per il token ${token.mint}:`, instances.get(token.mint));
     return instances.get(token.mint);
   }

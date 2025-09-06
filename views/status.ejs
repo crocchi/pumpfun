@@ -97,6 +97,7 @@
         
         <th>Contract</th>
         <th>Pool</th>
+        <th>info</th>
 
         
       </tr>
@@ -135,6 +136,8 @@
           </td>
           <td> <button onclick="copyToClipboard('<%= t.mint %>')">Copy Contract</button> </td>
           <td> <%- defiExchange %></td>
+          <td> <button onclick="showObject('<%= t.mint %>')">info</button>
+          </td>
         </tr>
       <% }) %>
     </tbody>

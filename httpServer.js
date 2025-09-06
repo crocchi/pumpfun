@@ -6,6 +6,7 @@ import url from 'url';
 import { fileURLToPath } from 'url';
 import { checkPrice } from './moralis.js';
 import { botOptions } from './config.js';
+import { instancesToken } from './index.js';
 
 let tokenLog = [];
 
@@ -128,6 +129,17 @@ if (parsed.pathname === '/status' && req.method === 'GET') {
         const token = tokenLog.find(t => t.mint === mint);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(token ? token.transactions : []));
+      }
+
+      else if (parsed.pathname === '/showinfo') {
+        const mint = parsed.query.mint;
+        let token;
+      if (instancesToken.has(mint)) {
+          token= instancesToken.get(mint);
+      }
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(token ? token : []));
       }
   
       else {

@@ -1,3 +1,74 @@
+
+async function showObject(mint) {
+    const res = await fetch(`/showinfo?mint=${mint}`);
+    const txs = await res.json();
+    // Crea una nuova finestra o scheda
+    const newWindow = window.open('', '_blank');
+
+    // Controlla se la finestra è stata bloccata dal browser
+    if (!newWindow) {
+      alert('Impossibile aprire una nuova finestra. Controlla le impostazioni del tuo browser.');
+      return;
+    }
+
+    // Crea il contenuto HTML per la nuova pagina
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dettagli Oggetto</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+          }
+          th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+          }
+          th {
+            background-color: #f4f4f4;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>Dettagli Oggetto</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Chiave</th>
+              <th>Valore</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${Object.entries(txs).map(([key, value]) => `
+              <tr>
+                <td>${key}</td>
+                <td>${JSON.stringify(value, null, 2)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </body>
+      </html>
+    `;
+
+    // Scrive il contenuto nella nuova finestra
+    newWindow.document.open();
+    newWindow.document.write(htmlContent);
+    newWindow.document.close();
+
+}
+
 async function showTransactions(mint) {
     const res = await fetch(`/transactions?mint=${mint}`);
     const txs = await res.json();
