@@ -1,6 +1,7 @@
 import WebSocket from 'ws';
 import { isSafeToken } from './utils.js';
 import TokenMonitor from './tradeMonitor.js';
+import TokenLogger from './tokenLogger.js';
 
 import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken, buyTokenLog } from './httpServer.js';
@@ -163,7 +164,7 @@ ws.on('message', async function message(data) {
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
         console.log(`🧠 Mint: ${token.mint}`);
         console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
-        const solToUsdRate = SOLANA_USD; // Replace with the current SOL to USD conversion rate
+        //const solToUsdRate = SOLANA_USD; // Replace with the current SOL to USD conversion rate
         const marketCapUsd = (token.marketCapSol * SOLANA_USD).toFixed(2);
         const totTokens= token.tokensInPool + token.initialBuy;
         let priceBuy=monitor.lastPrice()
@@ -176,16 +177,29 @@ ws.on('message', async function message(data) {
         console.log(`📦 URI: ${token.uri}`);
         console.log(`🌊 Pool: ${token.pool}`);
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
-        let buyTokenSignature=await buyToken(token.mint)
+        let buyTokenSignature=await buyToken(token.mint);
+
+        const tokenLog=getInstanceForToken(token,'tokenLogger')// iniz istanza di TokenLogger
         // buyTokenLog
         getTopHolders(token.mint).then(holders=>{
           console.log(`👥 Top 5 holders:`)
 
           if(holders){ 
               console.log(`Holders: ${holders?.value.length}`);
+              tokenLog.holders=holders?.value.length;
+              tokenLog.holdersList=holders?.value;
           }
           
         });
+
+          // Logga il token nel database
+          tokenLog.safeProblem=safer;
+          tokenLog.buyPrice=priceBuy;
+          tokenLog.startPrice=prezzo;
+          tokenLog.buyTransactionSign=buyTokenSignature;
+          tokenLog.marketCapUsd=marketCapUsd;
+
+
 
         logToken({
             mint: token.mint,
@@ -236,6 +250,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     }// fine if (parsed.txType === 'create')
 
+    
 
 
     //controlla la tua transazione
@@ -468,16 +483,29 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
 
 });
 
-function getInstanceForToken(token) {
-  if (!instances.has(token.mint)) {
+function getInstanceForToken(token , type='monitor' ) {
+
+  if (!instancesToken.has(token.mint) && type==='tokenLogger') {
+    const instance = new TokenLogger(token);
+    instancesToken.set(token.mint, instance);
+
+    console.log(`Nuova istanzaToken creata per ${token.mint}`);
+  } else if (instancesToken.has(token.mint) && type==='tokenLogger') {
+    console.log(`Riutilizzo dell'istanzaToken esistente per il ${token.mint}:`, instancesToken.get(token.mint));
+    return instancesToken.get(token.mint);
+  }
+  
+
+  if (!instances.has(token.mint) && type==='monitor') {
     const instance = new TokenMonitor(token);
     instances.set(token.mint, instance);
 
     console.log(`Nuova istanza creata per il token ${token.mint}`);
-  } else {
+  } else if (instances.has(token.mint) && type==='monitor'){
     console.log(`Riutilizzo dell'istanza esistente per il token ${token.mint}:`, instances.get(token.mint));
+    return instances.get(token.mint);
   }
-  return instances.get(token.mint);
+  
 }
 /*{
   signature: '5i4GzuYha8LiJwB8VQHEQcH5d1pUV3TMsctcZa3hvLDJCWU3tBwddyi8z8V26R1GU4jrcvzLfNGVtoLUeCWEYRRj',

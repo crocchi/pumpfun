@@ -7,15 +7,23 @@ import TokenMonitor from "./tradeMonitor";
    // this.solAmount = 0;
    // this.solTrxNumMonitor = 0;
    // this.volume = 0;
-    this.buyTransaction = null;
+    this.buyTransactionSign = null;
     this.LivePrice = 0;
-    this.startPrice = 0;
-    this.buyPrice = 0;
+    this.startPrice = 0; //prezzo iniziale in sol
+    this.buyPrice = 0; //prezzo di acquisto in sol
     this.sellPrice = 0;
     this.highPrice = 0; // sol
     this.lowPrice = 0; // sol
-    this.volumeNet = 0;
-   // this.trxArray = [];
+    this.volumeNet = this.solAmount;
+    this.devWallet=token.traderPublicKey || "Unknown";
+    this.holders=0;//numero holders
+    this.holdersList=[];
+    this.solInPool=token.solInPool || token.vSolInBondingCurve || 0;
+    this.tokensInPool=token.tokensInPool || token.vTokensInBondingCurve || 0;
+    this.marketCapSol=token.marketCapSol || 0;
+    this.marketCapUsd=0;
+    
+    // this.trxArray = [];
     this.safeProblem = [];
   }
 
