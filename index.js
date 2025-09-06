@@ -135,12 +135,12 @@ ws.on('message', async function message(data) {
           return
 
         }
-        
-        if(safer.fastBuy){
+
+        const monitor=getInstanceForToken(token)
+        if(safer.fastBuy){ // fast buy
           console.log(`✅ Token '${parsed.name}' passato per sicurezza. Procedo con l\'acquisto rapido.`);
 
-        }else{
-        const monitor=getInstanceForToken(token)
+        }else{      //modalità monitoraggio   
         let devbott=await monitor.startMonitor();
          if (!devbott) {
          console.log(`✅ Token '${parsed.name}' non sicuro e monitorato per vendite sospette.`);
