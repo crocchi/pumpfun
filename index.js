@@ -140,7 +140,7 @@ ws.on('message', async function message(data) {
         const monitor=getInstanceForToken(token)
         if(safer.fastBuy){ // fast buy
           console.log(`✅ Token '${parsed.name}' passato per sicurezza. Procedo con l\'acquisto rapido.`);
-
+          monitor.tradeMonitor=false;// disabilito il monitoraggio
         }else{      //modalità monitoraggio   
         let devbott=await monitor.startMonitor();
          if (!devbott) {
@@ -250,19 +250,22 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     }// fine if (parsed.txType === 'create')
 
-
+    liquidityCheck()
+    const tokenLog=getInstanceForToken(token,'tokenLogger')
 
 
     //controlla la tua transazione
     if(parsed.txType === 'buy' && parsed.traderPublicKey === 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'){
      priceInSol = liquidityCheck(parsed);
-     console.log(`Acquisto rilevato wallet Bot:`)
+     console.log(`Acquisto rilevato wallet Bot:`);
+     tokenLog.buyPrice=prezzo;
       buyTokenLog(parsed.mint, parsed.tokenAmount , parsed.solAmount, priceInSol)
     }
 
     if(parsed.txType === 'sell' && parsed.traderPublicKey === 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'){
       priceInSol = liquidityCheck(parsed);
        console.log(`vendita rilevata wallet Bot:`)
+      tokenLog.sellPrice=prezzo;
       buyTokenLog(parsed.mint, parsed.tokenAmount , parsed.solAmount , priceInSol)
     }
 
@@ -413,7 +416,14 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
          // const price = formatPrezzoTokenNoSci(prezzo);
           const marketCapUsd = (trade.marketCapSol * SOLANA_USD).toFixed(2);
           //updateToken(trade.mint, price, trade.marketCapSol, marketCapUsd);
-         
+          
+          // Aggiorna il token nel database
+         // tokenLog.price=prezzo;
+          tokenLog.marketCapUsd=marketCapUsd;
+          tokenLog.logTransaction(trade);
+          //tokenLog.addSolAmount(-(trade.solAmount));
+         // tokenLog.addVolume(trade.solAmount);
+
          updateToken(trade.mint, {
             marketCapSol: trade.marketCapSol,
             price: prezzo,

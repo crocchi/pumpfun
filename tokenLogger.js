@@ -28,26 +28,52 @@ import TokenMonitor from "./tradeMonitor.js";
   }
 
   logTransaction(transaction) {
-    this.trxArray.push(transaction);
-    this.solAmount += transaction.amount;
-    this.volume += transaction.amount * transaction.price;
-    this.volumeNet += transaction.amount * (transaction.price - this.buyPrice);
-    this.price = transaction.price;
-
-    if (transaction.price > this.highPrice) {
-      this.highPrice = transaction.price;
+    this.trxArray.push({
+            type:transaction.txType,
+            amount:transaction.solAmount,
+            tokenAmount:transaction.tokenAmount,
+            trader:transaction.traderPublicKey,
+            price: this.LivePrice,
+            signature: transaction.signature,
+            time: new Date().toLocaleTimeString()
+          });
+    //this.solAmount += transaction.amount;
+    this.volume += transaction.solAmount;
+    if (transaction.txType === 'buy') {
+        this.volumeNet += transaction.solAmount;
+    }
+    if (transaction.txType === 'sell') {
+        this.volumeNet += -(transaction.solAmount);
     }
 
-    if (this.lowPrice === 0 || transaction.price < this.lowPrice) {
-      this.lowPrice = transaction.price;
-    }
-  }
+    this.liquidityCheck(transaction);
 
-  monitorTransaction() {
+    if (this.LivePrice > this.highPrice) {
+      this.highPrice = this.LivePrice;
+    }
+
+    this.marketCapSol = transaction.marketCapSol || this.marketCapSol;
     this.solTrxNumMonitor++;
+   /* if (this.lowPrice === 0 || transaction.price < this.lowPrice) {
+      this.lowPrice = transaction.price;
+    }*/
   }
 
-  resetLogger() {
+  liquidityCheck(tok){
+    if (tok.solInPool && tok.tokensInPool) {
+        this.LivePrice = (tok.solInPool / tok.tokensInPool).toFixed(10);
+        this.solInPool = tok.solInPool;
+        this.tokensInPool = tok.tokensInPool;
+    }
+    if (tok.vSolInBondingCurve && tok.vTokensInBondingCurve) {
+        this.LivePrice = (tok.vSolInBondingCurve / tok.vTokensInBondingCurve).toFixed(10);
+        this.solInPool = tok.vSolInBondingCurve;
+        this.tokensInPool = tok.vTokensInBondingCurve;
+    }
+    return this.LivePrice;
+
+  }
+    resetLogger() {
     this.solAmount = 0;
     this.solTrxNumMonitor = 0;
     this.volume = 0;
