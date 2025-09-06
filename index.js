@@ -137,16 +137,16 @@ ws.on('message', async function message(data) {
         }
         
         if(safer.fastBuy){
+          console.log(`✅ Token '${parsed.name}' passato per sicurezza. Procedo con l\'acquisto rapido.`);
 
-        }
-
+        }else{
         const monitor=getInstanceForToken(token)
         let devbott=await monitor.startMonitor();
          if (!devbott) {
          console.log(`✅ Token '${parsed.name}' non sicuro e monitorato per vendite sospette.`);
          return;
-         }
-
+           }
+        }
          /*
          setMintMonitor(token.mint); // Imposta il mint del token da monitorare x controllare le vendite sospette
          let devBot=await monitorEarlyTrades(token);
