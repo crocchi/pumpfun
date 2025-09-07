@@ -252,7 +252,12 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     }// fine if (parsed.txType === 'create')
 
     liquidityCheck()
-    const tokenLog=getInstanceForTokenLogger(token);
+    let tokenLog;
+    if (instancesToken.has(parsed.mint)) { // controlla se esiste l'istanza dell'oggetto class
+      // tokenMonitor= instances.get(parsed.mint);
+      tokenLog=getInstanceForTokenLogger(token);
+
+   }
 
 
     //controlla la tua transazione
@@ -509,6 +514,7 @@ function getInstanceForTokenMonitor(token) {
   
 
 function getInstanceForTokenLogger(token) {
+  if(!token) {return null}
 
   if (!instancesToken.has(token.mint)) {
     const instance = new TokenLogger(token);
@@ -520,7 +526,7 @@ function getInstanceForTokenLogger(token) {
     //instance.monitor = tmp; // Collega l'istanza di TokenLogger con l'istanza di TokenMonitor
     console.log(`Nuova istanzaToken creata per ${token.mint}`);
   }else {
-    console.log(`Riutilizzo dell'istanzaToken esistente per il ${token.mint}:`, instancesToken.get(token.mint));
+    //console.log(`Riutilizzo dell'istanzaToken esistente per il ${token.mint}:`, instancesToken.get(token.mint));
   }
 
   return instancesToken.get(token.mint);
