@@ -256,7 +256,6 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     if (instancesToken.has(parsed.mint)) { // controlla se esiste l'istanza dell'oggetto class
       // tokenMonitor= instances.get(parsed.mint);
       tokenLog=getInstanceForTokenLogger(token);
-
    }
 
 
@@ -386,11 +385,13 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     }
 
 
-    // Verifica se è un evento di trade
+    // Verifica se è un evento di trade // trade dp monitor
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
 
         const trade = parsed;
-
+      tokenLog=getInstanceForTokenLogger(token);
+      //tokenMonitor= instances.get(parsed.mint);
+      tokenLog.linked(tokenMonitor)
       //  console.log('trade:',trade);
 
          //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
