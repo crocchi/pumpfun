@@ -494,15 +494,22 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
 });
 
 function getInstanceForToken(token , type='monitor' ) {
+let tmp=null;
+    if (!instancesToken.has(token.mint) && !instances.has(token.mint) && type==='tokenLogger') {
+      tmp=instances.get(token.mint);
+    }
 
   if (!instancesToken.has(token.mint) && type==='tokenLogger') {
     const instance = new TokenLogger(token);
+    if(tmp) instance.linked(tmp);
+    //tmp
     instancesToken.set(token.mint, instance);
 
+    //instance.monitor = tmp; // Collega l'istanza di TokenLogger con l'istanza di TokenMonitor
     console.log(`Nuova istanzaToken creata per ${token.mint}`);
   }
   if (instancesToken.has(token.mint) && type==='tokenLogger') {
-    console.log(`Riutilizzo dell'istanzaToken esistente per il ${token.mint}:`, instancesToken.get(token.mint));
+   // console.log(`Riutilizzo dell'istanzaToken esistente per il ${token.mint}:`, instancesToken.get(token.mint));
     return instancesToken.get(token.mint);
   }
   
@@ -515,7 +522,7 @@ function getInstanceForToken(token , type='monitor' ) {
   }
   
   if (instances.has(token.mint) && type==='monitor'){
-    console.log(`Riutilizzo dell'istanza esistente per il token ${token.mint}:`, instances.get(token.mint));
+   // console.log(`Riutilizzo dell'istanza esistente per il token ${token.mint}:`, instances.get(token.mint));
     return instances.get(token.mint);
   }
   

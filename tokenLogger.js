@@ -7,6 +7,7 @@ import TokenMonitor from "./tradeMonitor.js";
    // this.solAmount = 0;
    // this.solTrxNumMonitor = 0;
    // this.volume = 0;
+    this.monitor;
     this.buyTransactionSign = null;
     this.LivePrice = 0;
     this.startPrice = 0; //prezzo iniziale in sol
@@ -14,7 +15,7 @@ import TokenMonitor from "./tradeMonitor.js";
     this.sellPrice = 0;
     this.highPrice = 0; // sol
     this.lowPrice = 0; // sol
-    this.volumeNet = this.solAmount;
+    this.volumeNet = 0;
     this.devWallet=token.traderPublicKey || "Unknown";
     this.holders=0;//numero holders
     this.holdersList=[];
@@ -25,6 +26,14 @@ import TokenMonitor from "./tradeMonitor.js";
     
     // this.trxArray = [];
     this.safeProblem = [];
+  }
+
+  linked(ob){
+    this.monitor=ob;
+    this.trxArray = ob.trxArray;
+    this.solTrxNumMonitor = ob.solTrxNumMonitor;
+    this.volume = ob.volume;
+    this.volumeNet = ob.solAmount;
   }
 
   logTransaction(transaction) {
