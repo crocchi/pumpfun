@@ -512,6 +512,8 @@ function getInstanceForTokenLogger(token) {
 
   if (!instancesToken.has(token.mint)) {
     const instance = new TokenLogger(token);
+    const instanceMonitor=instances.get(token.mint);
+    instance.linked(instanceMonitor)
     //tmp
     instancesToken.set(token.mint, instance);
 
