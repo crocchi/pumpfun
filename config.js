@@ -27,8 +27,8 @@ export let SOLANA_USD = 200;
     rugpullxyz:true,
 
     //monitor token
-    time_monitor: 3000, // 3 secondi
-    volumeMin: 0.1, // volume minimo in SOL per considerare il token
+    time_monitor: 60000, // 3 secondi
+    volumeMin: 5, // volume minimo in SOL per considerare il token
     maxTrxNumMonitor:500, // numero massimo di transazioni sospette per considerare il token un rugpull
     minTrxNumMonitor:60,
     netVolumeUpBuy:false, // se il volume netto tra buy e sell supera volumeMin allora compra

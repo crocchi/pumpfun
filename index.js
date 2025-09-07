@@ -137,10 +137,11 @@ ws.on('message', async function message(data) {
 
         }
 
-        const monitor=getInstanceForToken(token)
+        const monitor=getInstanceForTokenMonitor(token)
         if(safer.fastBuy){ // fast buy
           console.log(`✅ Token '${parsed.name}' passato per sicurezza. Procedo con l\'acquisto rapido.`);
           monitor.tradeMonitor=false;// disabilito il monitoraggio
+          //monitor.
         }else{      //modalità monitoraggio   
         let devbott=await monitor.startMonitor();
          if (!devbott) {
@@ -167,7 +168,7 @@ ws.on('message', async function message(data) {
         //const solToUsdRate = SOLANA_USD; // Replace with the current SOL to USD conversion rate
         const marketCapUsd = (token.marketCapSol * SOLANA_USD).toFixed(2);
         const totTokens= token.tokensInPool + token.initialBuy;
-        let priceBuy=monitor.lastPrice()
+        let priceBuy=monitor.lastPrice() || prezzo;
         console.log(`📈 MarketCap (USD): ${marketCapUsd}`);
         console.log(`💰 Price SOL Start: ${prezzo} `);
         console.log(`💰 Price SOL Buy: ${priceBuy} `);   
@@ -179,7 +180,7 @@ ws.on('message', async function message(data) {
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         let buyTokenSignature=await buyToken(token.mint);
 
-        const tokenLog=getInstanceForToken(token,'tokenLogger')// iniz istanza di TokenLogger
+        const tokenLog=getInstanceForTokenLogger(token)// iniz istanza di TokenLogger
         // buyTokenLog
         getTopHolders(token.mint).then(holders=>{
           console.log(`👥 Top 5 holders:`)
@@ -251,7 +252,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     }// fine if (parsed.txType === 'create')
 
     liquidityCheck()
-    const tokenLog=getInstanceForToken(token,'tokenLogger')
+    const tokenLog=getInstanceForTokenLogger(token);
 
 
     //controlla la tua transazione
@@ -493,38 +494,34 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
 
 });
 
-function getInstanceForToken(token , type='monitor' ) {
-let tmp=null;
-    if (!instancesToken.has(token.mint) && !instances.has(token.mint) && type==='tokenLogger') {
-      tmp=instances.get(token.mint);
-    }
+function getInstanceForTokenMonitor(token) {
+  // Controlla se esiste già un'istanza per questo token
+  if (!instances.has(token.mint)) {
+    const instance = new TokenMonitor(token);
+    instances.set(token.mint, instance);
 
-  if (!instancesToken.has(token.mint) && type==='tokenLogger') {
+    console.log(`Nuova istanza creata per il token ${token.mint}`);
+  }else{
+    console.log(`Riutilizzo dell'istanza esistente per il token ${token.mint}:`, instances.get(token.mint));
+  }
+ return instances.get(token.mint);
+  }
+  
+
+function getInstanceForTokenLogger(token) {
+
+  if (!instancesToken.has(token.mint)) {
     const instance = new TokenLogger(token);
-    if(tmp) instance.linked(tmp);
     //tmp
     instancesToken.set(token.mint, instance);
 
     //instance.monitor = tmp; // Collega l'istanza di TokenLogger con l'istanza di TokenMonitor
     console.log(`Nuova istanzaToken creata per ${token.mint}`);
+  }else {
+    console.log(`Riutilizzo dell'istanzaToken esistente per il ${token.mint}:`, instancesToken.get(token.mint));
   }
-  if (instancesToken.has(token.mint) && type==='tokenLogger') {
-   // console.log(`Riutilizzo dell'istanzaToken esistente per il ${token.mint}:`, instancesToken.get(token.mint));
-    return instancesToken.get(token.mint);
-  }
-  
 
-  if (!instances.has(token.mint) && type==='monitor') {
-    const instance = new TokenMonitor(token);
-    instances.set(token.mint, instance);
-
-    console.log(`Nuova istanza creata per il token ${token.mint}`);
-  }
-  
-  if (instances.has(token.mint) && type==='monitor'){
-   // console.log(`Riutilizzo dell'istanza esistente per il token ${token.mint}:`, instances.get(token.mint));
-    return instances.get(token.mint);
-  }
+  return instancesToken.get(token.mint);
   
 }
 /*{
