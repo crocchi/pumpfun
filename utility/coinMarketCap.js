@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { CMC_API_KEY } from '../config.js';
 
+/*
 let response = null;
 new Promise(async (resolve, reject) => {
   try {
@@ -22,7 +23,7 @@ new Promise(async (resolve, reject) => {
     resolve(json);
   }
 });
-
+*/
 
 const getTop10Tokens = async () => {
     try {
@@ -163,34 +164,53 @@ https://pro-api.coinmarketcap.com/v3/index/cmc20-historical
 }
 }
 */
-const getCMC20Historical = async () => {
-    try {
-        const response = await axios.get('https://pro-api.coinmarketcap.com/v3/index/cmc20-latest', {
-            headers: {
-                'X-CMC_PRO_API_KEY': CMC_API_KEY,
-            },
-        });
 
-        if (response && response.data && response.data.data) {
-            const cryptoList = response.data.data.flatMap(entry => 
-                entry.constituents.map(crypto => ({
-                    name: crypto.name,
-                    symbol: crypto.symbol,
-                    price: crypto.priceUsd,
-                    change_24h: crypto.weight // Assuming weight represents 24h change
-                }))
-            );
 
-            console.log(cryptoList);
-            return cryptoList;
-        } else {
-            console.log('No data available');
-            return [];
-        }
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return [];
-    }
-};
+const BASE_URL = "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest";
 
-export { getCMC20Historical , getTop10Tokens};
+async function getQuote(symbols = ["BTC", "ETH"], convert = "USD") {
+  try {
+    const response = await axios.get(BASE_URL, {
+      headers: {
+        "X-CMC_PRO_API_KEY": CMC_API_KEY,
+      },
+      params: {
+        symbol: symbols.join(","), // es. "BTC,ETH"
+        convert: convert,          // es. "USD"
+      },
+    });
+
+    const data = response.data.data;
+    console.log(data);
+
+    // Estraggo solo i campi più importanti
+    const results = Object.values(data).map((crypto) => {
+      const quote = crypto.quote[convert];
+      return {
+        id: crypto.id,
+        name: crypto.name,
+        symbol: crypto.symbol,
+        price: quote.price,
+        market_cap: quote.market_cap,
+        volume_24h: quote.volume_24h,
+        percent_change_24h: quote.percent_change_24h,
+        last_updated: quote.last_updated,
+      };
+    });
+
+    return results;
+  } catch (err) {
+    console.error("Errore API CoinMarketCap:", err.response?.data || err.message);
+    return null;
+  }
+}
+
+// --- ESEMPIO ---
+/*
+(async () => {
+  const result = await getQuote(["BTC", "SOL", "ETH"], "USD");
+  console.log(result);
+})();
+*/
+
+export { getTop10Tokens , getQuote};
