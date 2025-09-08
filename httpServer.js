@@ -26,7 +26,7 @@ function serveStatic(req, res) {
     }
     if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
       const ext = path.extname(filePath).toLowerCase();
-      const ct = ext === '.css' ? 'text/css' : ext === '.js' ? 'application/javascript' : 'application/octet-stream';
+      const ct = ext === '.css' ? 'text/css' : ext === '.js' ? 'application/javascript' : ext === '.jpg' ? 'image/jpeg' : 'image/png';
       res.writeHead(200, { 'Content-Type': ct });
       return res.end(fs.readFileSync(filePath));
     }
