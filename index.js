@@ -8,7 +8,7 @@ import { startHttpServer, logToken ,updateToken, buyTokenLog } from './httpServe
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
 import { buyToken , sellToken } from './utility/lightTrx.js';
-import { getTop10Tokens , getCMC20Historical , getQuote } from './utility/coinMarketCap.js';
+import { getTop10Tokens ,getQuote } from './utility/coinMarketCap.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
