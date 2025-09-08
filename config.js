@@ -7,6 +7,7 @@ export const RPC_URL_HELIUS = process.env.RPC_URL_HELIUS;
 export const RPC_WS_HELIUS = process.env.RPC_WS_HELIUS;
 export const DESEARCH_API = process.env.DESEARCH_API;
 export const LIGHT_WALLET_API = process.env.LIGHT_WALLET_API;
+export const CMC_API_KEY = process.env.CMC_API_KEY;
 
 export const MAX_TOKENS_SUBSCRIBED = 40;
 
