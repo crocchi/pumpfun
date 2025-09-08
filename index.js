@@ -89,8 +89,6 @@ export const instancesToken  = new Map(); // Mappa per memorizzare le istanze di
 
 //getTop10Tokens();
 //getCMC20Historical()
-  const result = await getQuote(["SOL"], "USD");
-  console.log(result);
 
 ws.on('open', function open() {
     console.log('📡 Connesso al WebSocket di Pump.fun');
