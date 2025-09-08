@@ -87,7 +87,7 @@ const subscribedTokens = new Set();
 const instances = new Map(); // Mappa per memorizzare le istanze di TokenMonitor
 export const instancesToken  = new Map(); // Mappa per memorizzare le istanze di TokenLogger
 
-getTop10Tokens();
+//getTop10Tokens();
 getCMC20Historical()
 
 ws.on('open', function open() {

@@ -165,7 +165,7 @@ https://pro-api.coinmarketcap.com/v3/index/cmc20-historical
 */
 const getCMC20Historical = async () => {
     try {
-        const response = await axios.get('https://pro-api.coinmarketcap.com/v3/index/cmc20-historical', {
+        const response = await axios.get('https://pro-api.coinmarketcap.com/v3/index/cmc20-latest', {
             headers: {
                 'X-CMC_PRO_API_KEY': CMC_API_KEY,
             },
