@@ -168,14 +168,32 @@ https://pro-api.coinmarketcap.com/v3/index/cmc20-historical
 
 const BASE_URL = "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest";
 
-async function getQuote(symbols = ["BTC", "ETH"], convert = "USD") {
+const idCmc=[
+    { symbol: "BTC", id: 1 },
+    { symbol: "ETH", id: 1027 },
+    { symbol: "USDT", id: 825 },
+    { symbol: "BNB", id: 1839 },
+    { symbol: "USDC", id: 3408 },
+    { symbol: "XRP", id: 52 },
+    { symbol: "SOL", id: 5426 },
+]
+function convertSymbolsToIds(symbols) {
+    return symbols.map(symbol => {
+        const match = idCmc.find(item => item.symbol === symbol);
+        return match ? match.id : null;
+    }).filter(id => id !== null); // Remove nulls for unmatched symbols
+}
+
+async function getQuote(symbols = ["BTC", "ETH","SOL"], convert = "USD") {
+
   try {
     const response = await axios.get(BASE_URL, {
       headers: {
         "X-CMC_PRO_API_KEY": CMC_API_KEY,
       },
       params: {
-        symbol: symbols.join(","), // es. "BTC,ETH"
+        //symbol: symbols.join(","), // es. "BTC,ETH"
+         ids: convertSymbolsToIds(symbols).join(","), // es. "1,1027"
         convert: convert,          // es. "USD"
       },
     });
@@ -198,6 +216,7 @@ async function getQuote(symbols = ["BTC", "ETH"], convert = "USD") {
       };
     });
 
+    console.log(results)
     return results;
   } catch (err) {
     console.error("Errore API CoinMarketCap:", err.response?.data || err.message);
