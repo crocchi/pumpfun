@@ -248,6 +248,12 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     console.log(`🚫 Unsubscribed da ${mintToRemove} (limite ${MAX_TOKENS_SUBSCRIBED})`);
   }
 
+  if (instances.size > 6) {
+    const lastMint = [...instances.keys()].pop();
+    instances.delete(lastMint);
+    console.log(`🗑️ Rimossa l'ultima istanza per il token ${lastMint} (limite superato).`);
+     }
+
 
         console.log(`-----------------------------------------------`);
       // 👉 Qui puoi chiamare la tua funzione `snipeToken(token.mint)`
