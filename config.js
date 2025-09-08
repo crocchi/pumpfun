@@ -69,7 +69,6 @@ export let SOLANA_USD = 200;
   async function fetchSolPrice() {
   
    let priceSol=await getQuote(["SOL"], "USD");
-   console.log(priceSol);
 
       SOLANA_USD = Number(priceSol[0].price) || SOLANA_USD;
       console.log(`📈 Prezzo SOL aggiornato: $${SOLANA_USD}`);
