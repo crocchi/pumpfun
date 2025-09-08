@@ -65,72 +65,27 @@
 
 								<!-- Box -->
 									<section class="box feature">
-										<table>
-    <thead>
-      <tr>
-        <th>Symbol</th>
-        <th>Nome</th>
-        <th>StartPrice</th>
-        <th>Buy Price</th>
-        <th>Live Price</th>
-        
-        <th>Gain</th>
-        <th>MarketCap USD</th>
+										<!--<a href="#" class="image featured"><img src="../public/images/pic01.jpg" alt="" /></a>-->
+                                        <div class="inner">
+                                            <header>
+                                                <h2>Token Monitor</h2>
+                                                <p>Monitora i token in base ai filtri impostati</p>
+                                            </header>
+                                            <ul class="checklist">
+                      <% tokensMonitor.forEach(function(monitor, index) { %>
+                        <li>
+                          <strong><%= monitor.tokenSymbol %> (<%= monitor.tokenMint %>)</strong><br>
+                          Prezzo: $<%= monitor.price %> | Liquidity: <%= monitor.liquidity %> SOL | Market Cap: $<%= monitor.marketCap %><br>
+                          Volume 24h: $<%= monitor.volume24h %> | Change 1h: <%= monitor.percentChange1h %>% | Change 24h: <%= monitor.percentChange24h %>%<br>
+                          Net Volume: <%= monitor.netVolume %> SOL | Trades: <%= monitor.trades %><br>
+                          Status: <%= monitor.status %>
+                        </li>
+                      <% }); %>
+                    </ul>
+                                        </div>
+			</section>
 
-        <th>Trx Num</th>
-        <th>Time</th>
-        <th>Transazioni</th>
-        
-        <th>Contract</th>
-        <th>Pool</th>
-        <th>info</th>
-
-        
-      </tr>
-    </thead>
-    <tbody>
-      <% tokens.forEach(t => { 
-        const pct = t.oldMarketCapUsd ? ((t.marketCapUsd - t.oldMarketCapUsd) / t.oldMarketCapUsd) * 100 : 0;
-        const gain = ((t.price - t.buyPrice) / t.buyPrice) * 100;
-        let gainColor;
-        if(gain > 1) gainColor = 'color:green';
-        else if(gain < -1) gainColor = 'color:red';
-        const time = new Date(t.timestamp).toLocaleTimeString();
-        let defiExchange ;
-        if (t.mint.includes('BONK') || t.mint.includes('bonk')) {
-          defiExchange = `<a href="https://bonk.fun/token/${t.mint}" target="_blank">Apri Pool</a>`;
-        } else if (t.mint.includes('PUMP') || t.mint.includes('pump')) {
-          defiExchange = `<a href="https://pump.fun/coin/${t.mint}" target="_blank">Apri Pool</a>`;
-        } else {
-          defiExchange = 'N/A';
-        }
-      %>
-        <tr>
-          <td><%= t.symbol %></td>
-          <td><%= t.name %></td>
-          <td><%= t.startPrice %></td>
-          <td><%= t.buyPrice || '..' %></td>
-          <td><%= t.price || (t.solInPool / t.tokensInPool).toFixed(10) %></td>
-           <td style=<%- gainColor %>><%= gain.toFixed(2) %>%</td>
-          
-           <td>$<%= t.marketCapUsd %></td>    
-
-          <td><%= t.trxNum %></td>
-          <td><%= time %></td>
-          <td>
-            <button onclick="showTransactions('<%= t.mint %>')">Vedi</button>
-          </td>
-          <td> <button onclick="copyToClipboard('<%= t.mint %>')">Copy Contract</button> </td>
-          <td> <%- defiExchange %></td>
-          <td> <button onclick="showObject('<%= t.mint %>')">info</button>
-          </td>
-        </tr>
-      <% }) %>
-    </tbody>
-  </table>
-									</section>
-
-							</div>
+			</div>
 							<div class="col-4 col-12-medium">
 
 								<!-- Box -->
