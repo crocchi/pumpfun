@@ -62,6 +62,10 @@ export let SOLANA_USD = 200;
     hasTwitterOrTelegram_filter: true,
     hasTwitterCheck_filter: true,
 
+
+    //
+    SOLANA_USD:200,
+    solanaInfo:{}
   };
 
 
@@ -71,6 +75,8 @@ export let SOLANA_USD = 200;
    let priceSol=await getQuote(["SOL"], "USD");
 
       SOLANA_USD = Number(priceSol[0].price) || SOLANA_USD;
+      botOptions.SOLANA_USD=SOLANA_USD;
+      botOptions.solanaInfo=priceSol[0];
       console.log(`📈 Prezzo SOL aggiornato: $${SOLANA_USD}`);
       return SOLANA_USD
   }
