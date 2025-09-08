@@ -1,5 +1,4 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
 import { CMC_API_KEY } from '../config.js';
 
 let response = null;
@@ -58,7 +57,8 @@ const getTop10Tokens = async () => {
     }
 };
 
-getTop10Tokens();
+export default getTop10Tokens;
+
 /*
 CoinMarketCap 100 Index Latest
 https://pro-api.coinmarketcap.com/v3/index/cmc100-latest
