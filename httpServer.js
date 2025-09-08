@@ -111,7 +111,20 @@ export function startHttpServer(port = 4000) {
           return res.end(JSON.stringify({ ok: false, error: e.message }));
         }
       }
-  
+
+if (parsed.pathname === '/UI' && req.method === 'GET') {
+    /*
+    const templatePath = path.join(__dirname, 'views', 'status.ejs');
+    const html = await ejs.renderFile(templatePath, { tokens: tokenLog });
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(html);*/
+
+      const tpl = fs.readFileSync(path.join(__dirname, 'views', 'index.ejs'), 'utf8');
+      const html = ejs.render(tpl, { tokens: tokenLog , botOptions });
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      return res.end(html);
+    }
+
 if (parsed.pathname === '/status' && req.method === 'GET') {
     /*
     const templatePath = path.join(__dirname, 'views', 'status.ejs');
