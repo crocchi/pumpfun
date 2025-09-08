@@ -312,6 +312,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       //setSolAmount(parsed.solAmount);
       tokenMonitor.addSolAmount(parsed.solAmount);
       tokenMonitor.addVolume(parsed.solAmount);
+      tokenMonitor.prez=prezzo;
       let solValueTrx = tokenMonitor.getSolAmount() 
       let trxNumm = tokenMonitor.getSolTrxNumMonitor();
       tokenMonitor.trxArray.push({
@@ -380,6 +381,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       //console.log('SOL:',priceInSol);
       tokenMonitor.addSolAmount(-(parsed.solAmount));
       tokenMonitor.addVolume(parsed.solAmount);
+      tokenMonitor.prez=prezzo;
 
          tokenMonitor.trxArray.push({
             type:parsed.txType,
@@ -552,6 +554,10 @@ function getInstanceForTokenLogger(token) {
     const instance = new TokenLogger(token);
   //  const instanceMonitor=instances.get(token.mint);
   //  instance.linked(instanceMonitor)
+  if (instances.has(token.mint)) {
+      const instanceMonitor=instances.get(token.mint);
+      instance.linked(instanceMonitor)
+  }
     //tmp
     instancesToken.set(token.mint, instance);
 

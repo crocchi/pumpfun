@@ -61,8 +61,8 @@
                          <% tokensMonitor.forEach(function(monitor, index) { %>
                           <li>
                             <strong><%= monitor.token.name %> (<%= monitor.token.symbol %>)</strong><br>
-                              Prezzo: $<%= monitor.price %>  | Market Cap Sol: $<%= monitor.token.marketCapSol %><br>
-                              Net Volume: <%= monitor.solAmount %> SOL | TradesNum: <%= monitor.solTrxNumMonitor %><br>
+                              Prezzo: $<%= monitor.price %>  | Market Cap Sol: $<%= monitor.token.marketCapSol.toFixed(4) %> SOL<br>
+                              Net Volume: <%= monitor.solAmount.toFixed(4) %> SOL | TradesNum: <%= monitor.solTrxNumMonitor %><br>
                               MonitorStatus: <%= monitor.tradeMonitor %>
                             </li>
                          <% }); %>
@@ -120,8 +120,8 @@
                                       
                                         <li>Prezzo SOL: $<%= botOptions.solanaInfo.price %> </li>
                                        <li>Market Cap: $<%= botOptions.solanaInfo.market_cap %></li>
-                                       <li>1h: $<%= botOptions.solanaInfo.percent_change_1h %></li>
-                                        <li>Volume 24h: $<%= botOptions.solanaInfo.volume_24h %></li>
+                                       <li>1h: <%= botOptions.solanaInfo.percent_change_1h %>%</li>
+                                        <li>24h: $<%= botOptions.solanaInfo.percent_change_24h %>%</li>
 								
 											
 										</ul>

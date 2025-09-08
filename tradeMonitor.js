@@ -19,6 +19,7 @@ import { botOptions } from './config.js';
     this.quickBuy=0;
     this.quickSell=0;
     this.rugpullSafe=true;
+    this.prez;
   }
 
   startMonitor(snipeCallback) {
