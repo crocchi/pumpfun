@@ -193,7 +193,7 @@ async function getQuote(symbols = ["BTC", "ETH","SOL"], convert = "USD") {
       },
       params: {
         //symbol: symbols.join(","), // es. "BTC,ETH"
-         ids: convertSymbolsToIds(symbols).join(","), // es. "1,1027"
+         id: convertSymbolsToIds(symbols).join(","), // es. "1,1027"
         convert: convert,          // es. "USD"
       },
     });
