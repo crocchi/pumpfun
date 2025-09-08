@@ -64,3 +64,28 @@ Token: {
 ⏱️ Controlla se qualcuno vende troppo presto
 🔔 Sottoscrizione ai trade del token 73jhGV2ihb7pCjWU6VQdq8Rjs3qFb4PybBXWRVZapump
 -----------------------------------------------
+
+✅ Success
+❌ Error
+⚠️ Warning
+ℹ️ Info
+🚀 Launch
+📈 Growth
+📉 Decline
+💰 Money
+💧 Liquidity
+👤 User
+🌊 Pool
+🔔 Notification
+🔎 Search
+⏱️ Timer
+📦 Package
+🔗 Link
+📊 Chart
+🛠️ Tools
+📂 Folder
+📜 Document
+🔒 Lock
+🔓 Unlock
+📥 Download
+📤 Upload

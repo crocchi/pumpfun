@@ -152,6 +152,7 @@ async function saveOptions(e) {
     volumeMinMonitor: document.getElementById('volumeMinMonitor').value,
     netVolumeUpBuy: document.getElementById('netVolumeUpBuy').checked,
     buyAmount: document.getElementById('buyAmount').value,
+    sellOffPanic: document.getElementById('sellOffPanic').value,
     maxTrxNumMonitor: document.getElementById('maxTrxNumMonitor').value,
     minTrxNumMonitor : document.getElementById('minTrxNumMonitor').value,
     hasWeb_filter: document.getElementById('website').checked,
@@ -187,6 +188,7 @@ async function loadOptions() {
   document.getElementById('timeMonitor').value = o.time_monitor / 1000; // Converti in secondi
   document.getElementById('volumeMinMonitor').value = o.volumeMin;
   document.getElementById('buyAmount').value = o.buyAmount;
+  document.getElementById('sellOffPanic').value = o.sellOffPanic;
   document.getElementById('maxTrxNumMonitor').value = o.maxTrxNumMonitor;
   document.getElementById('minTrxNumMonitor').value = o.minTrxNumMonitor;
   document.getElementById('netVolumeUpBuy').checked = o.netVolumeUpBuy;

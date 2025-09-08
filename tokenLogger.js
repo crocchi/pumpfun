@@ -8,6 +8,8 @@ import TokenMonitor from "./tradeMonitor.js";
    // this.solTrxNumMonitor = 0;
    // this.volume = 0;
     this.monitor;
+    this.name ;
+    this.symbol;
     this.buyTransactionSign = null;
     this.LivePrice = 0;
     this.startPrice = 0; //prezzo iniziale in sol
@@ -24,12 +26,15 @@ import TokenMonitor from "./tradeMonitor.js";
     this.marketCapSol=token.marketCapSol || 0;
     this.marketCapUsd=0;
     
+    
     // this.trxArray = [];
     this.safeProblem = [];
   }
 
   linked(ob){
     this.monitor=ob;
+    this.name = ob.token.name || "Unknown";
+    this.symbol = ob.token.symbol || "Unknown";
     this.trxArray = ob.trxArray;
     this.solTrxNumMonitor = ob.solTrxNumMonitor;
     this.volume = ob.volume;

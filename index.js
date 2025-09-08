@@ -248,8 +248,11 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
         console.log(`-----------------------------------------------`);
       // 👉 Qui puoi chiamare la tua funzione `snipeToken(token.mint)`
-
+    return; // quando c'e evento di creazione,poi esci..nn ce
+    // bisogno di continuare o no?, 
     }// fine if (parsed.txType === 'create')
+
+
 
     liquidityCheck()
     let tokenLog;
@@ -317,12 +320,26 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
           tokenMonitor.cancelMonitor();
           return
       }
-      //se rugpull, cioè acquistano tanto in pochissimi secondi, 
-      // apepena il volume supera 1sol..mi ci ficco anke io
-      //let trxNumm = getSolTrx();
-      
+
+
+            //nuova regola da testare...
+            //volume netto superiore al volume impostato
+       if(solValueTrx > botOptions.volumeMin) {
+        console.log(`📈 🚀 volume netto superiore al volume impostato! Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
+        console.log("buy at sol: ",prezzo);
+        tokenMonitor.quickBuy=prezzo;
+        tokenMonitor.quickSell=`📈 🚀 volume netto superiore al volume impostato! Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`;
+      }
+      //nuova regola da testare...
+       if(trxNumm >= 2 && solValueTrx > botOptions.volumeMin && trxNumm < 10) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
+        console.log(`📈 Super Pump... Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
+        console.log("buy at sol: ",prezzo);
+        tokenMonitor.quickBuy=prezzo;
+        tokenMonitor.quickSell=`📈 Super Pump... Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`
       //let priceTrx = priceInSol;
-      if(trxNumm >= 2 && solValueTrx > 1.00 && trxNumm < 4) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
+       }
+
+      if(trxNumm >= 2 && solValueTrx > 1.50 && trxNumm < 4) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
         console.log(`❌ RugPull Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
         console.log("buy at sol: ",priceInSol);
         //cancelMonitor();
