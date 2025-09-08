@@ -61,6 +61,8 @@
 				<div id="features-wrapper">
 					<div class="container">
 						<div class="row">
+
+
 							<div class="col-4 col-12-medium">
 
 								<!-- Box -->
@@ -72,49 +74,48 @@
                                                 <p>Monitora i token in base ai filtri impostati</p>
                                             </header>
                                             <ul class="checklist">
-                      <% tokensMonitor.forEach(function(monitor, index) { %>
-                        <li>
-                          <strong><%= monitor.tokenSymbol %> (<%= monitor.tokenMint %>)</strong><br>
-                          Prezzo: $<%= monitor.price %> | Liquidity: <%= monitor.liquidity %> SOL | Market Cap: $<%= monitor.marketCap %><br>
-                          Volume 24h: $<%= monitor.volume24h %> | Change 1h: <%= monitor.percentChange1h %>% | Change 24h: <%= monitor.percentChange24h %>%<br>
-                          Net Volume: <%= monitor.netVolume %> SOL | Trades: <%= monitor.trades %><br>
-                          Status: <%= monitor.status %>
-                        </li>
-                      <% }); %>
-                    </ul>
-                                        </div>
-			</section>
+                         <% tokensMonitor.forEach(function(monitor, index) { %>
+                          <li>
+                            <strong><%= monitor.token.name %> (<%= monitor.token.symbol %>)</strong><br>
+                              Prezzo: $<%= monitor.price %>  | Market Cap Sol: $<%= monitor.token.marketCapSol %><br>
+                              Net Volume: <%= monitor.solAmount %> SOL | TradesNum: <%= monitor.solTrxNumMonitor %><br>
+                              MonitorStatus: <%= monitor.tradeMonitor %>
+                            </li>
+                         <% }); %>
+                        </ul>
+                        </div>
+			            </section>
 
-			</div>
+			            </div>
+
+
+
 							<div class="col-4 col-12-medium">
 
 								<!-- Box -->
 									<section class="box feature">
 										<!--<a href="#" class="image featured"><img src="../public/images/pic02.jpg" alt="" /></a>-->
 										<div class="inner">
-											<header>
-												<h2>An interesting title</h2>
-												<p>This is also an interesting subtitle</p>
-											</header>
-											<p>Phasellus quam turpis, feugiat sit amet in, hendrerit in lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
-										</div>
-									</section>
+											 <header>
+                                                <h2>Token Logger</h2>
+                                                <p>Log dei token intercettati</p>
+                                            </header>
+                                            <ul class="checklist">
+                          <% tokenLogger.forEach(function(token, index) { %>
+                            <li>
+                              <strong><%= token.name %> (<%= token.symbol %>)</strong><br>
+                              Prezzo: $<%= token.LivePrice %> | Liquidity: <%= token.solInPool %> SOL | Market Cap Sol: $<%= token.marketCapSol %><br>
+                              VolumeNet: $<%= token.volumeNet %> | TradesNum: <%= token.solTrxNumMonitor %> Volume: <%= token.volume %> <br>   
+                              Buy Price: <%= token.buyPrice %> | Start Price: <%= token.startPrice %> |
+                            </li>
+                         <% }); %>
+                        </ul>
+                        </div>
+			            </section>
 
-							</div>
-							<div class="col-4 col-12-medium">
+			            </div>
 
-								<!-- Box -->
-									<section class="box feature">
-										<div class="inner">
-											<header>
-												<h2>Oh, and finally ...</h2>
-												<p>Here's another intriguing subtitle</p>
-											</header>
-											<p>Phasellus quam turpis, feugiat sit amet in, hendrerit in lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
-										</div>
-									</section>
-
-							</div>
+                       
 						</div>
 					</div>
 				</div>
