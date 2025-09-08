@@ -8,7 +8,7 @@ import { startHttpServer, logToken ,updateToken, buyTokenLog } from './httpServe
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
 import { buyToken , sellToken } from './utility/lightTrx.js';
-import getTop10Tokens from './utility/coinMarketCap.js';
+import { getTop10Tokens , getCMC20Historical } from './utility/coinMarketCap.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
@@ -88,6 +88,7 @@ const instances = new Map(); // Mappa per memorizzare le istanze di TokenMonitor
 export const instancesToken  = new Map(); // Mappa per memorizzare le istanze di TokenLogger
 
 getTop10Tokens();
+getCMC20Historical()
 
 ws.on('open', function open() {
     console.log('📡 Connesso al WebSocket di Pump.fun');

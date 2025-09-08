@@ -57,7 +57,6 @@ const getTop10Tokens = async () => {
     }
 };
 
-export default getTop10Tokens;
 
 /*
 CoinMarketCap 100 Index Latest
@@ -130,4 +129,68 @@ https://pro-api.coinmarketcap.com/v3/fear-and-greed/historical
 "notice": ""
 }
 }
+
+
+CoinMarketCap 20 Index Historical
+Returns an interval of historic CoinMarketCap 20 Index values based on the interval parameter.
+https://pro-api.coinmarketcap.com/v3/index/cmc20-historical
+{
+"data": [
+{
+"constituents": [
+{
+"id": 0,
+"name": "string",
+"symbol": "string",
+"url": "string",
+"weight": 0,
+"priceUsd": 0,
+"units": 0
+}
+],
+"update_time": "2025-09-08",
+"value": 0
+}
+],
+"status": {
+"credit_count": 0,
+"elapsed": 0,
+"error_code": "string",
+"error_message": "string",
+"notice": "string",
+"timestamp": "2025-09-08T10:38:09Z",
+"total_count": 0
+}
+}
 */
+const getCMC20Historical = async () => {
+    try {
+        const response = await axios.get('https://pro-api.coinmarketcap.com/v3/index/cmc20-historical', {
+            headers: {
+                'X-CMC_PRO_API_KEY': CMC_API_KEY,
+            },
+        });
+
+        if (response && response.data && response.data.data) {
+            const cryptoList = response.data.data.flatMap(entry => 
+                entry.constituents.map(crypto => ({
+                    name: crypto.name,
+                    symbol: crypto.symbol,
+                    price: crypto.priceUsd,
+                    change_24h: crypto.weight // Assuming weight represents 24h change
+                }))
+            );
+
+            console.log(cryptoList);
+            return cryptoList;
+        } else {
+            console.log('No data available');
+            return [];
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return [];
+    }
+};
+
+export { getCMC20Historical , getTop10Tokens};
