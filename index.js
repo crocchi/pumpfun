@@ -417,7 +417,12 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
         const trade = parsed;
       tokenLog=await getInstanceForTokenLogger(trade);
       //tokenMonitor= instances.get(parsed.mint);
-      tokenLog.linked(tokenMonitor)
+      if (instances.has(parsed.mint)) { // controlla se esiste l'istanza dell'oggetto class
+       console.log("Token monitor trovato per il merging...");
+        tokenMonitor= instances.get(parsed.mint);
+       tokenLog.linked(tokenMonitor)
+      }
+      
       //  console.log('trade:',trade);
 
          //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
