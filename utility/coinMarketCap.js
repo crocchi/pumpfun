@@ -90,7 +90,7 @@ async function getQuote(symbols = ["BTC", "ETH","SOL"], convert = "USD") {
       };
     });
 
-    console.log(results)
+   // console.log(results)
     return results;
   } catch (err) {
     console.error("Errore API CoinMarketCap:", err.response?.data || err.message);
