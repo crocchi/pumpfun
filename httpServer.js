@@ -6,7 +6,7 @@ import url from 'url';
 import { fileURLToPath } from 'url';
 import { checkPrice } from './moralis.js';
 import { botOptions } from './config.js';
-import { instancesToken } from './index.js';
+import { instancesToken,instances } from './index.js';
 
 let tokenLog = [];
 
@@ -120,7 +120,7 @@ if (parsed.pathname === '/UI' && req.method === 'GET') {
     res.end(html);*/
 
       const tpl = fs.readFileSync(path.join(__dirname, 'views', 'index.ejs'), 'utf8');
-      const html = ejs.render(tpl, { tokens: tokenLog , botOptions });
+      const html = ejs.render(tpl, { tokensMonitor: instances , tokens: tokenLog , tokenLogger:instancesToken ,botOptions });
       res.writeHead(200, { 'Content-Type': 'text/html' });
       return res.end(html);
     }

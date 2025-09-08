@@ -55,43 +55,7 @@
 
 
 
-			<!-- Main -->
-				<div id="main-wrapper">
-					<div class="container">
-						<div class="row gtr-200">
-							<div class="col-4 col-12-medium">
-								<div id="sidebar">
-
-									<!-- Sidebar -->
-										<section>
-											<h3>Subheading</h3>
-											<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-											Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-											Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-											consequat etiam.</p>
-											<footer>
-												<a href="#" class="button icon solid fa-info-circle">Find out more</a>
-											</footer>
-										</section>
-
-										<section>
-											<h3>Subheading</h3>
-											<ul class="style2">
-												<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
-												<li><a href="#">Ornare in hendrerit in lectus</a></li>
-												<li><a href="#">Semper mod quis eget mi dolore</a></li>
-												<li><a href="#">Quam turpis feugiat sit dolor</a></li>
-												<li><a href="#">Amet ornare in hendrerit in lectus</a></li>
-												<li><a href="#">Semper mod quisturpis nisi</a></li>
-											</ul>
-										</section>
-
-								</div>
-							</div>
-							
-						</div>
-					</div>
-				</div>
+			
 
 <!-- Features -->
 				<div id="features-wrapper">
@@ -101,14 +65,70 @@
 
 								<!-- Box -->
 									<section class="box feature">
-										<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-										<div class="inner">
-											<header>
-												<h2>Put something here</h2>
-												<p>Maybe here as well I think</p>
-											</header>
-											<p>Phasellus quam turpis, feugiat sit amet in, hendrerit in lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
-										</div>
+										<a href="#" class="image featured"><img src="../public/images/pic01.jpg" alt="" /></a>
+									<table>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Nome</th>
+        <th>StartPrice</th>
+        <th>Buy Price</th>
+        <th>Live Price</th>
+        
+        <th>Gain</th>
+        <th>MarketCap USD</th>
+
+        <th>Trx Num</th>
+        <th>Time</th>
+        <th>Transazioni</th>
+        
+        <th>Contract</th>
+        <th>Pool</th>
+        <th>info</th>
+
+        
+      </tr>
+    </thead>
+    <tbody>
+      <% tokens.forEach(t => { 
+        const pct = t.oldMarketCapUsd ? ((t.marketCapUsd - t.oldMarketCapUsd) / t.oldMarketCapUsd) * 100 : 0;
+        const gain = ((t.price - t.buyPrice) / t.buyPrice) * 100;
+        let gainColor;
+        if(gain > 1) gainColor = 'color:green';
+        else if(gain < -1) gainColor = 'color:red';
+        const time = new Date(t.timestamp).toLocaleTimeString();
+        let defiExchange ;
+        if (t.mint.includes('BONK') || t.mint.includes('bonk')) {
+          defiExchange = `<a href="https://bonk.fun/token/${t.mint}" target="_blank">Apri Pool</a>`;
+        } else if (t.mint.includes('PUMP') || t.mint.includes('pump')) {
+          defiExchange = `<a href="https://pump.fun/coin/${t.mint}" target="_blank">Apri Pool</a>`;
+        } else {
+          defiExchange = 'N/A';
+        }
+      %>
+        <tr>
+          <td><%= t.symbol %></td>
+          <td><%= t.name %></td>
+          <td><%= t.startPrice %></td>
+          <td><%= t.buyPrice || '..' %></td>
+          <td><%= t.price || (t.solInPool / t.tokensInPool).toFixed(10) %></td>
+           <td style=<%- gainColor %>><%= gain.toFixed(2) %>%</td>
+          
+           <td>$<%= t.marketCapUsd %></td>    
+
+          <td><%= t.trxNum %></td>
+          <td><%= time %></td>
+          <td>
+            <button onclick="showTransactions('<%= t.mint %>')">Vedi</button>
+          </td>
+          <td> <button onclick="copyToClipboard('<%= t.mint %>')">Copy Contract</button> </td>
+          <td> <%- defiExchange %></td>
+          <td> <button onclick="showObject('<%= t.mint %>')">info</button>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
 									</section>
 
 							</div>
@@ -116,7 +136,7 @@
 
 								<!-- Box -->
 									<section class="box feature">
-										<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
+										<a href="#" class="image featured"><img src="../public/images/pic02.jpg" alt="" /></a>
 										<div class="inner">
 											<header>
 												<h2>An interesting title</h2>
@@ -131,7 +151,7 @@
 
 								<!-- Box -->
 									<section class="box feature">
-										<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
+										<a href="#" class="image featured"><img src="../public/images/pic03.jpg" alt="" /></a>
 										<div class="inner">
 											<header>
 												<h2>Oh, and finally ...</h2>
