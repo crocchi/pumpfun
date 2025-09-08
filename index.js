@@ -415,7 +415,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
 
         const trade = parsed;
-      tokenLog=getInstanceForTokenLogger(token);
+      tokenLog=await getInstanceForTokenLogger(trade);
       //tokenMonitor= instances.get(parsed.mint);
       tokenLog.linked(tokenMonitor)
       //  console.log('trade:',trade);
