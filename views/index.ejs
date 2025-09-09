@@ -58,7 +58,7 @@
                                                 <p>Monitora i token in base ai filtri impostati</p>
                                             </header>
                                             <ul class="checklist">
-                         <% tokensMonitor.forEach(function(monitor, index) { if(!monitor.tradeMonitor) {continue } %>
+                         <% tokensMonitor.forEach(function(monitor, index) { if(!monitor.tradeMonitor) {return } %>
                           <li>
                             <strong><%= monitor.token.name %> (<%= monitor.token.symbol %>)</strong><br>
                               Prezzo: $<%= monitor.price %>  | Market Cap Sol: $<%= monitor.token.marketCapSol.toFixed(4) %> SOL<br>
