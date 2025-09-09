@@ -120,11 +120,14 @@
 									<section class="widget links">
 										<h3>Solana Network info</h3>
                                         <ul class="style2"></ul>
-                                      
+                                      <% 
+                                      let h1=botOptions.solanaInfo.percent_change_1h;
+                                      let h24=botOptions.solanaInfo.percent_change_24h;
+                                      %>
                                         <li>Prezzo SOL: $<%= botOptions.solanaInfo.price %> </li>
                                        <li>Market Cap: $<%= botOptions.solanaInfo.market_cap %></li>
-                                       <li>1h: <%= (botOptions.solanaInfo.percent_change_1h).toFixed(2) %>%</li>
-                                        <li>24h: <%= (botOptions.solanaInfo.percent_change_24h).toFixed(2) %>%</li>
+                                       <li>1h: <%= (h1).toFixed(2) %>%</li>
+                                        <li>24h: <%= (h24).toFixed(2) %>%</li>
 								
 											
 										</ul>
