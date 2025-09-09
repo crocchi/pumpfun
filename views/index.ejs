@@ -91,7 +91,7 @@
                             <li>
                               <strong><%= token.name || token.mint.slice(0,4) %> (<%= token.symbol %>) - <%= gain.toFixed(3) %></strong><br>
                               Prezzo: $<%= token.LivePrice %> | Liquidity: <%= token.solInPool.toFixed(2) %> SOL | Market Cap Sol: <%= token.marketCapSol.toFixed(2) %> SOL<br>
-                              VolumeNet: <%= token.volumeNet.toFixed(3) %> | TradesNum: <%= token.solTrxNumMonitor %> Volume: <%= token.volume.toFixed(3) %> <br>   
+                              VolumeNet: <%= (token.volumeNet).toFixed(3) %> | TradesNum: <%= token.solTrxNumMonitor %> Volume: <%= token.volume.toFixed(3) %> <br>   
                               Buy Price: <%= token.buyPrice %> | Start Price: <%= token.startPrice %> |
                               QuickBuy: <%= token.monitor.quickBuy %> | info: <%= token.monitor.quickSell %> |
                             </li>
