@@ -325,6 +325,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
           });
 
           //
+          /*
           if(solValueTrx > (botOptions.volumeMin*1.5) && botOptions.netVolumeUpBuy && trxNumm > (botOptions.minTrxNumMonitor/2) ) {//se il volume tra buy e sell e maggiore del netvolume impostato
           console.log(`🚀[${tokenMonitor.token.name}] 🚀 NetVolume UPPP: (${solValueTrx} SOL) per ${parsed.mint}.`);
           //setSuspiciousSellDetected(false);
@@ -334,18 +335,21 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
           tokenMonitor.quick=true;
           return
       }
+          */
 
 
             //nuova regola da testare...
             //volume netto superiore al volume impostato
-       if(solValueTrx > botOptions.volumeMin && !tokenMonitor.quick) {
-        console.log(`📈 🚀 volume netto superiore al volume impostato! Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
+       if(solValueTrx > botOptions.volumeMin && !tokenMonitor.quick && botOptions.netVolumeUpBuy) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
+        console.log(`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) ${trxNumm} per ${parsed.mint}.`);
         console.log("buy at sol: ",prezzo);
         tokenMonitor.quickBuy=prezzo;
-        tokenMonitor.quickSell=`📈 🚀 volume netto superiore al volume impostato! Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`;
-        tokenMonitor.quick=true;
+        tokenMonitor.quickSell=`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) ${trxNumm} per ${parsed.mint}.`;
+       tokenMonitor.cancelMonitor();
+       return
       }
       //nuova regola da testare...
+      /*
        if(trxNumm >= 4 && solValueTrx > botOptions.volumeMin && trxNumm < 10 && !tokenMonitor.quick) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
         console.log(`📈 Super Pump... Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
         console.log("buy at sol: ",prezzo);
@@ -353,6 +357,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
         tokenMonitor.quickSell=`📈 Super Pump... Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`
         tokenMonitor.quick=true;
        }
+      */
 
       if(trxNumm >= 2 && solValueTrx > 1.50 && trxNumm < 4) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
         console.log(`❌ RugPull Detect: volume:(${solValueTrx} SOL) per ${parsed.mint}.`);
@@ -428,7 +433,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       tokenLog=await getInstanceForTokenLogger(trade);
       //tokenMonitor= instances.get(parsed.mint);
       if (instances.has(parsed.mint)) { // controlla se esiste l'istanza dell'oggetto class
-       console.log("Token monitor trovato per il merging...");
+       //console.log("Token monitor trovato per il merging...");
         tokenMonitor= instances.get(parsed.mint);
        tokenLog.linked(tokenMonitor)
       }

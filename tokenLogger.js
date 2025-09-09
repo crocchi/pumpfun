@@ -33,8 +33,8 @@ import TokenMonitor from "./tradeMonitor.js";
 
   linked(ob){
     this.monitor=ob;
-    this.name = ob.token.name || "Unknown";
-    this.symbol = ob.token.symbol || "Unknown";
+    this.name = ob.token?.name || "Unknown";
+    this.symbol = ob.token?.symbol || "Unknown";
     this.trxArray = ob.trxArray;
     this.quickBuy = ob.quickBuy;
    this.quickSell = ob.quickSell;

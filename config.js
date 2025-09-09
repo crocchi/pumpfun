@@ -38,15 +38,15 @@ export let SOLANA_USD = 200;
     //acquisto token
     buyAmount: 0.025, // quantità di SOL da acquistare
     demoVersion:true, // (true)non compra/vende - false - on compra/vende
-    sellOffPanic: -30, // % vendi se vao oltre -25% dal prezzo di acquisto
+    sellOffPanic: -35, // % vendi se vao oltre -25% dal prezzo di acquisto
 
     // vendita rapida
-    quickSellMultiplier: 3.5,     // vendi se price >= startPrice * 3.5 ...
+    quickSellMultiplier: 1.5,     // vendi se price >= startPrice * 3.5 ...
     quickSellMinTrades: 3,        // ...e almeno 3 trade
   
     // protezione "rugpull" basata su activity
-    rugpullMaxTrades: 35,
-    rugpullMinGainMultiplier: 1.5,
+    rugpullMaxTrades: 200,
+    rugpullMinGainMultiplier: 1.2,
   
     // trailing sell
     enableTrailing: true,
