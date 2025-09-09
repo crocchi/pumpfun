@@ -17,9 +17,11 @@ import { botOptions } from './config.js';
     this.timee=new Date(token.timestamp).toLocaleTimeString();
     //this.highPrice = 0;//sol
     this.quickBuy=0;
+    this.quick=false;
     this.quickSell=0;
     this.rugpullSafe=true;
     this.prez;
+
   }
 
   startMonitor(snipeCallback) {

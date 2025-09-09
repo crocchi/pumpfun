@@ -85,12 +85,15 @@
                                                 <p>Log dei token intercettati</p>
                                             </header>
                                             <ul class="checklist">
-                          <% tokenLogger.forEach(function(token, index) { %>
+                          <% tokenLogger.forEach(function(token, index) { 
+                            const gain = ((token.Liveprice - token.buyPrice) / token.buyPrice) * 100;
+                            %>
                             <li>
-                              <strong><%= token.name %> (<%= token.symbol %>)</strong><br>
-                              Prezzo: $<%= token.LivePrice %> | Liquidity: <%= token.solInPool %> SOL | Market Cap Sol: $<%= token.marketCapSol %><br>
-                              VolumeNet: $<%= token.volumeNet %> | TradesNum: <%= token.solTrxNumMonitor %> Volume: <%= token.volume %> <br>   
+                              <strong><%= token.name || token.mint.slice(0,4) %> (<%= token.symbol %>) - <%= gain.toFixed(3) %></strong><br>
+                              Prezzo: $<%= token.LivePrice %> | Liquidity: <%= token.solInPool.toFixed(2) %> SOL | Market Cap Sol: <%= token.marketCapSol.toFixed(2) %> SOL<br>
+                              VolumeNet: <%= token.volumeNet.toFixed(3) %> | TradesNum: <%= token.solTrxNumMonitor %> Volume: <%= token.volume.toFixed(3) %> <br>   
                               Buy Price: <%= token.buyPrice %> | Start Price: <%= token.startPrice %> |
+                              QuickBuy: <%= token.monitor.quickBuy %> | info: <%= token.monitor.quickSell %> |
                             </li>
                          <% }); %>
                         </ul>
@@ -98,6 +101,8 @@
 			            </section>
 
 			            </div>
+
+
 
                        
 						</div>
@@ -115,13 +120,11 @@
 									<section class="widget links">
 										<h3>Solana Network info</h3>
                                         <ul class="style2"></ul>
-
-                                      
                                       
                                         <li>Prezzo SOL: $<%= botOptions.solanaInfo.price %> </li>
                                        <li>Market Cap: $<%= botOptions.solanaInfo.market_cap %></li>
-                                       <li>1h: <%= botOptions.solanaInfo.percent_change_1h %>%</li>
-                                        <li>24h: $<%= botOptions.solanaInfo.percent_change_24h %>%</li>
+                                       <li>1h: <%= botOptions.solanaInfo.percent_change_1h.toFixed(2) %>%</li>
+                                        <li>24h: <%= botOptions.solanaInfo.percent_change_24h.toFixed(2) %>%</li>
 								
 											
 										</ul>
