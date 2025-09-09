@@ -36,6 +36,8 @@ import TokenMonitor from "./tradeMonitor.js";
     this.name = ob.token.name || "Unknown";
     this.symbol = ob.token.symbol || "Unknown";
     this.trxArray = ob.trxArray;
+    this.quickBuy = ob.quickBuy;
+   this.quickSell = ob.quickSell;
     this.solTrxNumMonitor = ob.solTrxNumMonitor;
     this.volume = ob.volume;
     this.volumeNet = ob.solAmount;
