@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
 
 }//fine initSocket
 
-export const sendMessageToClient = (type='newToken',message) => {
+export const sendMessageToClient = (type='newToken',message,data) => {
     if (io) {
        io.emit(type, message);
        //console.log('📤 Messaggio inviato al client:', message);
@@ -37,10 +37,43 @@ export const sendMessageToClient = (type='newToken',message) => {
 };
 
 setInterval(() => {
+ let contToken=[];
+ let cont=[];
+ let setInvio=false;
+     if (instancesToken && instancesToken.size > 0) {
+       
+        instancesToken.forEach((instance, key) => {
+            let tmpToken={
+                name:instance.token?.name || "Unknown",
+                symbol:instance.token?.symbol || "Unknown",
+                
+                marketCapSol:instance.marketCapSol,
+                solInPool:instance.solInPool,
+                
+                LivePrice:instance.LivePrice,
+                startPrice:instance.startPrice,
+                buyPrice:instance.buyPrice,
+                solTrxNumMonitor:instance.solTrxNumMonitor,
+                
+            
+                volumeNet:instance.solAmount,
+                volume:instance.volume,
+            }
+           // contToken.push(tmpToken)
+           // setInvio=true;
+           sendMessageToClient('tokenLogger', tmpToken)//`NumTrx:${instance.solTrxNumMonitor} Volume:${instance.volume} SOL VolumeNet:${instance.volumeNet} SOL Price:${instance.LivePrice} `);
+       
+
+        })//fine ciclo foreach
+
+     }
+
     if (instances && instances.size > 0) {
+        
         instances.forEach((instance, key) => {
             //console.log(`🔄 Inviando aggiornamento per il token ${key} al client.`);
             if(!instance.tradeMonitor){
+                setInvio=false;
                 return
             }
             let tmp={
@@ -58,7 +91,11 @@ setInterval(() => {
                 
                 trxArrayLength:instance.trxArray.length,
             }
+            //cont.push(tmp)
+           // setInvio=true;
             sendMessageToClient('tokenMonitor', tmp)//`NumTrx:${instance.solTrxNumMonitor} Volume:${instance.volume} SOL VolumeNet:${instance.volumeNet} SOL Price:${instance.LivePrice} `);
         });
     }
+
+
 }, 3000);
