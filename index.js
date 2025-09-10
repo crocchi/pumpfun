@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import { isSafeToken } from './utils.js';
 import TokenMonitor from './tradeMonitor.js';
 import TokenLogger from './tokenLogger.js';
-import { sendMessageToClient } from './socketio.js';
+import { sendMessageToClient , watchInstances } from './socketio.js';
 
 
 import { startHttpServer, logToken ,updateToken, buyTokenLog } from './httpServer.js';
@@ -90,7 +90,7 @@ export const instancesToken  = new Map(); // Mappa per memorizzare le istanze di
 
 //getTop10Tokens();
 //getCMC20Historical()
-
+watchInstances()
 ws.on('open', function open() {
     console.log('📡 Connesso al WebSocket di Pump.fun');
   // Subscribing to token creation events

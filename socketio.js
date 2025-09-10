@@ -58,5 +58,3 @@ export const watchInstances = () => {
 
     global.instances = new Proxy(instances, handler);
 };
-
-watchInstances();
