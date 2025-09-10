@@ -438,7 +438,7 @@
 	<script src="../public/scriptt.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
-		const socket = io('https://localhost:4000');
+		const socket = io('http://localhost:4000');
 
 		socket.on('connect', () => {
 			console.log('🔌 Connesso al server con socket.io, ID:', socket.id);
