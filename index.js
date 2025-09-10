@@ -131,6 +131,7 @@ ws.on('message', async function message(data) {
 
 
     liquidityCheck()
+    sendMessageToClient('newToken', token); // invio il token al client
 
         const safer = await isSafeToken(token);
         if (safer.valid !== true) {
@@ -141,7 +142,6 @@ ws.on('message', async function message(data) {
           return
 
         }
-    sendMessageToClient('newToken', token); // invio il token al client
 
         const monitor=getInstanceForTokenMonitor(token)
         if(safer.fastBuy){ // fast buy
