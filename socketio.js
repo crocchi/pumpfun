@@ -1,5 +1,4 @@
 import { Server } from 'socket.io';
-import { server} from './httpServer.js';
 
     // Attacco socket.io al server http
 let io;
