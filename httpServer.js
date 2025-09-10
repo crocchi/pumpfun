@@ -20,6 +20,9 @@ export function logToken(tokenData) {
 
 function serveStatic(req, res) {
     const parsed = url.parse(req.url);
+  if (parsed.pathname.startsWith('/socket.io/')) {
+    return; // Lascia che `socket.io` gestisca questa route
+  }
     const filePath = path.join(__dirname, 'public', decodeURIComponent(parsed.pathname.replace(/^\/public\//, '')));
     if (!filePath.startsWith(path.join(__dirname, 'public'))) {
       res.writeHead(403); return res.end('Forbidden');
