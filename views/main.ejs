@@ -450,6 +450,11 @@
 			console.log('📩 Messaggio dal server:', data);
 		});
 
+		sockets.on('newToken', (token) => {
+			console.log('🆕 Nuovo token monitorato:', token);
+			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
+		});
+
 		socket.on('disconnect', () => {
 			console.log('🔌 Disconnesso dal server');
 		});
