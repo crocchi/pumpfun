@@ -243,7 +243,7 @@
 						<h2>Config</h2>
 					</header>
 
-					<form method="post" action="#">
+					<form method="post" onsubmit="return saveOptions(event)">
 						<div class="row gtr-uniform">
 
 							<div class="col-12">
@@ -414,8 +414,8 @@
 							
 							<div class="col-12">
 								<ul class="actions">
-									<li><input type="submit" onclick="saveOptions(event)" value="SAVE" class="primary" /></li>
-									<li><input type="reset" onclick="loadOptions()" value="LOAD" /></li>
+									<li><input type="submit" value="SAVE" class="primary" /></li>
+									<li><input type="load" onclick="loadOptions()" value="LOAD" /></li>
 									
 								</ul>
 							</div>
