@@ -119,11 +119,16 @@
 							<thead>
 								<tr>
 									<th>Name</th>
-									<th>Description</th>
 									<th>Price</th>
+									<th>Trx Numb</th>
+									<th>MarketCap Sol</th>
+									<th>VolumeNet</th>
+									<th>Volume</th>
+
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="tokenLoggerBody">
+								<!--
 								<tr>
 									<td>BonkFun</td>
 									<td>SOL: 0.000023</td>
@@ -131,36 +136,9 @@
 									<td>$9233</td>
 									<td>42 </td>
 									<td>10:00am</td>
-									<td>open</td>
-									<td>pump </td>
-									<td><button></td>
-									<td>ok </td>
+									
 								</tr>
-								<tr>
-									<td>BonkFun</td>
-									<td>SOL: 0.000023</td>
-									<td>10%</td>
-									<td>$9233</td>
-									<td>42 </td>
-									<td>10:00am</td>
-									<td>open</td>
-									<td>pump </td>
-									<td><button></td>
-									<td>ok </td>
-								</tr>
-								<tr>
-									<td>BonkFun</td>
-									<td>SOL: 0.000023</td>
-									<td>10%</td>
-									<td>$9233</td>
-									<td>42 </td>
-									<td>10:00am</td>
-									<td>open</td>
-									<td>pump </td>
-									<td><button></td>
-									<td>ok </td>
-								</tr>
-
+								-->
 							</tbody>
 							<tfoot>
 								<tr>
@@ -476,10 +454,19 @@
 
 		socket.on('tokenMonitor', (token) => {
 			console.log('🆕 Nuovo token monitorato:', token);
-			//document.getElementById("loggerHtml").textContent += token + "\n";
-			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
-			//let size=document.querySelector("#loggerHtml").textLength;
-			//if(size>90000) document.getElementById("loggerHtml").textContent = '0\n';
+			let html=				`<tr>
+									<td>${token.name}</td>
+									<td>SOL: ${token.LivePrice}</td>
+									<td>${token.solTrxNumMonitor}</td>
+									<td>${token.marketCapSol.toFixed(2)}</td>
+									<td>${token.volumeNet}</td>
+									<td>${token.volume}</td>
+								
+									
+								</tr>`;
+			document.getElementById("tokenLoggerBody").innerHTML += html;
+			
+            
 		});
 
 		socket.on('disconnect', () => {
