@@ -3,7 +3,6 @@ import { isSafeToken } from './utils.js';
 import TokenMonitor from './tradeMonitor.js';
 import TokenLogger from './tokenLogger.js';
 
-import {io} from './socketio.js';
 
 import { startHttpServer, logToken ,updateToken, buyTokenLog } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
@@ -21,7 +20,7 @@ const httpServer = createServer((req, res) => {
   res.end('Server con socket.io');
 });
 
-export const io = new Server(httpServer, {
+const io = new Server(httpServer, {
   cors: {
     origin: "*", // permette a tutti i client di connettersi
   },
