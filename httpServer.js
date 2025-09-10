@@ -50,9 +50,9 @@ async function parseBody(req) {
       });
     });
   }
-
+export let server;
 export function startHttpServer(port = 4000) {
-    const server = http.createServer(async (req, res) => {
+    server = http.createServer(async (req, res) => {
       const parsed = url.parse(req.url, true);
   
     // static
@@ -163,24 +163,6 @@ if (parsed.pathname === '/status' && req.method === 'GET') {
       }
     });
 
-    // Attacco socket.io al server http
-const io = new Server(server, {
-  cors: { origin: "*" }
-});
-
-
-// Quando un client si connette
-io.on("connection", (socket) => {
-  console.log("Nuovo client connesso:", socket.id);
-
-  // Esempio: invia subito un messaggio
-  socket.emit("message", "Benvenuto alla dashboard!");
-
-  // Riceve messaggi dal client
-  socket.on("msgFromClient", (data) => {
-    console.log("Messaggio dal client:", data);
-  });
-});
     server.listen(port, () => {
       console.log(`🌐 Server attivo su http://localhost:${port}`);
     });

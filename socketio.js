@@ -1,9 +1,9 @@
 import { Server } from 'socket.io';
-import { createServer } from 'http';
+import { server} from './httpServer.js';
 
-const httpServer = createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Server con socket.io');
+    // Attacco socket.io al server http
+const io = new Server(server, {
+  cors: { origin: "*" }
 });
 
 
@@ -17,12 +17,3 @@ io.on('connection', (socket) => {
   socket.emit('message', 'Benvenuto al server con socket.io!');
 });
 
-export const io = new Server(httpServer, {
-  cors: {
-    origin: "*", // permette a tutti i client di connettersi
-  },
-});
-
-httpServer.listen(4000, () => {
-  console.log('🚀 Server in ascolto su http://localhost:4000');
-});
