@@ -162,7 +162,8 @@ if (parsed.pathname === '/status' && req.method === 'GET') {
         res.end('<h2>Server attivo</h2><p>Vai su <a href="/status">/status</a></p>');
       }
     });
-  initSocket(server);
+    
+  initSocket(server);// inizializza socket.io con il server creato
 
 
     server.listen(port, () => {
