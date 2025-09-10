@@ -61,4 +61,4 @@ setInterval(() => {
             sendMessageToClient('tokenMonitor', tmp)//`NumTrx:${instance.solTrxNumMonitor} Volume:${instance.volume} SOL VolumeNet:${instance.volumeNet} SOL Price:${instance.LivePrice} `);
         });
     }
-}, 5000);
+}, 3000);

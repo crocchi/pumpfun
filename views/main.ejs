@@ -471,20 +471,20 @@
 				existingRow.cells[3].textContent = token.marketCapSol.toFixed(2);
 				existingRow.cells[4].textContent = token.volumeNet;
 				existingRow.cells[5].textContent = token.volume;
-				existingRow.cells[5].textContent = date;
+				existingRow.cells[6].textContent = date;
 			} else {
 				// Add a new row for the token
 				let html = `<tr>
 								<td>${token.name}</td>
-								<td>SOL: ${token.LivePrice}</td>
+								<td>${token.LivePrice} SOL</td>
 								<td>${token.solTrxNumMonitor}</td>
-								<td>${token.marketCapSol.toFixed(2)}</td>
-								<td>${token.volumeNet}</td>
-								<td>${token.volume}</td>
+								<td>${token.marketCapSol.toFixed(4)}</td>
+								<td>${token.volumeNet.toFixed(4)} SOL</td>
+								<td>${token.volume.toFixed(2)} SOL</td>
 								<td>${date}</td>
 							</tr>`;
 				document.getElementById("tokenLoggerBody").innerHTML += html;
-				
+
 				setTimeout((token) => {
 
 					let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
@@ -497,7 +497,7 @@
 
 					//let row=Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
 					//row[0].remove();
-				}, 60000);
+				}, 100000);
 			}
 
 
