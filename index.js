@@ -3,7 +3,6 @@ import { isSafeToken } from './utils.js';
 import TokenMonitor from './tradeMonitor.js';
 import TokenLogger from './tokenLogger.js';
 
-import { snipeToken } from './snipeToken.js';
 import { startHttpServer, logToken ,updateToken, buyTokenLog } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
