@@ -124,6 +124,8 @@
 									<th>MarketCap Sol</th>
 									<th>VolumeNet</th>
 									<th>Volume</th>
+									<th>Time</th>
+
 
 								</tr>
 							</thead>
@@ -458,6 +460,8 @@
 			let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
 				return row.cells[0].textContent === token.name;
 			});
+			let date=new Date().toLocaleTimeString();
+
 
 			if (existingRow) {
 				// Update the existing row
@@ -466,6 +470,7 @@
 				existingRow.cells[3].textContent = token.marketCapSol.toFixed(2);
 				existingRow.cells[4].textContent = token.volumeNet;
 				existingRow.cells[5].textContent = token.volume;
+				existingRow.cells[5].textContent = date;
 			} else {
 				// Add a new row for the token
 				let html = `<tr>
@@ -475,6 +480,7 @@
 								<td>${token.marketCapSol.toFixed(2)}</td>
 								<td>${token.volumeNet}</td>
 								<td>${token.volume}</td>
+								<td>${date}</td>
 							</tr>`;
 				document.getElementById("tokenLoggerBody").innerHTML += html;
 			}
@@ -483,6 +489,12 @@
 		socket.on('disconnect', () => {
 			console.log('🔌 Disconnesso dal server');
 		});
+
+		setInterval(() => {
+  			let row=Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
+			row[0].remove();
+			}, 60000);
+			
 	</script>
 
 </body>

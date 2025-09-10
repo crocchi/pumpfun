@@ -39,7 +39,7 @@ export const sendMessageToClient = (type='newToken',message) => {
 setInterval(() => {
     if (instances && instances.size > 0) {
         instances.forEach((instance, key) => {
-            console.log(`🔄 Inviando aggiornamento per il token ${key} al client.`);
+            //console.log(`🔄 Inviando aggiornamento per il token ${key} al client.`);
             if(!instance.tradeMonitor){
                 return
             }
