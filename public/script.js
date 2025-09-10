@@ -169,6 +169,7 @@ async function saveOptions(e) {
   const data = await r.json();
   if (data.ok) {
     refreshMs = data.botOptions.clientRefreshMs;
+    alert('Opzioni salvate con successo!');
   }
   return false;
 }

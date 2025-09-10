@@ -510,7 +510,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
       if(tokenLog.activeTrailing){
           if (tradeInfo.price <= tokenLog.stop) {
             tokenLog.activeTrailing= false;
-            console.log(`🔻 Trailing Stop attivato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop}`);
+            console.log(`🔻 Trailing Stop attivato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)}`);
 
             sellToken(trade.mint)
             console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);

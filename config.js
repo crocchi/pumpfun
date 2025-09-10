@@ -50,7 +50,7 @@ export let SOLANA_USD = 200;
   
     // trailing sell
     enableTrailing: true,
-    trailingPercent: 0.15,        // 15% sotto il massimo raggiunto
+    trailingPercent: 0.25,        // 15% sotto il massimo raggiunto
   
     // refresh client
     clientRefreshMs: 4000,
