@@ -131,7 +131,7 @@ ws.on('message', async function message(data) {
 
 
     liquidityCheck()
-    socketVar?.emit('newToken', token); // invio il token al client
+    socketVar.emit('newToken', token); // invio il token al client
 
         const safer = await isSafeToken(token);
         if (safer.valid !== true) {

@@ -11,7 +11,8 @@ export const initSocket=(server)=>{
         });
 
 
-  io.on('connection', (socket) => {
+io.on('connection', (socket) => {
+
   console.log('🔌 Nuovo client connesso:', socket.id);
   socketVar=socket;
   socket.on('clientMessage', (data) => {
@@ -19,9 +20,9 @@ export const initSocket=(server)=>{
   });
 
   socket.emit('message', 'Benvenuto al server con socket.io!');
-});
+});//fine io.on connection
 
-    }
+}//fine initSocket
 
 
 export default socketVar
