@@ -159,39 +159,40 @@
 						<h2>Logger</h2>
 					</header>
 
-				<textarea id="loggerHtml" name="demo-message" id="demo-message" placeholder="Enter your message" rows="10">
+					<textarea id="loggerHtml" name="demo-message" id="demo-message" placeholder="Enter your message"
+						rows="10">
 
  				</textarea>
-			</section>
+				</section>
 
 
-					<!-- Section -->
-					<section>
-						<header class="major">
-							<h2>Ipsum sed dolor</h2>
-						</header>
-						<div class="posts">
-							<article>
-								<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
-								<h3>Interdum aenean</h3>
-								<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
-									facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-								<ul class="actions">
-									<li><a href="#" class="button">More</a></li>
-								</ul>
-							</article>
-							<article>
-								<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
-								<h3>Nulla amet dolore</h3>
-								<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
-									facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-								<ul class="actions">
-									<li><a href="#" class="button">More</a></li>
-								</ul>
-							</article>
+				<!-- Section -->
+				<section>
+					<header class="major">
+						<h2>Ipsum sed dolor</h2>
+					</header>
+					<div class="posts">
+						<article>
+							<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+							<h3>Interdum aenean</h3>
+							<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
+								facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+							<ul class="actions">
+								<li><a href="#" class="button">More</a></li>
+							</ul>
+						</article>
+						<article>
+							<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
+							<h3>Nulla amet dolore</h3>
+							<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
+								facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+							<ul class="actions">
+								<li><a href="#" class="button">More</a></li>
+							</ul>
+						</article>
 
-						</div>
-					</section>
+					</div>
+				</section>
 
 			</div>
 		</div>
@@ -450,8 +451,8 @@
 			//console.log('🆕 Nuovo token monitorato:', token);
 			document.getElementById("loggerHtml").textContent += token + "\n";
 			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
-			let size=document.querySelector("#loggerHtml").textLength;
-			if(size>90000) document.getElementById("loggerHtml").textContent = '0\n';
+			let size = document.querySelector("#loggerHtml").textLength;
+			if (size > 90000) document.getElementById("loggerHtml").textContent = '0\n';
 		});
 		socket.on('tokenMonitor', (token) => {
 			console.log('🆕 Nuovo token monitorato:', token);
@@ -460,7 +461,7 @@
 			let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
 				return row.cells[0].textContent === token.name;
 			});
-			let date=new Date().toLocaleTimeString();
+			let date = new Date().toLocaleTimeString();
 
 
 			if (existingRow) {
@@ -483,21 +484,23 @@
 								<td>${date}</td>
 							</tr>`;
 				document.getElementById("tokenLoggerBody").innerHTML += html;
-			}
+				
+				setTimeout((token) => {
 
-			setTimeout(() => {
+					let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
+						if (row.cells[0].textContent === token.name) {
+							row.remove();
+							//let row=Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
+							//row[0].remove();
+						}
+					});
 
-			let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
-				if(row.cells[0].textContent === token.name){
-					row.remove();
 					//let row=Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
 					//row[0].remove();
-				}
-			});
+				}, 60000);
+			}
 
-  			//let row=Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
-			//row[0].remove();
-			}, 15000);
+
 		});
 
 		socket.on('disconnect', () => {
@@ -505,10 +508,10 @@
 		});
 
 		setInterval(() => {
-  			let row=Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
+			let row = Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
 			row[0].remove();
-			}, 60000);
-			
+		}, 60000);
+
 	</script>
 
 </body>
