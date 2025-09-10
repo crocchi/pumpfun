@@ -2,11 +2,11 @@ import { Server } from 'socket.io';
 import { botOptions } from './config.js';
 import { instancesToken,instances } from './index.js';
 
-let io;
+let sendMessageToClient;
     // Attacco socket.io al server http
 export const initSocket=(server)=>{
     console.log("🔔 Inizializzo socket.io");
-    io = new Server(server, {
+    const io = new Server(server, {
             cors: { origin: "*" }
         });
 
@@ -20,11 +20,8 @@ io.on('connection', (socket) => {
   });
 
   socket.emit('message', 'Benvenuto al server con socket.io!');
-});//fine io.on connection
 
-}//fine initSocket
-
-export const sendMessageToClient = (type='newToken',message) => {
+  sendMessageToClient = (type='newToken',message) => {
     if (io) {
         io.emit(type, message);
        // console.log('📤 Messaggio inviato al client:', message);
@@ -32,6 +29,8 @@ export const sendMessageToClient = (type='newToken',message) => {
         console.log('⚠️ Nessun client connesso.');
     }
 };
+});//fine io.on connection
 
+}//fine initSocket
 
-
+export default sendMessageToClient;
