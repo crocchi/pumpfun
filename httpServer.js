@@ -167,14 +167,14 @@ if (parsed.pathname === '/status' && req.method === 'GET') {
 const io = new Server(server, {
   cors: { origin: "*" }
 });
-  
+
 
 // Quando un client si connette
 io.on("connection", (socket) => {
   console.log("Nuovo client connesso:", socket.id);
 
   // Esempio: invia subito un messaggio
-  socket.emit("msgFromServer", "Benvenuto alla dashboard!");
+  socket.emit("message", "Benvenuto alla dashboard!");
 
   // Riceve messaggi dal client
   socket.on("msgFromClient", (data) => {
