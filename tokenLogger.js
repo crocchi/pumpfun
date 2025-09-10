@@ -1,4 +1,5 @@
 import TokenMonitor from "./tradeMonitor.js";
+import { botOptions } from "./config.js";
  
  class TokenLogger extends TokenMonitor{
  constructor(token) {
@@ -15,7 +16,13 @@ import TokenMonitor from "./tradeMonitor.js";
     this.startPrice = 0; //prezzo iniziale in sol
     this.buyPrice = 0; //prezzo di acquisto in sol
     this.sellPrice = 0;
+    //trailing info
+    this.trailingPercent = botOptions.trailingPercent; // percentuale per trailing stop
     this.highPrice = 0; // sol
+    this.stop = this.startPrice * (1 - trailingPercent / 100);
+    this.activeTrailing = botOptions.enableTrailing;
+
+    ////////
     this.lowPrice = 0; // sol
     this.volumeNet = 0;
     this.devWallet=token.traderPublicKey || "Unknown";
@@ -44,6 +51,8 @@ import TokenMonitor from "./tradeMonitor.js";
   }
 
   logTransaction(transaction) {
+
+    this.liquidityCheck(transaction);
     this.trxArray.push({
             type:transaction.txType,
             amount:transaction.solAmount,
@@ -62,10 +71,9 @@ import TokenMonitor from "./tradeMonitor.js";
         this.volumeNet += -(transaction.solAmount);
     }
 
-    this.liquidityCheck(transaction);
-
     if (this.LivePrice > this.highPrice) {
       this.highPrice = this.LivePrice;
+      this.stop = this.highPrice * (1 - this.trailingPercent / 100);
     }
 
     this.marketCapSol = transaction.marketCapSol || this.marketCapSol;
@@ -88,6 +96,15 @@ import TokenMonitor from "./tradeMonitor.js";
     }
     return this.LivePrice;
 
+  }
+
+  trailingUp(){
+    if(this.activeTrailing && this.highPrice>0){
+      if(this.LivePrice <= this.stop) {
+        console.log(`🔻 Trailing Stop attivato per ${this.name} a $${this.LivePrice}. Vendita automatica.`);
+        this.activeTrailing = false;
+      }
+    }
   }
     resetLogger() {
     this.solAmount = 0;

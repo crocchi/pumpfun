@@ -161,6 +161,9 @@ async function saveOptions(e) {
     hasTwitterOrTelegram_filter: document.getElementById('TwitterOrTelegram').checked,
     demoVersion: document.getElementById('demoversion').checked,
     hasTwitterCheck_filter: document.getElementById('TwitterCheck').checked,
+    enableTrailing: document.getElementById('enableTrailing').checked,
+    trailingPercent: document.getElementById('trailingPercent').value,
+
   };
   const r = await fetch('/bot-options', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
   const data = await r.json();
@@ -200,6 +203,9 @@ async function loadOptions() {
   document.getElementById('TwitterCheck').checked = o.hasTwitterCheck_filter;
 
   document.getElementById('demoversion').checked = o.demoVersion;
+  document.getElementById('enableTrailing').checked = o.enableTrailing;
+  document.getElementById('trailingPercent').value = o.trailingPercent;
+  // Imposta il checkbox rugpullxyz
 
   if (o.rugpullxyz === 'true' || o.rugpullxyz === true){
     o.rugpullxyz = true; // Imposta default se non presente

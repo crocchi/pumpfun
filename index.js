@@ -340,7 +340,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
             //nuova regola da testare...
             //volume netto superiore al volume impostato
-       if(solValueTrx > botOptions.volumeMin*(2) && !tokenMonitor.quick && botOptions.netVolumeUpBuy) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
+       if(solValueTrx > botOptions.volumeMin*(2) && !tokenMonitor.quick && botOptions.netVolumeUpBuy && trxNumm >30) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
         console.log(`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) ${trxNumm} per ${parsed.mint}.`);
         console.log("buy at sol: ",prezzo);
         tokenMonitor.quickBuy=prezzo;
@@ -504,6 +504,28 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
                   }));
                   return
     
+      }
+
+      //INSERIAMO IL TRAILING UP QUI..X IL MOMENTO
+      
+      if(tokenLog.activeTrailing){
+          if (tradeInfo.price <= tokenLog.stop) {
+            tokenLog.activeTrailing= false;
+            console.log(`🔻 Trailing Stop attivato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop}`);
+
+            sellToken(trade.mint)
+            console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
+                subscribedTokens.delete(trade.mint);
+                
+                console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
+                ws.send(JSON.stringify({
+                    method: "unsubscribeTokenTrade",
+                    keys: [trade.mint]
+                  }));
+           //return { action: "SELL", sellPrice: tradeInfo.price, stop: tokenLog.stop };
+          }
+          console.log(`🔺 Trailing attivo per ${tradeInfo.name}: currentPrice: ${tradeInfo.price}, highest: ${tokenLog.highPrice}, stop: ${tokenLog.stop}`);
+          //return { action: "HOLD", currentPrice, highest: tokenLog.highPrice, stop: tokenLog.stop };
       }
 
             if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) { 
