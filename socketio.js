@@ -1,6 +1,7 @@
 import { Server } from 'socket.io';
 import { botOptions } from './config.js';
 import { instancesToken,instances } from './index.js';
+// instances Mappa per memorizzare le istanze di TokenMonitor
 
 let io = null;
 
@@ -34,3 +35,28 @@ export const sendMessageToClient = (type='newToken',message) => {
        // console.log('⚠️ Nessun client connesso.');
     }
 };
+
+export const watchInstances = () => {
+    const handler = {
+        set(target, key, value) {
+            const result = Reflect.set(target, key, value);
+            if (result) {
+                console.log(`🛠️ Instances updated: ${key} = ${value}`);
+                sendMessageToClient('tokenMonitor', { key, value });
+            }
+            return result;
+        },
+        deleteProperty(target, key) {
+            const result = Reflect.deleteProperty(target, key);
+            if (result) {
+                console.log(`🗑️ Instance deleted: ${key}`);
+                //sendMessageToClient('instancesUpdated', { key, deleted: true });
+            }
+            return result;
+        }
+    };
+
+    global.instances = new Proxy(instances, handler);
+};
+
+watchInstances();
