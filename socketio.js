@@ -2,16 +2,18 @@ import { Server } from 'socket.io';
 import { botOptions } from './config.js';
 import { instancesToken,instances } from './index.js';
 
-const IO={}
+const IO = {
+  io: null,
+};
+
     // Attacco socket.io al server http
 export const initSocket=(server)=>{
     console.log("🔔 Inizializzo socket.io");
-    const io = new Server(server, {
+    IO.io = new Server(server, {
             cors: { origin: "*" }
         });
-IO.io=io;
 
-io.on('connection', (socket) => {
+IO.io.on('connection', (socket) => {
 
   console.log('🔌 Nuovo client connesso:', socket.id);
 //  socketVar=socket;
