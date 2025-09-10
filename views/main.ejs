@@ -437,7 +437,7 @@ socket.on('tokenLogger', (token) => {
 				existingRow.cells[3].textContent = token.startPrice;
 				existingRow.cells[4].textContent = token.solTrxNumMonitor;
 				existingRow.cells[5].textContent = token.marketCapSol.toFixed(4);
-				existingRow.cells[6].textContent = token.volumeNet.toFixed(4);
+				existingRow.cells[6].textContent = token.volumeNet.toFixed(2);
 				existingRow.cells[7].textContent = token.volume.toFixed(2);
 				existingRow.cells[8].textContent = date;
 			} else {
@@ -448,8 +448,8 @@ socket.on('tokenLogger', (token) => {
 								<td>${token.buyPrice}</td>
 								<td>${token.startPrice}</td>
 								<td>${token.solTrxNumMonitor}</td>
-								<td>${token.marketCapSol.toFixed(4)}</td>
-								<td>${token.volumeNet.toFixed(4)} SOL</td>
+								<td>${token.marketCapSol.toFixed(2)}</td>
+								<td>${token.volumeNet.toFixed(2)} SOL</td>
 								<td>${token.volume.toFixed(2)} SOL</td>
 								<td>${date}</td>
 								
@@ -484,7 +484,7 @@ socket.on('tokenLogger', (token) => {
 								<td>${token.LivePrice} SOL</td>
 								<td>${token.solTrxNumMonitor}</td>
 								<td>${token.marketCapSol.toFixed(4)}</td>
-								<td>${token.volumeNet.toFixed(4)} SOL</td>
+								<td>${token.volumeNet.toFixed(2)} SOL</td>
 								<td>${token.volume.toFixed(2)} SOL</td>
 								<td>${date}</td>
 							</tr>`;
