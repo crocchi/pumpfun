@@ -178,10 +178,10 @@
 					<header class="major">
 						<h2>Logger</h2>
 					</header>
-				<pre><code id="loggerHtml">i = 0;
 
-				print 'It took ' + i + ' iterations to sort the deck.';
-				</code></pre>
+				<textarea id="loggerHtml" name="demo-message" id="demo-message" placeholder="Enter your message" rows="10">
+
+ 				</textarea>
 			</section>
 
 
@@ -468,7 +468,7 @@
 
 		socket.on('logger', (token) => {
 			//console.log('🆕 Nuovo token monitorato:', token);
-			document.getElementById("loggerHtml").innerHTML+=token;
+			document.getElementById("loggerHtml").textContent += token + "\n";
 			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
 		});
 
