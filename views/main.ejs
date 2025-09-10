@@ -451,22 +451,33 @@
 			let size=document.querySelector("#loggerHtml").textLength;
 			if(size>90000) document.getElementById("loggerHtml").textContent = '0\n';
 		});
-
 		socket.on('tokenMonitor', (token) => {
 			console.log('🆕 Nuovo token monitorato:', token);
-			let html=				`<tr>
-									<td>${token.name}</td>
-									<td>SOL: ${token.LivePrice}</td>
-									<td>${token.solTrxNumMonitor}</td>
-									<td>${token.marketCapSol.toFixed(2)}</td>
-									<td>${token.volumeNet}</td>
-									<td>${token.volume}</td>
-								
-									
-								</tr>`;
-			document.getElementById("tokenLoggerBody").innerHTML += html;
-			
-            
+
+			// Check if the token already exists in the table
+			let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
+				return row.cells[0].textContent === token.name;
+			});
+
+			if (existingRow) {
+				// Update the existing row
+				existingRow.cells[1].textContent = `SOL: ${token.LivePrice}`;
+				existingRow.cells[2].textContent = token.solTrxNumMonitor;
+				existingRow.cells[3].textContent = token.marketCapSol.toFixed(2);
+				existingRow.cells[4].textContent = token.volumeNet;
+				existingRow.cells[5].textContent = token.volume;
+			} else {
+				// Add a new row for the token
+				let html = `<tr>
+								<td>${token.name}</td>
+								<td>SOL: ${token.LivePrice}</td>
+								<td>${token.solTrxNumMonitor}</td>
+								<td>${token.marketCapSol.toFixed(2)}</td>
+								<td>${token.volumeNet}</td>
+								<td>${token.volume}</td>
+							</tr>`;
+				document.getElementById("tokenLoggerBody").innerHTML += html;
+			}
 		});
 
 		socket.on('disconnect', () => {
