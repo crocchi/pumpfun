@@ -54,14 +54,14 @@
 								<tr>
 									<th>Token</th>
 									<th>Price</th>
-									<th>Gain</th>
-									<th>MarketCap USD</th>
+									<th>BuyPrice</th>
+									<th>StartPrice</th>
 									<th>Trx Num</th>
-									<th>Time</th>
-									<th>Transazioni</th>
+									<th>MarketCap SOL</th>
+									<th>VolumeNet</th>
 
-									<th>Contract</th>
-									<th>Pool</th>
+									<th>Volume</th>
+									<th>Data</th>
 									<th>info</th>
 								</tr>
 							</thead>
@@ -456,12 +456,14 @@ socket.on('tokenLogger', (token) => {
 				let html = `<tr>
 								<td>${token.name}</td>
 								<td>${token.LivePrice} SOL</td>
-								<td></td>
+								<td>${token.buyPrice}</td>
+								<td>${token.startPrice}</td>
 								<td>${token.solTrxNumMonitor}</td>
 								<td>${token.marketCapSol.toFixed(4)}</td>
 								<td>${token.volumeNet.toFixed(4)} SOL</td>
 								<td>${token.volume.toFixed(2)} SOL</td>
 								<td>${date}</td>
+								
 							</tr>`;
 				document.getElementById("tokenMonitorBody").innerHTML += html;
 				}
