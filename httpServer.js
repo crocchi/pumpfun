@@ -119,7 +119,7 @@ if (parsed.pathname === '/UI' && req.method === 'GET') {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(html);*/
 
-      const tpl = fs.readFileSync(path.join(__dirname, 'views', 'index.ejs'), 'utf8');
+      const tpl = fs.readFileSync(path.join(__dirname, 'views', 'main.ejs'), 'utf8');
       const html = ejs.render(tpl, { tokensMonitor: instances , tokens: tokenLog , tokenLogger:instancesToken ,botOptions });
       res.writeHead(200, { 'Content-Type': 'text/html' });
       return res.end(html);
