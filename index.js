@@ -131,11 +131,12 @@ ws.on('message', async function message(data) {
 
 
     liquidityCheck()
-    sendMessageToClient('newToken', token); // invio il token al client
+   // sendMessageToClient('newToken', token); // invio il token al client
 
         const safer = await isSafeToken(token);
         if (safer.valid !== true) {
           console.log(`⛔ Token '${parsed.name}' scartato per sicurezza.` , JSON.stringify(safer) );
+          sendMessageToClient('logger', `⛔ Token '${parsed.name}' scartato per sicurezza. ` + JSON.stringify(safer) ); // invio il token al client
           //console.log(`---Pool:${token.pool}-----MINT:${token.mint}-----`);
          if(!parsed.name) console.log(token)
           console.log('--------------------------------------------')

@@ -176,10 +176,9 @@
 
 				<section>
 					<header class="major">
-						<h2>Get Started</h2>
+						<h2>Logger</h2>
 					</header>
-					<h3>Preformatted</h3>
-				<pre><code>i = 0;
+				<pre id="loggerHtml"><code>i = 0;
 
 				print 'It took ' + i + ' iterations to sort the deck.';
 				</code></pre>
@@ -463,12 +462,13 @@
 		});
 
 		socket.on('newToken', (token) => {
-			console.log('🆕 Nuovo token monitorato:', token);
+			//console.log('🆕 Nuovo token monitorato:', token);
 			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
 		});
 
 		socket.on('logger', (token) => {
 			console.log('🆕 Nuovo token monitorato:', token);
+			document.getElementById("loggerHtml").innerHTML=token;
 			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
 		});
 
