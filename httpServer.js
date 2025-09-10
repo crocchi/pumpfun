@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import { checkPrice } from './moralis.js';
 import { botOptions } from './config.js';
 import { instancesToken,instances } from './index.js';
+import { Server } from 'socket.io';
 
 let tokenLog = [];
 
@@ -20,9 +21,6 @@ export function logToken(tokenData) {
 
 function serveStatic(req, res) {
     const parsed = url.parse(req.url);
-  if (parsed.pathname.startsWith('/socket.io/')) {
-    return; // Lascia che `socket.io` gestisca questa route
-  }
     const filePath = path.join(__dirname, 'public', decodeURIComponent(parsed.pathname.replace(/^\/public\//, '')));
     if (!filePath.startsWith(path.join(__dirname, 'public'))) {
       res.writeHead(403); return res.end('Forbidden');
@@ -164,163 +162,32 @@ if (parsed.pathname === '/status' && req.method === 'GET') {
         res.end('<h2>Server attivo</h2><p>Vai su <a href="/status">/status</a></p>');
       }
     });
+
+    // Attacco socket.io al server http
+const io = new Server(server, {
+  cors: { origin: "*" }
+});
   
+
+// Quando un client si connette
+io.on("connection", (socket) => {
+  console.log("Nuovo client connesso:", socket.id);
+
+  // Esempio: invia subito un messaggio
+  socket.emit("msgFromServer", "Benvenuto alla dashboard!");
+
+  // Riceve messaggi dal client
+  socket.on("msgFromClient", (data) => {
+    console.log("Messaggio dal client:", data);
+  });
+});
     server.listen(port, () => {
       console.log(`🌐 Server attivo su http://localhost:${port}`);
     });
   }
 
 
-/*    old client
-export function startHttpServer(port = process.env.PORT || 4000) {
-const server = http.createServer(async (req, res) => {
-    if (req.url === '/tokens') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(tokenLog, null, 2));
 
-    } else if (req.url === '/status') {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(`
-        <!doctype html>
-        <html><head>
-            <title>Token Status</title>
-            <style>
-            body { font-family: sans-serif; background: #111; color: #ddd; padding: 2rem; }
-            table { width: 100%; border-collapse: collapse; }
-            th, td { padding: 0.5rem; border: 1px solid #444; text-align: left; }
-            th { background: #222; }
-            tr:nth-child(even) { background: #1a1a1a; }
-            .good { color: lime; }
-            .bad { color: red; }
-            button { padding: 0.5rem; margin: 0.5rem; background: #333; color: #ddd; border: none; cursor: pointer; }
-            button:hover { background: #444; }
-            </style>
-        </head>
-        <body>
-            <h1>Status Token Monitorati</h1>
-            <table>
-            <thead>
-                <tr>
-                    <th>Symbol</th>
-                    <th>Nome</th>
-                    <th>Start Price</th>
-                    <th>Prezzo</th>
-                    <th>GAIN</th>
-                    <th>MarketCap SOl</th>
-                    <th>MarketCap Usd</th>
-                    <th>Variazione %</th>
-                    <th>Sicuro</th>
-                    <th>Contract</th>
-                    <th>trx</th>
-                    <th>Time</th>
-                </tr>
-            </thead>
-            <tbody id="body"></tbody>
-            </table>
-
-            <script>
-            async function load() {
-                const r = await fetch('/tokens');
-                const tokens = await r.json();
-                const tbody = document.getElementById('body');
-                tbody.innerHTML = '';
-
-                for (const t of tokens) {
-  // Calcolo venerabili della percentuale di change se t.oldMarketCapUsd esiste
-    let pct = 0;
-    if (t.oldMarketCapUsd && t.marketCapUsd) {
-      pct = getPercentageChange(t.oldMarketCapUsd, t.marketCapUsd);
-    }
-
-    const color = pct > 0 ? 'lime' : (pct < 0 ? 'red' : '#ddd');
-    const sign = pct > 0 ? '+' : '';
-    const pctText = pct ? \`\${sign}\${pct.toFixed(2)}%\` : \`0%\`;
-    const price = t.price ? t.price : (t.solInPool / t.tokensInPool).toFixed(10);
-    const time = new Date(t.timestamp).toLocaleTimeString();
-    const safe = t.safe ? 'YES' : 'NO'; //t.safe.includes('✅');
-    const colorClass = safe ? 'good' : 'bad';
-    const gain = calcolaGuadagno(t.startPrice, price);
-    const contractAddress = t.mint || 'N/A';
-                    const row = document.createElement('tr');
-                    
-
-                    row.innerHTML = \`
-                    <td>\${t.symbol}</td>
-                    <td>\${t.name}</td>
-                    <td>\${t.startPrice}</td>
-                    <td>\${price}</td>
-                    <td>\${gain.toFixed(2)}%</td>
-                    <td>\${t.marketCapSol}</td>
-                     
-                    <td>$\${t.marketCapUsd}</td>
-                    
-                    <td style="color:\${color}">\${pctText}</td>
-                    <td class="\${colorClass}">\${safe}</td>
-
-                     <td>\${t.mint}</td>
-                     <td>\${t.trxNum}</td>
-                    <td>\${time}</td>
-                    \`;
-
-                    tbody.appendChild(row);
-                }
-            }
-
-            async function checkPrice(symbol) {
-                try {
-                    const response = await fetch('/checkPrice?symbol=' + encodeURIComponent(symbol));
-                    const data = await response.json();
-                    //console.log(data.raw);
-                    alert(\`Current price of \${symbol}: \${data.price}\`);
-                } catch (error) {
-                    console.error('Error checking price:', error);
-                    alert('Failed to fetch price.');
-                }
-            }
-            function getPercentageChange(oldValue, newValue) {
-                if (!oldValue || oldValue === 0) return 0;
-                 return ((newValue - oldValue) / oldValue) * 100;
-            }
-                 function calcolaGuadagno(prezzoIniziale, prezzoFinale) {
-                     const percentuale = ((prezzoFinale - prezzoIniziale) / prezzoIniziale) * 100;
-                return percentuale;
-                    }
-
-
-
-            setInterval(load, 2000);
-            load();
-            </script>
-        </body>
-        </html>
-    `);
-    } else if (req.url.startsWith('/checkPrice?symbol=')) {
-        const urlParams = new URLSearchParams(req.url.split('?')[1]);
-        const symbol = urlParams.get('symbol');
-
-        if (symbol) {
-            try {
-                const priceData = checkPrice(symbol);
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ symbol, price: priceData }, null, 2));
-            } catch (error) {
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ error: 'Failed to fetch price' }, null, 2));
-            }
-        } else {
-            res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Symbol parameter is missing' }, null, 2));
-        }
-    } else {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(`<h2>Server attivo</h2><p>Usa <a href="/tokens">/tokens</a> o <a href="/status">/status</a></p>`);
-    }
-});
-
-  server.listen(port, () => {
-    console.log(`🌐 HTTP Server attivo su http://localhost:${port}`);
-  });
-}*/
 export async function returnTokenLog(mint) {
     const token = tokenLog.find(t => t.mint === mint);
     if (token) {return token}
