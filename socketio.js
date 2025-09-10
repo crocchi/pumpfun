@@ -8,15 +8,6 @@ const httpServer = createServer((req, res) => {
 
 export const io = new Server(httpServer);
 
-io.on('connection', (socket) => {
-  console.log('🔌 Nuovo client connesso:', socket.id);
-
-  socket.on('clientMessage', (data) => {
-    console.log('📩 Messaggio dal client:', data);
-  });
-
-  socket.emit('message', 'Benvenuto al server con socket.io!');
-});
 
 httpServer.listen(4000, () => {
   console.log('🚀 Server in ascolto su http://localhost:3000');

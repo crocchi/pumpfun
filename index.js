@@ -12,6 +12,16 @@ import { buyToken , sellToken } from './utility/lightTrx.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
+
+io.on('connection', (socket) => {
+  console.log('🔌 Nuovo client connesso:', socket.id);
+
+  socket.on('clientMessage', (data) => {
+    console.log('📩 Messaggio dal client:', data);
+  });
+
+  socket.emit('message', 'Benvenuto al server con socket.io!');
+});
 /*
 
             COSE DA FARE:
