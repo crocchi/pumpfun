@@ -2,9 +2,13 @@ import { Server } from 'socket.io';
 import { server} from './httpServer.js';
 
     // Attacco socket.io al server http
-const io = new Server(server, {
-  cors: { origin: "*" }
-});
+let io;
+export const initSocket=(server)=>{
+      console.log("Inizializzo socket.io");
+        io = new Server(server, {
+            cors: { origin: "*" }
+        });
+    }
 
 
 io.on('connection', (socket) => {

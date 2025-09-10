@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 import { checkPrice } from './moralis.js';
 import { botOptions } from './config.js';
 import { instancesToken,instances } from './index.js';
-import { Server } from 'socket.io';
+import { initSocket } from './socketio.js';
 
 let tokenLog = [];
 
@@ -50,9 +50,9 @@ async function parseBody(req) {
       });
     });
   }
-export let server;
+
 export function startHttpServer(port = 4000) {
-    server = http.createServer(async (req, res) => {
+    const server = http.createServer(async (req, res) => {
       const parsed = url.parse(req.url, true);
   
     // static
@@ -162,6 +162,8 @@ if (parsed.pathname === '/status' && req.method === 'GET') {
         res.end('<h2>Server attivo</h2><p>Vai su <a href="/status">/status</a></p>');
       }
     });
+  initSocket(server);
+
 
     server.listen(port, () => {
       console.log(`🌐 Server attivo su http://localhost:${port}`);
