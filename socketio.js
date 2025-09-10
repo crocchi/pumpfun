@@ -6,9 +6,12 @@ const httpServer = createServer((req, res) => {
   res.end('Server con socket.io');
 });
 
-export const io = new Server(httpServer);
-
+export const io = new Server(httpServer, {
+  cors: {
+    origin: "*", // permette a tutti i client di connettersi
+  },
+});
 
 httpServer.listen(4000, () => {
-  console.log('🚀 Server in ascolto su http://localhost:3000');
+  console.log('🚀 Server in ascolto su http://localhost:4000');
 });
