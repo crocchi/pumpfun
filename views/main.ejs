@@ -436,6 +436,22 @@
 	<script src="../public/assetsClient/js/util.js"></script>
 	<script src="../public/assetsClient/js/main.js"></script>
 	<script src="../public/scriptt.js"></script>
+	<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+	<script>
+		const socket = io('http://localhost:4000');
+
+		socket.on('connect', () => {
+			console.log('🔌 Connesso al server con socket.io, ID:', socket.id);
+		});
+
+		socket.on('message', (data) => {
+			console.log('📩 Messaggio dal server:', data);
+		});
+
+		socket.on('disconnect', () => {
+			console.log('🔌 Disconnesso dal server');
+		});
+	</script>
 
 </body>
 
