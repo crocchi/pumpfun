@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import { isSafeToken } from './utils.js';
 import TokenMonitor from './tradeMonitor.js';
 import TokenLogger from './tokenLogger.js';
-import { socketVar } from './socketio.js';
+import { sendMessageToClient } from './socketio.js';
 
 
 import { startHttpServer, logToken ,updateToken, buyTokenLog } from './httpServer.js';
@@ -131,7 +131,7 @@ ws.on('message', async function message(data) {
 
 
     liquidityCheck()
-    socketVar.emit('newToken', token); // invio il token al client
+    sendMessageToClient('newToken', token); // invio il token al client
 
         const safer = await isSafeToken(token);
         if (safer.valid !== true) {
