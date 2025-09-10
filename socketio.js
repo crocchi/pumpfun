@@ -40,7 +40,7 @@ setInterval(() => {
     if (instances && instances.size > 0) {
         instances.forEach((instance, key) => {
             console.log(`🔄 Inviando aggiornamento per il token ${key} al client.`);
-            sendMessageToClient('tokenMonitor', `NumTrx:${instance.solTrxNumMonitor} Volume:${instance.volume} SOL VolumeNet:${instance.volumeNet} SOL Price:${instance.LivePrice}  MarketCap:${instance.marketCapUsd.toFixed(2)} USD`);
+            sendMessageToClient('tokenMonitor', `NumTrx:${instance.solTrxNumMonitor} Volume:${instance.volume} SOL VolumeNet:${instance.volumeNet} SOL Price:${instance.LivePrice} `);
         });
     }
 }, 5000);
