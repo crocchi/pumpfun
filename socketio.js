@@ -2,7 +2,7 @@ import { Server } from 'socket.io';
 import { botOptions } from './config.js';
 import { instancesToken,instances } from './index.js';
 
-let sendMessageToClient;
+export let sendMessageToClient;
     // Attacco socket.io al server http
 export const initSocket=(server)=>{
     console.log("🔔 Inizializzo socket.io");
@@ -33,4 +33,3 @@ io.on('connection', (socket) => {
 
 }//fine initSocket
 
-export default sendMessageToClient;
