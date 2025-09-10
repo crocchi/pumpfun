@@ -24,10 +24,10 @@ io.on('connection', (socket) => {
 
 }//fine initSocket
 
-export const sendMessageToClient = (message,type='newToken') => {
+export const sendMessageToClient = (type='newToken',message) => {
     if (io) {
         io.emit(type, message);
-        console.log('📤 Messaggio inviato al client:', message);
+       // console.log('📤 Messaggio inviato al client:', message);
     } else {
         console.log('⚠️ Nessun client connesso.');
     }
