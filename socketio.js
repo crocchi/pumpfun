@@ -28,9 +28,9 @@ io.on('connection', (socket) => {
 
 export const sendMessageToClient = (type='newToken',message) => {
     if (io) {
-       io.emit('newToken', message);
-       console.log('📤 Messaggio inviato al client:', message);
+       io.emit(type, message);
+       //console.log('📤 Messaggio inviato al client:', message);
     } else {
-        console.log('⚠️ Nessun client connesso.');
+       // console.log('⚠️ Nessun client connesso.');
     }
 };

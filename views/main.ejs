@@ -174,33 +174,42 @@
 
 				</section>
 
-				<!-- Section -->
 				<section>
 					<header class="major">
-						<h2>Ipsum sed dolor</h2>
+						<h2>Get Started</h2>
 					</header>
-					<div class="posts">
-						<article>
-							<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
-							<h3>Interdum aenean</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
-								facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
-							<h3>Nulla amet dolore</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
-								facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
+					<h3>Preformatted</h3>
+				<pre><code>i = 0;
 
-					</div>
-				</section>
+				print 'It took ' + i + ' iterations to sort the deck.';
+				</code></pre>
+					<!-- Section -->
+					<section>
+						<header class="major">
+							<h2>Ipsum sed dolor</h2>
+						</header>
+						<div class="posts">
+							<article>
+								<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+								<h3>Interdum aenean</h3>
+								<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
+									facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+								<ul class="actions">
+									<li><a href="#" class="button">More</a></li>
+								</ul>
+							</article>
+							<article>
+								<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
+								<h3>Nulla amet dolore</h3>
+								<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
+									facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+								<ul class="actions">
+									<li><a href="#" class="button">More</a></li>
+								</ul>
+							</article>
+
+						</div>
+					</section>
 
 			</div>
 		</div>
@@ -307,7 +316,7 @@
 								<h3>Monitor Token </h3>
 							</div>
 							<div class="col-12">
-								
+
 								<input type="number" step="0.10" id="timeMonitor">
 								<label for="timeMonitor">Timer Monitor(sec)</label>
 							</div>
@@ -320,12 +329,12 @@
 								<label for="maxTrxNumMonitor">Max Trades</label>
 							</div>
 							<div class="col-12">
-								
+
 								<input type="number" step="0.10" id="minTrxNumMonitor">
 								<label for="minTrxNumMonitor">Min Trades</label>
 							</div>
 							<div class="col-12">
-								
+
 								<input type="number" step="0.01" id="maxSuspiciousGain">
 								<label for="maxSuspiciousGain">Max Suspicious Gain (%)</label>
 							</div>
@@ -342,12 +351,12 @@
 								<h3>Buy Snipe Token</h3>
 							</div>
 							<div class="col-12">
-								
+
 								<input type="number" step="0.005" id="buyAmount">
 								<label for="buyAmount">Buy Amount: </label>
 							</div>
 							<div class="col-12">
-								
+
 								<input type="number" step="1" id="sellOffPanic">
 								<label for="sellOffPanic">SellPanic: %</label>
 							</div>
@@ -363,7 +372,7 @@
 							<div class="col-12">
 								<h3>Extra filtri Token</h3>
 							</div>
-							
+
 							<div class="col-12">
 								<input type="checkbox" id="website" value="Bike">
 								<label for="website">haswebsite</label>
@@ -394,7 +403,7 @@
 							</div>
 
 							<div class="col-12">
-								
+
 								<input type="checkbox" id="enableTrailing">
 								<label for="enableTrailing">Abilita Trailing</label>
 							</div>
@@ -413,12 +422,12 @@
 									<option value="1">Human Resources</option>
 								</select>
 							</div>
-							
+
 							<div class="col-12">
 								<ul class="actions">
 									<li><input type="submit" value="SAVE" class="primary" /></li>
 									<li><input type="submit" onclick="loadOptions()" value="LOAD" /></li>
-									
+
 								</ul>
 							</div>
 						</div>
@@ -438,8 +447,8 @@
 	<script src="../public/assetsClient/js/util.js"></script>
 	<script src="../public/assetsClient/js/main.js"></script>
 	<script src="../public/scriptt.js"></script>
-	 <script src="/socket.io/socket.io.js"></script>
-	 <script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
 		const socket = io();
 
 		socket.on('connect', () => {
@@ -451,6 +460,11 @@
 		});
 
 		socket.on('newToken', (token) => {
+			console.log('🆕 Nuovo token monitorato:', token);
+			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
+		});
+
+		socket.on('logger', (token) => {
 			console.log('🆕 Nuovo token monitorato:', token);
 			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
 		});
