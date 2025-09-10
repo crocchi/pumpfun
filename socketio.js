@@ -39,7 +39,8 @@ export const sendMessageToClient = (type='newToken',message) => {
 setInterval(() => {
     if (instances && instances.size > 0) {
         instances.forEach((instance, key) => {
+            console.log(`🔄 Inviando aggiornamento per il token ${key} al client.`);
             sendMessageToClient('tokenMonitor', { key, instance });
         });
     }
-}, 3000);
+}, 5000);
