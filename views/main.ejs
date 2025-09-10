@@ -484,6 +484,20 @@
 							</tr>`;
 				document.getElementById("tokenLoggerBody").innerHTML += html;
 			}
+
+			setTimeout(() => {
+
+			let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
+				if(row.cells[0].textContent === token.name){
+					row.remove();
+					//let row=Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
+					//row[0].remove();
+				}
+			});
+
+  			//let row=Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
+			//row[0].remove();
+			}, 15000);
 		});
 
 		socket.on('disconnect', () => {
