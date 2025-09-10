@@ -48,7 +48,7 @@
 				<!-- Section -->
 				<section>
 					<div class="table-wrapper">
-						<h4>TokenMonitor</h4>
+						<h4>TokenLogger</h4>
 						<table>
 							<thead>
 								<tr>
@@ -66,20 +66,7 @@
 								</tr>
 							</thead>
 							<tbody id="tokenMonitorBody">
-								<tr>
-									<td>BonkFun</td>
-									<td>SOL: 0.000023</td>
-									<td>10%</td>
-									<td>$9233</td>
-									<td>42 </td>
-									<td>10:00am</td>
-									<td>open</td>
-									<td>pump </td>
-									<td><button></td>
-									<td>ok </td>
-								</tr>
-						
-
+								
 							</tbody>
 							<tfoot>
 								<tr>
@@ -92,7 +79,7 @@
 
 					<br>
 					<div class="table-wrapper">
-						<h4>TokenLogger</h4>
+						<h4>TokenMonitor</h4>
 						<table class="alt">
 							<thead>
 								<tr>
@@ -446,11 +433,13 @@ socket.on('tokenLogger', (token) => {
 			if (existingRow) {
 				// Update the existing row
 				existingRow.cells[1].textContent = `SOL: ${token.LivePrice}`;
-				existingRow.cells[2].textContent = token.solTrxNumMonitor;
-				existingRow.cells[3].textContent = token.marketCapSol.toFixed(2);
-				existingRow.cells[4].textContent = token.volumeNet;
-				existingRow.cells[5].textContent = token.volume;
-				existingRow.cells[6].textContent = date;
+				existingRow.cells[2].textContent = token.buyPrice;
+				existingRow.cells[3].textContent = token.startPrice;
+				existingRow.cells[4].textContent = token.solTrxNumMonitor;
+				existingRow.cells[5].textContent = token.marketCapSol.toFixed(4);
+				existingRow.cells[6].textContent = token.volumeNet.toFixed(4);
+				existingRow.cells[7].textContent = token.volume.toFixed(2);
+				existingRow.cells[8].textContent = date;
 			} else {
 				// Add a new row for the token
 				let html = `<tr>
