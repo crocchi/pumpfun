@@ -19,7 +19,7 @@ import { botOptions } from "./config.js";
     //trailing info
     this.trailingPercent = botOptions.trailingPercent; // percentuale per trailing stop
     this.highPrice = 0; // sol
-    this.stop = this.LivePrice * (1 - this.trailingPercent / 100);
+    this.stop = this.buyPrice * (1 - this.trailingPercent / 100);
     this.activeTrailing = botOptions.enableTrailing;
 
     ////////

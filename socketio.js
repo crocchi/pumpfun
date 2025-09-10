@@ -30,8 +30,8 @@ IO.io.on('connection', (socket) => {
 
 export const sendMessageToClient = (type='newToken',message) => {
     if (IO.io) {
-        IO.io.emit(type, message);
-       // console.log('📤 Messaggio inviato al client:', message);
+        IO.io.emit('newToken', message);
+       console.log('📤 Messaggio inviato al client:', message);
     } else {
         console.log('⚠️ Nessun client connesso.');
     }
