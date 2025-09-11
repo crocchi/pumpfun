@@ -450,7 +450,7 @@ socket.on('tokenLogger', (token) => {
 				existingRow.cells[6].textContent = token.volumeNet.toFixed(2);
 				existingRow.cells[7].textContent = token.volume.toFixed(2);
 				existingRow.cells[8].textContent = token.time;
-				existingRow.cells[9].textContent = defiExchange;
+				existingRow.cells[9].innerHTML = defiExchange;
 			} else {
 				// Add a new row for the token
 				let html = `<tr>
@@ -496,7 +496,7 @@ socket.on('tokenLogger', (token) => {
 				existingRow.cells[4].textContent = token.volumeNet;
 				existingRow.cells[5].textContent = token.volume;
 				existingRow.cells[6].textContent = token.timee;
-				existingRow.cells[7].textContent = `${defiExchange}`
+				existingRow.cells[7].innerHTML = `${defiExchange}`
 			} else {
 				// Add a new row for the token
 				let html = `<tr>
