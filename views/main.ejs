@@ -476,7 +476,7 @@ socket.on('tokenLogger', (token) => {
 
 			// Check if the token already exists in the table
 			let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
-				return row.cells[0].textContent === token.name;
+				return row.cells[0].textContent === token?.name;
 			});
 
 			let defiExchange ;
@@ -496,11 +496,11 @@ socket.on('tokenLogger', (token) => {
 				existingRow.cells[4].textContent = token.volumeNet;
 				existingRow.cells[5].textContent = token.volume;
 				existingRow.cells[6].textContent = token.timee;
-				existingRow.cells[7].textContent = defiExchange;
+				existingRow.cells[7].textContent = `${defiExchange}`
 			} else {
 				// Add a new row for the token
 				let html = `<tr>
-								<td>${token.name}</td>
+								<td>${token?.name}</td>
 								<td>${token.LivePrice} SOL</td>
 								<td>${token.solTrxNumMonitor}</td>
 								<td>${token.marketCapSol.toFixed(4)}</td>

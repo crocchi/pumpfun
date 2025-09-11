@@ -98,6 +98,11 @@ return new Promise((resolve) => {
     this.timeoutId = null;
     */
   }
+  orario(){
+    const dataCorrente = new Date();
+    const opzioniFusoOrario = { timeZone: "Europe/Rome" };
+    this.time=(dataCorrente.toLocaleString("it-IT", opzioniFusoOrario)); 
+  }
 
   lastPrice(){
     if(this.trxArray.length>0){
