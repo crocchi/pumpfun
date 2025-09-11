@@ -46,6 +46,7 @@ setInterval(() => {
             let tmpToken={
                 name:instance.token?.name || "Unknown",
                 symbol:instance.token?.symbol || "Unknown",
+                token:instance.token,
                 
                 marketCapSol:instance.marketCapSol,
                 solInPool:instance.solInPool,
@@ -80,6 +81,7 @@ setInterval(() => {
             let tmp={
                 name:instance.token?.name || "Unknown",
                 symbol:instance.token?.symbol || "Unknown",
+                token:instance.token,
                 
                 marketCapSol:instance.token.marketCapSol,
                 
