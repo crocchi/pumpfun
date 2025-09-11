@@ -170,6 +170,7 @@ ws.on('message', async function message(data) {
 
         console.log(`-----------------------------------------------`);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
+        sendMessageToClient('logger',`🚀 Nuovo token: ${token.name} (${token.symbol})`)
         console.log(`🧠 Mint: ${token.mint}`);
         console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
         //const solToUsdRate = SOLANA_USD; // Replace with the current SOL to USD conversion rate
@@ -313,7 +314,9 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
    if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
       liquidityCheck() //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log(`👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
-     // console.log('SOL:',priceInSol);
+    sendMessageToClient('logger',`👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`)
+        
+      // console.log('SOL:',priceInSol);
       //setSolAmount(parsed.solAmount);
       tokenMonitor.addSolAmount(parsed.solAmount);
       tokenMonitor.addVolume(parsed.solAmount);
@@ -346,6 +349,8 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             //volume netto superiore al volume impostato
        if(solValueTrx > botOptions.volumeMin*(2) && !tokenMonitor.quick && botOptions.netVolumeUpBuy && trxNumm >30) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
         console.log(`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) ${trxNumm} per ${parsed.mint}.`);
+      sendMessageToClient('logger',`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) ${trxNumm} per ${parsed.mint}. buy at ${prezzo}`)
+  
         console.log("buy at sol: ",prezzo);
         tokenMonitor.quickBuy=prezzo;
         tokenMonitor.quickSell=`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) ${trxNumm} per ${parsed.mint}.`;
@@ -392,6 +397,8 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
       priceInSol = liquidityCheck()
       console.log(`⚠️ Sell Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo}) - Vendita precoce da ${parsed.traderPublicKey} – `);
+         sendMessageToClient('logger',`⚠️ Sell Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo}) - Vendita precoce da ${parsed.traderPublicKey} – `)
+  
       //console.log('SOL:',priceInSol);
       tokenMonitor.addSolAmount(-(parsed.solAmount));
       tokenMonitor.addVolume(parsed.solAmount);
@@ -499,6 +506,8 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
 //  console.log(`% cambio prezzo: ${change}%`)
  if (change < botOptions.sellOffPanic ){// se vai meno del -15%
   console.log(`% Sell Off ${botOptions.sellOffPanic}%: ${change}%`)
+  sendMessageToClient('logger',`% Sell Off ${botOptions.sellOffPanic}%: ${change}%`)
+  
    subscribedTokens.delete(trade.mint);
     sellToken(trade.mint);            
                 console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
@@ -535,6 +544,8 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
             if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) { 
                 sellToken(trade.mint)
               console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
+               sendMessageToClient('logger',`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
+  
                 subscribedTokens.delete(trade.mint);
                 
                 console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
@@ -548,6 +559,8 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
             if (tradeInfo.trxNum >botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.buyPrice * botOptions.rugpullMinGainMultiplier) { 
                  sellToken(trade.mint)
                 console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
+                sendMessageToClient('logger',`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
+  
                 ws.send(JSON.stringify({
                     method: "unsubscribeTokenTrade",
                     keys: [trade.mint]
