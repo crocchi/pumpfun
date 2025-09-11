@@ -433,7 +433,7 @@ socket.on('tokenLogger', (token) => {
 			let defiExchange ;
         if (token.mint.includes('BONK') || token.mint.includes('bonk')) {
           defiExchange = `<a href="https://bonk.fun/token/${token.mint}" target="_blank">Apri Pool</a>`;
-        } else if (t.mint.includes('PUMP') || t.mint.includes('pump')) {
+        } else if (token.mint.includes('PUMP') || token.mint.includes('pump')) {
           defiExchange = `<a href="https://pump.fun/coin/${token.mint}" target="_blank">Apri Pool</a>`;
         } else {
           defiExchange = 'N/A';
