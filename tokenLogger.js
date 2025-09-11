@@ -24,7 +24,7 @@ import { botOptions } from "./config.js";
 
     ////////
     this.lowPrice = 0; // sol
-    this.volumeNet = this.monitor.solAmount || 0;
+    this.volumeNet = 0;
     this.devWallet=token.traderPublicKey || "Unknown";
     this.holders=0;//numero holders
     this.holdersList=[];
