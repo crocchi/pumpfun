@@ -56,7 +56,8 @@ setInterval(() => {
                 solTrxNumMonitor:instance.solTrxNumMonitor,
                 
             
-                volumeNet:instance.solAmount,
+                volumeNet:instance.volumeNet,
+                time:instance.time,
                 volume:instance.volume,
             }
            // contToken.push(tmpToken)
@@ -88,6 +89,7 @@ setInterval(() => {
             
                 volumeNet:instance.solAmount,
                 volume:instance.volume,
+                time:instance.timee,
                 
                 trxArrayLength:instance.trxArray.length,
             }

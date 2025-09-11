@@ -421,7 +421,7 @@
 		});
 		
 socket.on('tokenLogger', (token) => {
-	let date = new Date().toLocaleTimeString();
+	//let date = new Date().toLocaleTimeString();
 
 	// Check if the token already exists in the table
 			let existingRow = Array.from(document.querySelectorAll("#tokenMonitorBody tr")).find(row => {
@@ -432,14 +432,14 @@ socket.on('tokenLogger', (token) => {
 
 			if (existingRow) {
 				// Update the existing row
-				existingRow.cells[1].textContent = `SOL: ${token.LivePrice}`;
+				existingRow.cells[1].textContent = `${token.LivePrice}`;
 				existingRow.cells[2].textContent = token.buyPrice;
 				existingRow.cells[3].textContent = token.startPrice;
 				existingRow.cells[4].textContent = token.solTrxNumMonitor;
-				existingRow.cells[5].textContent = token.marketCapSol.toFixed(4);
+				existingRow.cells[5].textContent = token.marketCapSol.toFixed(2);
 				existingRow.cells[6].textContent = token.volumeNet.toFixed(2);
 				existingRow.cells[7].textContent = token.volume.toFixed(2);
-				existingRow.cells[8].textContent = date;
+				existingRow.cells[8].textContent = token.time;
 			} else {
 				// Add a new row for the token
 				let html = `<tr>
@@ -451,7 +451,7 @@ socket.on('tokenLogger', (token) => {
 								<td>${token.marketCapSol.toFixed(2)}</td>
 								<td>${token.volumeNet.toFixed(2)} SOL</td>
 								<td>${token.volume.toFixed(2)} SOL</td>
-								<td>${date}</td>
+								<td>${token.time}</td>
 								
 							</tr>`;
 				document.getElementById("tokenMonitorBody").innerHTML += html;
@@ -466,7 +466,6 @@ socket.on('tokenLogger', (token) => {
 			let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
 				return row.cells[0].textContent === token.name;
 			});
-			let date = new Date().toLocaleTimeString();
 
 
 			if (existingRow) {
@@ -476,7 +475,7 @@ socket.on('tokenLogger', (token) => {
 				existingRow.cells[3].textContent = token.marketCapSol.toFixed(2);
 				existingRow.cells[4].textContent = token.volumeNet;
 				existingRow.cells[5].textContent = token.volume;
-				existingRow.cells[6].textContent = date;
+				existingRow.cells[6].textContent = token.timee;
 			} else {
 				// Add a new row for the token
 				let html = `<tr>
@@ -486,7 +485,7 @@ socket.on('tokenLogger', (token) => {
 								<td>${token.marketCapSol.toFixed(4)}</td>
 								<td>${token.volumeNet.toFixed(2)} SOL</td>
 								<td>${token.volume.toFixed(2)} SOL</td>
-								<td>${date}</td>
+								<td>${token.timee}</td>
 							</tr>`;
 				document.getElementById("tokenLoggerBody").innerHTML += html;
 

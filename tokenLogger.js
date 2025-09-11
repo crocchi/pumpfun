@@ -10,6 +10,7 @@ import { botOptions } from "./config.js";
    // this.volume = 0;
     this.monitor;
     this.name ;
+    this.time;
     this.symbol;
     this.buyTransactionSign = null;
     this.LivePrice = 0;
@@ -48,6 +49,7 @@ import { botOptions } from "./config.js";
     this.solTrxNumMonitor = ob.solTrxNumMonitor;
     this.volume = ob.volume;
     this.volumeNet = ob.solAmount;
+    this.time = ob.timee;
   }
 
   logTransaction(transaction) {
