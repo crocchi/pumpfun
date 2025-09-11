@@ -14,7 +14,7 @@ import { botOptions } from './config.js';
     this.volume = 0;
     this.trxArray = [];
     this.resolve = null;
-    this.timee=new Date(token.timestamp).toLocaleTimeString();
+    this.timee=new Date().toLocaleTimeString();
     //this.highPrice = 0;//sol
     this.quickBuy=0;
     this.quick=false;
