@@ -50,6 +50,7 @@ import { botOptions } from "./config.js";
     this.volume = ob.volume;
     this.volumeNet = ob.solAmount;
     this.time = ob.timee;
+    this.id=ob.id;
   }
 
   logTransaction(transaction) {
