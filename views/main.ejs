@@ -57,9 +57,11 @@
 									<th>BuyPrice</th>
 									<th>StartPrice</th>
 									<th>HighPrice</th>
-									
-									
+
+
 									<th>Trx Num</th>
+									<th>TrxList</th>
+
 									<th>MarketCap SOL</th>
 									<th>VolumeNet</th>
 
@@ -72,7 +74,7 @@
 								</tr>
 							</thead>
 							<tbody id="tokenMonitorBody">
-								
+
 							</tbody>
 							<tfoot>
 								<tr>
@@ -137,6 +139,13 @@
  				</textarea>
 				</section>
 
+				<div id="modal" class="modal">
+					<div class="modal-content">
+						<span id="close">&times;</span>
+						<h2>Transazioni Token</h2>
+						<ul id="txList"></ul>
+					</div>
+				</div>
 
 				<!-- Section 
 				<section>
@@ -426,25 +435,25 @@
 			let size = document.querySelector("#loggerHtml").textLength;
 			if (size > 90000) document.getElementById("loggerHtml").textContent = '0\n';
 		});
-		
-socket.on('tokenLogger', (token) => {
-	//let date = new Date().toLocaleTimeString();
 
-	// Check if the token already exists in the table
+		socket.on('tokenLogger', (token) => {
+			//let date = new Date().toLocaleTimeString();
+
+			// Check if the token already exists in the table
 			let existingRow = Array.from(document.querySelectorAll("#tokenMonitorBody tr")).find(row => {
 				return row.cells[0].textContent === token.name;
 			});
 
-			let defiExchange ;
-        if (token.token.mint.includes('BONK') || token.token.mint.includes('bonk')) {
-          defiExchange = `<a href="https://bonk.fun/token/${token.token.mint}" target="_blank">Apri Pool</a>`;
-        } else if (token.token.mint.includes('PUMP') || token.token.mint.includes('pump')) {
-          defiExchange = `<a href="https://pump.fun/coin/${token.token.mint}" target="_blank">Apri Pool</a>`;
-        } else {
-          defiExchange = 'N/A';
-        }
+			let defiExchange;
+			if (token.token.mint.includes('BONK') || token.token.mint.includes('bonk')) {
+				defiExchange = `<a href="https://bonk.fun/token/${token.token.mint}" target="_blank">Apri Pool</a>`;
+			} else if (token.token.mint.includes('PUMP') || token.token.mint.includes('pump')) {
+				defiExchange = `<a href="https://pump.fun/coin/${token.token.mint}" target="_blank">Apri Pool</a>`;
+			} else {
+				defiExchange = 'N/A';
+			}
 
-		const gain = ((token.LivePrice - token.buyPrice) / token.buyPrice) * 100;
+			const gain = ((token.LivePrice - token.buyPrice) / token.buyPrice) * 100;
 
 
 			if (existingRow) {
@@ -455,14 +464,17 @@ socket.on('tokenLogger', (token) => {
 				existingRow.cells[4].textContent = token.highPrice;
 
 				existingRow.cells[5].textContent = token.solTrxNumMonitor;
-				existingRow.cells[6].textContent = token.marketCapSol.toFixed(2);
-				existingRow.cells[7].textContent = token.volumeNet.toFixed(2);
-				existingRow.cells[8].textContent = token.volume.toFixed(2);
-				existingRow.cells[9].textContent = token.time;
-				existingRow.cells[10].innerHTML = defiExchange;
-				//existingRow.cells[10].innerHTML = defiExchange;
+				//existingRow.cells[6].textContent = token.solTrxNumMonitor;
 
-				existingRow.cells[12].innerHTML = `${gain.toFixed(2)}%`;
+				existingRow.cells[7].textContent = token.marketCapSol.toFixed(2);
+				existingRow.cells[8].textContent = token.volumeNet.toFixed(2);
+
+				existingRow.cells[9].textContent = token.volume.toFixed(2);
+				existingRow.cells[10].textContent = token.time;
+				existingRow.cells[11].innerHTML = defiExchange;
+				//existingRow.cells[12].innerHTML = defiExchange;
+
+				existingRow.cells[13].innerHTML = `${gain.toFixed(2)}%`;
 			} else {
 				// Add a new row for the token
 				let html = `<tr>
@@ -473,6 +485,8 @@ socket.on('tokenLogger', (token) => {
 								<td>${token.highPrice}</td>
 
 								<td>${token.solTrxNumMonitor}</td>
+								<td><button onclick="showTransactions('${token.token.mint}')">Vedi</button></td>
+
 								<td>${token.marketCapSol.toFixed(3)}</td>
 								<td>${token.volumeNet.toFixed(3)} SOL</td>
 
@@ -486,9 +500,9 @@ socket.on('tokenLogger', (token) => {
 								
 							</tr>`;
 				document.getElementById("tokenMonitorBody").innerHTML += html;
-				}
+			}
 
-})
+		})
 
 		socket.on('tokenMonitor', (token) => {
 			//console.log('🆕 Nuovo token monitorato:', token);
@@ -498,14 +512,14 @@ socket.on('tokenLogger', (token) => {
 				return row.cells[0].textContent === token?.name;
 			});
 
-			let defiExchange ;
-        if (token.token.mint.includes('BONK') || token.token.mint.includes('bonk')) {
-          defiExchange = `<a href="https://bonk.fun/token/${token.token.mint}" target="_blank">Apri Pool</a>`;
-        } else if (token.token.mint.includes('PUMP') || token.token.mint.includes('pump')) {
-          defiExchange = `<a href="https://pump.fun/coin/${token.token.mint}" target="_blank">Apri Pool</a>`;
-        } else {
-          defiExchange = 'N/A';
-        }
+			let defiExchange;
+			if (token.token.mint.includes('BONK') || token.token.mint.includes('bonk')) {
+				defiExchange = `<a href="https://bonk.fun/token/${token.token.mint}" target="_blank">Apri Pool</a>`;
+			} else if (token.token.mint.includes('PUMP') || token.token.mint.includes('pump')) {
+				defiExchange = `<a href="https://pump.fun/coin/${token.token.mint}" target="_blank">Apri Pool</a>`;
+			} else {
+				defiExchange = 'N/A';
+			}
 
 			if (existingRow) {
 				// Update the existing row
