@@ -56,14 +56,18 @@
 									<th>Price</th>
 									<th>BuyPrice</th>
 									<th>StartPrice</th>
+									
+									
 									<th>Trx Num</th>
 									<th>MarketCap SOL</th>
 									<th>VolumeNet</th>
 
 									<th>Volume</th>
 									<th>Data</th>
+
 									<th>Pool</th>
 									<th>info</th>
+									<th>Gain</th>
 								</tr>
 							</thead>
 							<tbody id="tokenMonitorBody">
@@ -439,6 +443,8 @@ socket.on('tokenLogger', (token) => {
           defiExchange = 'N/A';
         }
 
+		const gain = ((token.LivePrice - token.buyPrice) / token.buyPrice) * 100;
+
 
 			if (existingRow) {
 				// Update the existing row
@@ -451,6 +457,9 @@ socket.on('tokenLogger', (token) => {
 				existingRow.cells[7].textContent = token.volume.toFixed(2);
 				existingRow.cells[8].textContent = token.time;
 				existingRow.cells[9].innerHTML = defiExchange;
+				//existingRow.cells[10].innerHTML = defiExchange;
+
+				existingRow.cells[11].innerHTML = `${gain.toFixed(2)}%`;
 			} else {
 				// Add a new row for the token
 				let html = `<tr>
@@ -458,12 +467,18 @@ socket.on('tokenLogger', (token) => {
 								<td>${token.LivePrice} SOL</td>
 								<td>${token.buyPrice}</td>
 								<td>${token.startPrice}</td>
+
 								<td>${token.solTrxNumMonitor}</td>
-								<td>${token.marketCapSol.toFixed(2)}</td>
-								<td>${token.volumeNet.toFixed(2)} SOL</td>
-								<td>${token.volume.toFixed(2)} SOL</td>
+								<td>${token.marketCapSol.toFixed(3)}</td>
+								<td>${token.volumeNet.toFixed(3)} SOL</td>
+
+								<td>${token.volume.toFixed(3)} SOL</td>
 								<td>${token.time}</td>
+
 								<td>${defiExchange}</td>
+								<td> <button onclick="showObject('${token.mint}')">info</button></td>
+
+								<td>${gain.toFixed(2)}%</td>
 								
 							</tr>`;
 				document.getElementById("tokenMonitorBody").innerHTML += html;

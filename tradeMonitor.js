@@ -6,6 +6,7 @@ import { botOptions } from './config.js';
  class TokenMonitor {
   constructor(token) {
     this.tradeMonitor = true;
+    this.id=`${token.mint.slice(0,6)}`
     this.token = token; // Informazioni sul token
     this.suspiciousSellDetected = false;
     this.solAmount = 0;

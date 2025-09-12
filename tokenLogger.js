@@ -54,7 +54,9 @@ import { botOptions } from "./config.js";
 
   logTransaction(transaction) {
 
+   
     this.liquidityCheck(transaction);
+   
     this.trxArray.push({
             type:transaction.txType,
             amount:transaction.solAmount,

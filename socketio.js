@@ -41,13 +41,13 @@ setInterval(() => {
  let cont=[];
  let setInvio=false;
      if (instancesToken && instancesToken.size > 0) {
-       
+       //.  DA SISTEMARE ,FARE UN SOLO SEND...
         instancesToken.forEach((instance, key) => {
             let tmpToken={
                 name:instance.token?.name || "Unknown",
                 symbol:instance.token?.symbol || "Unknown",
                 token:instance.token,
-                
+                id:instance.id,
                 marketCapSol:instance.marketCapSol,
                 solInPool:instance.solInPool,
                 
@@ -82,7 +82,7 @@ setInterval(() => {
                 name:instance.token?.name || "Unknown",
                 symbol:instance.token?.symbol || "Unknown",
                 token:instance.token,
-                
+                id:instance.id,
                 marketCapSol:instance.token.marketCapSol,
                 
                 LivePrice:instance.prez,
