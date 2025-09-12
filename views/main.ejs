@@ -56,6 +56,7 @@
 									<th>Price</th>
 									<th>BuyPrice</th>
 									<th>StartPrice</th>
+									<th>HighPrice</th>
 									
 									
 									<th>Trx Num</th>
@@ -451,15 +452,17 @@ socket.on('tokenLogger', (token) => {
 				existingRow.cells[1].textContent = `${token.LivePrice}`;
 				existingRow.cells[2].textContent = token.buyPrice;
 				existingRow.cells[3].textContent = token.startPrice;
-				existingRow.cells[4].textContent = token.solTrxNumMonitor;
-				existingRow.cells[5].textContent = token.marketCapSol.toFixed(2);
-				existingRow.cells[6].textContent = token.volumeNet.toFixed(2);
-				existingRow.cells[7].textContent = token.volume.toFixed(2);
-				existingRow.cells[8].textContent = token.time;
-				existingRow.cells[9].innerHTML = defiExchange;
+				existingRow.cells[4].textContent = token.highPrice;
+
+				existingRow.cells[5].textContent = token.solTrxNumMonitor;
+				existingRow.cells[6].textContent = token.marketCapSol.toFixed(2);
+				existingRow.cells[7].textContent = token.volumeNet.toFixed(2);
+				existingRow.cells[8].textContent = token.volume.toFixed(2);
+				existingRow.cells[9].textContent = token.time;
+				existingRow.cells[10].innerHTML = defiExchange;
 				//existingRow.cells[10].innerHTML = defiExchange;
 
-				existingRow.cells[11].innerHTML = `${gain.toFixed(2)}%`;
+				existingRow.cells[12].innerHTML = `${gain.toFixed(2)}%`;
 			} else {
 				// Add a new row for the token
 				let html = `<tr>
@@ -467,6 +470,7 @@ socket.on('tokenLogger', (token) => {
 								<td>${token.LivePrice} SOL</td>
 								<td>${token.buyPrice}</td>
 								<td>${token.startPrice}</td>
+								<td>${token.highPrice}</td>
 
 								<td>${token.solTrxNumMonitor}</td>
 								<td>${token.marketCapSol.toFixed(3)}</td>
@@ -476,7 +480,7 @@ socket.on('tokenLogger', (token) => {
 								<td>${token.time}</td>
 
 								<td>${defiExchange}</td>
-								<td> <button onclick="showObject('${token.mint}')">info</button></td>
+								<td> <button onclick="showObject('${token.token.mint}')">info</button></td>
 
 								<td>${gain.toFixed(2)}%</td>
 								
