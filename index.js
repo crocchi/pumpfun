@@ -537,7 +537,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
                   }));
            //return { action: "SELL", sellPrice: tradeInfo.price, stop: tokenLog.stop };
           }
-          console.log(`🔺 Trailing attivo per ${tradeInfo.name}: currentPrice: ${tradeInfo.price}, highest: ${tokenLog.highPrice}, stop: ${tokenLog.stop.toFixed(10)}`);
+         // console.log(`🔺 Trailing attivo per ${tradeInfo.name}: currentPrice: ${tradeInfo.price}, highest: ${tokenLog.highPrice}, stop: ${tokenLog.stop.toFixed(10)}`);
           //return { action: "HOLD", currentPrice, highest: tokenLog.highPrice, stop: tokenLog.stop };
       }
 
