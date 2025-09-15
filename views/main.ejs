@@ -439,7 +439,7 @@
 		socket.on('tokenLogger', (token) => {
 			//let date = new Date().toLocaleTimeString();
 
-			let searchEl=document.querySelectorAll(`#tokenMonitorBody tr#${token.id}`)
+			let searchEl=document.getElementById(`${token.id}`)
 			// Check if the token already exists - search by id
 		
 
@@ -457,23 +457,23 @@
 
 			if (searchEl) {
 				// Update the existing row
-				existingRow.cells[1].textContent = `${token.LivePrice}`;
-				existingRow.cells[2].textContent = token.buyPrice;
-				existingRow.cells[3].textContent = token.startPrice;
-				existingRow.cells[4].textContent = token.highPrice;
+				searchEl.cells[1].textContent = `${token.LivePrice}`;
+				searchEl.cells[2].textContent = token.buyPrice;
+				searchEl.cells[3].textContent = token.startPrice;
+				searchEl.cells[4].textContent = token.highPrice;
 
-				existingRow.cells[5].textContent = token.solTrxNumMonitor;
+				searchEl.cells[5].textContent = token.solTrxNumMonitor;
 				//existingRow.cells[6].textContent = token.solTrxNumMonitor;
 
-				existingRow.cells[7].textContent = token.marketCapSol.toFixed(2);
-				existingRow.cells[8].textContent = token.volumeNet.toFixed(2);
+				searchEl.cells[7].textContent = token.marketCapSol.toFixed(2);
+				searchEl.cells[8].textContent = token.volumeNet.toFixed(2);
 
-				existingRow.cells[9].textContent = token.volume.toFixed(2);
-				existingRow.cells[10].textContent = token.time;
-				existingRow.cells[11].innerHTML = defiExchange;
+				searchEl.cells[9].textContent = token.volume.toFixed(2);
+				searchEl.cells[10].textContent = token.time;
+				searchEl.cells[11].innerHTML = defiExchange;
 				//existingRow.cells[12].innerHTML = defiExchange;
 
-				existingRow.cells[13].innerHTML = `${gain.toFixed(2)}%`;
+				searchEl.cells[13].innerHTML = `${gain.toFixed(2)}%`;
 			} else {
 				// Add a new row for the token
 				let html = `<tr id='${token.id}'>
