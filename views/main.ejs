@@ -563,7 +563,7 @@
 							</tr>`;
 				document.getElementById("tokenLoggerBody").innerHTML += html;
 
-				timerRemoveEl(token)
+				timerRemoveEl(token.id)
 				
 			}
 
@@ -574,10 +574,10 @@
 			console.log('🔌 Disconnesso dal server');
 		});
 
-		let timerRemoveEl =(token)=>{
+		let timerRemoveEl =(tokenid)=>{
 					setTimeout(() => {
 
-					let searchEl=document.getElementById(`mon${token.id}`)
+					let searchEl=document.getElementById(`mon${tokenid}`)
 					searchEl.remove();
 				}, 70000);
 				}
