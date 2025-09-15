@@ -508,8 +508,8 @@
 
 			if(!token.name){token.name='N/A'}
 
-			let searchEl=document.querySelectorAll(`#tokenMonitorBody tr#${token.id}`)
-			
+			//let searchEl=document.querySelectorAll(`#tokenMonitorBody tr#${token.id}`)
+			let searchEl=document.getElementById(`${token.id}`)
 			// Check if the token already exists in the table
 			/*
 			let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
@@ -561,10 +561,7 @@
 
 				setTimeout((token) => {
 
-				let existingRow = Array.from(document.querySelectorAll(`#tokenLoggerBody tr#${token-id}`))
-						
-					//let row=Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
-					existingRow[0].remove();
+				searchEl[0].remove();
 				}, 80000);
 			}
 
