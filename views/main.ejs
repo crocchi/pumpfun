@@ -459,7 +459,7 @@
 			const gain = ((token.LivePrice - token.buyPrice) / token.buyPrice) * 100;
 
 
-			if (searchEl.cells) {// fix se tova id da tokenmonitor element 
+			if (searchEl) {// fix se tova id da tokenmonitor element 
 				// Update the existing row
 				searchEl.cells[1].textContent = `${token.LivePrice}`;
 				searchEl.cells[2].textContent = token.buyPrice;
@@ -563,11 +563,14 @@
 							</tr>`;
 				document.getElementById("tokenLoggerBody").innerHTML += html;
 
-				setTimeout((token) => {
+				async ()=>{
+					setTimeout(() => {
 
 					let searchEl=document.getElementById(`mon${token.id}`)
 					searchEl.remove();
 				}, 70000);
+				}
+				
 			}
 
 
