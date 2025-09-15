@@ -443,7 +443,7 @@
 		socket.on('tokenLogger', (token) => {
 			//let date = new Date().toLocaleTimeString();
 
-			let searchEl=document.getElementById(`${token.id}`)
+			let searchEl=document.getElementById(`log${token.id}`)
 			// Check if the token already exists - search by id
 		
 
@@ -459,7 +459,7 @@
 			const gain = ((token.LivePrice - token.buyPrice) / token.buyPrice) * 100;
 
 
-			if (searchEl.cells) {
+			if (searchEl.cells) {// fix se tova id da tokenmonitor element 
 				// Update the existing row
 				searchEl.cells[1].textContent = `${token.LivePrice}`;
 				searchEl.cells[2].textContent = token.buyPrice;
@@ -480,7 +480,7 @@
 				searchEl.cells[13].innerHTML = `${gain.toFixed(2)}%`;
 			} else {
 				// Add a new row for the token
-				let html = `<tr id='${token.id}'>
+				let html = `<tr id='log${token.id}'>
 								<td>${token.name}</td>
 								<td>${token.LivePrice} SOL</td>
 								<td>${token.buyPrice}</td>
@@ -513,7 +513,7 @@
 			if(!token.name){token.name='N/A'}
 
 			//let searchEl=document.querySelectorAll(`#tokenMonitorBody tr#${token.id}`)
-			let searchEl=document.getElementById(`${token.id}`)
+			let searchEl=document.getElementById(`mon${token.id}`)
 			// Check if the token already exists in the table
 			/*
 			let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
@@ -550,7 +550,7 @@
 				searchEl.cells[7].innerHTML = `${defiExchange}`
 			} else {
 				// Add a new row for the token
-				let html = `<tr id='${token.id}'>
+				let html = `<tr id='mon${token.id}'>
 								<td>${token?.name}</td>
 								<td>${token.LivePrice} SOL</td>
 								<td>${token.solTrxNumMonitor}</td>
@@ -565,9 +565,9 @@
 
 				setTimeout((token) => {
 
-					let searchEl=document.getElementById(`${token.id}`)
+					let searchEl=document.getElementById(`mon${token.id}`)
 					searchEl.remove();
-				}, 55000);
+				}, 70000);
 			}
 
 
