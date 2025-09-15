@@ -563,10 +563,11 @@
 							</tr>`;
 				document.getElementById("tokenLoggerBody").innerHTML += html;
 
-				setTimeout((searchEl) => {
+				setTimeout((token) => {
 
-				searchEl.remove();
-				}, 80000);
+					let searchEl=document.getElementById(`${token.id}`)
+					searchEl.remove();
+				}, 55000);
 			}
 
 
