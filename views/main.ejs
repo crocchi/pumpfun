@@ -430,10 +430,14 @@
 
 		socket.on('logger', (token) => {
 			//console.log('🆕 Nuovo token monitorato:', token);
-			document.getElementById("loggerHtml").textContent += token + "\n";
+			 
+            let logggerEl = document.getElementById("loggerHtml")
+            
+			logggerEl.textContent += token + "\n";
 			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
-			let size = document.querySelector("#loggerHtml").textLength;
-			if (size > 90000) document.getElementById("loggerHtml").textContent = '0\n';
+			let size = logggerEl.textLength;
+			logggerEl.scrollTop = logggerEl.scrollHeight;
+			if (size > 90000) logggerEl.textContent = '0\n';
 		});
 
 		socket.on('tokenLogger', (token) => {
@@ -455,7 +459,7 @@
 			const gain = ((token.LivePrice - token.buyPrice) / token.buyPrice) * 100;
 
 
-			if (searchEl) {
+			if (searchEl.cells) {
 				// Update the existing row
 				searchEl.cells[1].textContent = `${token.LivePrice}`;
 				searchEl.cells[2].textContent = token.buyPrice;
@@ -559,9 +563,9 @@
 							</tr>`;
 				document.getElementById("tokenLoggerBody").innerHTML += html;
 
-				setTimeout((token) => {
+				setTimeout((searchEl) => {
 
-				searchEl[0].remove();
+				searchEl.remove();
 				}, 80000);
 			}
 
