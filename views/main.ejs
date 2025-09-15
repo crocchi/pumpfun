@@ -439,10 +439,9 @@
 		socket.on('tokenLogger', (token) => {
 			//let date = new Date().toLocaleTimeString();
 
-			// Check if the token already exists in the table
-			let existingRow = Array.from(document.querySelectorAll("#tokenMonitorBody tr")).find(row => {
-				return row.cells[0].textContent === token.name;
-			});
+			let searchEl=document.querySelectorAll(`#tokenMonitorBody tr#${token.id}`)
+			// Check if the token already exists - search by id
+		
 
 			let defiExchange;
 			if (token.token.mint.includes('BONK') || token.token.mint.includes('bonk')) {
@@ -456,7 +455,7 @@
 			const gain = ((token.LivePrice - token.buyPrice) / token.buyPrice) * 100;
 
 
-			if (existingRow) {
+			if (searchEl) {
 				// Update the existing row
 				existingRow.cells[1].textContent = `${token.LivePrice}`;
 				existingRow.cells[2].textContent = token.buyPrice;
@@ -477,7 +476,7 @@
 				existingRow.cells[13].innerHTML = `${gain.toFixed(2)}%`;
 			} else {
 				// Add a new row for the token
-				let html = `<tr>
+				let html = `<tr id='${token.id}'>
 								<td>${token.name}</td>
 								<td>${token.LivePrice} SOL</td>
 								<td>${token.buyPrice}</td>
@@ -508,10 +507,14 @@
 			//console.log('🆕 Nuovo token monitorato:', token);
 
 			if(!token.name){token.name='N/A'}
+
+			let searchEl=document.querySelectorAll(`#tokenMonitorBody tr#${token.id}`)
+			
 			// Check if the token already exists in the table
+			/*
 			let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
 				return row.cells[0].textContent === token?.name;
-			});
+			});*/
 
 			let defiExchange;
 			if (token.token.mint.includes('BONK') || token.token.mint.includes('bonk')) {
@@ -522,7 +525,8 @@
 				defiExchange = 'N/A';
 			}
 
-			if (existingRow) {
+
+			/*		if (existingRow) {
 				// Update the existing row
 				existingRow.cells[1].textContent = `${token.LivePrice}`;
 				existingRow.cells[2].textContent = token.solTrxNumMonitor;
@@ -530,7 +534,16 @@
 				existingRow.cells[4].textContent = token.volumeNet;
 				existingRow.cells[5].textContent = token.volume;
 				existingRow.cells[6].textContent = token.timee;
-				existingRow.cells[7].innerHTML = `${defiExchange}`
+				existingRow.cells[7].innerHTML = `${defiExchange}`*/
+			if (searchEl) {
+				// Update the existing row
+				searchEl[0].cells[1].textContent = `${token.LivePrice}`;
+				searchEl[0].cells[2].textContent = token.solTrxNumMonitor;
+				searchEl[0].cells[3].textContent = token.marketCapSol.toFixed(2);
+				searchEl[0].cells[4].textContent = token.volumeNet;
+				searchEl[0].cells[5].textContent = token.volume;
+				searchEl[0].cells[6].textContent = token.timee;
+				searchEl[0].cells[7].innerHTML = `${defiExchange}`
 			} else {
 				// Add a new row for the token
 				let html = `<tr id='${token.id}'>
@@ -548,17 +561,11 @@
 
 				setTimeout((token) => {
 
-					let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
-						if (row.cells[0].textContent === token?.name) {
-							row.remove();
-							//let row=Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
-							//row[0].remove();
-						}
-					});
-
+				let existingRow = Array.from(document.querySelectorAll(`#tokenLoggerBody tr#${token-id}`))
+						
 					//let row=Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
-					//row[0].remove();
-				}, 100000);
+					existingRow[0].remove();
+				}, 80000);
 			}
 
 
@@ -567,11 +574,6 @@
 		socket.on('disconnect', () => {
 			console.log('🔌 Disconnesso dal server');
 		});
-
-		setInterval(() => {
-			let row = Array.from(document.querySelectorAll("#tokenLoggerBody tr"));
-			row[0].remove();
-		}, 60000);
 
 	</script>
 
