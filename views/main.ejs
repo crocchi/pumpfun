@@ -537,13 +537,13 @@
 				existingRow.cells[7].innerHTML = `${defiExchange}`*/
 			if (searchEl) {
 				// Update the existing row
-				searchEl[0].cells[1].textContent = `${token.LivePrice}`;
-				searchEl[0].cells[2].textContent = token.solTrxNumMonitor;
-				searchEl[0].cells[3].textContent = token.marketCapSol.toFixed(2);
-				searchEl[0].cells[4].textContent = token.volumeNet;
-				searchEl[0].cells[5].textContent = token.volume;
-				searchEl[0].cells[6].textContent = token.timee;
-				searchEl[0].cells[7].innerHTML = `${defiExchange}`
+				searchEl.cells[1].textContent = `${token.LivePrice}`;
+				searchEl.cells[2].textContent = token.solTrxNumMonitor;
+				searchEl.cells[3].textContent = token.marketCapSol.toFixed(2);
+				searchEl.cells[4].textContent = token.volumeNet;
+				searchEl.cells[5].textContent = token.volume;
+				searchEl.cells[6].textContent = token.timee;
+				searchEl.cells[7].innerHTML = `${defiExchange}`
 			} else {
 				// Add a new row for the token
 				let html = `<tr id='${token.id}'>
