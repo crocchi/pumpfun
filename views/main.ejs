@@ -507,6 +507,14 @@
 
 		})
 
+
+		let timerRemoveEl =(tokenid)=>{
+					setTimeout(() => {
+
+					let searchEl=document.getElementById(`mon${tokenid}`)
+					searchEl.remove();
+				}, 70000);
+				}
 		socket.on('tokenMonitor', (token) => {
 			//console.log('🆕 Nuovo token monitorato:', token);
 
@@ -574,13 +582,7 @@
 			console.log('🔌 Disconnesso dal server');
 		});
 
-		let timerRemoveEl =(tokenid)=>{
-					setTimeout(() => {
-
-					let searchEl=document.getElementById(`mon${tokenid}`)
-					searchEl.remove();
-				}, 70000);
-				}
+		
 
 	</script>
 
