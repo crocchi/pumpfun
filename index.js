@@ -529,8 +529,11 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
       if(tokenLog.activeTrailing){
           if (tradeInfo.price <= tokenLog.stop) {
             tokenLog.activeTrailing= false;
-            console.log(`🔻 Trailing Stop attivato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)}`);
-
+            let msg=(`🔻 Trailing Stop attivato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} , HighPrice:${tokenLog.highPrice.toFixed(10)}`);
+            
+            console.log(msg);
+            sendMessageToClient('logger',msg)
+  
             sellToken(trade.mint)
             console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
                 subscribedTokens.delete(trade.mint);

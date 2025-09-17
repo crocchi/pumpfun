@@ -51,9 +51,9 @@ import { botOptions } from "./config.js";
     this.volumeNet = ob.solAmount;
     this.time = ob.time;
     this.id=ob.id;
-    if ( ob.highPrez > this.highPrice ) {
+    /*if ( ob.highPrez > this.highPrice ) {
       this.highPrice = ob.highPrez;
-    }
+    }*/
 
   }
 

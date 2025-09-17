@@ -327,7 +327,7 @@ const loadConf = async (o) => {
   document.getElementById('marketcapMin').value = o.marketcapMin;
   document.getElementById('marketcapMax').value = o.marketcapMax;
   document.getElementById('timeMonitor').value = o.time_monitor / 1000; // Converti in secondi
-  document.getElementById('volumeMinMonitor').value = o.volumeMin;
+  document.getElementById('volumeMinMonitor').value = o.volumeMin || o.volumeMinMonitor;
   document.getElementById('minVolumeMonitor').value = o.minVolumeMonitor;
 
   document.getElementById('buyAmount').value = o.buyAmount;
