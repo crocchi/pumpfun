@@ -93,7 +93,7 @@ setInterval(() => {
             
                 volumeNet:instance.solAmount,
                 volume:instance.volume,
-                time:instance.timee,
+                time:instance.time,
                 
                 trxArrayLength:instance.trxArray.length,
             }

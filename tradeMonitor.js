@@ -106,7 +106,7 @@ return new Promise((resolve) => {
     */
   }
   orario(){
-    const dataCorrente = new Date();
+    const dataCorrente = new Date().toLocaleTimeString();
     const opzioniFusoOrario = { timeZone: "Europe/Rome" };
     this.time=(dataCorrente.toLocaleString("it-IT", opzioniFusoOrario)); 
   }
