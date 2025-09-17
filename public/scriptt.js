@@ -186,7 +186,6 @@ async function saveOptions(e) {
 }
 
 async function loadOptions() {
-
   const r = await fetch('/bot-options');
   const o = await r.json();
   // Salvarlo in localStorage

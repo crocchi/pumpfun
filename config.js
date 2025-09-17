@@ -37,8 +37,8 @@ export let SOLANA_USD = 200;
 
     netVolumeUpBuy:false, // se il volume netto tra buy e sell supera volumeMin allora compra
     quickBuyTrxNumb:30, // num trx prima di quickbuy
-    quickBuyVolumeUp:6,
-    quickBuyVolumeMin:7,//minimo volume x accettare il token
+    quickBuyVolumeUp:8,
+    quickBuyVolumeMin:15,//minimo volume x accettare il token
 
     //acquisto token
     buyAmount: 0.02, // quantità di SOL da acquistare

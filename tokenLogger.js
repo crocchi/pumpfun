@@ -22,7 +22,7 @@ import { botOptions } from "./config.js";
     this.highPrice = 0; // sol
     this.stop = this.buyPrice * (1 - this.trailingPercent / 100);
     this.activeTrailing = botOptions.enableTrailing;
-
+    this.traderWallet=[]; //ci mettiamo tutti i wallet dei trade
     ////////
     this.lowPrice = 0; // sol
     this.volumeNet = 0;
@@ -62,6 +62,9 @@ import { botOptions } from "./config.js";
    
     this.liquidityCheck(transaction);
    
+    this.traderWallet.push(
+      transaction.traderPublicKey,
+      );
     this.trxArray.push({
             type:transaction.txType,
             amount:transaction.solAmount,
