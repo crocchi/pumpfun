@@ -16,6 +16,7 @@ import { botOptions } from './config.js';
     this.trxArray = [];
     this.resolve = null;
     this.timee=new Date().toLocaleTimeString();
+    this.time;
     //this.highPrice = 0;//sol
     this.quickBuy=0;
     this.quick=false;

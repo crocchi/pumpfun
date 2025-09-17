@@ -145,6 +145,7 @@ ws.on('message', async function message(data) {
         }
 
         const monitor=getInstanceForTokenMonitor(token)
+        monitor.orario()
         if(safer.fastBuy){ // fast buy
           console.log(`✅ Token '${parsed.name}' passato per sicurezza. Procedo con l\'acquisto rapido.`);
           monitor.tradeMonitor=false;// disabilito il monitoraggio
