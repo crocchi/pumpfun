@@ -529,7 +529,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
       if(tokenLog.activeTrailing){
           if (tradeInfo.price <= tokenLog.stop) {
             tokenLog.activeTrailing= false;
-            let msg=(`🔻 Trailing Stop attivato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} , HighPrice:${tokenLog.highPrice.toFixed(10)}`);
+            let msg=(`🔻 Trailing Stop attivato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} , HighPrice:${tokenLog.highPrice}`);
             
             console.log(msg);
             sendMessageToClient('logger',msg)
