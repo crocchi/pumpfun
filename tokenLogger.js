@@ -6,7 +6,7 @@ import { botOptions } from "./config.js";
     super(token); // Chiama il costruttore di TokenMonitor
     //this.token = token; // Informazioni sul token
    // this.solAmount = 0;
-   // this.solTrxNumMonitor = 0;
+    this.solTrxNumMonitor = 0;
    // this.volume = 0;
     this.monitor;
     this.name ;
