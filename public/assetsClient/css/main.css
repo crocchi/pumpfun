@@ -2278,3 +2278,7 @@ button,
 .modal-content { background: #222; margin: 10% auto; padding: 20px; width: 50%; border-radius: 8px; }
 #close { float: right; cursor: pointer; font-size: 20px; }
 #close:hover { color: red; }
+
+.cool {
+    background-color: beige;
+}
