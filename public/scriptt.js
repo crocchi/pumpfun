@@ -189,6 +189,9 @@ async function loadOptions() {
 
   const r = await fetch('/bot-options');
   const o = await r.json();
+  // Salvarlo in localStorage
+  localStorage.setItem("myConfig", JSON.stringify(o));
+
   document.getElementById('quickSellMultiplier').value = o.quickSellMultiplier;
   document.getElementById('quickSellMinTrades').value = o.quickSellMinTrades;
   document.getElementById('rugpullMaxTrades').value = o.rugpullMaxTrades;
@@ -202,7 +205,7 @@ async function loadOptions() {
   document.getElementById('marketcapMin').value = o.marketcapMin;
   document.getElementById('marketcapMax').value = o.marketcapMax;
   document.getElementById('timeMonitor').value = o.time_monitor / 1000; // Converti in secondi
-  document.getElementById('volumeMinMonitor').value = o.volumeMin;
+  document.getElementById('volumeMinMonitor').value = o.volumeMin || o.volumeMinMonitor;
   document.getElementById('minVolumeMonitor').value = o.minVolumeMonitor;
 
   document.getElementById('buyAmount').value = o.buyAmount;
@@ -242,8 +245,76 @@ document.addEventListener("DOMContentLoaded", () => {
       // recupero
     const savedConfig = JSON.parse(localStorage.getItem("myConfig"));
     let o=savedConfig;
-    
+    loadConf(o)
 
+    }
+    
+});
+
+
+async function saveConfig() {
+
+  let slotSave=document.getElementById('save-category').value;
+
+  const payload = {
+    quickSellMultiplier: document.getElementById('quickSellMultiplier').value,
+    quickSellMinTrades: document.getElementById('quickSellMinTrades').value,
+    rugpullMaxTrades: document.getElementById('rugpullMaxTrades').value,
+    rugpullMinGainMultiplier: document.getElementById('rugpullMinGainMultiplier').value,
+   // enableTrailing: document.getElementById('enableTrailing').checked,
+   // trailingPercent: document.getElementById('trailingPercent').value,
+   // clientRefreshMs: document.getElementById('clientRefreshMs').value,
+    liquidityMax: document.getElementById('liquidityMax').value,
+    liquidityMin: document.getElementById('liquidityMin').value,
+    devShare: document.getElementById('devShare').value / 100, // Converti in decimale
+    marketcapMin: document.getElementById('marketcapMin').value,
+    marketcapMax: document.getElementById('marketcapMax').value,
+    rugpullxyz: document.getElementById('enablerugpullxyz').checked,
+    time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
+    volumeMinMonitor: document.getElementById('volumeMinMonitor').value,
+    minVolumeMonitor: document.getElementById('minVolumeMonitor').value,
+
+    netVolumeUpBuy: document.getElementById('netVolumeUpBuy').checked,
+    quickBuyTrxNumb: document.getElementById('quickBuyTrxNumb').value,
+    quickBuyVolumeUp: document.getElementById('quickBuyVolumeUp').value,
+    quickBuyVolumeMin: document.getElementById('quickBuyVolumeMin').value,
+
+
+    buyAmount: document.getElementById('buyAmount').value,
+    sellOffPanic: document.getElementById('sellOffPanic').value,
+    maxTrxNumMonitor: document.getElementById('maxTrxNumMonitor').value,
+    minTrxNumMonitor : document.getElementById('minTrxNumMonitor').value,
+    hasWeb_filter: document.getElementById('website').checked,
+    hasWebCheck_filter: document.getElementById('websitecheck').checked,
+    hasDescription_filter: document.getElementById('Description').checked,
+    hasTwitterOrTelegram_filter: document.getElementById('TwitterOrTelegram').checked,
+    demoVersion: document.getElementById('demoversion').checked,
+    hasTwitterCheck_filter: document.getElementById('TwitterCheck').checked,
+    enableTrailing: document.getElementById('enableTrailing').checked,
+    trailingPercent: document.getElementById('trailingPercent').value,
+
+
+  };
+
+  localStorage.setItem(slotSave, JSON.stringify(payload));
+  
+
+}
+
+async function loadConfig() {
+
+  let slotSave=document.getElementById('save-category').value;
+
+  const savedConfig = JSON.parse(localStorage.getItem(slotSave));
+  //localStorage.setItem(slotSave, JSON.stringify(payload));
+   let o=savedConfig;
+    loadConf(o)
+
+}
+
+
+const loadConf = async (o) => {
+  
   document.getElementById('quickSellMultiplier').value = o.quickSellMultiplier;
   document.getElementById('quickSellMinTrades').value = o.quickSellMinTrades;
   document.getElementById('rugpullMaxTrades').value = o.rugpullMaxTrades;
@@ -280,6 +351,5 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('demoversion').checked = o.demoVersion;
   document.getElementById('enableTrailing').checked = o.enableTrailing;
   document.getElementById('trailingPercent').value = o.trailingPercent;
-    }
-    
-});
+  document.getElementById('enablerugpullxyz').checked = o.rugpullxyz;
+}

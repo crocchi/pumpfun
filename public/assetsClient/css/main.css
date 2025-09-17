@@ -2282,3 +2282,6 @@ button,
 .cool {
     background-color: beige;
 }
+.yo {
+    display: inline-flex;
+}
