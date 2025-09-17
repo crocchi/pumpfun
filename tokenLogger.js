@@ -82,7 +82,7 @@ import { botOptions } from "./config.js";
 
     if (this.LivePrice > this.highPrice) {
       this.highPrice = this.LivePrice;
-      this.stop = (this.highPrice * (1 - this.trailingPercent / 100)).toFixed(10);
+      this.stop = this.highPrice * (1 - this.trailingPercent / 100);
     }
 
     this.marketCapSol = transaction.marketCapSol || this.marketCapSol;
