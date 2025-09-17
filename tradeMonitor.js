@@ -22,6 +22,7 @@ import { botOptions } from './config.js';
     this.quickSell=0;
     this.rugpullSafe=true;
     this.prez;
+    this.highPrez;
 
   }
 
@@ -76,6 +77,9 @@ return new Promise((resolve) => {
     });//fine promise
   }
 
+   logTransaction(transaction) {
+
+   }
   cancelMonitor() {
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
@@ -118,6 +122,13 @@ return new Promise((resolve) => {
   }
   addVolume(value) {
     this.volume += value;
+  }
+  livePrice(priceLive){
+    this.prez=priceLive
+
+     if (priceLive > this.highPrez) {
+      this.highPrez = priceLive;
+    }
   }
 
   getSolAmount() {

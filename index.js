@@ -205,6 +205,7 @@ ws.on('message', async function message(data) {
           tokenLog.safeProblem=safer;
           tokenLog.buyPrice=priceBuy;
           tokenLog.startPrice=prezzo;
+          tokenLog.highPrez=prezzo;
           tokenLog.buyTransactionSign=buyTokenSignature;
           tokenLog.marketCapUsd=marketCapUsd;
 
@@ -320,7 +321,8 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       //setSolAmount(parsed.solAmount);
       tokenMonitor.addSolAmount(parsed.solAmount);
       tokenMonitor.addVolume(parsed.solAmount);
-      tokenMonitor.prez=prezzo;
+      tokenMonitor.livePrice(prezzo);
+      //tokenMonitor.prez=prezzo;
       let solValueTrx = tokenMonitor.getSolAmount() 
       let trxNumm = tokenMonitor.getSolTrxNumMonitor();
       tokenMonitor.trxArray.push({
@@ -402,7 +404,8 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       //console.log('SOL:',priceInSol);
       tokenMonitor.addSolAmount(-(parsed.solAmount));
       tokenMonitor.addVolume(parsed.solAmount);
-      tokenMonitor.prez=prezzo;
+      tokenMonitor.livePrice(prezzo);
+     // tokenMonitor.prez=prezzo;
 
          tokenMonitor.trxArray.push({
             type:parsed.txType,

@@ -51,6 +51,10 @@ import { botOptions } from "./config.js";
     this.volumeNet = ob.solAmount;
     this.time = ob.timee;
     this.id=ob.id;
+    if ( ob.highPrez > this.highPrice ) {
+      this.highPrice = ob.highPrez;
+    }
+
   }
 
   logTransaction(transaction) {
@@ -78,7 +82,7 @@ import { botOptions } from "./config.js";
 
     if (this.LivePrice > this.highPrice) {
       this.highPrice = this.LivePrice;
-      this.stop = this.highPrice * (1 - this.trailingPercent / 100);
+      this.stop = (this.highPrice * (1 - this.trailingPercent / 100)).toFixed(10);
     }
 
     this.marketCapSol = transaction.marketCapSol || this.marketCapSol;
