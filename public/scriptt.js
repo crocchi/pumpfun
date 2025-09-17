@@ -200,6 +200,7 @@ async function loadOptions() {
   document.getElementById('sellOffPanic').value = o.sellOffPanic;
   document.getElementById('maxTrxNumMonitor').value = o.maxTrxNumMonitor;
   document.getElementById('minTrxNumMonitor').value = o.minTrxNumMonitor;
+  
   document.getElementById('netVolumeUpBuy').checked = o.netVolumeUpBuy;
   document.getElementById('quickBuyTrxNumb').value = o.quickBuyTrxNumb;
   document.getElementById('quickBuyVolumeUp').value = o.quickBuyVolumeUp;
