@@ -44,9 +44,9 @@ setInterval(() => {
        //.  DA SISTEMARE ,FARE UN SOLO SEND...
         instancesToken.forEach((instance, key) => {
             let tmpToken={
-                name:instance.token?.name || "Unknown",
-                symbol:instance.token?.symbol || "Unknown",
-                token:instance.token,
+                name:instance.monitor.token?.name || "Unknown",
+                symbol:instance.monitor.token?.symbol || "Unknown",
+                token:instance.monitor.token,
                 id:instance.id,
                 marketCapSol:instance.marketCapSol,
                 solInPool:instance.solInPool,

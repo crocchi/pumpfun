@@ -8,6 +8,7 @@ import { botOptions } from './config.js';
     this.tradeMonitor = true;
     this.id=`${token.mint.slice(0,6)}`
     this.token = token; // Informazioni sul token
+    //this.name = token.name || 
     this.suspiciousSellDetected = false;
     this.solAmount = 0;
     this.solTrxNumMonitor = 0;
