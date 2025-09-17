@@ -22,7 +22,7 @@ export let SOLANA_USD = 200;
   export const botOptions = {
     //filtri token
     liquidityMin: 1.7,
-    liquidityMax: 20,
+    liquidityMax: 30,
     devShare:0.30,
     marketcapMin: 5,
     marketcapMax: 100,
@@ -33,7 +33,7 @@ export let SOLANA_USD = 200;
     volumeMin: 5, // volume netto minimo in SOL per considerare il token
     minVolumeMonitor:6, //volume generale
     maxTrxNumMonitor:500, // numero massimo di transazioni sospette per considerare il token un rugpull
-    minTrxNumMonitor:60,
+    minTrxNumMonitor:65,
 
     netVolumeUpBuy:false, // se il volume netto tra buy e sell supera volumeMin allora compra
     quickBuyTrxNumb:30, // num trx prima di quickbuy
@@ -41,31 +41,31 @@ export let SOLANA_USD = 200;
     quickBuyVolumeMin:7,//minimo volume x accettare il token
 
     //acquisto token
-    buyAmount: 0.025, // quantità di SOL da acquistare
+    buyAmount: 0.02, // quantità di SOL da acquistare
     demoVersion:true, // (true)non compra/vende - false - on compra/vende
     sellOffPanic: -35, // % vendi se vao oltre -25% dal prezzo di acquisto
 
     // vendita rapida
-    quickSellMultiplier: 1.5,     // vendi se price >= startPrice * 3.5 ...
+    quickSellMultiplier: 2.5,     // vendi se price >= startPrice * 3.5 ...
     quickSellMinTrades: 3,        // ...e almeno 3 trade
   
     // protezione "rugpull" basata su activity
-    rugpullMaxTrades: 200,
+    rugpullMaxTrades: 250,
     rugpullMinGainMultiplier: 1.2,
   
     // trailing sell
     enableTrailing: true,
-    trailingPercent: 0.25,        // 15% sotto il massimo raggiunto
+    trailingPercent: 25,        // 15% sotto il massimo raggiunto
   
     // refresh client
     clientRefreshMs: 4000,
 
     //filtri extra token
-    hasWeb_filter: true,
+    hasWeb_filter: false,
     hasWebCheck_filter: true,
-    hasDescription_filter: true,
+    hasDescription_filter: false,
     hasTwitterOrTelegram_filter: true,
-    hasTwitterCheck_filter: true,
+    hasTwitterCheck_filter: false,
 
 
     //

@@ -173,6 +173,9 @@ async function saveOptions(e) {
 
 
   };
+  // Salvarlo in localStorage
+  localStorage.setItem("myConfig", JSON.stringify(payload));
+
   const r = await fetch('/bot-options', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
   const data = await r.json();
   if (data.ok) {
@@ -183,6 +186,7 @@ async function saveOptions(e) {
 }
 
 async function loadOptions() {
+
   const r = await fetch('/bot-options');
   const o = await r.json();
   document.getElementById('quickSellMultiplier').value = o.quickSellMultiplier;
@@ -230,3 +234,52 @@ async function loadOptions() {
   // Aggiorna la variabile globale refreshMs
   //refreshMs = o.clientRefreshMs;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ Pagina caricata!");
+
+    if(localStorage.getItem("myConfig")){
+      // recupero
+    const savedConfig = JSON.parse(localStorage.getItem("myConfig"));
+    let o=savedConfig;
+    
+
+  document.getElementById('quickSellMultiplier').value = o.quickSellMultiplier;
+  document.getElementById('quickSellMinTrades').value = o.quickSellMinTrades;
+  document.getElementById('rugpullMaxTrades').value = o.rugpullMaxTrades;
+  document.getElementById('rugpullMinGainMultiplier').value = o.rugpullMinGainMultiplier;
+ // document.getElementById('enableTrailing').checked = !!o.enableTrailing;
+ // document.getElementById('trailingPercent').value = o.trailingPercent;
+  //document.getElementById('clientRefreshMs').value = o.clientRefreshMs;
+  document.getElementById('liquidityMin').value = o.liquidityMin;
+  document.getElementById('liquidityMax').value = o.liquidityMax
+  document.getElementById('devShare').value = o.devShare* 100; // Converti in percentuale
+  document.getElementById('marketcapMin').value = o.marketcapMin;
+  document.getElementById('marketcapMax').value = o.marketcapMax;
+  document.getElementById('timeMonitor').value = o.time_monitor / 1000; // Converti in secondi
+  document.getElementById('volumeMinMonitor').value = o.volumeMin;
+  document.getElementById('minVolumeMonitor').value = o.minVolumeMonitor;
+
+  document.getElementById('buyAmount').value = o.buyAmount;
+  document.getElementById('sellOffPanic').value = o.sellOffPanic;
+  document.getElementById('maxTrxNumMonitor').value = o.maxTrxNumMonitor;
+  document.getElementById('minTrxNumMonitor').value = o.minTrxNumMonitor;
+
+  document.getElementById('netVolumeUpBuy').checked = o.netVolumeUpBuy;
+  document.getElementById('quickBuyTrxNumb').value = o.quickBuyTrxNumb;
+  document.getElementById('quickBuyVolumeUp').value = o.quickBuyVolumeUp;
+  document.getElementById('quickBuyVolumeMin').value = o.quickBuyVolumeMin;
+
+  // Imposta il checkbox rugpullxyz
+  document.getElementById('website').checked = o.hasWeb_filter;
+  document.getElementById('websitecheck').checked = o.hasWebCheck_filter;
+  document.getElementById('Description').checked = o.hasDescription_filter;
+  document.getElementById('TwitterOrTelegram').checked = o.hasTwitterOrTelegram_filter;
+  document.getElementById('TwitterCheck').checked = o.hasTwitterCheck_filter;
+
+  document.getElementById('demoversion').checked = o.demoVersion;
+  document.getElementById('enableTrailing').checked = o.enableTrailing;
+  document.getElementById('trailingPercent').value = o.trailingPercent;
+    }
+    
+});
