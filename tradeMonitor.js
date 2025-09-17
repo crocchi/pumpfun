@@ -59,7 +59,7 @@ return new Promise((resolve) => {
             this.suspiciousSellDetected = true;
         }
 
-        if (this.suspiciousSellDetected || this.solAmount < botOptions.volumeMin) {
+        if (this.suspiciousSellDetected || this.solAmount < botOptions.volumeMin || this.volume < botOptions.minVolumeMonitor ) {
           console.log(`⛔ Token (${this.token.name}) scartato. ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}`);
           ws.send(JSON.stringify({
             method: "unsubscribeTokenTrade",
