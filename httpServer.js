@@ -87,6 +87,9 @@ export function startHttpServer(port = 4000) {
           if ('rugpullMinGainMultiplier' in body) botOptions.rugpullMinGainMultiplier = Number(body.rugpullMinGainMultiplier) || botOptions.rugpullMinGainMultiplier;
           if ('time_monitor' in body) botOptions.time_monitor = Number(body.time_monitor) || botOptions.time_monitor;
           if ('volumeMinMonitor' in body) botOptions.volumeMin = Number(body.volumeMinMonitor) || botOptions.volumeMin;
+                  
+          if ('minVolumeMonitor' in body) botOptions.minVolumeMonitor = Number(body.minVolumeMonitor) || botOptions.minVolumeMonitor;
+
           if ('buyAmount' in body) botOptions.buyAmount = Math.max(0, Number(body.buyAmount)) || botOptions.buyAmount;
           if(' sellOffPanic' in body) botOptions.sellOffPanic = Number(body.sellOffPanic) || botOptions.sellOffPanic;
           if ('maxTrxNumMonitor' in body) botOptions.maxTrxNumMonitor = Number(body.maxTrxNumMonitor) || botOptions.maxTrxNumMonitor;
@@ -95,6 +98,8 @@ export function startHttpServer(port = 4000) {
 
           if ('quickBuyTrxNumb' in body) botOptions.quickBuyTrxNumb = Number(body.quickBuyTrxNumb) || botOptions.quickBuyTrxNumb;
           if ('quickBuyVolumeUp' in body) botOptions.quickBuyVolumeUp = Number(body.quickBuyVolumeUp) || botOptions.quickBuyVolumeUp;
+
+          if ('quickBuyVolumeMin' in body) botOptions.quickBuyVolumeMin = Number(body.quickBuyVolumeMin) || botOptions.quickBuyVolumeMin;
 
           if ('hasWeb_filter' in body) botOptions.hasWeb_filter = body.hasWeb_filter === 'true' || body.hasWeb_filter === true || false;
           if ('hasWebCheck_filter' in body) botOptions.hasWebCheck_filter = body.hasWebCheck_filter === 'true' || body.hasWebCheck_filter === true || false;

@@ -150,10 +150,13 @@ async function saveOptions(e) {
     rugpullxyz: document.getElementById('enablerugpullxyz').checked,
     time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
     volumeMinMonitor: document.getElementById('volumeMinMonitor').value,
+    minVolumeMonitor: document.getElementById('minVolumeMonitor').value,
 
     netVolumeUpBuy: document.getElementById('netVolumeUpBuy').checked,
     quickBuyTrxNumb: document.getElementById('quickBuyTrxNumb').value,
     quickBuyVolumeUp: document.getElementById('quickBuyVolumeUp').value,
+    quickBuyVolumeMin: document.getElementById('quickBuyVolumeMin').value,
+
 
     buyAmount: document.getElementById('buyAmount').value,
     sellOffPanic: document.getElementById('sellOffPanic').value,
@@ -196,14 +199,17 @@ async function loadOptions() {
   document.getElementById('marketcapMax').value = o.marketcapMax;
   document.getElementById('timeMonitor').value = o.time_monitor / 1000; // Converti in secondi
   document.getElementById('volumeMinMonitor').value = o.volumeMin;
+  document.getElementById('minVolumeMonitor').value = o.minVolumeMonitor;
+
   document.getElementById('buyAmount').value = o.buyAmount;
   document.getElementById('sellOffPanic').value = o.sellOffPanic;
   document.getElementById('maxTrxNumMonitor').value = o.maxTrxNumMonitor;
   document.getElementById('minTrxNumMonitor').value = o.minTrxNumMonitor;
-  
+
   document.getElementById('netVolumeUpBuy').checked = o.netVolumeUpBuy;
   document.getElementById('quickBuyTrxNumb').value = o.quickBuyTrxNumb;
   document.getElementById('quickBuyVolumeUp').value = o.quickBuyVolumeUp;
+  document.getElementById('quickBuyVolumeMin').value = o.quickBuyVolumeMin;
 
   // Imposta il checkbox rugpullxyz
   document.getElementById('website').checked = o.hasWeb_filter;

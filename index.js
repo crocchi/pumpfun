@@ -350,13 +350,13 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
             //nuova regola da testare...
             //volume netto superiore al volume impostato
-       if(solValueTrx > botOptions.quickBuyVolumeUp && !tokenMonitor.quick && botOptions.netVolumeUpBuy && trxNumm > botOptions.quickBuyTrxNumb) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
-        console.log(`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) ${trxNumm} per ${parsed.mint}.`);
+       if(solValueTrx > botOptions.quickBuyVolumeUp && !tokenMonitor.quick && botOptions.netVolumeUpBuy && trxNumm > botOptions.quickBuyTrxNumb && tokenMonitor.volume > botOptions.quickBuyVolumeMin) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
+        console.log(`📈 🚀 volume netto superiore al volume impostato! Netvolume:(${solValueTrx} SOL) TrxNumb:${trxNumm} per ${parsed.mint}.`);
       sendMessageToClient('logger',`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) ${trxNumm} per ${parsed.mint}. buy at ${prezzo}`)
   
         console.log("buy at sol: ",prezzo);
         tokenMonitor.quickBuy=prezzo;
-        tokenMonitor.quickSell=`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) ${trxNumm} per ${parsed.mint}.`;
+        tokenMonitor.quickSell=`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) TrxNumb:${trxNumm} per ${parsed.mint}.`;
        tokenMonitor.cancelMonitor();
        return
       }
