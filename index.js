@@ -350,7 +350,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
             //nuova regola da testare...
             //volume netto superiore al volume impostato
-       if(solValueTrx > botOptions.volumeMin*(2) && !tokenMonitor.quick && botOptions.netVolumeUpBuy && trxNumm >30) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
+       if(solValueTrx > botOptions.quickBuyVolumeUp && !tokenMonitor.quick && botOptions.netVolumeUpBuy && trxNumm > botOptions.quickBuyTrxNumb) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
         console.log(`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) ${trxNumm} per ${parsed.mint}.`);
       sendMessageToClient('logger',`📈 🚀 volume netto superiore al volume impostato! volume:(${solValueTrx} SOL) ${trxNumm} per ${parsed.mint}. buy at ${prezzo}`)
   

@@ -150,7 +150,11 @@ async function saveOptions(e) {
     rugpullxyz: document.getElementById('enablerugpullxyz').checked,
     time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
     volumeMinMonitor: document.getElementById('volumeMinMonitor').value,
+
     netVolumeUpBuy: document.getElementById('netVolumeUpBuy').checked,
+    quickBuyTrxNumb: document.getElementById('quickBuyTrxNumb').value,
+    quickBuyVolumeUp: document.getElementById('quickBuyVolumeUp').value,
+
     buyAmount: document.getElementById('buyAmount').value,
     sellOffPanic: document.getElementById('sellOffPanic').value,
     maxTrxNumMonitor: document.getElementById('maxTrxNumMonitor').value,
@@ -163,6 +167,7 @@ async function saveOptions(e) {
     hasTwitterCheck_filter: document.getElementById('TwitterCheck').checked,
     enableTrailing: document.getElementById('enableTrailing').checked,
     trailingPercent: document.getElementById('trailingPercent').value,
+
 
   };
   const r = await fetch('/bot-options', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -196,6 +201,9 @@ async function loadOptions() {
   document.getElementById('maxTrxNumMonitor').value = o.maxTrxNumMonitor;
   document.getElementById('minTrxNumMonitor').value = o.minTrxNumMonitor;
   document.getElementById('netVolumeUpBuy').checked = o.netVolumeUpBuy;
+  document.getElementById('quickBuyTrxNumb').value = o.quickBuyTrxNumb;
+  document.getElementById('quickBuyVolumeUp').value = o.quickBuyVolumeUp;
+
   // Imposta il checkbox rugpullxyz
   document.getElementById('website').checked = o.hasWeb_filter;
   document.getElementById('websitecheck').checked = o.hasWebCheck_filter;

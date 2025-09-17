@@ -4,9 +4,10 @@ import { checkRugRisk } from './utility/rugCheck.js';
 import { botOptions } from './config.js';
 import { checkTwitterMatch } from './utility/twitterCheck.js';
 import { checkWebsiteMatch } from './utility/websiteCheck.js';
-import { searchTwitter } from './utility/desearchTwitter.js';
+//import { searchTwitter } from './utility/desearchTwitter.js';
+import { sendMessageToClient } from './socketio.js';
 
-import { checkTokenDistribution } from './utility/checkOwner.js';
+//import { checkTokenDistribution } from './utility/checkOwner.js';
 const MAX_CREATOR_SUPPLY_PERCENT = 5; // massimo accettabile per il creator
 const MAX_BURN_PERCENT = 50; // opzionale: es. se >50% burned, è sospetto
 
