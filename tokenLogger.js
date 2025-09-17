@@ -49,7 +49,7 @@ import { botOptions } from "./config.js";
     this.solTrxNumMonitor = ob.solTrxNumMonitor;
     this.volume = ob.volume;
     this.volumeNet = ob.solAmount;
-    this.time = ob.timee;
+    this.time = ob.time;
     this.id=ob.id;
     if ( ob.highPrez > this.highPrice ) {
       this.highPrice = ob.highPrez;
