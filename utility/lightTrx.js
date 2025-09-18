@@ -17,6 +17,14 @@ const response = await fetch("https://pumpportal.fun/api/trade?api-key=your-api-
     })
 });
 const data = await response.json();  // JSON object with tx signature or error(s)
+
+Errore di connessione o fetch: TypeError: Cannot read properties of undefined (reading 'tokenAmount')
+📊 RUgPool - vendi Mylo: gain  buy at 0.0000000617 -- sold at  0.0000000765
+🚫 Unsubscribed da GuhPErYHfnHGYLMYUeY19u4jX4TzAR2Afc52Z72Dpump venduto!!)
+(Mylo)📊 Trade su GuhPErYHfnHGYLMYUeY19u4jX4TzAR2Afc52Z72Dpump: buy - 981919.275246- SOL:0.07505 price:0.0000000765
+    at sellToken (file:///opt/render/project/src/utility/lightTrx.js:120:52)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
 */
 
 
@@ -117,7 +125,7 @@ export async function sellToken(mintToken ,sol_or_not=false) {
             body: JSON.stringify({
                 action: "sell",
                 mint: mintToken,
-                amount: totAmountToSell.buySign[1].tokenAmount-1 || botOptions.buyAmount*1.5 ,
+                amount: totAmountToSell.buySign[1]?.tokenAmount-1 || botOptions.buyAmount*1.5 ,
                 denominatedInSol: sol_or_not, // true = AMOUNT_SOL è in SOL
                 slippage: SLIPPAGE,
                 priorityFee: PRIORITY_FEE,

@@ -7,5 +7,4 @@ let tokenContract =[{
 {
     'USDC':EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 },
-EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 ]
