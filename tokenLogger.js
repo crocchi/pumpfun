@@ -46,7 +46,7 @@ import { botOptions } from "./config.js";
     this.trxArray = ob.trxArray;
     this.quickBuy = ob.quickBuy;
    this.quickSell = ob.quickSell;
-    this.solTrxNumMonitor = ob.solTrxNumMonitor;
+    this.solTrxNumMonitor = Number(ob.solTrxNumMonitor);
     this.volume = ob.volume;
     this.volumeNet = ob.solAmount;
     this.time = ob.time;
