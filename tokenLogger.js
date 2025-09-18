@@ -62,6 +62,7 @@ import { botOptions } from "./config.js";
    
     this.liquidityCheck(transaction);
    
+    if(!this.traderWallet.includes(transaction.traderPublicKey))
     this.traderWallet.push(
       transaction.traderPublicKey,
       );
