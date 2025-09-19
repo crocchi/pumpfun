@@ -49,7 +49,7 @@ import { botOptions } from "./config.js";
     this.quickBuy = ob.quickBuy;
    this.quickSell = ob.quickSell;
     this.solTrxNumMonitor = Number(ob.solTrxNumMonitor);
-    this.solTrxNum = Number(ob.solTrxNumMonitor);
+    this.solTrxNum = ob.solTrxNumMonitor;
     this.volume = ob.volume;
     this.volumeNet = ob.solAmount;
     this.time = ob.time;
@@ -65,10 +65,12 @@ import { botOptions } from "./config.js";
    
     this.liquidityCheck(transaction);
    
-    if(!this.traderWallet.includes(transaction.traderPublicKey))
-    this.traderWallet.push(
+    if(!this.traderWallet.includes(transaction.traderPublicKey)){
+       this.traderWallet.push(
       transaction.traderPublicKey,
       );
+    }
+   
     this.trxArray.push({
             type:transaction.txType,
             amount:transaction.solAmount,

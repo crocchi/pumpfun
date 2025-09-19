@@ -280,14 +280,14 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
 
     //controlla la tua transazione
-    if(parsed.txType === 'buy' && parsed.traderPublicKey === 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'){
+    if(parsed.txType === 'buy' && parsed.traderPublicKey === botOptions.botWallet){
      priceInSol = liquidityCheck(parsed);
      console.log(`Acquisto rilevato wallet Bot:`);
      tokenLog.buyPrice=prezzo;
       buyTokenLog(parsed.mint, parsed.tokenAmount , parsed.solAmount, priceInSol)
     }
 
-    if(parsed.txType === 'sell' && parsed.traderPublicKey === 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'){
+    if(parsed.txType === 'sell' && parsed.traderPublicKey === botOptions.botWallet){
       priceInSol = liquidityCheck(parsed);
        console.log(`vendita rilevata wallet Bot:`)
       tokenLog.sellPrice=prezzo;

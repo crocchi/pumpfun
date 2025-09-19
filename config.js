@@ -72,7 +72,8 @@ export let SOLANA_USD = 200;
 
     //
     SOLANA_USD:200,
-    solanaInfo:{}
+    solanaInfo:{},
+    botWallet:'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG'
   };
 
 
