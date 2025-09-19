@@ -38,7 +38,7 @@ class TokenMonitor {
       ws.send(JSON.stringify(payload));
       console.log(`👁️  Monitoraggio trade per ${this.token.symbol} (${this.token.mint}) attivo per ${botOptions.time_monitor / 1000}s`);
 
-      this.timeoutId = setTimeout(() => {
+      this.timeoutId = setTimeout(async () => {
         if (this.solAmount > 3.0) {
           this.suspiciousSellDetected = false;
           console.log("⛔ Volume Alto - rimuovi tag false.");
@@ -61,7 +61,7 @@ class TokenMonitor {
         }
 
         if (this.suspiciousSellDetected || this.solAmount < botOptions.volumeMin || this.volume < botOptions.minVolumeMonitor) {
-          ws.send(JSON.stringify({
+          await ws.send(JSON.stringify({
             method: "unsubscribeTokenTrade",
             keys: [this.token.mint],
           }));
