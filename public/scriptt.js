@@ -157,6 +157,9 @@ async function saveOptions(e) {
     quickBuyVolumeUp: document.getElementById('quickBuyVolumeUp').value,
     quickBuyVolumeMin: document.getElementById('quickBuyVolumeMin').value,
 
+    marketCapSolUpMode: document.getElementById('marketCapSolUpMode').checked,
+    marketCapSolUpQuickBuy: document.getElementById('marketCapSolUpQuickBuy').value,
+
 
     buyAmount: document.getElementById('buyAmount').value,
     sellOffPanic: document.getElementById('sellOffPanic').value,
@@ -216,6 +219,9 @@ async function loadOptions() {
   document.getElementById('quickBuyTrxNumb').value = o.quickBuyTrxNumb;
   document.getElementById('quickBuyVolumeUp').value = o.quickBuyVolumeUp;
   document.getElementById('quickBuyVolumeMin').value = o.quickBuyVolumeMin;
+
+  document.getElementById('marketCapSolUpMode').checked = o.marketCapSolUpMode;
+  document.getElementById('marketCapSolUpQuickBuy').value = o.marketCapSolUpQuickBuy;
 
   // Imposta il checkbox rugpullxyz
   document.getElementById('website').checked = o.hasWeb_filter;
@@ -278,6 +284,8 @@ async function saveConfig() {
     quickBuyVolumeUp: document.getElementById('quickBuyVolumeUp').value,
     quickBuyVolumeMin: document.getElementById('quickBuyVolumeMin').value,
 
+    marketCapSolUpMode: document.getElementById('marketCapSolUpMode').checked,
+    marketCapSolUpQuickBuy: document.getElementById('marketCapSolUpQuickBuy').value,
 
     buyAmount: document.getElementById('buyAmount').value,
     sellOffPanic: document.getElementById('sellOffPanic').value,
@@ -339,6 +347,9 @@ const loadConf = async (o) => {
   document.getElementById('quickBuyTrxNumb').value = o.quickBuyTrxNumb;
   document.getElementById('quickBuyVolumeUp').value = o.quickBuyVolumeUp;
   document.getElementById('quickBuyVolumeMin').value = o.quickBuyVolumeMin;
+
+   document.getElementById('marketCapSolUpMode').checked = o.marketCapSolUpMode;
+  document.getElementById('marketCapSolUpQuickBuy').value = o.marketCapSolUpQuickBuy;
 
   // Imposta il checkbox rugpullxyz
   document.getElementById('website').checked = o.hasWeb_filter;

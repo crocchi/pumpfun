@@ -337,14 +337,14 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
           //
           /*
-          if(solValueTrx > (botOptions.volumeMin*1.5) && botOptions.netVolumeUpBuy && trxNumm > (botOptions.minTrxNumMonitor/2) ) {//se il volume tra buy e sell e maggiore del netvolume impostato
-          console.log(`🚀[${tokenMonitor.token.name}] 🚀 NetVolume UPPP: (${solValueTrx} SOL) per ${parsed.mint}.`);
-          //setSuspiciousSellDetected(false);
-          tokenMonitor.cancelMonitor();
-          tokenMonitor.quickBuy=prezzo;
-          tokenMonitor.quickSell=`🚀[${tokenMonitor.token.name}] 🚀 NetVolume UPPP: (${solValueTrx} SOL) per ${parsed.mint}.`
-          tokenMonitor.quick=true;
-          return
+          if(parsed.marketCapSol > botOptions.marketCapSolUpQuickBuy && botOptions.marketCapSolUpMode ) {
+          let msg=(`📈 🚀 Market Cap Up Quick Buy! MarketCap:(${parsed.marketCapSol} SOL) TrxNumb:${trxNumm}  volume: ${volume}per ${parsed.mint}. buy at ${prezzo}`);
+          console.log(msg);
+          sendMessageToClient('event',msg)
+         tokenMonitor.quickBuy=prezzo;
+         tokenMonitor.quickSell=msg;
+         tokenMonitor.cancelMonitor();
+         return
       }
           */
 
@@ -354,7 +354,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
        if(solValueTrx > botOptions.quickBuyVolumeUp && !tokenMonitor.quick && botOptions.netVolumeUpBuy && trxNumm > botOptions.quickBuyTrxNumb && tokenMonitor.volume > botOptions.quickBuyVolumeMin) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
         let msg=(`📈 🚀 volume netto superiore al volume impostato! Netvolume:(${solValueTrx} SOL) TrxNumb:${trxNumm}  volume: ${volume}per ${parsed.mint}. buy at ${prezzo}`);
         console.log(msg);
-      sendMessageToClient('logger',msg)
+      sendMessageToClient('event',msg)
 
         tokenMonitor.quickBuy=prezzo;
         tokenMonitor.quickSell=msg;
@@ -444,14 +444,6 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     // Verifica se è un evento di trade // trade dp monitor
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
-
-     if(tokenMonitor.tradeMonitor){
-       //forse fix ,quando entrano le trx se sei qui dentro
-       // con trademonitor= true ce un problema.
-     // forse nn si è unscribe from token
-     console.log('fix undefined ')
-      return null 
-     }
     
 
         const trade = parsed;
@@ -520,7 +512,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
 //  console.log(`% cambio prezzo: ${change}%`)
  if (change < botOptions.sellOffPanic ){// se vai meno del -15%
   console.log(`% Sell Off ${botOptions.sellOffPanic}%: ${change}%`)
-  sendMessageToClient('event',`% Sell Off ${botOptions.sellOffPanic}%: ${change}%`)
+  sendMessageToClient('event',`% Sell Off Panic:${tradeInfo.name}  ${botOptions.sellOffPanic}%: ${change}%`)
   
    subscribedTokens.delete(trade.mint);
     sellToken(trade.mint);            
@@ -541,7 +533,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
             let msg=(`🔻 Trailing Stop attivato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} , HighPrice:${tokenLog.highPrice}`);
             
             console.log(msg);
-            sendMessageToClient('logger',msg)
+            sendMessageToClient('event',msg)
   
             sellToken(trade.mint)
             console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
@@ -561,7 +553,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
             if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) { 
                 sellToken(trade.mint)
               console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
-               sendMessageToClient('logger',`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
+               sendMessageToClient('event',`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
   
                 subscribedTokens.delete(trade.mint);
                 
@@ -576,7 +568,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
             if (tradeInfo.trxNum >botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.buyPrice * botOptions.rugpullMinGainMultiplier) { 
                  sellToken(trade.mint)
                 console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
-                sendMessageToClient('logger',`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
+                sendMessageToClient('event',`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
   
                 ws.send(JSON.stringify({
                     method: "unsubscribeTokenTrade",

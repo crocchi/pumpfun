@@ -127,6 +127,16 @@
 
 
 				</section>
+				<section>
+					<header class="major">
+						<h2>Event</h2>
+					</header>
+
+					<textarea id="loggerEvent" name="demo-message" id="demo-message" placeholder="Event"
+						rows="10">
+
+ 				</textarea>
+				</section>
 
 				<section>
 					<header class="major">
@@ -316,6 +326,14 @@
 								<label for="quickBuyTrxNumb">Volume Min</label>
 							</div>
 
+							<div class="col-12 cool">
+								<input type="checkbox" id="marketCapSolUpMode">
+								<label for="marketCapSolUpMode">Buy Quick if [MarketCap] >  </label>
+
+								<input type="number" step="1" id="marketCapSolUpQuickBuy">
+								<label for="marketCapSolUpQuickBuy">Market Cap Sol</label>
+							</div>
+
 
 
 							<div class="col-12">
@@ -438,6 +456,22 @@
 		socket.on('newToken', (token) => {
 			//console.log('🆕 Nuovo token monitorato:', token);
 			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
+		});
+
+		socket.on('event', (token) => {
+			//console.log('🆕 Nuovo token monitorato:', token);
+			 const oraIt = new Date().toLocaleTimeString("it-IT", {
+      timeZone: "Europe/Rome",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+            let logggerEl = document.getElementById("loggerEvent")
+            
+			logggerEl.textContent += "["+oraIt+"] "+token + "\n";
+			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
+			//let size = logggerEl.textLength;
+			
 		});
 
 		socket.on('logger', (token) => {

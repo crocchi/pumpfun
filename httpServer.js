@@ -99,6 +99,9 @@ export function startHttpServer(port = 4000) {
           if ('quickBuyTrxNumb' in body) botOptions.quickBuyTrxNumb = Number(body.quickBuyTrxNumb) || botOptions.quickBuyTrxNumb;
           if ('quickBuyVolumeUp' in body) botOptions.quickBuyVolumeUp = Number(body.quickBuyVolumeUp) || botOptions.quickBuyVolumeUp;
 
+          if ('marketCapSolUpQuickBuy' in body) botOptions.marketCapSolUpQuickBuy = Number(body.marketCapSolUpQuickBuy) || botOptions.marketCapSolUpQuickBuy;
+          if ('marketCapSolUpMode' in body) botOptions.marketCapSolUpMode = body.marketCapSolUpMode === 'true' || body.marketCapSolUpMode === true || false;
+
           if ('quickBuyVolumeMin' in body) botOptions.quickBuyVolumeMin = Number(body.quickBuyVolumeMin) || botOptions.quickBuyVolumeMin;
 
           if ('hasWeb_filter' in body) botOptions.hasWeb_filter = body.hasWeb_filter === 'true' || body.hasWeb_filter === true || false;
@@ -219,7 +222,9 @@ export async function updateToken(mint, updates,type) {
         token.transactions.push({
             type,
             price: updates.price,
-            time: new Date().toLocaleTimeString()
+        time: new Date().toLocaleTimeString("it-IT", {timeZone: "Europe/Rome",hour: "2-digit",minute: "2-digit",
+      second: "2-digit" }),
+            mCap: updates.marketCapSol
           });
       }
 

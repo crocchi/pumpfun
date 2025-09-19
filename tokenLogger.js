@@ -9,7 +9,8 @@ import { botOptions } from "./config.js";
     this.solTrxNumMonitor = 0;
    // this.volume = 0;
     this.monitor;
-    this.name ;
+    this.pool= token.pool //|| token.mint.toLowerCase().includes('pump')
+    this.name;
     this.time;
     this.symbol;
     this.buyTransactionSign = null;
