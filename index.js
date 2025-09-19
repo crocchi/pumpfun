@@ -337,8 +337,8 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
           //
           
-          if(parsed.marketCapSol > botOptions.marketCapSolUpQuickBuy && botOptions.marketCapSolUpMode ) {
-          let msg=(`📈 🚀 Market Cap Up Quick Buy! MarketCap:(${parsed.marketCapSol} SOL) TrxNumb:${trxNumm}  volume: ${volume}per ${parsed.mint}. buy at ${prezzo}`);
+          if(parsed.marketCapSol > botOptions.marketCapSolUpQuickBuy && botOptions.marketCapSolUpMode && trxNumm > 10) {
+          let msg=(`📈 🚀 [${tokenMonitor.token.name}] Market Cap Up Quick Buy! MarketCap:(${parsed.marketCapSol} SOL) TrxNumb:${trxNumm}  volume: ${volume}per ${parsed.mint}. buy at ${prezzo}`);
           console.log(msg);
           sendMessageToClient('event',msg)
          tokenMonitor.quickBuy=prezzo;
