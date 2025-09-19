@@ -7,6 +7,7 @@ import { botOptions } from "./config.js";
     //this.token = token; // Informazioni sul token
    // this.solAmount = 0;
     this.solTrxNumMonitor = 0;
+    this.solTrxNum = 0;
    // this.volume = 0;
     this.monitor;
     this.pool= token.pool //|| token.mint.toLowerCase().includes('pump')
@@ -48,6 +49,7 @@ import { botOptions } from "./config.js";
     this.quickBuy = ob.quickBuy;
    this.quickSell = ob.quickSell;
     this.solTrxNumMonitor = Number(ob.solTrxNumMonitor);
+    this.solTrxNum = Number(ob.solTrxNumMonitor);
     this.volume = ob.volume;
     this.volumeNet = ob.solAmount;
     this.time = ob.time;
@@ -92,6 +94,7 @@ import { botOptions } from "./config.js";
 
     this.marketCapSol = transaction.marketCapSol || this.marketCapSol;
     this.solTrxNumMonitor++;
+    this.solTrxNum++;
    /* if (this.lowPrice === 0 || transaction.price < this.lowPrice) {
       this.lowPrice = transaction.price;
     }*/

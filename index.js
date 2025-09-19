@@ -336,7 +336,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
           });
 
           //
-          /*
+          
           if(parsed.marketCapSol > botOptions.marketCapSolUpQuickBuy && botOptions.marketCapSolUpMode ) {
           let msg=(`📈 🚀 Market Cap Up Quick Buy! MarketCap:(${parsed.marketCapSol} SOL) TrxNumb:${trxNumm}  volume: ${volume}per ${parsed.mint}. buy at ${prezzo}`);
           console.log(msg);
@@ -346,7 +346,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
          tokenMonitor.cancelMonitor();
          return
       }
-          */
+          
 
 
             //nuova regola da testare...

@@ -56,7 +56,7 @@ setInterval(() => {
                 buyPrice:instance.buyPrice,
                 highPrice:instance.highPrice,
 
-                solTrxNumMonitor:instance.solTrxNumMonitor,
+                solTrxNumMonitor:instance.solTrxNum,
                 
             
                 volumeNet:instance.volumeNet,
