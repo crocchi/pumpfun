@@ -435,7 +435,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       //setSuspiciousSellDetected(true);
       tokenMonitor.suspiciousSellDetected=true;
       console.log('solValueTrx:', tokenMonitor.getSolAmount());
-      return; // Esci se è una vendita sospetta
+      return; // Esci dall'area monitor
     }
 
     //FINE ZONA MONITORAGGIO
@@ -444,6 +444,15 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
 
     // Verifica se è un evento di trade // trade dp monitor
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
+
+     if(tokenMonitor.tradeMonitor){
+       //forse fix ,quando entrano le trx se sei qui dentro
+       // con trademonitor= true ce un problema.
+     // forse nn si è unscribe from token
+     console.log('fix undefined ')
+      return null 
+     }
+    
 
         const trade = parsed;
       tokenLog=await getInstanceForTokenLogger(trade);
@@ -511,7 +520,7 @@ if(tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//
 //  console.log(`% cambio prezzo: ${change}%`)
  if (change < botOptions.sellOffPanic ){// se vai meno del -15%
   console.log(`% Sell Off ${botOptions.sellOffPanic}%: ${change}%`)
-  sendMessageToClient('logger',`% Sell Off ${botOptions.sellOffPanic}%: ${change}%`)
+  sendMessageToClient('event',`% Sell Off ${botOptions.sellOffPanic}%: ${change}%`)
   
    subscribedTokens.delete(trade.mint);
     sellToken(trade.mint);            
