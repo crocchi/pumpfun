@@ -8,6 +8,7 @@ import { sendMessageToClient } from './socketio.js';
 import { startHttpServer, logToken ,updateToken, buyTokenLog } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
+import { getHour} from './utility/time.js';
 import { buyToken , sellToken } from './utility/lightTrx.js';
 
 // Avvia HTTP server
@@ -332,7 +333,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             amount:parsed.solAmount,
             trader:parsed.traderPublicKey,
             price: prezzo,
-            time: new Date().toLocaleTimeString()
+            time: getHour()
           });
 
           //
@@ -414,7 +415,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
             amount:parsed.solAmount,
             trader:parsed.traderPublicKey,
             price: prezzo,
-            time: new Date().toLocaleTimeString()
+            time: getHour()
           });
 
       //setSolAmount(-(parsed.solAmount));
