@@ -6,6 +6,7 @@ import { botOptions } from './config.js';
 class TokenMonitor {
   constructor(token) {
     this.tradeMonitor = true;
+    this.tradeMonitorOff=false;
     this.id = `${token.mint.slice(0, 6)}`
     this.token = token; // Informazioni sul token
     //this.name = token.name || 
@@ -61,11 +62,11 @@ class TokenMonitor {
         }
 
         if (this.suspiciousSellDetected || this.solAmount < botOptions.volumeMin || this.volume < botOptions.minVolumeMonitor) {
-          await ws.send(JSON.stringify({
+          ws.send(JSON.stringify({
             method: "unsubscribeTokenTrade",
             keys: [this.token.mint],
           }));
-
+          this.tradeMonitorOff=true;
           console.log(`⛔ Token (${this.token.name}) scartato. ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}`);
           this.resetValues();
           resolve(false);

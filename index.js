@@ -449,6 +449,10 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
      if(parsed.txType === 'buy' || parsed.txType === 'sell') {
     
 
+      if(tokenMonitor.tradeMonitorOff){
+        sendMessageToClient('event',`⚠️ esci dal bug... `);
+        return
+      }
         const trade = parsed;
       tokenLog=await getInstanceForTokenLogger(trade);
       //tokenMonitor= instances.get(parsed.mint);
