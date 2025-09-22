@@ -1,7 +1,13 @@
 import { chromium } from 'playwright';
 import { sendMessageToClient } from '../socketio.js';
-import fs from 'fs';
+
+import { promises as fs } from 'fs';
+import { fileURLToPath } from 'url';
 import path from 'path';
+
+// Calcola __dirname per ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //const fs = require('fs').promises; // Per leggere/scrivere file JSON
   const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
