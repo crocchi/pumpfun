@@ -121,13 +121,14 @@ export async function checkAccount(username) {
 }
 
 // Argomenti da riga di comando
-/*
+
 const username = process.argv[2];
 if (!username) {
   console.error('Uso: node check-account.js @username');
   process.exit(1);
+}else{
+    checkAccount(username);
 }
 
-checkAccount(username);
 
-*/
+
