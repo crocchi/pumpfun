@@ -3,6 +3,7 @@ import { isSafeToken } from './utils.js';
 import TokenMonitor from './tradeMonitor.js';
 import TokenLogger from './tokenLogger.js';
 import { sendMessageToClient } from './socketio.js';
+import { checkAccount } from "./utility/twitter.js";
 
 
 import { startHttpServer, logToken ,updateToken, buyTokenLog } from './httpServer.js';
@@ -89,8 +90,10 @@ const subscribedTokens = new Set();
 export const instances = new Map(); // Mappa per memorizzare le istanze di TokenMonitor
 export const instancesToken  = new Map(); // Mappa per memorizzare le istanze di TokenLogger
 
+checkAccount('elonmusk');
 //getTop10Tokens();
 //getCMC20Historical()
+
 
 ws.on('open', function open() {
     console.log('📡 Connesso al WebSocket di Pump.fun');

@@ -6,6 +6,7 @@ import { checkTwitterMatch } from './utility/twitterCheck.js';
 import { checkWebsiteMatch } from './utility/websiteCheck.js';
 //import { searchTwitter } from './utility/desearchTwitter.js';
 import { sendMessageToClient } from './socketio.js';
+import { checkAccount } from './utility/twitter.js';
 
 //import { checkTokenDistribution } from './utility/checkOwner.js';
 const MAX_CREATOR_SUPPLY_PERCENT = 5; // massimo accettabile per il creator
@@ -174,6 +175,8 @@ if(blacklist.length >= 80){ blacklist.shift() }
     
   }else if (twitterCheck.valid === true) {
     console.log("✅ Twitter OK:", metadata.twitter);
+    console.log(twitterCheck)
+   if(botOptions.hasTwitterCheck_filter){checkAccount(twitterCheck.handle)}
    // safeProblem=[];// aggiungere controllo twitter account profile
     //account x = twitterCheck.handle
     //token.mint
