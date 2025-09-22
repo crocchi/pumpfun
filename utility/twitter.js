@@ -32,7 +32,7 @@ export async function checkAccount(username) {
 
     // Ritardo esplicito per contenuti dinamici
     await page.waitForTimeout(3000); // Aspetta 2 secondi per caricamento JS
-
+ 
     // Aspetta il selettore del profilo con timeout aumentato
     await page.waitForSelector('[data-testid="UserName"]');
 
