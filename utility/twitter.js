@@ -56,9 +56,20 @@ export async function checkAccount(username) {
 
     // Ritardo esplicito per contenuti dinamici
     await page.waitForTimeout(3000); // Aspetta 2 secondi per caricamento JS
-   // await page.screenshot({ path: 'loading-screenshot.png' });
+
     // Aspetta il selettore del profilo con timeout aumentato
-    await page.waitForSelector('[data-testid="UserName"]');
+    //await page.waitForSelector('[data-testid="UserName"]');
+    let user; //(await page.locator('[data-testid="UserDescription"] span').textContent()) || 'Nessuna bio';
+    let locatorr = page.locator('[data-testid="UserName"]');
+    if (await locatorr.count() > 0) {
+        user = await locatorr.textContent();
+    } else {
+        console.log('account nn esistente');
+         await browser.close();
+         return {
+            valid: false
+        }
+    }
 
     // Estrai informazioni base
     const displayName = await page.locator('[data-testid="UserName"]').textContent();
@@ -82,9 +93,6 @@ export async function checkAccount(username) {
 
     const followers = await page.locator('a[href$="/verified_followers"] span').first().textContent();
 
-    //const followers = followersText ? parseInt(followersText.replace(/[^\d]/g, '')) : 'N/A';
-//clicca su accettacoockie
-//data-testid="BottomBar"
 // Gestione banner cookie (opzionale: solo se visibile)
     await page.waitForSelector('[data-testid="BottomBar"]', { timeout: 5000 });
     
@@ -98,46 +106,32 @@ export async function checkAccount(username) {
     console.log('Cookie accettati con successo.');
 
     //const postsText = await page.locator('a[href$="/with_replies"]').first().textContent() || 'N/A';
+    const recentPosts = [];
+    let postsText; //(await page.locator('[data-testid="UserDescription"] span').textContent()) || 'Nessuna bio';
+    let locatorpost = page.locator('div [data-testid="tweetText"]');
 
-    await page.waitForSelector('[data-testid="tweet"]', { timeout: 5000 });
-    // Primi 3 post
-    const posts = await page.locator('[data-testid="tweet"]', { timeout: 2000 }).all();
-    const postsText = await page.locator('div [data-testid="tweetText"]', { timeout: 2000 }).all();
-    /*[
-2025-09-22 16:26:53
-
-  locator('[data-testid="tweet"]').first(),
-2025-09-22 16:26:53
-
-  locator('[data-testid="tweet"]').nth(1),
-2025-09-22 16:26:53
-
-2025-09-22 16:26:53
-
-  locator('[data-testid="tweet"]').nth(7)
-2025-09-22 16:26:53
-
-
-] */
-   // console.log(posts)
-     // console.log(postsText)
-
-    const firstPost = await page.locator('div[data-testid="tweetText"]').first().textContent();
-   // const secondPost = await page.locator('div[data-testid="tweetText"]').nth(1).textContent();
+    if (await locatorpost.count() > 0) {
+        postsText = await page.locator('div [data-testid="tweetText"]', { timeout: 2000 }).all();
+       
+        for (let i = 0; i < Math.min(3, postsText.length); i++) {
+        const text = await postsText[i].textContent();
+        recentPosts.push(text ? text.trim() : 'Post senza testo');
+        }
+    } else {
+        
+        postsText = 'Nessun Post';
+    }
 
 
     // await page.screenshot({ path: 'error-screenshot.png' });
-    const recentPosts = [];
+    
     /*
     for (let i = 0; i < Math.min(3, posts.length); i++) {
         const text = await posts[i].locator('div[data-testid="tweetText"]').first().textContent();
         recentPosts.push(text ? text.trim() : 'Post senza testo');
     }
 */
-  for (let i = 0; i < Math.min(3, postsText.length); i++) {
-        const text = await postsText[i].textContent();
-        recentPosts.push(text ? text.trim() : 'Post senza testo');
-    }
+ 
     // Output risultati
     let msgg = `( --- X Account ---)
               Nome visualizzato: ${displayName}
@@ -145,6 +139,7 @@ export async function checkAccount(username) {
               handleName:${handleName}
               Bio: ${bio}
               Follower: ${followers}
+              PostNumb: ${recentPosts.length}
               `;
     console.log(msgg);
     sendMessageToClient('event', msgg)
@@ -167,6 +162,9 @@ export async function checkAccount(username) {
       
      } */
     await browser.close();
+    return {
+      valid: recentPosts.length > 0
+    }
 }
 
 // Argomenti da riga di comando

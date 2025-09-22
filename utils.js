@@ -168,21 +168,31 @@ if(blacklist.length >= 80){ blacklist.shift() }
 
   
   //controllo Twitter
+  if(botOptions.hasTwitterCheck_filter){ 
   const twitterCheck= checkTwitterMatch(metadata);
   //console.log("check Twitter:",twitterCheck);
   if (twitterCheck.valid !== true) {
-    if(botOptions.hasTwitterCheck_filter)safeProblem.push(twitterCheck.reason);
+    safeProblem.push(twitterCheck.reason);
     
   }else if (twitterCheck.valid === true) {
     console.log("✅ Twitter OK:", metadata.twitter);
     console.log(twitterCheck)
-   if(botOptions.hasTwitterCheck_filter){checkAccount(twitterCheck.handle)}
+     let checkX = await checkAccount(twitterCheck.handle)
+
+     if(checkX.valid){
+      safeProblem=[]
+     return {
+      safeProblem,
+      valid: safeProblem.length === 0,
+      fastBuy:true // soglia regolabile
+    }
+     }
    // safeProblem=[];// aggiungere controllo twitter account profile
     //account x = twitterCheck.handle
     //token.mint
    // searchTwitter(twitterCheck.handle , token.mint )
   }
-
+}
 
           // Controllo sito web
           const hasWebsite = typeof metadata.website === 'string' && metadata.website.length > 5;
