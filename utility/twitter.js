@@ -1,22 +1,40 @@
 import { chromium } from 'playwright';
 import { sendMessageToClient } from '../socketio.js';
+import fs from 'fs';
+import path from 'path';
+
+//const fs = require('fs').promises; // Per leggere/scrivere file JSON
+  const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+  const viewport = { width: 1280, height: 720 };
+  const storageStatePath = path.join(__dirname, 'storage-state.json');
 
 export async function checkAccount(username) {
   // Configurazioni anti-bot avanzate
-  const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
-  const viewport = { width: 1280, height: 720 };
 
+  
   const browser = await chromium.launch({ headless: true }); // headless: false per debug visivo
-  const context = await browser.newContext({
+  
+  let context;
+
+  // Controlla se esiste il file di stato
+  let storageState = {};
+  try {
+    storageState = JSON.parse(await fs.readFile(storageStatePath, 'utf-8'));
+    console.log('Caricato stato precedente da storage-state.json');
+  } catch (error) {
+    console.log('Nessun file di stato trovato, verrà creato uno nuovo.');
+  }
+  
+  // Crea contesto con stato salvato (se esiste)
+  context = await browser.newContext({
     userAgent: userAgent,
     viewport: viewport,
     extraHTTPHeaders: {
       'Accept-Language': 'en-US,en;q=0.9',
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     },
-    // Abilita storage persistente e fingerprint realistico
-    storageState: { cookies: [], origins: [] },
-    bypassCSP: true, // Ignora Content Security Policy se necessario
+    storageState: storageState, // Carica cookie/state
+    bypassCSP: true,
   });
 
   const page = await context.newPage();
