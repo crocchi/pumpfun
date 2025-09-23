@@ -14,7 +14,7 @@ const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 
 const viewport = { width: 1280, height: 998 };
 const storageStatePath = path.join(__dirname, 'storage-state.json');
 
-export async function checkAccount(username) {
+export async function checkAccount(username, mint) {
     // Configurazioni anti-bot avanzate
 
 
@@ -28,7 +28,15 @@ export async function checkAccount(username) {
         storageState = JSON.parse(await fs.readFile(storageStatePath, 'utf-8'));
         console.log('Caricato stato precedente da storage-state.json');
     } catch (error) {
+       /* fs.writeFile(storageStatePath, JSON.stringify(storageState, null, 2), (err) => {
+            if (err) {
+                console.error('Errore:', err);
+                return;
+            }
+            console.log('File JSON creato!');
+        });*/
         console.log('Nessun file di stato trovato, verrà creato uno nuovo.');
+
     }
 
     // Crea contesto con stato salvato (se esiste)
@@ -42,6 +50,7 @@ export async function checkAccount(username) {
         storageState: storageState, // Carica cookie/state
         bypassCSP: true,
     });
+
 
     const page = await context.newPage();
 
@@ -57,6 +66,11 @@ export async function checkAccount(username) {
     // Ritardo esplicito per contenuti dinamici
     await page.waitForTimeout(3000); // Aspetta 2 secondi per caricamento JS
 
+    //salva coockie,localstorage e tutte le info del browser appena collegato a x.com
+    await context.storageState({ path: 'storage-state.json' }).then((data)=>{
+        console.log(data)
+    })
+
     // Aspetta il selettore del profilo con timeout aumentato
     //await page.waitForSelector('[data-testid="UserName"]');
     let user; //(await page.locator('[data-testid="UserDescription"] span').textContent()) || 'Nessuna bio';
@@ -65,8 +79,9 @@ export async function checkAccount(username) {
         user = await locatorr.textContent();
     } else {
         console.log('account nn esistente');
-         await browser.close();
-         return {
+        await page.screenshot({ path: 'account-nofound-screenshot.png' });
+        await browser.close();
+        return {
             valid: false
         }
     }
@@ -79,7 +94,7 @@ export async function checkAccount(username) {
     //    const handle = await page.locator('[data-testid="UserHandle"]').textContent();
     //const bio = await (await page.locator('[data-testid="UserDescription"] span').textContent()) || 'Nessuna bio';
     let bio; //(await page.locator('[data-testid="UserDescription"] span').textContent()) || 'Nessuna bio';
-    let locator = page.locator('[data-testid="UserDescription"] span');
+    let locator = page.locator('[data-testid="UserDescription"]');
     if (await locator.count() > 0) {
         bio = await locator.textContent();
     } else {
@@ -93,45 +108,54 @@ export async function checkAccount(username) {
 
     const followers = await page.locator('a[href$="/verified_followers"] span').first().textContent();
 
-// Gestione banner cookie (opzionale: solo se visibile)
+    // Gestione banner cookie (opzionale: solo se visibile)
     await page.waitForSelector('[data-testid="BottomBar"]', { timeout: 5000 });
-    
+
     // Clicca sul bottone "Accetta tutto" o equivalente
     // Opzione 1: Selettore per bottone con testo "Accetta tutto"
     await page.getByRole('button', { name: 'Accept all cookies', exact: true }).click();
-    
+
     // Opzione 2: Se il selettore è diverso (es. link o altro bottone), usa questo
     // await page.locator('button[data-testid="accept-all"]').click();
-    
+
     console.log('Cookie accettati con successo.');
 
     //const postsText = await page.locator('a[href$="/with_replies"]').first().textContent() || 'N/A';
     const recentPosts = [];
     let postsText; //(await page.locator('[data-testid="UserDescription"] span').textContent()) || 'Nessuna bio';
-    let locatorpost = page.locator('div [data-testid="tweetText"]');
+    let locatorpost = await page.locator('div[data-testid="tweetText"]', { timeout: 2000 });
 
+
+    let firstPost;
+    try {
+        firstPost = await page.locator('div[data-testid="tweetText"]', { timeout: 2000 }).first().textContent();
+    } catch (error) {
+        await page.screenshot({ path: 'firts-post-error.png' });
+        console.log(error);
+    }
+    //const firstPost = await page.locator('div[data-testid="tweetText"]').first().textContent();
     if (await locatorpost.count() > 0) {
-        postsText = await page.locator('div [data-testid="tweetText"]', { timeout: 2000 }).all();
-       
-        for (let i = 0; i < Math.min(3, postsText.length); i++) {
-        const text = await postsText[i].textContent();
-        recentPosts.push(text ? text.trim() : 'Post senza testo');
+        postsText = await page.locator('div[data-testid="tweetText"]', { timeout: 2000 }).all();
+        console.log(postsText)
+        for (let i = 0; i < Math.min(8, postsText.length); i++) {
+            const text = await postsText[i].textContent();
+            recentPosts.push(text ? text.trim() : 'Post senza testo');
         }
     } else {
-        
+
         postsText = 'Nessun Post';
     }
 
 
     // await page.screenshot({ path: 'error-screenshot.png' });
-    
+
     /*
     for (let i = 0; i < Math.min(3, posts.length); i++) {
         const text = await posts[i].locator('div[data-testid="tweetText"]').first().textContent();
         recentPosts.push(text ? text.trim() : 'Post senza testo');
     }
 */
- 
+
     // Output risultati
     let msgg = `( --- X Account ---)
               Nome visualizzato: ${displayName}
@@ -139,8 +163,10 @@ export async function checkAccount(username) {
               handleName:${handleName}
               Bio: ${bio}
               Follower: ${followers}
-              PostNumb: ${recentPosts.length}
+              PostNumb: ${recentPosts.length || postsText}
               `;
+    if (firstPost) { msgg = msgg + ` 1Post: ${firstPost}` }
+
     console.log(msgg);
     sendMessageToClient('event', msgg)
     console.log('Primi 3 post recenti:');
@@ -163,7 +189,7 @@ export async function checkAccount(username) {
      } */
     await browser.close();
     return {
-      valid: recentPosts.length > 0
+        valid: recentPosts.length > 0
     }
 }
 
