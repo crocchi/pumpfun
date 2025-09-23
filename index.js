@@ -90,7 +90,7 @@ const subscribedTokens = new Set();
 export const instances = new Map(); // Mappa per memorizzare le istanze di TokenMonitor
 export const instancesToken  = new Map(); // Mappa per memorizzare le istanze di TokenLogger
 
-checkAccount('ziocro');
+checkAccount('elonmusk','How to vote');
 //getTop10Tokens();
 //getCMC20Historical()
 

@@ -187,10 +187,31 @@ export async function checkAccount(username, mint) {
      } finally {
       
      } */
+     // Ottieni il contenuto HTML della pagina
+  const htmlContent = await page.content();
+
+  // Stringa da cercare
+  const searchString = mint;
+
+  // Verifica se la stringa è presente
+  if (htmlContent.includes(searchString)) {
+    let msg=(`Il contratto "${searchString}" è presente nella pagina X!`);
+    console.log(msg);
+    sendMessageToClient('event',msg)
     await browser.close();
     return {
-        valid: recentPosts.length > 0
+        valid: true,
     }
+  } else {
+     let msg=(`Il contratto "${searchString}" NON è presente nella pagina X!`);
+    console.log(msg);
+    sendMessageToClient('event',msg)
+    await browser.close();
+    return {
+        valid: false,
+    }
+  }
+    
 }
 
 // Argomenti da riga di comando
