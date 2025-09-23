@@ -15,7 +15,7 @@ RUN npm install
 COPY . .
 
 # Espone la porta su cui il server ascolta
-EXPOSE 4004
+EXPOSE 4000
 
 # Comando per avviare l'applicazione
 CMD ["node", "index.js"]

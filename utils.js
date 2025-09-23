@@ -169,7 +169,7 @@ if(blacklist.length >= 80){ blacklist.shift() }
   
   //controllo Twitter
   if(botOptions.hasTwitterCheck_filter){ 
-  const twitterCheck= checkTwitterMatch(metadata,token.mint);
+  const twitterCheck= checkTwitterMatch(metadata,token);
   //console.log("check Twitter:",twitterCheck);
   if (twitterCheck.valid !== true) {
     safeProblem.push(twitterCheck.reason);
@@ -177,7 +177,7 @@ if(blacklist.length >= 80){ blacklist.shift() }
   }else if (twitterCheck.valid === true) {
     console.log("✅ Twitter OK:", metadata.twitter);
     console.log(twitterCheck)
-     let checkX = await checkAccount(twitterCheck.handle)
+     let checkX = await checkAccount(twitterCheck.handle,token)
 
      if(checkX.valid){
       safeProblem=[]

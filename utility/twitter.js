@@ -14,7 +14,7 @@ const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 
 const viewport = { width: 1280, height: 998 };
 const storageStatePath = path.join(__dirname, 'storage-state.json');
 
-export async function checkAccount(username, mint) {
+export async function checkAccount(username, token) {
     // Configurazioni anti-bot avanzate
 
 
@@ -191,7 +191,8 @@ export async function checkAccount(username, mint) {
   const htmlContent = await page.content();
 
   // Stringa da cercare
-  const searchString = mint;
+  const searchString = token.mint;
+  console.log('stringa da cercare..'+searchString)
 
   // Verifica se la stringa è presente
   if (htmlContent.includes(searchString)) {
