@@ -1,6 +1,6 @@
 # Usa un'immagine base di Node.js
 FROM node:18-alpine
-FROM mcr.microsoft.com/playwright:v1.55.0-jammy
+FROM mcr.microsoft.com/playwright:v1.55.1-jammy
 
 # Imposta la directory di lavoro all'interno del container
 WORKDIR /Pumpfun
