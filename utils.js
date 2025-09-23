@@ -18,12 +18,23 @@ const blacklist = [ // o aggiungi dev wallet che hanno creato un token ultimi 20
   '6QsW5rSMYaQTGJxg9UiwmhxEQ7w1DypdN9kfHQuWoobi'
 ];
 let cont=0
+
 export async function isSafeToken(token) {
   let safeProblem=[];
+  let fastReason;
   //console.log(token);
   try {
     // 1. ✅ Controllo liquidità min 2 max 20
     if(token.mint.includes('bonk') || token.mint.includes('BONK') ) {
+      if(token.solAmount ===0){
+        console.log('debug Bonk:',token);
+         safeProblem.push("❌ Liquidità sconosciuta..."+`: 0 SOL`);
+        return {
+          safeProblem,
+          valid: safeProblem.length === 0, // soglia regolabile
+        }
+      }
+      
       if (token.solInPool < botOptions.liquidityMin || token.solInPool > botOptions.liquidityMax ) {
         safeProblem.push("❌ Liquidità fuori range."+`: ${token.solInPool.toFixed(3)} SOL`);
         return {
@@ -148,6 +159,7 @@ if(blacklist.length >= 80){ blacklist.shift() }
         if (typeof metadata.createdOn === 'string' && metadata.createdOn.includes('raydium.launchlab')) {
           //safeProblem.push("✅ Creato su Pump.Fun"); createdOn: 'https://raydium.io/',
           console.log("✅ Creato su Raydium LaunchLab");
+          fastReason="✅ Creato su Raydium LaunchLab";
           safeProblem=[];
          // return true; // Creato su Raydium LaunchLab
         }//createdOn: 'https://bonk.fun',createdOn: 'https://letsbonk.fun',  createdOn: 'raydium.launchlab',
@@ -184,7 +196,8 @@ if(blacklist.length >= 80){ blacklist.shift() }
      return {
       safeProblem,
       valid: safeProblem.length === 0,
-      fastBuy:true // soglia regolabile
+      fastBuy:true, // soglia regolabile
+      fastReason:'Trovato contratto sulla pagina Twitter: '+checkX.data
     }
      }
    // safeProblem=[];// aggiungere controllo twitter account profile
@@ -217,12 +230,14 @@ if(blacklist.length >= 80){ blacklist.shift() }
       safeProblem.push(websiteCheck.finpage.reason);
       console.log("❌ Contratto token Non trovato nella pagina: ", websiteCheck.finpage.reason);
      } else if(websiteCheck.finpage.found){
-        console.log(' ✅ Indirizzo contratto trovato nella pagina...')
+        let msg=(' ✅ Indirizzo contratto trovato nella pagina...')
+        console.log(msg)
     safeProblem=[];
     return {
       safeProblem,
       valid: safeProblem.length === 0,
-      fastBuy:true // soglia regolabile
+      fastBuy:true, // soglia regolabile
+      fastReason:msg
     }
      }
    
@@ -269,7 +284,8 @@ if(blacklist.length >= 80){ blacklist.shift() }
 
     return {
       safeProblem,
-      valid: safeProblem.length === 0, // soglia regolabile
+      valid: safeProblem.length === 0,
+       // soglia regolabile
     }
   } catch (err) {
     console.error("Errore nel controllo sicurezza:", err);

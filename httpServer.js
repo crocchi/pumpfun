@@ -170,7 +170,7 @@ if (parsed.pathname === '/status' && req.method === 'GET') {
   
       else {
         res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end('<h2>Server attivo</h2><p>Vai su <a href="/status">/status</a></p>');
+        res.end('<h2>Server attivo</h2> <p>Vai su <a href="/status">/status</a></p> <p>o <a href="/UI">/UI</a></p> ');
       }
     });
     

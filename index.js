@@ -4,6 +4,7 @@ import TokenMonitor from './tradeMonitor.js';
 import TokenLogger from './tokenLogger.js';
 import { sendMessageToClient } from './socketio.js';
 import { checkAccount } from "./utility/twitter.js";
+//import { initArbitrage , TOKENS } from "./arbitrage.js";
 
 
 import { startHttpServer, logToken ,updateToken, buyTokenLog } from './httpServer.js';
@@ -90,7 +91,7 @@ const subscribedTokens = new Set();
 export const instances = new Map(); // Mappa per memorizzare le istanze di TokenMonitor
 export const instancesToken  = new Map(); // Mappa per memorizzare le istanze di TokenLogger
 
-checkAccount('elonmusk','How to vote');
+//checkAccount('elonmusk','How to vote');
 //getTop10Tokens();
 //getCMC20Historical()
 
@@ -104,6 +105,7 @@ ws.on('open', function open() {
   ws.send(JSON.stringify(payload));
 
 });
+
 
 let priceInSol;
 ws.on('message', async function message(data) {
@@ -406,8 +408,11 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
    
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
       priceInSol = liquidityCheck()
-      console.log(`⚠️ Sell Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo}) - Vendita precoce da ${parsed.traderPublicKey} – `);
-         sendMessageToClient('logger',`⚠️ Sell Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo}) - Vendita precoce da ${parsed.traderPublicKey} – `)
+      liquidityCheck();
+      let msg=(`⚠️ Sell Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo}) - Vendita precoce da ${parsed.traderPublicKey} – `);
+      
+      console.log(msg);
+         sendMessageToClient('logger',msg)
   
       //console.log('SOL:',priceInSol);
       tokenMonitor.addSolAmount(-(parsed.solAmount));
@@ -673,6 +678,21 @@ function getInstanceForTokenLogger(token) {
   symbol: 'BONKO',
   uri: 'https://ipfs.io/ipfs/bafkreiarm4uhc6puyp53mpb7tplwcdznbpwby6nxd7x6ajb3yuqjbnwutu',
   pool: 'bonk'
+}
+
+debug Bonk: {
+
+  signature: '5sRHyQ6RFGvMjSdnMjzfSdktJeCjGnVHF3nnHDGZhvXa8R9aEvzainYQBxN5iPJtaRckyPnT3cekKrHXXUtsTVFN',
+  traderPublicKey: '6U8LE8YPBLhPXx1CGwb6HDB2K6Xz4gxPh6BtVMC45W1M',
+  txType: 'create',
+  mint: 'A6h38mkmdEX6g5tP6hAmCnZLtwPhTQsrguoY7ayNbonk',
+  tokensInPool: 862305461.067954,
+  initialBuy: 137694538.93204606,
+  solAmount: 0,
+  newTokenBalance: 137694538.932046,
+  marketCapSol: 36.79512288357042,
+  pool: 'bonk'
+
 }
 
 trade: {

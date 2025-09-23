@@ -17,16 +17,21 @@ const storageStatePath = path.join(__dirname, 'storage-state.json');
 export async function checkAccount(username, token) {
     // Configurazioni anti-bot avanzate
 
-
-    const browser = await chromium.launch({ headless: true }); // headless: false per debug visivo
-
     let context;
 
     // Controlla se esiste il file di stato
-    let storageState = {};
+    let storageState = { cookies: [], origins: [] }; 
     try {
-        storageState = JSON.parse(await fs.readFile(storageStatePath, 'utf-8'));
-        console.log('Caricato stato precedente da storage-state.json');
+        //storageState = JSON.parse(await fs.readFile(storageStatePath, 'utf-8'));
+        //(console.log('Caricato stato precedente da storage-state.json');
+
+         const fileContent = await fs.readFile(storageStatePath, 'utf-8');
+         storageState = JSON.parse(fileContent);
+         console.log('Caricato stato precedente da storage-state.json');
+         
+  // Carica lo stato salvato
+ // const context = await browser.newContext({ storageState: 'cookies-state.json' });
+ 
     } catch (error) {
        /* fs.writeFile(storageStatePath, JSON.stringify(storageState, null, 2), (err) => {
             if (err) {
@@ -35,9 +40,14 @@ export async function checkAccount(username, token) {
             }
             console.log('File JSON creato!');
         });*/
+         // Opzionale: crea un file vuoto
+    await fs.writeFile(storageStatePath, JSON.stringify(storageState, null, 2));
+    console.log('File storage-state.json creato vuoto.');
         console.log('Nessun file di stato trovato, verrà creato uno nuovo.');
 
     }
+
+const browser = await chromium.launch({ headless: true }); // headless: false per debug visivo
 
     // Crea contesto con stato salvato (se esiste)
     context = await browser.newContext({
@@ -67,7 +77,7 @@ export async function checkAccount(username, token) {
     await page.waitForTimeout(3000); // Aspetta 2 secondi per caricamento JS
 
     //salva coockie,localstorage e tutte le info del browser appena collegato a x.com
-    await context.storageState({ path: 'storage-state.json' }).then((data)=>{
+    await context.storageState({ path: './utility/storage-state.json' }).then((data)=>{
         console.log(data)
     })
 
@@ -127,7 +137,7 @@ export async function checkAccount(username, token) {
 
 
     let firstPost;
-    try {
+    try {//fa perdere un sacco di tempo se nn ci sono post...
         firstPost = await page.locator('div[data-testid="tweetText"]', { timeout: 2000 }).first().textContent();
     } catch (error) {
         await page.screenshot({ path: 'firts-post-error.png' });
@@ -202,6 +212,7 @@ export async function checkAccount(username, token) {
     await browser.close();
     return {
         valid: true,
+        data:msgg
     }
   } else {
      let msg=(`Il contratto "${searchString}" NON è presente nella pagina X!`);
