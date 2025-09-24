@@ -9,6 +9,7 @@ export const RPC_WS_HELIUS = process.env.RPC_WS_HELIUS;
 export const DESEARCH_API = process.env.DESEARCH_API;
 export const LIGHT_WALLET_API = process.env.LIGHT_WALLET_API;
 export const CMC_API_KEY = process.env.CMC_API_KEY;
+export const BITQUERY_API= process.env.BITQUERY;
 
 export const MAX_TOKENS_SUBSCRIBED = 40;
 
@@ -31,6 +32,7 @@ export let SOLANA_USD = 200;
     //monitor token
     time_monitor: 60000, // 3 secondi
     volumeMin: 5, // volume netto minimo in SOL per considerare il token
+    volumeMax: 10,
     minVolumeMonitor:15, //volume generale
     maxTrxNumMonitor:500, // numero massimo di transazioni sospette per considerare il token un rugpull
     minTrxNumMonitor:65,

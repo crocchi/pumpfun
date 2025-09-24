@@ -95,6 +95,8 @@ export function startHttpServer(port = 4000) {
           if ('maxTrxNumMonitor' in body) botOptions.maxTrxNumMonitor = Number(body.maxTrxNumMonitor) || botOptions.maxTrxNumMonitor;
           if ('minTrxNumMonitor' in body) botOptions.minTrxNumMonitor = Number(body.minTrxNumMonitor) || botOptions.minTrxNumMonitor;
           if ('netVolumeUpBuy' in body) botOptions.netVolumeUpBuy = body.netVolumeUpBuy === 'true' || body.netVolumeUpBuy === true || false;
+          if ('volumeMax' in body) botOptions.volumeMax = Number(body.volumeMax) || botOptions.volumeMax;
+
 
           if ('quickBuyTrxNumb' in body) botOptions.quickBuyTrxNumb = Number(body.quickBuyTrxNumb) || botOptions.quickBuyTrxNumb;
           if ('quickBuyVolumeUp' in body) botOptions.quickBuyVolumeUp = Number(body.quickBuyVolumeUp) || botOptions.quickBuyVolumeUp;

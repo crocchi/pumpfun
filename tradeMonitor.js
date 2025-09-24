@@ -60,6 +60,10 @@ class TokenMonitor {
           console.log(`⛔ [${this.token.name}] Pochi Trade...trx Num:${this.solTrxNumMonitor}`);
           this.suspiciousSellDetected = true;
         }
+         if (this.solAmount > botOptions.volumeMax) {// volumeNet Superato
+          console.log(`⛔ [${this.token.name}] Volume Max Superato.:${this.solAmount}`);
+          this.suspiciousSellDetected = true;
+        }
 
         if (this.suspiciousSellDetected || this.solAmount < botOptions.volumeMin || this.volume < botOptions.minVolumeMonitor) {
           ws.send(JSON.stringify({

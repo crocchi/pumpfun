@@ -151,6 +151,7 @@ async function saveOptions(e) {
     time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
     volumeMinMonitor: document.getElementById('volumeMinMonitor').value,
     minVolumeMonitor: document.getElementById('minVolumeMonitor').value,
+    volumeMax: document.getElementById('volumeMax').value,
 
     netVolumeUpBuy: document.getElementById('netVolumeUpBuy').checked,
     quickBuyTrxNumb: document.getElementById('quickBuyTrxNumb').value,
@@ -208,6 +209,9 @@ async function loadOptions() {
   document.getElementById('marketcapMax').value = o.marketcapMax;
   document.getElementById('timeMonitor').value = o.time_monitor / 1000; // Converti in secondi
   document.getElementById('volumeMinMonitor').value = o.volumeMin || o.volumeMinMonitor;
+  document.getElementById('volumeMax').value = o.volumeMax;
+  
+  
   document.getElementById('minVolumeMonitor').value = o.minVolumeMonitor;
 
   document.getElementById('buyAmount').value = o.buyAmount;
@@ -278,6 +282,7 @@ async function saveConfig() {
     time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
     volumeMinMonitor: document.getElementById('volumeMinMonitor').value,
     minVolumeMonitor: document.getElementById('minVolumeMonitor').value,
+    volumeMax: document.getElementById('volumeMax').value,
 
     netVolumeUpBuy: document.getElementById('netVolumeUpBuy').checked,
     quickBuyTrxNumb: document.getElementById('quickBuyTrxNumb').value,
@@ -337,6 +342,7 @@ const loadConf = async (o) => {
   document.getElementById('timeMonitor').value = o.time_monitor / 1000; // Converti in secondi
   document.getElementById('volumeMinMonitor').value = o.volumeMin || o.volumeMinMonitor;
   document.getElementById('minVolumeMonitor').value = o.minVolumeMonitor;
+  document.getElementById('volumeMax').value = o.volumeMax;
 
   document.getElementById('buyAmount').value = o.buyAmount;
   document.getElementById('sellOffPanic').value = o.sellOffPanic;
