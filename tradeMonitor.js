@@ -13,6 +13,7 @@ class TokenMonitor {
     this.suspiciousSellDetected = false;
     this.solAmount = 0;
     this.solTrxNumMonitor = 0;
+    this.marketCapSol=0;
     this.timeoutId = null;
     this.volume = 0;
     this.trxArray = [];

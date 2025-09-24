@@ -116,6 +116,23 @@ function startTimeout() {
     }, 300000);//300s
   }
 startTimeout()
+
+// Funzione per inizializzare/riconnettere il WebSocket
+/*
+  function connect() {
+    if (isClosing) return;
+    console.log('Connessione WebSocket in corso...');
+
+    ws = new WebSocket('wss://pumpportal.fun/api/data');
+
+    // Associa le callback definite sopra
+    ws.on('open', onOpen);
+    ws.on('message', onMessage);
+    ws.on('close', onClose);
+    ws.on('error', onError);
+  }
+*/
+
 ws.on('open', function open() {
     console.log('📡 Connesso al WebSocket di Pump.fun');
   // Subscribing to token creation events
@@ -356,6 +373,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       // console.log('SOL:',priceInSol);
       //setSolAmount(parsed.solAmount);
       tokenMonitor.addSolAmount(parsed.solAmount);
+      tokenMonitor.marketCapSol=parsed.marketCapSol;
       tokenMonitor.addVolume(parsed.solAmount);
       tokenMonitor.livePrice(prezzo);
       //tokenMonitor.prez=prezzo;
@@ -445,6 +463,7 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
       tokenMonitor.addSolAmount(-(parsed.solAmount));
       tokenMonitor.addVolume(parsed.solAmount);
       tokenMonitor.livePrice(prezzo);
+      tokenMonitor.marketCapSol=parsed.marketCapSol;
      // tokenMonitor.prez=prezzo;
 
          tokenMonitor.trxArray.push({
@@ -491,11 +510,14 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
         const trade = parsed;
       tokenLog=await getInstanceForTokenLogger(trade);
       //tokenMonitor= instances.get(parsed.mint);
+      //mi sa che questa parte nn serve...
+      /*
       if (instances.has(parsed.mint)) { // controlla se esiste l'istanza dell'oggetto class
        //console.log("Token monitor trovato per il merging...");
         tokenMonitor= instances.get(parsed.mint);
        tokenLog.linked(tokenMonitor)
       }
+       */
       
       //  console.log('trade:',trade);
 
@@ -532,6 +554,8 @@ if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
           // Aggiorna il token nel database
          // tokenLog.price=prezzo;
           tokenLog.marketCapUsd=marketCapUsd;
+          tokenLog.marketCapSol=trade.marketCapSol;
+          //tokenLog.solTrxNum++;
           tokenLog.logTransaction(trade);
           //tokenLog.addSolAmount(-(trade.solAmount));
          // tokenLog.addVolume(trade.solAmount);

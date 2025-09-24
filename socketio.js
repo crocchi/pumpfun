@@ -85,7 +85,7 @@ setInterval(() => {
                 symbol:instance.token?.symbol || "Unknown",
                 token:instance.token,
                 id:instance.id,
-                marketCapSol:instance.token.marketCapSol,
+                marketCapSol:instance.marketCapSol,
                 
                 LivePrice:instance.prez,
                 solTrxNumMonitor:instance.solTrxNumMonitor,
