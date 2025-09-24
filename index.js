@@ -94,8 +94,28 @@ export const instancesToken  = new Map(); // Mappa per memorizzare le istanze di
 //checkAccount('elonmusk','How to vote');
 //getTop10Tokens();
 //getCMC20Historical()
-
-
+let lastMessageTime = Date.now()
+let timeoutId;
+ // Avvia il timeout di inattività
+function startTimeout() {
+    timeoutId = setInterval(() => {
+      const lastMessageTimeNow = Date.now();
+      let result= lastMessageTimeNow -lastMessageTime;
+      if (result > 100000) {
+        console.log('Inattività rilevata per 100 Secondi. Riavvio della connessione...');
+        if (ws) {
+          ws.close(1000, 'Inattività timeout'); // Chiudi con codice personalizzato
+        }
+        // La riconnessione è gestita dall'evento 'close'
+      } else {
+        console.log('Controllo attività rilevata '+`${result/1000} Sec Fà..` );
+        
+        // Se non è passato il timeout completo, ricontrolla tra 30 secondi
+        //setTimeout(checkInactivity, 30000);
+      }
+    }, 300000);//300s
+  }
+startTimeout()
 ws.on('open', function open() {
     console.log('📡 Connesso al WebSocket di Pump.fun');
   // Subscribing to token creation events
@@ -106,10 +126,17 @@ ws.on('open', function open() {
 
 });
 
+ws.on('error', function error(err) {
+    console.log('📡 Errore  WebSocket di Pump.fun');
+  // Subscribing to token creation events
+    console.log(err);
+
+});
 
 let priceInSol;
 ws.on('message', async function message(data) {
   //console.log(JSON.parse(data));
+  lastMessageTime = Date.now()
   if(!data) return
   try {
     const parsed = JSON.parse(data);
