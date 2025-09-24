@@ -132,8 +132,7 @@
 						<h2>Event</h2>
 					</header>
 
-					<textarea id="loggerEvent" name="demo-message" id="demo-message" placeholder="Event"
-						rows="5">
+					<textarea id="loggerEvent" name="demo-message" id="demo-message" placeholder="Event" rows="5">
 
  				</textarea>
 				</section>
@@ -294,28 +293,25 @@
 								<input type="number" step="0.10" id="timeMonitor">
 								<label for="timeMonitor">Timer Monitor(sec)</label>
 							</div>
-							<div class="col-12">
-								<input type="number" step="0.01" id="volumeMinMonitor">
-								<label for="volumeMinMonitor">Net Volume Min (SOL)</label>
+							<div class="row">
+								<label>Net Volume Min-Max</label>
+								<input class='insi' type="number" step="0.01" id="volumeMinMonitor">
+								<input class='insi' type="number" step="0.01" id="volumeMax">
 							</div>
 							<div class="col-12">
 								<input type="number" step="0.01" id="minVolumeMonitor">
 								<label for="maxSuspiciousGain">Volume Min</label>
 							</div>
-							<div class="col-12">
-								<input type="number" step="1" id="maxTrxNumMonitor">
-								<label for="maxTrxNumMonitor">Max Trades</label>
+							<div class="row">
+								<label>Trades Min-Max</label>
+								<input class='insi' type="number" step="0.10" id="minTrxNumMonitor">
+								<input class='insi' type="number" step="1" id="maxTrxNumMonitor">
 							</div>
-							<div class="col-12">
 
-								<input type="number" step="0.10" id="minTrxNumMonitor">
-								<label for="minTrxNumMonitor">Min Trades</label>
-							</div>
-							
 							<div class="col-12 cool">
 								<input type="checkbox" id="netVolumeUpBuy">
 								<label for="netVolumeUpBuy">Buy Quick if > </label>
-				
+
 								<input type="number" step="0.1" id="quickBuyVolumeUp">
 								<label for="quickBuyVolumeUp">Net Volume Min</label>
 
@@ -328,7 +324,7 @@
 
 							<div class="col-12 cool">
 								<input type="checkbox" id="marketCapSolUpMode">
-								<label for="marketCapSolUpMode">Buy Quick if [MarketCap] >  </label>
+								<label for="marketCapSolUpMode">Buy Quick if [MarketCap] > </label>
 
 								<input type="number" step="1" id="marketCapSolUpQuickBuy">
 								<label for="marketCapSolUpQuickBuy">Market Cap Sol</label>
@@ -460,31 +456,31 @@
 
 		socket.on('event', (token) => {
 			//console.log('🆕 Nuovo token monitorato:', token);
-			 const oraIt = new Date().toLocaleTimeString("it-IT", {
-      timeZone: "Europe/Rome",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    });
-            let logggerEl = document.getElementById("loggerEvent")
-            
-			logggerEl.textContent += "["+oraIt+"] "+token + "\n";
+			const oraIt = new Date().toLocaleTimeString("it-IT", {
+				timeZone: "Europe/Rome",
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit"
+			});
+			let logggerEl = document.getElementById("loggerEvent")
+
+			logggerEl.textContent += "[" + oraIt + "] " + token + "\n";
 			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
 			//let size = logggerEl.textLength;
-			
+
 		});
 
 		socket.on('logger', (token) => {
 			//console.log('🆕 Nuovo token monitorato:', token);
-			 const oraIt = new Date().toLocaleTimeString("it-IT", {
-      timeZone: "Europe/Rome",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    });
-            let logggerEl = document.getElementById("loggerHtml")
-            
-			logggerEl.textContent += "["+oraIt+"] "+token + "\n";
+			const oraIt = new Date().toLocaleTimeString("it-IT", {
+				timeZone: "Europe/Rome",
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit"
+			});
+			let logggerEl = document.getElementById("loggerHtml")
+
+			logggerEl.textContent += "[" + oraIt + "] " + token + "\n";
 			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
 			let size = logggerEl.textLength;
 			logggerEl.scrollTop = logggerEl.scrollHeight;
@@ -494,9 +490,9 @@
 		socket.on('tokenLogger', (token) => {
 			//let date = new Date().toLocaleTimeString();
 
-			let searchEl=document.getElementById(`log${token.id}`)
+			let searchEl = document.getElementById(`log${token.id}`)
 			// Check if the token already exists - search by id
-		
+
 
 			let defiExchange;
 			if (token.token.mint.includes('BONK') || token.token.mint.includes('bonk')) {
@@ -559,20 +555,20 @@
 		})
 
 
-		let timerRemoveEl =(tokenid)=>{
-					setTimeout(() => {
+		let timerRemoveEl = (tokenid) => {
+			setTimeout(() => {
 
-					let searchEl=document.getElementById(`mon${tokenid}`)
-					searchEl.remove();
-				}, 70000);
-				}
+				let searchEl = document.getElementById(`mon${tokenid}`)
+				searchEl.remove();
+			}, 70000);
+		}
 		socket.on('tokenMonitor', (token) => {
 			//console.log('🆕 Nuovo token monitorato:', token);
 
-			if(!token.name){token.name='N/A'}
+			if (!token.name) { token.name = 'N/A' }
 
 			//let searchEl=document.querySelectorAll(`#tokenMonitorBody tr#${token.id}`)
-			let searchEl=document.getElementById(`mon${token.id}`)
+			let searchEl = document.getElementById(`mon${token.id}`)
 			// Check if the token already exists in the table
 			/*
 			let existingRow = Array.from(document.querySelectorAll("#tokenLoggerBody tr")).find(row => {
@@ -623,7 +619,7 @@
 				document.getElementById("tokenLoggerBody").innerHTML += html;
 
 				timerRemoveEl(token.id)
-				
+
 			}
 
 
@@ -633,7 +629,7 @@
 			console.log('🔌 Disconnesso dal server');
 		});
 
-		
+
 
 	</script>
 
