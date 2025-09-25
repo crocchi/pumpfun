@@ -25,6 +25,7 @@ export const onOpen = () => {
 }
 
 let lastMessageTime = Date.now();
+let timeoutId;
 export const lastMessageTimeSet = () => {lastMessageTime = Date.now()}
 //export const lastMessageTimeReturn = () => {return lastMessageTime}
 
