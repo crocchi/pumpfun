@@ -1,0 +1,51 @@
+import { webSock,connect } from './index.js';
+let ws;
+
+export const onError = (err) => {
+  console.log('📡 Errore  WebSocket di Pump.fun');
+  // Subscribing to token creation events
+  console.log(err);
+}
+
+export const onClose = (err) => {
+    console.log('📡 Chiusura  WebSocket di Pump.fun');
+    // Subscribing to token creation events
+    console.log(err);
+}
+
+export const onOpen = () => {
+  console.log('📡 Connesso al WebSocket di Pump.fun');
+  // Subscribing to token creation events
+  let payload = {
+    method: "subscribeNewToken",
+  }
+  ws=webSock();
+  ws.send(JSON.stringify(payload));
+
+}
+
+let lastMessageTime = Date.now();
+export const lastMessageTimeSet = () => {lastMessageTime = Date.now()}
+//export const lastMessageTimeReturn = () => {return lastMessageTime}
+
+export function startTimeout() {
+  timeoutId = setInterval(() => {
+    const lastMessageTimeNow = Date.now();
+    let result = lastMessageTimeNow - lastMessageTime;
+    if (result > 100000) {
+      console.log('Inattività rilevata per 100 Secondi. Riavvio della connessione...');
+      console.log(ws);
+      if (ws) {
+        ws.removeAllListeners(); // Rimuovi listener per evitare memory leak
+        ws.close(1000, 'Riavvio manuale o inattività');
+      }
+      setTimeout(()=>{connect()},5000) //
+      // La riconnessione è gestita dall'evento 'close'
+    } else {
+      console.log('Controllo attività rilevata ' + `${result / 1000} Sec Fà..`);
+
+      // Se non è passato il timeout completo, ricontrolla tra 30 secondi
+      //setTimeout(checkInactivity, 30000);
+    }
+  }, 300000);//300s
+}
