@@ -18,6 +18,7 @@ import { botOptions } from "./config.js";
     this.LivePrice = 0;
     this.startPrice = 0; //prezzo iniziale in sol
     this.buyPrice = 0; //prezzo di acquisto in sol
+    this.tokenAmount=0; //qnt token comprato
     this.sellPrice = 0;
     //trailing info
     this.trailingPercent = botOptions.trailingPercent; // percentuale per trailing stop

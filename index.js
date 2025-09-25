@@ -133,6 +133,7 @@ const onMessage = async (data) => {
         console.log(`🌊 Pool: ${token.pool}`);
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         let buyTokenSignature = await buyToken(token.mint);
+        botOptions.botCash = botOptions.botCash - botOptions.buyAmount;
 
         const tokenLog = getInstanceForTokenLogger(token)// iniz istanza di TokenLogger
         // buyTokenLog
@@ -154,6 +155,7 @@ const onMessage = async (data) => {
         tokenLog.highPrez = prezzo;
         tokenLog.buyTransactionSign = buyTokenSignature;
         tokenLog.marketCapUsd = marketCapUsd;
+        tokenLog.tokenAmount=botOptions.buyAmount/priceBuy //qnt token comprato
 
 
 
@@ -475,6 +477,9 @@ const onMessage = async (data) => {
 
                 subscribedTokens.delete(trade.mint);
                 sellToken(trade.mint);
+                tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
+                botOptions.botCash= botOptions.botCash + tokenLog.tokenAmount;
+                sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
                 console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
                 ws.send(JSON.stringify({
                   method: "unsubscribeTokenTrade",
@@ -495,6 +500,9 @@ const onMessage = async (data) => {
                   sendMessageToClient('event', msg)
 
                   sellToken(trade.mint)
+                  tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
+                  botOptions.botCash= botOptions.botCash + tokenLog.tokenAmount;
+                  sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
                   console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
                   subscribedTokens.delete(trade.mint);
 
@@ -511,6 +519,9 @@ const onMessage = async (data) => {
 
               if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) {
                 sellToken(trade.mint)
+                tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
+                botOptions.botCash= botOptions.botCash + tokenLog.tokenAmount;
+                sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
                 sendMessageToClient('event', `📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
 
@@ -526,6 +537,9 @@ const onMessage = async (data) => {
               // Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi
               if (tradeInfo.trxNum > botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.buyPrice * botOptions.rugpullMinGainMultiplier) {
                 sellToken(trade.mint)
+                tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
+                botOptions.botCash= botOptions.botCash + tokenLog.tokenAmount;
+                sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
                 console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
                 sendMessageToClient('event', `📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
 
