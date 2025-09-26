@@ -36,6 +36,8 @@ import { botOptions } from "./config.js";
     this.tokensInPool=token.tokensInPool || token.vTokensInBondingCurve || 0;
     this.marketCapSol=token.marketCapSol || 0;
     this.marketCapUsd=0;
+    //venduto
+    this.soldOut=false;
     
     
     // this.trxArray = [];

@@ -1,4 +1,5 @@
 import { webSock,connect } from './index.js';
+
 let ws;
 
 export const onError = (err) => {

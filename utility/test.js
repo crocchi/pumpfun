@@ -1,13 +1,14 @@
 //import { Connection } from '@solana/web3.js';
 import fetch from "node-fetch";
 import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
-import { decodeProgramData , readString } from './decodeSolana.js';
+import { decodeProgramData, readString } from './decodeSolana.js';
 import WebSocket from 'ws';
+//import { decodeAnchorProgramData } from './anchor/anchor.js'
 
 export let target_mint; // Mint del token da monitorare (da impostare se necessario)
 //config debug
 const attivo = false; // Abilita/disabilita la connessione a Helius
-const mint_token_helius =false; // abilita/disabilita il monitoraggio dei token su Pump.fun e raydius
+const mint_token_helius = false; // abilita/disabilita il monitoraggio dei token su Pump.fun e raydius
 
 // Initialize connection to Helius RPC
 /*
@@ -35,74 +36,91 @@ const PUMP_FUN_PROGRAM_ID = '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';
 const LETSBONK_PROGRAM_ID = 'FfYek5vEz23cMkWsdJwG2oa6EphsvXSHrGpdALN4g6W1'
 // Lista dei Program ID da monitorare
 const PROGRAM_IDS = [
-  '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P', // pump.fun
+  // '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P', // pump.fun
   'LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj',   // Raydium Launchpad (letsbonk.fun)
   //'11111111111111111111111111111111'              // System Program (esempio)
 ];
 
 export const wshelius = new WebSocket(RPC_WS_HELIUS);
-if(attivo){
+if (attivo) {
 
-wshelius.on('open', () => {
-  console.log('✅ Connesso a Helius WebSocket');
+  wshelius.on('open', () => {
+    console.log('✅ Connesso a Helius WebSocket');
 
-  // Invia una subscription per ogni programma
-  PROGRAM_IDS.forEach((programId, i) => {
-    const msg = {
-      jsonrpc: '2.0',
-      id: i + 1,
-      method: 'logsSubscribe',
-      params: [
-        { mentions: [programId] },
-        { commitment: 'finalized',encoding : 'jsonParsed',maxSupportedTransactionVersion: '0' }
-      ]
-    };
-    wshelius.send(JSON.stringify(msg));
+    // Invia una subscription per ogni programma
+    PROGRAM_IDS.forEach((programId, i) => {
+      const msg = {
+        jsonrpc: '2.0',
+        id: i + 1,
+        method: 'logsSubscribe',
+        params: [
+          { mentions: [programId] },
+          { commitment: 'finalized', encoding: 'jsonParsed', maxSupportedTransactionVersion: '0' }
+        ]
+      };
+      wshelius.send(JSON.stringify(msg));
+    });
+
+
   });
+  let i = 0;
+
+  wshelius.on('message', async (data) => {
+    const message = JSON.parse(data);
 
 
-});
-let i=0;
+    if (message.method === "logsNotification") {
 
-wshelius.on('message', async (data) => {
-  const message = JSON.parse(data);
+      const { logs, signature } = message.params.result.value;
+      let decoded;
+      //// Token creation detection
+      /*
+      if log_messages.contains("Program log: Create") &&
+      log_messages.contains("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj") {
+            console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun");
+            console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
+          }*/
 
 
-  if (message.method === "logsNotification") {
 
-    const { logs, signature } = message.params.result.value;
-    let decoded;
-//// Token creation detection
-/*
-if log_messages.contains("Program log: Create") &&
-log_messages.contains("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj") {
-      console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun");
-      console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
-    }*/
+      /* if (mint_token_helius && logs.some(line => line.includes("Instruction: InitializeMint2")) && logs.some(line => line.includes("Instruction: Create"))){
+         const programData = logs.find(line => line.includes("Program data: "));
+         const dataP = programData?.split("Program data: ")[1];
+         console.log("------------------------------");
+         console.log("🆕 Token creato su Pump.fun!");
+         //console.log("🔗 Mint:", mint);
+         console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
+         try {
+           decoded = decodeProgramData(dataP);
+           console.log("📦 Dati del token:", decoded);
+         } catch (err) {
+           console.error('❌ Failed to decode:', err.message);
+         }
+         console.log("------------------------------");
+       }*/
 
-    if (mint_token_helius && logs.some(line => line.includes("Instruction: InitializeMint2")) && logs.some(line => line.includes("Instruction: Create"))){
-      const programData = logs.find(line => line.includes("Program data: "));
-      const dataP = programData?.split("Program data: ")[1];
-      console.log("------------------------------");
-      console.log("🆕 Token creato su Pump.fun!");
-      //console.log("🔗 Mint:", mint);
-      console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
-      try {
-        decoded = decodeProgramData(dataP);
-        console.log("📦 Dati del token:", decoded);
-      } catch (err) {
-        console.error('❌ Failed to decode:', err.message);
-      }
-      console.log("------------------------------");
-    } 
-     
-      if (mint_token_helius && logs.some(line => line.includes(PROGRAM_IDS[1])) && logs.some(line => line.includes("Instruction: InitializeMint2"))){
+      if (mint_token_helius && logs.some(line => line.includes(PROGRAM_IDS[0])) && logs.some(line => line.includes("Instruction: InitializeMint2"))) {
+
+        const programData = logs.find(line => line.includes("Program data: "));
+        const dataP = programData?.split("Program data: ")[1];
+
+        /*. LEGGE IL LEGGIBILE DA PROGRAMDATA
+        const buf = Buffer.from(dataP, "base64");
+        console.log(buf.toString("utf8")); // a volte ci sono pezzi leggibili
+        console.log(buf); // dump raw bytes
+        */
+       
+      // const decoded = decodeAnchorProgramData(dataP);
+       
 
         console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun ");
         console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
-    
+        console.log("Istruzione Raydium decodificata:",);
+        //console.log(logs)
+
       }
 
+      /*
       // Qui puoi aggiungere logica per filtri, subscribeTrade, buy/sell, ecc.
       if (logs.some(log => log.includes('Instruction: Buy')) && i<5) {
         console.log(`🟢 BUY rilevato: https://solscan.io/tx/${signature}`);
@@ -137,48 +155,48 @@ log_messages.contains("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj") {
 
       if (logs.some(line => line.includes("Instruction: Sell")) && i<5 ) {
         console.log(`🔴 SELL rilevato: https://solscan.io/tx/${signature}`);
-      }
+      }*/
     }
 
-    
-   /*
-    if (isCreate) {
-      console.log(`--------------------------`);
-      console.log(`🆕 Nuovo token creato su Pump.fun`);
-      console.log(`🔗 TX: https://solscan.io/tx/${signature}`);
-    console.log('Messaggio ricevuto value:', message.params.result.value);
-    console.log('Messaggio ricevuto context:', message.params.result.context);
-    console.log(`--------------------------`);
-      // (opzionale) Puoi ora chiamare l'RPC Helius per recuperare i dettagli della transazione
-      // e determinare l'indirizzo del mint e del creatore.
-    }*/
-});
 
-wshelius.on('error', (err) => {
-  console.error('❌ Errore WebSocket:', err.message);
-});
+    /*
+     if (isCreate) {
+       console.log(`--------------------------`);
+       console.log(`🆕 Nuovo token creato su Pump.fun`);
+       console.log(`🔗 TX: https://solscan.io/tx/${signature}`);
+     console.log('Messaggio ricevuto value:', message.params.result.value);
+     console.log('Messaggio ricevuto context:', message.params.result.context);
+     console.log(`--------------------------`);
+       // (opzionale) Puoi ora chiamare l'RPC Helius per recuperare i dettagli della transazione
+       // e determinare l'indirizzo del mint e del creatore.
+     }*/
+  });
 
-wshelius.on('close', () => {
-  console.log('🔌 Connessione WebSocket chiusa');
-});
+  wshelius.on('error', (err) => {
+    console.error('❌ Errore WebSocket:', err.message);
+  });
+
+  wshelius.on('close', () => {
+    console.log('🔌 Connessione WebSocket chiusa');
+  });
 
 }
 
 async function getTransaction(signature) {
   const body = {
-      jsonrpc: "2.0",
-      id: 1,
-      method: "getTransaction",
-      params: [
-          signature,
-          { commitment: "finalized"}
-      ]
+    jsonrpc: "2.0",
+    id: 1,
+    method: "getTransaction",
+    params: [
+      signature,
+      { commitment: "finalized" }
+    ]
   };
 
   const res = await fetch(RPC_URL_HELIUS, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body)
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
   });
 
   const data = await res.json();
@@ -189,20 +207,20 @@ async function getTransaction(signature) {
 function extractMint(tx) {
   if (!tx) return null;
 
-  console.log("Istruzioni: ",tx.transaction.message.instructions)
+  console.log("Istruzioni: ", tx.transaction.message.instructions)
   console.log("PayerWallet: ", tx.transaction.message.accountKeys);
   // 1️⃣ Controllo se c'è tokenTransfers
   if (tx.meta && tx.meta.tokenTransfers && tx.meta.tokenTransfers.length > 0) {
-      return tx.meta.tokenTransfers[0].mint;
+    return tx.meta.tokenTransfers[0].mint;
   }
 
   // 2️⃣ Controllo negli innerInstructions
   if (tx.transaction?.message?.instructions) {
-      for (const ix of tx.transaction.message.instructions) {
-          if (ix.program === "spl-token" && ix.parsed?.info?.mint) {
-              return ix.parsed.info.mint;
-          }
+    for (const ix of tx.transaction.message.instructions) {
+      if (ix.program === "spl-token" && ix.parsed?.info?.mint) {
+        return ix.parsed.info.mint;
       }
+    }
   }
 
   return null;

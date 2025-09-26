@@ -27,6 +27,7 @@
     "desearch-js": "^1.0.9",
     "ejs": "^3.1.10",
     "socket.io": "^4.7.2",
-    "playwright": "^1.47.0"
+    "playwright": "^1.47.0",
+    "@project-serum/anchor": "^0.25.0"
   }
 }

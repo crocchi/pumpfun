@@ -105,3 +105,11 @@ setInterval(() => {
 
 
 }, 2000);
+
+setInterval(() => {
+    let data={
+        walletSol:botOptions.botCash
+    }
+    sendMessageToClient('wallet', data)//`NumTrx:${instance.solTrxNumMonitor} Volume:${instance.volume} SOL VolumeNet:${instance.volumeNet} SOL Price:${instance.LivePrice} `);
+       
+},60000)

@@ -43,9 +43,9 @@ export let SOLANA_USD = 200;
     quickBuyVolumeMin:15,//minimo volume x accettare il token
 
     marketCapSolUpQuickBuy:40,
-    marketCapSolUpMode:true,
+    marketCapSolUpMode:false,
     //acquisto token
-    buyAmount: 0.02, // quantità di SOL da acquistare
+    buyAmount: 0.04, // quantità di SOL da acquistare
     demoVersion:true, // (true)non compra/vende - false - on compra/vende
     sellOffPanic: -35, // % vendi se vao oltre -25% dal prezzo di acquisto
 
