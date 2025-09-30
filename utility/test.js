@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
 import { decodeProgramData, readString } from './decodeSolana.js';
 import WebSocket from 'ws';
-//import { decodeAnchorProgramData } from './anchor/anchor.js'
+import { decodeAnchorProgramData } from './anchor/anchor.js'
 
 export let target_mint; // Mint del token da monitorare (da impostare se necessario)
 //config debug
@@ -104,19 +104,19 @@ if (attivo) {
         const programData = logs.find(line => line.includes("Program data: "));
         const dataP = programData?.split("Program data: ")[1];
 
-        /*. LEGGE IL LEGGIBILE DA PROGRAMDATA
+        //. LEGGE IL LEGGIBILE DA PROGRAMDATA
         const buf = Buffer.from(dataP, "base64");
         console.log(buf.toString("utf8")); // a volte ci sono pezzi leggibili
         console.log(buf); // dump raw bytes
-        */
+        console.log(dataP)
        
-      // const decoded = decodeAnchorProgramData(dataP);
+        const decoded = decodeAnchorProgramData(dataP);
        
 
         console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun ");
         console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
         console.log("Istruzione Raydium decodificata:",);
-        //console.log(logs)
+        console.log(decoded)
 
       }
 
@@ -182,14 +182,14 @@ if (attivo) {
 
 }
 
-async function getTransaction(signature) {
+export async function getTransaction(signature) {
   const body = {
     jsonrpc: "2.0",
     id: 1,
     method: "getTransaction",
     params: [
       signature,
-      { commitment: "finalized" }
+      { commitment: "confirmed" ,maxSupportedTransactionVersion: 0,}
     ]
   };
 
@@ -201,7 +201,60 @@ async function getTransaction(signature) {
 
   const data = await res.json();
   console.log("Dati transazione:", data);
+  console.log("Transaction logs:", data.result?.meta?.logMessages);
+  console.log("Token transaction:", data.result?.transaction?.message);
+  console.log("Token innerInstructions:", data.result?.meta?.innerInstructions);
+  console.log("Token status:", data.result?.meta?.status);
+
   return data.result;
+  /*
+  jsonrpc: '2.0',
+
+  result: {
+
+    blockTime: 1759101475,
+
+    meta: {
+
+      computeUnitsConsumed: 249699,
+
+      costUnits: 254258,
+
+      err: null,
+
+      fee: 610000,
+
+      innerInstructions: [Array],
+
+      loadedAddresses: [Object],
+
+      logMessages: [Array],
+
+      postBalances: [Array],
+
+      postTokenBalances: [Array],
+
+      preBalances: [Array],
+
+      preTokenBalances: [Array],
+
+      rewards: [],
+
+      status: [Object]
+
+    },
+
+    slot: 369921539,
+
+    transaction: { message: [Object], signatures: [Array] },
+
+    version: 0
+
+  },
+
+  id: 1
+
+} */
 }
 
 function extractMint(tx) {

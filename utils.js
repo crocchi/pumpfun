@@ -7,6 +7,10 @@ import { checkWebsiteMatch } from './utility/websiteCheck.js';
 //import { searchTwitter } from './utility/desearchTwitter.js';
 import { sendMessageToClient } from './socketio.js';
 import { checkAccount } from './utility/twitter.js';
+import { getTransaction } from './utility/test.js';
+import { parseLaunchpadTx } from './utility/anchor/solana-transaction-parser.js';
+
+
 
 //import { checkTokenDistribution } from './utility/checkOwner.js';
 const MAX_CREATOR_SUPPLY_PERCENT = 5; // massimo accettabile per il creator
@@ -28,6 +32,8 @@ export async function isSafeToken(token) {
     if(token.mint.includes('bonk') || token.mint.includes('BONK') ) {
       if(token.solAmount ===0){
         console.log('debug Bonk:',token);
+        //getTransaction(token.signature)
+        parseLaunchpadTx(token.signature)
          safeProblem.push("❌ Liquidità sconosciuta..."+`: 0 SOL`);
         return {
           safeProblem,
