@@ -27,6 +27,7 @@ class TokenMonitor {
     this.rugpullSafe = true;
     this.prez;
     this.highPrez;
+    this.infoSnipe;
 
   }
 
@@ -79,7 +80,9 @@ class TokenMonitor {
           resolve(false);
           return false
         } else {
-          console.log(`✅ Token (${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}... Procedo con snipe...`);
+          let msg=`✅ Token (${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}... Procedo con snipe...`
+          console.log(msg);
+          this.infoSnipe=msg;
           this.resetValues();
           resolve(true);
           return true

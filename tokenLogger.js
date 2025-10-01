@@ -38,7 +38,7 @@ import { botOptions } from "./config.js";
     this.marketCapUsd=0;
     //venduto
     this.soldOut=false;
-    
+    this.infoSniper;
     
     // this.trxArray = [];
     this.safeProblem = [];
@@ -57,6 +57,7 @@ import { botOptions } from "./config.js";
     this.volumeNet = ob.solAmount;
     this.time = ob.time;
     this.id=ob.id;
+    this.infoSniper=ob.infoSnipe;
     /*if ( ob.highPrez > this.highPrice ) {
       this.highPrice = ob.highPrez;
     }*/

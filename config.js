@@ -27,14 +27,14 @@ export let SOLANA_USD = 200;
     devShare:0.36,
     marketcapMin: 5,
     marketcapMax: 100,
-    rugpullxyz:true,
+    rugpullxyz:false,
 
     //monitor token
-    time_monitor: 60000, // 3 secondi
+    time_monitor: 60000, // 60 secondi
     volumeMin: 5, // volume netto minimo in SOL per considerare il token
-    volumeMax: 20,
+    volumeMax: 12,
     minVolumeMonitor:15, //volume generale
-    maxTrxNumMonitor:500, // numero massimo di transazioni sospette per considerare il token un rugpull
+    maxTrxNumMonitor:100, // numero massimo di transazioni sospette per considerare il token un rugpull
     minTrxNumMonitor:65,
 
     netVolumeUpBuy:false, // se il volume netto tra buy e sell supera volumeMin allora compra
