@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 import { RPC_URL_HELIUS, RPC_WS_HELIUS } from '../config.js';
 import { decodeProgramData, readString } from './decodeSolana.js';
 import WebSocket from 'ws';
-import { decodeAnchorProgramData } from './anchor/anchor.js'
+//import { decodeAnchorProgramData } from './anchor/anchor.js'
 
 export let target_mint; // Mint del token da monitorare (da impostare se necessario)
 //config debug
@@ -110,7 +110,7 @@ if (attivo) {
         console.log(buf); // dump raw bytes
         console.log(dataP)
        
-        const decoded = decodeAnchorProgramData(dataP);
+        //const decoded = decodeAnchorProgramData(dataP);
        
 
         console.log("🆕 Token creato su Raydium LaunchLab - letsbonk.fun ");
@@ -180,6 +180,8 @@ if (attivo) {
     console.log('🔌 Connessione WebSocket chiusa');
   });
 
+}else{
+  console.log("⚠️ Connessione a Helius disabilitata");
 }
 
 export async function getTransaction(signature) {

@@ -7,8 +7,9 @@ import { checkWebsiteMatch } from './utility/websiteCheck.js';
 //import { searchTwitter } from './utility/desearchTwitter.js';
 import { sendMessageToClient } from './socketio.js';
 import { checkAccount } from './utility/twitter.js';
-import { getTransaction } from './utility/test.js';
+//import { getTransaction } from './utility/test.js';
 import { parseLaunchpadTx } from './utility/anchor/solana-transaction-parser.js';
+import { SOLANA_USD } from './config.js';
 
 
 
@@ -33,12 +34,39 @@ export async function isSafeToken(token) {
       if(token.solAmount ===0){
         console.log('debug Bonk:',token);
         //getTransaction(token.signature)
-        parseLaunchpadTx(token.signature)
-         safeProblem.push("❌ Liquidità sconosciuta..."+`: 0 SOL`);
+         safeProblem.push("❌ Liquidità sconosciuta..."+`: ${token.solInPool.toFixed(3)} SOL`);
         return {
           safeProblem,
           valid: safeProblem.length === 0, // soglia regolabile
         }
+        let parsedTx=await parseLaunchpadTx(token.signature);
+        if(parsedTx.valid === true){
+          token.solInPool=parsedTx.usdtAmount/SOLANA_USD;
+          token.solAmount=parsedTx.usdtAmount/SOLANA_USD;
+          //token.initialBuy=parsedTx.usdtAmount/SOLANA_USD;
+          token.uri=parsedTx.uri;
+          token.name=parsedTx.name;
+        token.symbol=parsedTx.symbol;
+        console.log('Bonk USDT:',parsedTx.usdtAmount,'SOL:',token.solInPool);
+        console.log('debug Bonk:',token);
+        }
+        if(parsedTx.valid === false){
+          safeProblem.push("❌ Liquidità sconosciuta.. transazione nn trovata."+`:0 SOL`);
+        return {
+          safeProblem,
+          valid: safeProblem.length === 0, // soglia regolabile
+        }
+        }
+      if(token.solInPool > botOptions.liquidityMin){
+
+      }else{
+         safeProblem.push("❌ Liquidità sconosciuta..."+`: ${token.solInPool.toFixed(3)} SOL`);
+        return {
+          safeProblem,
+          valid: safeProblem.length === 0, // soglia regolabile
+        }
+      }
+        
       }
       
       if (token.solInPool < botOptions.liquidityMin || token.solInPool > botOptions.liquidityMax ) {

@@ -3,10 +3,16 @@ import { SolanaParser } from "@shyft-to/solana-transaction-parser";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { RPC_URL_SOLANA } from '../../config.js';
-//import raydiumLaunchpadIdl from "./idl-.json";
+import { RPC_URL_SOLANA, RPC_URL_HELIUS } from '../../config.js';
+import {getTransactionInfo } from '../../moralis.js';
+import { decodeBN } from '../bigNum.js';
 
-const connection = new Connection(RPC_URL_SOLANA, "confirmed");
+//import raydiumLaunchpadIdl from "./idl-.json";
+const TOKEN_CONTRACT=[
+  {"symbol":"USDC","address":"USD1ttGY1N17NEEHLmELoaybftRBUSErhqYiQzvEmuB","decimals":9},//World Liberty Financial USD
+]
+
+const connection = new Connection(RPC_URL_HELIUS, "confirmed");
 
 // Carichi l’IDL del Launchpad (salvato prima da Solscan in raydium_launchpad.json)
 const __filename = fileURLToPath(import.meta.url);
@@ -20,21 +26,24 @@ const idl = JSON.parse(fs.readFileSync(idlPath, "utf8"));
 // Inizializzi il parser
 const parser = new SolanaParser([]);
 const PROGRAM_ID = new PublicKey("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj");
-
+ let lastMessageTime = Date.now();
 // Aggiungi il parser basato su IDL
 parser.addParserFromIdl(PROGRAM_ID.toBase58(), idl);
 
-export async function parseLaunchpadTx(signature) {
-  const tx = await connection.getTransaction(signature, {
+export async function parseLaunchpadTx(signature,trx) {
+  let tx
+  if(!trx){
+   tx = await connection.getTransaction(signature, {
     maxSupportedTransactionVersion: 0,
-    commitment: "confirmed"
+    commitment: "confirmed"//confirmed - processed
   });
 
   if (!tx) {
     console.log("Transazione non trovata");
-    return;
+    //tx=await getTransactionInfo(signature)
+    return {valid:false};
   }
-
+  }else{ tx=trx; }
   // Decodifica le istruzioni
   const parsed = parser.parseTransactionWithInnerInstructions(tx);
   //console.log("Parsed Transaction:", JSON.stringify(parsed, null, 2));
@@ -72,15 +81,33 @@ export async function parseLaunchpadTx(signature) {
   const quote_mint = parsed.find(ix => ix.name === "quote_mint");
   const base_mint = parsed.find(ix => ix.name === "base_mint");
   //const name = parsed.find(ix => ix.name === "name");
+
   const base_mint_param = parsed.find(ix => ix.name === "initialize_v2");//name: 'initialize_v2',
-  if (base_mint_param) {
+  const buy_exact_in = parsed.find(ix => ix.name === "buy_exact_in"); //  name: 'buy_exact_in',
+
+  let qt,amount_in,creator;
+  if(buy_exact_in){
+ 
+    const quote_token_mint = buy_exact_in.accounts.find(ix => ix.name === "quote_token_mint");
+    creator = buy_exact_in.accounts.find(ix => ix.name === "creator");//
+    amount_in=decodeBN(buy_exact_in.args.amount_in,base_mint_param.args.base_mint_param.decimals);
+    
+    if(quote_token_mint){
+      qt=TOKEN_CONTRACT.find(t=>t.address===quote_token_mint.pubkey.toBase58());
+
+    }
+    console.log("Creator:", creator?.pubkey.toBase58());
+    console.log("Quote Token Mint:", qt?.symbol);
+    console.log("Minimum Amount Out:", decodeBN(buy_exact_in.args.minimum_amount_out,base_mint_param.args.base_mint_param.decimals)); 
+    console.log("Amount In:", amount_in);
+    //console.log("Buy Exact In:", JSON.stringify(buy_exact_in, null, 2));
+  }
+    if (base_mint_param) {
  console.log("Name:", base_mint_param.args.base_mint_param.name);
  console.log("Symbol:", base_mint_param.args.base_mint_param.symbol);
  console.log("URI:", base_mint_param.args.base_mint_param.uri);
  console.log("Decimals:", base_mint_param.args.base_mint_param.decimals);
- console.log(JSON.stringify(base_mint_param, null, 2));
-  }else{
-    console.log(parsed);
+// console.log(JSON.stringify(base_mint_param, null, 2));
   }
   //a[0].args.quote_mint_param
   //a[0].args.base_mint_param
@@ -90,8 +117,19 @@ export async function parseLaunchpadTx(signature) {
   if (base_mint) {
     console.log("Base Mint:", base_mint.parsed?.mint);
   }
-  console.log("Istruzioni decodificate:", parsed);
+  //console.log("Istruzioni decodificate:", parsed);
  // console.log("Eventuali CREATE trovate:", creates);
+ return {
+  valid:true,
+  name: base_mint_param?.args.base_mint_param.name,
+  symbol: base_mint_param?.args.base_mint_param.symbol,
+  uri: base_mint_param?.args.base_mint_param.uri,
+  decimals: base_mint_param?.args.base_mint_param.decimals,
+  creator: creator?.pubkey.toBase58(),
+  quote_token: qt?.symbol,
+  usdtAmount: amount_in,
+  minimum_amount_out: decodeBN(buy_exact_in?.args.minimum_amount_out,base_mint_param?.args.base_mint_param.decimals),
+ }
 }
 
 // 🔍 esempio con una signature che hai già loggato

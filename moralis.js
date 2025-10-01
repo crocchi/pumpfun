@@ -24,6 +24,22 @@ export async function checkPrice(addressContract) {
    }
 
 }
+export async function getTransactionInfo(signature) {
+  console.log("Recupero informazioni per la transazione con firma:", signature);
+  try {
+    const response = await Moralis.SolApi.transaction.getTransaction({
+      network: 'mainnet',
+      signature: signature,
+    });
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error("Errore durante il recupero delle informazioni sulla transazione:", error.message);
+    return null;
+  }
+}
+
 /*{
   "tokenAddress": "BtKMyfjQqbSS8vxi85RknpuqqFH7coCUekW9baqPpump",
   "pairAddress": "4ZVCNNU9f73uUpQntYqE4v15ctAKXxUDh6Ys3RmMUcy6",

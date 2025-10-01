@@ -1,4 +1,5 @@
 //import * as anchor from "@project-serum/anchor";
+/*
 import * as anchor from "@coral-xyz/anchor";
 import { BorshAccountsCoder } from "@coral-xyz/anchor";
 import { SolanaParser } from "@shyft-to/solana-transaction-parser";
@@ -33,6 +34,7 @@ const dummyProvider = new anchor.AnchorProvider(dummyConnection, {
 
 const PROGRAM_ID = new PublicKey("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj");
 
+
 console.log("IDL name:", idl.metadata.name);
 console.log("Program ID:", PROGRAM_ID.toBase58());
 console.log("Wallet:", dummyProvider.publicKey.toBase58());
@@ -58,3 +60,5 @@ export function decodeAnchorProgramData(base64Data) {
     return null;
   }
 }
+
+*/
