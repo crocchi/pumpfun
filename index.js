@@ -133,7 +133,7 @@ const onMessage = async (data) => {
         console.log(`🌊 Pool: ${token.pool}`);
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         let buyTokenSignature = await buyToken(token.mint);
-        botOptions.botCash = (botOptions.botCash - botOptions.buyAmount)-0.00004;//dp fee
+        botOptions.botCash = (botOptions.botCash - botOptions.buyAmount)-0.00008;//dp fee + slippage+extra
 
         const tokenLog = getInstanceForTokenLogger(token)// iniz istanza di TokenLogger
         // buyTokenLog

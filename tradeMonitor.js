@@ -80,7 +80,7 @@ class TokenMonitor {
           resolve(false);
           return false
         } else {
-          let msg=`✅ Token (${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}... Procedo con snipe...`
+          let msg=`✅ Token (${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}...highPrez:${this.highPrez} Procedo con snipe...`
           console.log(msg);
           this.infoSnipe=msg;
           this.resetValues();
@@ -99,8 +99,9 @@ class TokenMonitor {
       clearTimeout(this.timeoutId);
       console.log(`⏹️ Timer interrotto per il token ${this.token.mint}.`);
       this.resetValues();
-      console.log(`✅ Token (${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}... Procedo con snipe...`);
-
+     let msg=`✅ Token (${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}...highPrez:${this.highPrez} Procedo con snipe...`
+          console.log(msg);
+          this.infoSnipe=msg;
       if (this.resolve) {
         this.resolve(true);
         // this.resolve = null; // Resetta `resolve` per evitare chiamate multiple

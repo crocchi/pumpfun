@@ -34,7 +34,7 @@ export async function isSafeToken(token) {
       if(token.solAmount ===0){
         console.log('debug Bonk:',token);
         //getTransaction(token.signature)
-         safeProblem.push("❌ Liquidità sconosciuta..."+`: ${token.solInPool.toFixed(3)} SOL`);
+         safeProblem.push("❌ Liquidità sconosciuta..."+`: SOL`);
         return {
           safeProblem,
           valid: safeProblem.length === 0, // soglia regolabile

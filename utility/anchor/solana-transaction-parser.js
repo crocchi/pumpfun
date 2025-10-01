@@ -26,13 +26,18 @@ const idl = JSON.parse(fs.readFileSync(idlPath, "utf8"));
 // Inizializzi il parser
 const parser = new SolanaParser([]);
 const PROGRAM_ID = new PublicKey("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj");
- let lastMessageTime = Date.now();
+ let lastMessageTime;
 // Aggiungi il parser basato su IDL
 parser.addParserFromIdl(PROGRAM_ID.toBase58(), idl);
 
 export async function parseLaunchpadTx(signature,trx) {
-  let tx
+  let tx,lastMessageTimeNow;
   if(!trx){
+    lastMessageTimeNow = Date.now();
+    if (lastMessageTime && (lastMessageTimeNow - lastMessageTime) < 2000) {
+      console.log("Aspetta almeno 2 secondi tra le richieste per evitare rate limit.");
+      return {valid:false};
+    }
    tx = await connection.getTransaction(signature, {
     maxSupportedTransactionVersion: 0,
     commitment: "confirmed"//confirmed - processed
@@ -44,6 +49,7 @@ export async function parseLaunchpadTx(signature,trx) {
     return {valid:false};
   }
   }else{ tx=trx; }
+  lastMessageTime=lastMessageTimeNow;
   // Decodifica le istruzioni
   const parsed = parser.parseTransactionWithInnerInstructions(tx);
   //console.log("Parsed Transaction:", JSON.stringify(parsed, null, 2));
