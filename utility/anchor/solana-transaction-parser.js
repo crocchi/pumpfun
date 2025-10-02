@@ -30,6 +30,19 @@ const PROGRAM_ID = new PublicKey("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj");
 // Aggiungi il parser basato su IDL
 parser.addParserFromIdl(PROGRAM_ID.toBase58(), idl);
 
+
+export async function parseLaunchpadLogs(logs) {
+  // Decodifica i logs
+  //const parsed = parser.parseLogs(logs);
+//  console.log("Parsed Logs:", JSON.stringify(parsed, null, 2));
+
+    const paredIxs = parser.parseTransactionData(logs
+    );
+  // Filtra quelli relativi alla "creazione" token
+console.log("Parsed Ixs:", JSON.stringify(paredIxs, null, 2));
+  //const name = parsed.find(ix => ix.name === "name");
+}
+
 export async function parseLaunchpadTx(signature,trx) {
   let tx,lastMessageTimeNow;
   if(!trx){
@@ -53,34 +66,7 @@ export async function parseLaunchpadTx(signature,trx) {
   // Decodifica le istruzioni
   const parsed = parser.parseTransactionWithInnerInstructions(tx);
   //console.log("Parsed Transaction:", JSON.stringify(parsed, null, 2));
-/*/   "args": {
 
-      "base_mint_param": {
-
-        "decimals": 6,
-
-        "name": "Rated R For Retarded",
-
-        "symbol": "R",
-
-        "uri": "https://ipfs.io/ipfs/bafkreicgu7qv66whnq47wvr5mafdks4kjynnvqk6ciaeykwioksjftbvbq"
-
-      },{
-
-      "args": {
-
-      "base_mint_param": {
-
-        "decimals": 6,
-
-        "name": "Rated R For Retarded",
-
-        "symbol": "R",
-
-        "uri": "https://ipfs.io/ipfs/bafkreicgu7qv66whnq47wvr5mafdks4kjynnvqk6ciaeykwioksjftbvbq"
-
-      },
-*/
 
   // Filtra quelle che indicano una "creazione" token
   //const creates = parsed.filter(ix => ix.name?.toLowerCase().includes("create"));

@@ -156,7 +156,7 @@ const onMessage = async (data) => {
         tokenLog.buyTransactionSign = buyTokenSignature;
         tokenLog.marketCapUsd = marketCapUsd;
         tokenLog.tokenAmount=botOptions.buyAmount/priceBuy //qnt token comprato
-
+        tokenLog.startSellTimer();
 
 
         logToken({
@@ -514,6 +514,7 @@ const onMessage = async (data) => {
                     method: "unsubscribeTokenTrade",
                     keys: [trade.mint]
                   }));
+                  return
                   //return { action: "SELL", sellPrice: tradeInfo.price, stop: tokenLog.stop };
                 }
                 // console.log(`🔺 Trailing attivo per ${tradeInfo.name}: currentPrice: ${tradeInfo.price}, highest: ${tokenLog.highPrice}, stop: ${tokenLog.stop.toFixed(10)}`);
@@ -536,6 +537,7 @@ const onMessage = async (data) => {
                   method: "unsubscribeTokenTrade",
                   keys: [trade.mint]
                 }));
+                return
 
               }
               // Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi

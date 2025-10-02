@@ -56,7 +56,12 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
         extraHTTPHeaders: {
             'Accept-Language': 'en-US,en;q=0.9',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        },
+        },/*
+        proxy: {
+      server: 'http://127.0.0.1:8080', // Sostituisci con il tuo proxy
+      username: 'myUsername', // (Opzionale) Nome utente
+      password: 'myPassword'  // (Opzionale) Password
+    },*/
         storageState: storageState, // Carica cookie/state
         bypassCSP: true,
     });

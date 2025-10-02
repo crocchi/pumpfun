@@ -1,3 +1,24 @@
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { BorshInstructionCoder } from "@coral-xyz/anchor";
+
+// idl importato del Raydium Launchpad
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const idlPath = path.join(__dirname, "IDL-.json");
+const idl = JSON.parse(fs.readFileSync(idlPath, "utf-8"));
+
+
+const coder = new BorshInstructionCoder(idl);
+
+export function decodeFromLogs(base64data) {
+  const buf = Buffer.from(base64data, "base64");
+  const decoded = coder.decode(buf);
+  return decoded;
+}
+
 //import * as anchor from "@project-serum/anchor";
 /*
 import * as anchor from "@coral-xyz/anchor";

@@ -1,6 +1,8 @@
 import TokenMonitor from "./tradeMonitor.js";
 import { botOptions } from "./config.js";
- 
+import { buyToken, sellToken } from './utility/lightTrx.js';
+import { webSock } from "./index.js"; 
+
  class TokenLogger extends TokenMonitor{
  constructor(token) {
     super(token); // Chiama il costruttore di TokenMonitor
@@ -38,7 +40,8 @@ import { botOptions } from "./config.js";
     this.marketCapUsd=0;
     //venduto
     this.soldOut=false;
-    this.infoSniper;
+    this.sellOutTimer=new Date();
+    this.infoSniper;// informazioni di quando viene accettato
     
     // this.trxArray = [];
     this.safeProblem = [];
@@ -155,6 +158,35 @@ import { botOptions } from "./config.js";
     };
   }
   
+  startSellTimer() {
+  //console.log(`⏳ Timer di 30 minuti avviato per ${this.name}.`);
+  
+  // Imposta un timer di 30 minuti (30 * 60 * 1000 millisecondi)
+  setTimeout(() => {
+    if (!this.soldOut) {
+      console.log(`⏰ Timer scaduto per ${this.name}. Il token non è stato venduto. Vendita automatica in corso...`);
+      
+      // Esegui la vendita automatica
+      sellToken(this.token.mint)
+        .then((result) => {
+          let ws=webSock();
+          console.log(`✅ Vendita automatica completata per ${this.name}. Dettagli:`, result);
+          this.soldOut = true; // Imposta lo stato a venduto
+          this.tokenAmount=(this.tokenAmount * this.LivePrice);
+          this.sellPrice=this.LivePrice;
+          this.infoSniper=`Venduto automaticamente dopo 30 minuti a ${new Date().toLocaleTimeString()}`;
+          botOptions.botCash= (botOptions.botCash + this.tokenAmount);
+           ws.send(JSON.stringify({
+                  method: "unsubscribeTokenTrade",
+                  keys: [this.token.mint]
+                }));
+        })
+        .catch((error) => {
+          console.error(`❌ Errore durante la vendita automatica di ${this.name}:`, error);
+        });
+    }
+  }, 30 * 60 * 1000);
+}
  }
 
  export default TokenLogger;
