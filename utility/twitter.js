@@ -143,9 +143,9 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
     //const postsText = await page.locator('a[href$="/with_replies"]').first().textContent() || 'N/A';
     const recentPosts = [];
     let postsText; //(await page.locator('[data-testid="UserDescription"] span').textContent()) || 'Nessuna bio';
+    
+    /*
     let locatorpost = await page.locator('div[data-testid="tweetText"]', { timeout: 2000 });
-
-
     let firstPost;
     try {//fa perdere un sacco di tempo se nn ci sono post...
         firstPost = await page.locator('div[data-testid="tweetText"]', { timeout: 2000 }).first().textContent();
@@ -165,7 +165,7 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
 
         postsText = 'Nessun Post';
     }
-
+*/
 
     // await page.screenshot({ path: 'error-screenshot.png' });
 
@@ -176,23 +176,22 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
     }
 */
 
-    // Output risultati
+    // Output risultati.  PostNumb: ${recentPosts.length || postsText}
     let msgg = `( --- X Account ---)
               Nome visualizzato: ${displayName}
               nickName:${nickName}
               handleName:${handleName}
               Bio: ${bio}
-              Follower: ${followers}
-              PostNumb: ${recentPosts.length || postsText}
+              Follower: ${followers}      
               `;
-    if (firstPost) { msgg = msgg + ` 1Post: ${firstPost}` }
+   // if (firstPost) { msgg = msgg + ` 1Post: ${firstPost}` }
 
     console.log(msgg);
     sendMessageToClient('event', msgg)
-    console.log('Primi 3 post recenti:');
-    sendMessageToClient('event', JSON.stringify(recentPosts))
+    //console.log('Primi 3 post recenti:');
+   // sendMessageToClient('event', JSON.stringify(recentPosts))
     //console.log(recentPosts)
-    recentPosts.forEach((post, index) => console.log(`  ${index + 1}. ${post.substring(0, 100)}...`));
+    //recentPosts.forEach((post, index) => console.log(`  ${index + 1}. ${post.substring(0, 100)}...`));
 
     /* } catch (error) {
        console.error('Errore durante il controllo:', error.message);
