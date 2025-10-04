@@ -464,6 +464,7 @@ const onMessage = async (data) => {
 
             if (parsed.txType === 'buy') { }
 
+            
             // LOGICA DI VENDITA AUTOMATICA
             if (tradeInfo && tradeInfo.price && tradeInfo.startPrice && tradeInfo.trxNum) {//fix tradeinfo undefined
 
@@ -471,6 +472,7 @@ const onMessage = async (data) => {
               //percentuale cambiamento 
               const change = ((tradeInfo.price - tradeInfo.buyPrice) / tradeInfo.buyPrice) * 100;
               liquidityCheck()
+               console.log(`(${tradeInfo.name})📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount} price:${prezzo}`);
               //  console.log(`% cambio prezzo: ${change}%`)
               if (change < botOptions.sellOffPanic) {// se vai meno del -15%
                 console.log(`% Sell Off ${botOptions.sellOffPanic}%: ${change}%`)
@@ -560,7 +562,7 @@ const onMessage = async (data) => {
               }
             } else return console.error('❌ Errore nel tradeInfo:', tradeInfo);
             //
-            console.log(`(${tradeInfo.name})📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount} price:${prezzo}`);
+           // console.log(`(${tradeInfo.name})📊 Trade su ${trade.mint}: ${trade.txType} - ${trade.tokenAmount}- SOL:${trade.solAmount} price:${prezzo}`);
 
           });
 
