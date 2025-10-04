@@ -79,11 +79,11 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
     });
 
     // Ritardo esplicito per contenuti dinamici
-    await page.waitForTimeout(4000); // Aspetta 4 secondi per caricamento JS
+    await page.waitForTimeout(3000); // Aspetta 4 secondi per caricamento JS
 
     //salva coockie,localstorage e tutte le info del browser appena collegato a x.com
     await context.storageState({ path: './utility/storage-state.json' }).then((data)=>{
-        console.log(data)
+       // console.log(data)
     })
 
     // Aspetta il selettore del profilo con timeout aumentato
@@ -128,7 +128,11 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
 
     // Clicca sul bottone "Accetta tutto" o equivalente
     // Opzione 1: Selettore per bottone con testo "Accetta tutto"
-    await page.getByRole('button', { name: 'Accept all cookies', exact: true }).click();
+    try {
+        await page.getByRole('button', { name: 'Accept all cookies', exact: true }).click();
+    } catch (error) {
+        console.log('Bottone "Accetta tutto" non trovato.');
+    }
 
     // Opzione 2: Se il selettore è diverso (es. link o altro bottone), usa questo
     // await page.locator('button[data-testid="accept-all"]').click();
