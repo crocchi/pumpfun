@@ -124,6 +124,7 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
     const followers = await page.locator('a[href$="/verified_followers"] span').first().textContent();
 
     // Gestione banner cookie (opzionale: solo se visibile)
+    /*
     await page.waitForSelector('[data-testid="BottomBar"]', { timeout: 5000 });
 
     // Clicca sul bottone "Accetta tutto" o equivalente
@@ -134,11 +135,11 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
         console.log('Bottone "Accetta tutto" non trovato.');
         await page.screenshot({ path: 'account-nofound-screenshot.png' });
     }
-
+*/
     // Opzione 2: Se il selettore è diverso (es. link o altro bottone), usa questo
     // await page.locator('button[data-testid="accept-all"]').click();
 
-    console.log('Cookie accettati con successo.');
+  //  console.log('Cookie accettati con successo.');
 
     //const postsText = await page.locator('a[href$="/with_replies"]').first().textContent() || 'N/A';
     const recentPosts = [];
