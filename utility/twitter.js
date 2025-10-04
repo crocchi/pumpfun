@@ -132,6 +132,7 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
         await page.getByRole('button', { name: 'Accept all cookies', exact: true }).click();
     } catch (error) {
         console.log('Bottone "Accetta tutto" non trovato.');
+        await page.screenshot({ path: 'account-nofound-screenshot.png' });
     }
 
     // Opzione 2: Se il selettore è diverso (es. link o altro bottone), usa questo
