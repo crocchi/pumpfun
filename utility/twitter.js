@@ -79,7 +79,7 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
     });
 
     // Ritardo esplicito per contenuti dinamici
-    await page.waitForTimeout(3000); // Aspetta 2 secondi per caricamento JS
+    await page.waitForTimeout(4000); // Aspetta 4 secondi per caricamento JS
 
     //salva coockie,localstorage e tutte le info del browser appena collegato a x.com
     await context.storageState({ path: './utility/storage-state.json' }).then((data)=>{
