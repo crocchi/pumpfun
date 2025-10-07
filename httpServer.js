@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
 
 export function logToken(tokenData) {
   tokenLog.unshift({ timestamp: Date.now(), ...tokenData });
-  if (tokenLog.length > 40) tokenLog.pop();
+  if (tokenLog.length > 50) tokenLog.pop();
 }
 
 function serveStatic(req, res) {

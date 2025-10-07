@@ -97,7 +97,7 @@ if (attivo) {
          const programData = logs.find(line => line.includes("Program data: "));
          const dataP = programData?.split("Program data: ")[1];
          // const base64 = log.replace("Program data: ", "");
-         const decoded = decodeFromLogs(dataP);
+         const decoded = decodeProgramData(dataP);
          console.log("Decoded instruction:", decoded);
          console.log("------------------------------");
          console.log("🆕 Token creato su Pump.fun!");

@@ -43,7 +43,7 @@ const TOKEN_AMOUNT = 0; // QNT di token acquistato
 // =======================
 // FUNZIONE PRINCIPALE
 // =======================
-export async function buyToken(mintToken) {
+export async function buyToken(mintToken , retryCount = 1, timercount = 1000) {
 if(botOptions.demoVersion) return `demo version...no buy`
     try {
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
@@ -71,9 +71,16 @@ if(botOptions.demoVersion) return `demo version...no buy`
             return data.signature
         } else {
             console.error("❌ Errore:", data);
+            throw new Error("Errore nella risposta del server");
         }
     } catch (err) {
         console.error("Errore di connessione o fetch:", err);
+         if (retryCount < 4) { // Limita il numero di tentativi a 3
+            console.log(`Riprovo a comprare il token tra ${timercount / 1000} sec... Tentativo ${retryCount + 1}`);
+            setTimeout(() => buyToken(mintToken, retryCount + 1, timercount + 1000), timercount);
+        } else {
+            console.error("❌ Numero massimo di tentativi raggiunto. Operazione fallita.");
+        }
     }
 }
 /*
@@ -113,10 +120,11 @@ trade: {
 */
 
 
-export async function sellToken(mintToken ,sol_or_not=false) {
-   if(botOptions.demoVersion) return `demo version...no sell`
+export async function sellToken(mintToken ,sol_or_not=false,retryCount = 1, timercount = 1000) {
+   if(botOptions.demoVersion) return `demo version...no sell`;
     try {
-        let totAmountToSell=await returnTokenLog(mintToken)
+        let totAmountToSell=await returnTokenLog(mintToken);
+        let amountToSell=totAmountToSell.buySign[1]?.tokenAmount-1 || botOptions.buyAmount*1.5 ;
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
             method: "POST",
             headers: {
@@ -125,7 +133,7 @@ export async function sellToken(mintToken ,sol_or_not=false) {
             body: JSON.stringify({
                 action: "sell",
                 mint: mintToken,
-                amount: totAmountToSell.buySign[1]?.tokenAmount-1 || botOptions.buyAmount*1.5 ,
+                amount: amountToSell ,
                 denominatedInSol: sol_or_not, // true = AMOUNT_SOL è in SOL
                 slippage: SLIPPAGE,
                 priorityFee: PRIORITY_FEE,
@@ -141,9 +149,16 @@ export async function sellToken(mintToken ,sol_or_not=false) {
             console.log("Signature:", data.signature || JSON.stringify(data));
         } else {
             console.error("❌ Errore:", data);
+            throw new Error("Errore nella risposta del server");
         }
     } catch (err) {
         console.error("Errore di connessione o fetch:", err);
+        if (retryCount < 4) { // Limita il numero di tentativi a 3
+            console.log(`Riprovo a vendere il token tra ${timercount / 1000} sec... Tentativo ${retryCount + 1}`);
+            setTimeout(() => sellToken(mintToken, sol_or_not, retryCount + 1, timercount + 1000), timercount);
+        } else {
+            console.error("❌ Numero massimo di tentativi raggiunto. Operazione fallita.");
+        }
     }
 }
 
