@@ -124,7 +124,7 @@ export async function sellToken(mintToken ,sol_or_not=false,retryCount = 1, time
    if(botOptions.demoVersion) return `demo version...no sell`;
     try {
         let totAmountToSell=await returnTokenLog(mintToken);
-        let amountToSell=totAmountToSell.buySign[1]?.tokenAmount-1 || botOptions.buyAmount*1.5 ;
+        let amountToSell=totAmountToSell.buySign[1]?.tokenAmount || botOptions.buyAmount*1.5 ;
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
             method: "POST",
             headers: {
@@ -164,3 +164,29 @@ export async function sellToken(mintToken ,sol_or_not=false,retryCount = 1, time
 
 
 
+/*
+(MEOJI)📊 Trade su 3ARRZCGqZCihkm1jTaPA3hcU32MWnJrNxnjNQ4Sipump: buy - 11453683.534209- SOL:0.95 price:0.0000000845
+📊 vendi MEOJI: gain  buy at 0.0000000310 -- sold at  0.0000000845
+🚫 Unsubscribed da 3ARRZCGqZCihkm1jTaPA3hcU32MWnJrNxnjNQ4Sipump venduto!!)
+{
+  signature: '2x1japY1iU7R6Z8pCT5TwrDpiN8UdRdJxUmEp1JU8WSBMY4cQcUVzrWWRPwrDD7Q7cAevRebwcTUsVqECnaCX67q',
+  errors: []
+}
+✅ Transazione inviata!
+
+
+
+✅ Transazione inviata!
+Signature: 49eiTR2iES5K7WzaFyxz48gqdxhqVLJCeo4hnHryoK3NFoHB2f9dVWLYAfNAi1ivQxPBBNdxhnFZ6Vht2CZHxuuU
+
+📊 RUgPool - vendi China Man Currency : gain  buy at 0.0000000334 -- sold at  0.0000000660
+🚫 Unsubscribed da HXSsiNMjvbT6HwMxvKggMcGCbbFP4N3ggbqNCJF4pump venduto!!)
+{
+  errors: [
+    'Attempted to trade 0.06 tokens. Trades must buy or sell at least 1 token'
+  ]
+}
+✅ Transazione inviata!
+Signature: {"errors":["Attempted to trade 0.06 tokens. Trades must buy or sell at least 1 token"]}
+
+*/

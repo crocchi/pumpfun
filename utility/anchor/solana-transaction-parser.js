@@ -124,6 +124,44 @@ export async function parseLaunchpadTx(signature,trx) {
  }
 }
 
+
+const idlPathPump = path.join(__dirname, "idl-pumpfun.json");
+const idlPump = JSON.parse(fs.readFileSync(idlPathPump, "utf8"));
+// Carichi l’IDL del Launchpad (salvato prima da Solscan in raydium_launchpad.json)
+
+// Ini
+// Inizializzi il parser
+const parserPump = new SolanaParser([]);
+const PROGRAM_ID_PUMP = new PublicKey("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
+
+// Aggiungi il parser basato su IDL
+parserPump.addParserFromIdl(PROGRAM_ID_PUMP.toBase58(), idlPump);
+
+
+
+export async function parseTrx(signature,poolDecodeTrx="pumpfun") {
+  let tx,lastMessageTimeNow;
+  
+    lastMessageTimeNow = Date.now();
+    if (lastMessageTime && (lastMessageTimeNow - lastMessageTime) < 2000) {
+      console.log("Aspetta almeno 2 secondi tra le richieste per evitare rate limit.");
+      return {valid:false};
+    }
+   tx = await connection.getTransaction(signature, {
+    maxSupportedTransactionVersion: 0,
+    commitment: "confirmed"//confirmed - processed
+  });
+  lastMessageTime=lastMessageTimeNow;
+  if (!tx) {
+    console.log("Transazione non trovata");
+    return {valid:false};
+  }
+
+  
+  // Decodifica le istruzioni
+  const parsed = parserPump.parseTransactionWithInnerInstructions(tx);
+  console.log("Parsed Transaction:", JSON.stringify(parsed, null, 2));
+}
 // 🔍 esempio con una signature che hai già loggato
 //parseLaunchpadTx("2Wjfv2thD2McR19cVpMcg8R6Ra6Qk2gYEnjJJ65Bgvnx7HE19SxhJ92ruhENAGKawZvsJTyNVgUNnk6nCzZKaDi4");
 /*    programId: PublicKey [PublicKey(TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA)] {

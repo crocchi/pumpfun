@@ -5,6 +5,7 @@ import TokenLogger from './tokenLogger.js';
 import { sendMessageToClient } from './socketio.js';
 import { onError, onClose,onOpen,lastMessageTimeSet,startTimeout } from "./websocket.js";
 //import { initArbitrage , TOKENS } from "./arbitrage.js";
+import { parseTrx } from './utility/anchor/solana-transaction-parser.js';
 
 
 import { startHttpServer, logToken, updateToken, buyTokenLog } from './httpServer.js';
@@ -25,10 +26,17 @@ const subscribedTokens = new Set();
 export const instances = new Map(); // Mappa per memorizzare le istanze di TokenMonitor
 export const instancesToken = new Map(); // Mappa per memorizzare le istanze di TokenLogger
 
+setTimeout(parseTrx('49eiTR2iES5K7WzaFyxz48gqdxhqVLJCeo4hnHryoK3NFoHB2f9dVWLYAfNAi1ivQxPBBNdxhnFZ6Vht2CZHxuuU'), 10000); // Avvia il timeout di inattività
 //checkAccount('elonmusk','How to vote');
 //getTop10Tokens();
 //getCMC20Historical()
+/*
+          COSE DA FARE
+          -controllare la transazione di acquisto, e di vendità
+          -aggiungere controllo wallet monete e quantita
 
+
+*/
 // Avvia il timeout di inattività
 // Funzione per inizializzare/riconnettere il WebSocket
 export function connect() {
@@ -133,6 +141,13 @@ const onMessage = async (data) => {
         console.log(`🌊 Pool: ${token.pool}`);
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         let buyTokenSignature = await buyToken(token.mint);
+        if (buyTokenSignature) {
+          console.log(`Transazione di acquisto inviata con signature: ${buyTokenSignature}`);
+        }else {
+          console.log(`❌ Errore nell'invio della transazione di acquisto per il token ${token.name}.`);
+          //return
+        }
+
         botOptions.botCash = (botOptions.botCash - botOptions.buyAmount)-0.00008;//dp fee + slippage+extra
 
         const tokenLog = getInstanceForTokenLogger(token)// iniz istanza di TokenLogger
