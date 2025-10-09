@@ -81,7 +81,7 @@ if(botOptions.demoVersion) return false
         console.error("Errore di connessione o fetch:", err);
          if (retryCount < 4) { // Limita il numero di tentativi a 3
             console.log(`Riprovo a comprare il token tra ${timercount / 1000} sec... Tentativo ${retryCount + 1}`);
-            setTimeout(() => buyToken(mintToken, retryCount + 1, timercount + 1000), timercount);
+            setTimeout(() => buyToken(token, retryCount + 1, timercount + 1000), timercount);
         } else {
             console.error("❌ Numero massimo di tentativi raggiunto. Operazione fallita.");
         }
@@ -164,7 +164,7 @@ export async function sellToken(token ,sol_or_not=false,retryCount = 1, timercou
         console.error("Errore di connessione o fetch:", err);
         if (retryCount < 4) { // Limita il numero di tentativi a 3
             console.log(`Riprovo a vendere il token tra ${timercount / 1000} sec... Tentativo ${retryCount + 1}`);
-            setTimeout(() => sellToken(mintToken, sol_or_not, retryCount + 1, timercount + 1000), timercount);
+            setTimeout(() => sellToken(token, sol_or_not, retryCount + 1, timercount + 1000), timercount);
         } else {
             console.error("❌ Numero massimo di tentativi raggiunto. Operazione fallita.");
         }

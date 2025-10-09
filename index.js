@@ -161,7 +161,7 @@ const onMessage = async (data) => {
     mint: quote_token_mint.pubkey.toBase58(),
   } */
             })
-          }, 2000); // Avvia il timeout di inattività  
+          }, 1000); // Avvia il timeout di inattività  
         }else {
           console.log(`❌ Errore nell'invio della transazione di acquisto per il token ${token.name}.`);
           //return
@@ -515,8 +515,8 @@ const onMessage = async (data) => {
                 subscribedTokens.delete(trade.mint);
                 sellToken(trade);
                 tokenLog.soldOut=true;
-                tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
-                botOptions.botCash= (botOptions.botCash + tokenLog.tokenAmount);
+                //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
+                botOptions.botCash= (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
                 sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
                 console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
                 ws.send(JSON.stringify({
@@ -539,8 +539,8 @@ const onMessage = async (data) => {
 
                   sellToken(trade)
                   tokenLog.soldOut=true;
-                  tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
-                  botOptions.botCash= botOptions.botCash + tokenLog.tokenAmount;
+                  //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
+                  botOptions.botCash= (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
                   sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
                   console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
                   subscribedTokens.delete(trade.mint);
@@ -560,8 +560,8 @@ const onMessage = async (data) => {
               if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) {
                 sellToken(trade);
                 tokenLog.soldOut=true;
-                tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
-                botOptions.botCash= botOptions.botCash + tokenLog.tokenAmount;
+                //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
+                botOptions.botCash= (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
                 sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
                 sendMessageToClient('event', `📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
@@ -580,8 +580,8 @@ const onMessage = async (data) => {
               if (tradeInfo.trxNum > botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.buyPrice * botOptions.rugpullMinGainMultiplier) {
                 sellToken(trade);
                 tokenLog.soldOut=true;
-                tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
-                botOptions.botCash= botOptions.botCash + tokenLog.tokenAmount;
+                //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
+                botOptions.botCash= (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
                 sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
                 console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
                 sendMessageToClient('event', `📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
