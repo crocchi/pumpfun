@@ -26,7 +26,7 @@ const subscribedTokens = new Set();
 export const instances = new Map(); // Mappa per memorizzare le istanze di TokenMonitor
 export const instancesToken = new Map(); // Mappa per memorizzare le istanze di TokenLogger
 
-setTimeout(parseTrx('49eiTR2iES5K7WzaFyxz48gqdxhqVLJCeo4hnHryoK3NFoHB2f9dVWLYAfNAi1ivQxPBBNdxhnFZ6Vht2CZHxuuU'), 10000); // Avvia il timeout di inattività
+// Avvia il timeout di inattività
 //checkAccount('elonmusk','How to vote');
 //getTop10Tokens();
 //getCMC20Historical()
@@ -118,7 +118,7 @@ const onMessage = async (data) => {
         return;
         }
   */
-
+        let buyTokenSignature = await buyToken(token);
         liquidityCheck()
         console.log("Token:", token);
 
@@ -140,9 +140,28 @@ const onMessage = async (data) => {
         console.log(`📦 URI: ${token.uri}`);
         console.log(`🌊 Pool: ${token.pool}`);
         console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
-        let buyTokenSignature = await buyToken(token.mint);
+        
+        const tokenLog = getInstanceForTokenLogger(token);// iniz istanza di TokenLogger
         if (buyTokenSignature) {
           console.log(`Transazione di acquisto inviata con signature: ${buyTokenSignature}`);
+
+          setTimeout(() => {
+            parseTrx(buyTokenSignature).then(data => {
+              if(data.valid!==true){return console.log("Errore nel parsing della transazione di acquisto:",data)}
+              console.log('parse:', data);
+              tokenLog.buyPrice = data.priceBuy;
+              tokenLog.tokenAmount = data.totBuyToken;
+              tokenLog.jitoFee = data.feeJito6;
+              /*{
+    valid: true,
+    totBuyToken: realAmount,
+    totBuySol: buyAmountQnt,
+    priceBuy: (buyAmountQnt / realAmount).toFixed(10),
+    feeJito6: jitoFee,
+    mint: quote_token_mint.pubkey.toBase58(),
+  } */
+            })
+          }, 2000); // Avvia il timeout di inattività  
         }else {
           console.log(`❌ Errore nell'invio della transazione di acquisto per il token ${token.name}.`);
           //return
@@ -150,7 +169,7 @@ const onMessage = async (data) => {
 
         botOptions.botCash = (botOptions.botCash - botOptions.buyAmount)-0.00008;//dp fee + slippage+extra
 
-        const tokenLog = getInstanceForTokenLogger(token)// iniz istanza di TokenLogger
+        
         // buyTokenLog
         getTopHolders(token.mint).then(holders => {
           console.log(`👥 Top 5 holders:`)
@@ -165,12 +184,12 @@ const onMessage = async (data) => {
 
         // Logga il token nel database
         tokenLog.safeProblem = safer;
-        tokenLog.buyPrice = priceBuy;
+        tokenLog.buyPrice = tokenLog.buyPrice || priceBuy;
         tokenLog.startPrice = prezzo;
         tokenLog.highPrez = prezzo;
         tokenLog.buyTransactionSign = buyTokenSignature;
         tokenLog.marketCapUsd = marketCapUsd;
-        tokenLog.tokenAmount=botOptions.buyAmount/priceBuy //qnt token comprato
+        tokenLog.tokenAmount=tokenLog.tokenAmount || botOptions.buyAmount/priceBuy //qnt token comprato
         tokenLog.startSellTimer();
 
 
@@ -494,7 +513,7 @@ const onMessage = async (data) => {
                 sendMessageToClient('event', `% Sell Off Panic:${tradeInfo.name}  ${botOptions.sellOffPanic}%: ${change}%`)
 
                 subscribedTokens.delete(trade.mint);
-                sellToken(trade.mint);
+                sellToken(trade);
                 tokenLog.soldOut=true;
                 tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
                 botOptions.botCash= (botOptions.botCash + tokenLog.tokenAmount);
@@ -518,7 +537,7 @@ const onMessage = async (data) => {
                   console.log(msg);
                   sendMessageToClient('event', msg)
 
-                  sellToken(trade.mint)
+                  sellToken(trade)
                   tokenLog.soldOut=true;
                   tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
                   botOptions.botCash= botOptions.botCash + tokenLog.tokenAmount;
@@ -539,7 +558,7 @@ const onMessage = async (data) => {
               }
 
               if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) {
-                sellToken(trade.mint);
+                sellToken(trade);
                 tokenLog.soldOut=true;
                 tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
                 botOptions.botCash= botOptions.botCash + tokenLog.tokenAmount;
@@ -559,7 +578,7 @@ const onMessage = async (data) => {
               }
               // Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi
               if (tradeInfo.trxNum > botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.buyPrice * botOptions.rugpullMinGainMultiplier) {
-                sellToken(trade.mint);
+                sellToken(trade);
                 tokenLog.soldOut=true;
                 tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
                 botOptions.botCash= botOptions.botCash + tokenLog.tokenAmount;
@@ -607,7 +626,7 @@ function getInstanceForTokenMonitor(token) {
 }
 
 
-function getInstanceForTokenLogger(token) {
+export function getInstanceForTokenLogger(token) {
   if (!token) { return null }
 
   if (!instancesToken.has(token.mint)) {

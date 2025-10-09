@@ -1,5 +1,6 @@
 import { LIGHT_WALLET_API , botOptions } from '../config.js';
 import {returnTokenLog } from '../httpServer.js'
+import {getInstanceForTokenLogger} from '../index.js'
 /*
 const response = await fetch("https://pumpportal.fun/api/trade?api-key=your-api-key-here", {
     method: "POST",
@@ -43,8 +44,8 @@ const TOKEN_AMOUNT = 0; // QNT di token acquistato
 // =======================
 // FUNZIONE PRINCIPALE
 // =======================
-export async function buyToken(mintToken , retryCount = 1, timercount = 1000) {
-if(botOptions.demoVersion) return `demo version...no buy`
+export async function buyToken(token , retryCount = 1, timercount = 1000) {
+if(botOptions.demoVersion) return false
     try {
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
             method: "POST",
@@ -53,16 +54,19 @@ if(botOptions.demoVersion) return `demo version...no buy`
             },
             body: JSON.stringify({
                 action: "buy",
-                mint: mintToken,
+                mint: token.mint,
                 amount: botOptions.buyAmount,
                 denominatedInSol: "true", // true = AMOUNT_SOL è in SOL
                 slippage: SLIPPAGE,
                 priorityFee: PRIORITY_FEE,
-                pool: POOL
+                pool: token.pool || POOL
             })
         });
 
         const data = await response.json();
+        if(data.errors.length>0){ // se ci sono errori
+            throw new Error(data.errors.join(", "));
+        }
        // console.log(data)
         if (response.ok) {
             console.log("✅ Transazione inviata!");
@@ -120,11 +124,12 @@ trade: {
 */
 
 
-export async function sellToken(mintToken ,sol_or_not=false,retryCount = 1, timercount = 1000) {
-   if(botOptions.demoVersion) return `demo version...no sell`;
+export async function sellToken(token ,sol_or_not=false,retryCount = 1, timercount = 1000) {
+   if(botOptions.demoVersion) return false;
+   let tokenLog = await getInstanceForTokenLogger(token);
     try {
-        let totAmountToSell=await returnTokenLog(mintToken);
-        let amountToSell=totAmountToSell.buySign[1]?.tokenAmount || botOptions.buyAmount*1.5 ;
+        let totAmountToSell=await returnTokenLog(token.mint);
+        let amountToSell=tokenLog.tokenAmount || totAmountToSell.buySign[1]?.tokenAmount ;
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
             method: "POST",
             headers: {
@@ -132,21 +137,25 @@ export async function sellToken(mintToken ,sol_or_not=false,retryCount = 1, time
             },
             body: JSON.stringify({
                 action: "sell",
-                mint: mintToken,
+                mint: token.mint,
                 amount: amountToSell ,
                 denominatedInSol: sol_or_not, // true = AMOUNT_SOL è in SOL
                 slippage: SLIPPAGE,
                 priorityFee: PRIORITY_FEE,
-                pool: POOL
+                pool: token.pool || POOL
             })
         });
 
         const data = await response.json();
         console.log(data)
+        if(data.errors.length>0){ // se ci sono errori
+            throw new Error(data.errors.join(", "));
+        }
         if (response.ok) {
             console.log("✅ Transazione inviata!");
             
             console.log("Signature:", data.signature || JSON.stringify(data));
+            return data.signature
         } else {
             console.error("❌ Errore:", data);
             throw new Error("Errore nella risposta del server");
