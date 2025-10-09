@@ -474,6 +474,7 @@
 
 		socket.on('logger', (token) => {
 			//console.log('🆕 Nuovo token monitorato:', token);
+
 			const oraIt = new Date().toLocaleTimeString("it-IT", {
 				timeZone: "Europe/Rome",
 				hour: "2-digit",
@@ -491,6 +492,8 @@
 
 		socket.on('tokenLogger', (token) => {
 			//let date = new Date().toLocaleTimeString();
+			//const audio = new Audio('../public/assetsClient/sounds/notification.mp3');
+			playScale();
 
 			let searchEl = document.getElementById(`log${token.id}`)
 			// Check if the token already exists - search by id
@@ -631,6 +634,53 @@
 			console.log('🔌 Disconnesso dal server');
 		});
 
+function playBeep(frequency, duration = 500) {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    // Configura il tipo di suono e la frequenza
+    oscillator.type = 'sine'; // Puoi provare anche 'square', 'triangle', 'sawtooth'
+    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime); // Frequenza in Hz
+
+    // Configura il volume
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime); // Volume (0.1 = basso)
+
+    // Collega l'oscillatore al gainNode e poi al contesto audio
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    // Avvia il suono
+    oscillator.start();
+
+    // Ferma il suono dopo la durata specificata
+    setTimeout(() => {
+        oscillator.stop();
+        audioContext.close();
+    }, duration);
+}
+
+// Esempio: Riproduci una scala musicale
+function playScale() {
+    const notes = [
+        { frequency: 261.63, duration: 500 }, // Do
+        { frequency: 293.66, duration: 500 }, // Re
+        { frequency: 329.63, duration: 500 }, // Mi
+        { frequency: 349.23, duration: 500 }, // Fa
+        { frequency: 392.00, duration: 500 }, // Sol
+        { frequency: 440.00, duration: 500 }, // La
+        { frequency: 493.88, duration: 500 }, // Si
+        { frequency: 523.25, duration: 500 }  // Do (ottava successiva)
+    ];
+
+    let delay = 0;
+    notes.forEach(note => {
+        setTimeout(() => playBeep(note.frequency, note.duration), delay);
+        delay += note.duration;
+    });
+}
+
+// Esegui la scala musicale
 
 
 	</script>

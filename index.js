@@ -163,7 +163,7 @@ const onMessage = async (data) => {
             })
           }, 1000); // Avvia il timeout di inattività  
         }else {
-          console.log(`❌ Errore nell'invio della transazione di acquisto per il token ${token.name}.`);
+          console.log(`❌ Acquisto demo - ${token.name}.`);
           //return
         }
 
