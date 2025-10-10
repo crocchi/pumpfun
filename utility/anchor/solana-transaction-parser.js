@@ -178,6 +178,8 @@ export async function parseTrx(signature, poolDecodeTrx = "pumpfun") {
   if(buyAmount?.args){
      buyAmountQnt = decodeBN(buyAmount.args.lamports, 9);
   }else{
+   // buyAmount = transfers.find(ix => ix?.accounts.find(account => account?.pubkey === "ADuUkR4vqLUMWXxW9gh6D6L8pMSawimctcNZ5pGwDcEt"));
+
     buyAmountQnt=-1;
   }
 /*file:///Pumpfun/utility/anchor/solana-transaction-parser.js:177

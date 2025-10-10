@@ -264,7 +264,8 @@ const onMessage = async (data) => {
       //controlla la tua transazione
       if (parsed.txType === 'buy' && parsed.traderPublicKey === botOptions.botWallet) {
         liquidityCheck();
-        console.log(`Acquisto rilevato wallet Bot:`);
+        console.log(`Acquisto rilevato wallet Bot:
+          buy Token:[${tokenLog.token?.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
         tokenLog.buyPrice = prezzo;
         buyTokenLog(parsed.mint, parsed.tokenAmount, parsed.solAmount, prezzo)
       }
