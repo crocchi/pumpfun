@@ -166,15 +166,28 @@ export async function parseTrx(signature, poolDecodeTrx = "pumpfun") {
 
   //analizza le istruzioni.
   //console.log(transfers)
-
+  console.log("Transaction:", transfers);
   // controlla jito fee
   let jitoFee = transfers[0]//transfers.find(ix => ix?.accounts.some(account => account?.pubkey === "ADuUkR4vqLUMWXxW9gh6D6L8pMSawimctcNZ5pGwDcEt"));
   //console.log('jitofee:',jitoFee)
   let feeJito = decodeBN(jitoFee.args.lamports, 9);
   jitoFee = feeJito || 0; // in sol
 
+  let buyAmountQnt=0;
   let buyAmount = transfers[3]//transfers.find(ix => ix?.accounts.some(account => account?.pubkey === "ADuUkR4vqLUMWXxW9gh6D6L8pMSawimctcNZ5pGwDcEt"));
+  if(buyAmount?.args){
+     buyAmountQnt = decodeBN(buyAmount.args.lamports, 9);
+  }else{
+    buyAmountQnt=-1;
+  }
+/*file:///Pumpfun/utility/anchor/solana-transaction-parser.js:177
   let buyAmountQnt = decodeBN(buyAmount.args.lamports, 9);
+                                        ^
+TypeError: Cannot read properties of undefined (reading 'args')
+    at parseTrx (file:///Pumpfun/utility/anchor/solana-transaction-parser.js:177:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+ */
+
 
   // totale di token acquistati...
   const tokenAmountBuy = parsed.find(ix => ix.args.amount); //  hex number

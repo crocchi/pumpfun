@@ -490,10 +490,12 @@
 			if (size > 90000) logggerEl.textContent = '0\n';
 		});
 
+		socket.on('notifyMe', (data) => {
+			playScale();
+		})
 		socket.on('tokenLogger', (token) => {
 			//let date = new Date().toLocaleTimeString();
 			//const audio = new Audio('../public/assetsClient/sounds/notification.mp3');
-			playScale();
 
 			let searchEl = document.getElementById(`log${token.id}`)
 			// Check if the token already exists - search by id
@@ -644,7 +646,7 @@ function playBeep(frequency, duration = 500) {
     oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime); // Frequenza in Hz
 
     // Configura il volume
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime); // Volume (0.1 = basso)
+    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime); // Volume (0.1 = basso)
 
     // Collega l'oscillatore al gainNode e poi al contesto audio
     oscillator.connect(gainNode);
@@ -662,6 +664,26 @@ function playBeep(frequency, duration = 500) {
 
 // Esempio: Riproduci una scala musicale
 function playScale() {
+	const notesTwo = [
+		{ frequency: 392.00, duration: 400 }, // Sol
+		{ frequency: 440.00, duration: 400 }, // La
+		{ frequency: 493.88, duration: 400 }, // Si
+		{ frequency: 523.25, duration: 600 }, // Do (ottava successiva)
+		{ frequency: 493.88, duration: 400 }, // Si
+		{ frequency: 440.00, duration: 400 }, // La
+		{ frequency: 392.00, duration: 800 }, // Sol
+		{ frequency: 440.00, duration: 400 }, // La
+		{ frequency: 493.88, duration: 400 }, // Si
+		{ frequency: 523.25, duration: 600 }, // Do (ottava successiva)
+		{ frequency: 587.33, duration: 800 }  // Re
+	];
+
+	let delayTwo = 0;
+	notesTwo.forEach(note => {
+		setTimeout(() => playBeep(note.frequency, note.duration), delayTwo);
+		delayTwo += note.duration;
+	});
+	/*
     const notes = [
         { frequency: 261.63, duration: 500 }, // Do
         { frequency: 293.66, duration: 500 }, // Re
@@ -677,7 +699,7 @@ function playScale() {
     notes.forEach(note => {
         setTimeout(() => playBeep(note.frequency, note.duration), delay);
         delay += note.duration;
-    });
+    });*/
 }
 
 // Esegui la scala musicale

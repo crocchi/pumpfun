@@ -124,7 +124,8 @@ const onMessage = async (data) => {
 
         console.log(`-----------------------------------------------`);
         console.log(`🚀 Nuovo token: ${token.name} (${token.symbol})`);
-        sendMessageToClient('logger', `🚀 Nuovo token: ${token.name} (${token.symbol})`)
+        //sendMessageToClient('logger', `🚀 Nuovo token: ${token.name} (${token.symbol})`)
+        sendMessageToClient('notifyMe', `🚀 Nuovo token: ${token.name} (${token.symbol})`); // invio il token al client
         console.log(`🧠 Mint: ${token.mint}`);
         console.log(`📈 MarketCap (SOL): ${token.marketCapSol}`);
         //const solToUsdRate = SOLANA_USD; // Replace with the current SOL to USD conversion rate
