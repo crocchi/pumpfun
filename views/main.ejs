@@ -678,8 +678,19 @@ function playScale() {
 		{ frequency: 587.33, duration: 800 }  // Re
 	];
 
+	const myMusic = [
+		{ frequency: 392.00, duration: 400 }, // Sol
+        { frequency: 392.00, duration: 200 }, // Sol
+        { frequency: 392.00, duration: 200 }, // Sol
+		{ frequency: 440.00, duration: 400 }, // La
+		{ frequency: 392.00, duration: 800 }, // Sol
+        { frequency: 493.88, duration: 500 }, // Si
+        { frequency: 523.25, duration: 500 }, // Do
+		
+	];
+
 	let delayTwo = 0;
-	notesTwo.forEach(note => {
+	myMusic.forEach(note => {
 		setTimeout(() => playBeep(note.frequency, note.duration), delayTwo);
 		delayTwo += note.duration;
 	});
