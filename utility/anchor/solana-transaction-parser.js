@@ -14,7 +14,7 @@ const TOKEN_CONTRACT = [
 
 const CONTRACT=[{
   "Pump.fun Bonding Curve": "BFNU4SdjN6mJdJetUV8Aq5Zqf5uunjAu6uYa9LEXYBuX",
-  
+
 }]
 const connection = new Connection(RPC_URL_HELIUS, "confirmed");
 
@@ -164,7 +164,7 @@ export async function parseTrx(signature, poolDecodeTrx = "pumpfun") {
 
   // Decodifica le istruzioni
   const parsed = parserPump.parseTransactionWithInnerInstructions(tx);
-
+  console.log("Transaction:", parsed);
   //filtra tutti i transfer
   const transfers = parsed.filter(ix => ix.name === "transfer");
 
