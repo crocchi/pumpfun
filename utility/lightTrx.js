@@ -133,6 +133,7 @@ export async function sellToken(token ,sol_or_not=false,retryCount = 1, timercou
         if(amountFallback){
            amountToSell = '100%';
         }
+        console.log(`Lancio vendita ${token.symbol} :totamount to sell ${amountToSell}`);
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
             method: "POST",
             headers: {
@@ -167,7 +168,7 @@ export async function sellToken(token ,sol_or_not=false,retryCount = 1, timercou
         console.error("Errore di connessione o fetch:", err);
         if (retryCount < 4) { // Limita il numero di tentativi a 3
             console.log(`Riprovo a vendere il token tra ${timercount / 1000} sec... Tentativo ${retryCount + 1}`);
-            setTimeout(() => sellToken(token, sol_or_not, retryCount + 1, timercount + 1000,true), timercount);
+            setTimeout(() => sellToken(token, sol_or_not, retryCount + 1, timercount + 500,true), timercount);
         } else {
             console.error("❌ Numero massimo di tentativi raggiunto. Operazione fallita.");
         }

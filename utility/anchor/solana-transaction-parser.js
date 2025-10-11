@@ -12,6 +12,10 @@ const TOKEN_CONTRACT = [
   { "symbol": "USDC", "address": "USD1ttGY1N17NEEHLmELoaybftRBUSErhqYiQzvEmuB", "decimals": 9 },//World Liberty Financial USD
 ]
 
+const CONTRACT=[{
+  "Pump.fun Bonding Curve": "BFNU4SdjN6mJdJetUV8Aq5Zqf5uunjAu6uYa9LEXYBuX",
+  
+}]
 const connection = new Connection(RPC_URL_HELIUS, "confirmed");
 
 // Carichi l’IDL del Launchpad (salvato prima da Solscan in raydium_launchpad.json)

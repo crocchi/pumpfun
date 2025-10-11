@@ -168,7 +168,7 @@ const onMessage = async (data) => {
           //return
         }
 
-        botOptions.botCash = (botOptions.botCash - botOptions.buyAmount)-0.00008;//dp fee + slippage+extra
+        botOptions.botCash = (botOptions.botCash - botOptions.buyAmount)-0.001;//dp fee + slippage+extra
 
         
         // buyTokenLog
