@@ -133,7 +133,7 @@ export async function sellToken(token ,sol_or_not=false,retryCount = 1, timercou
         if(amountFallback){
            amountToSell = '100%';
         }
-        console.log(`Lancio vendita ${token.symbol} :totamount to sell ${amountToSell}`);
+        console.log(`Lancio vendita ${tokenLog.token.symbol} :totamount to sell ${amountToSell}`);
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
             method: "POST",
             headers: {

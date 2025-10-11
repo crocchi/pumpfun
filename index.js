@@ -148,9 +148,17 @@ const onMessage = async (data) => {
 
           setTimeout(() => {
             parseTrx(buyTokenSignature).then(data => {
-              if(data.valid!==true){return console.log("Errore nel parsing della transazione di acquisto:",data)}
+              if(data.valid!==true){
+                return console.log("Errore nel parsing della transazione di acquisto:",data)
+              
+              }
               console.log('parse:', data);
               tokenLog.buyPrice = data.priceBuy;
+
+              //salva nel db temp in httpServer.js
+              updateBuyPrice(token.mint, {
+                buyPrice: data.priceBuy,
+              })
               tokenLog.tokenAmount = data.totBuyToken;
               tokenLog.jitoFee = data.feeJito6;
               /*{
@@ -162,7 +170,7 @@ const onMessage = async (data) => {
     mint: quote_token_mint.pubkey.toBase58(),
   } */
             })
-          }, 1000); // Avvia il timeout di inattività  
+          }, 800); // Avvia il timeout di inattività  
         }else {
           console.log(`❌ Acquisto demo - ${token.name}.`);
           //return
@@ -267,6 +275,7 @@ const onMessage = async (data) => {
         console.log(`Acquisto rilevato wallet Bot:
           buy Token:[${tokenLog.token?.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
         tokenLog.buyPrice = prezzo;
+        updateBuyPrice(parsed.mint, { buyPrice: prezzo });
         buyTokenLog(parsed.mint, parsed.tokenAmount, parsed.solAmount, prezzo)
       }
 

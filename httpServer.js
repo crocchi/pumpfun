@@ -204,6 +204,14 @@ export async function returnTokenLog(mint) {
   if (token) { return token }
 }
 
+export async function updateBuyPrice(mint, updates) {
+  const token = tokenLog.find(t => t.mint === mint);
+  if (token) {
+    token.buyPrice = updates.buyPrice;
+    Object.assign(token, updates);
+  }
+}
+
 export async function buyTokenLog(mint, tokenAmount, solAmount, price) {
   const token = tokenLog.find(t => t.mint === mint);
   if (token) {
