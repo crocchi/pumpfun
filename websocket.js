@@ -1,4 +1,5 @@
 import { webSock,connect } from './index.js';
+import { botOptions } from './config.js';
 
 let ws;
 
@@ -22,6 +23,13 @@ export const onOpen = () => {
   }
   ws=webSock();
   ws.send(JSON.stringify(payload));
+
+    // Subscribing to trades made by accounts
+  let payyload = {
+      method: "subscribeAccountTrade",
+      keys: [botOptions.botWallet] // array of accounts to watch
+    }
+  ws.send(JSON.stringify(payyload));
 
 }
 

@@ -126,14 +126,14 @@ trade: {
 
 export async function sellToken(token ,sol_or_not=false,retryCount = 1, timercount = 1000,amountFallback=false) {
    if(botOptions.demoVersion) return false;
-   let tokenLog = await getInstanceForTokenLogger(token);
+   //let tokenLog = await getInstanceForTokenLogger(token);
     try {
-        let totAmountToSell=await returnTokenLog(token.mint);
-        let amountToSell=tokenLog.tokenAmount || totAmountToSell.buySign[1]?.tokenAmount ;
+        //let totAmountToSell=await returnTokenLog(token.mint);
+        //let amountToSell=tokenLog.tokenAmount || totAmountToSell.buySign[1]?.tokenAmount ;
         if(amountFallback){
            amountToSell = '100%';
         }
-        console.log(`Lancio vendita ${tokenLog.token.symbol} :totamount to sell ${amountToSell}`);
+        //console.log(`Lancio vendita ${tokenLog.token.symbol} :totamount to sell ${amountToSell}`);
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
             method: "POST",
             headers: {
@@ -142,7 +142,7 @@ export async function sellToken(token ,sol_or_not=false,retryCount = 1, timercou
             body: JSON.stringify({
                 action: "sell",
                 mint: token.mint,
-                amount: amountToSell ,
+                amount: '100%' ,
                 denominatedInSol: sol_or_not, // true = AMOUNT_SOL è in SOL
                 slippage: SLIPPAGE,
                 priorityFee: PRIORITY_FEE,

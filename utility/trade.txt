@@ -89,3 +89,23 @@ Token: {
 🔓 Unlock
 📥 Download
 📤 Upload
+
+
+
+
+(Platinum X DAO)📊 Trade su C1qmkisSnUM4zgwEJ2hGE6C4t66rQVt1bcLqAChqpump: sell - 6557113.121919- SOL:0.212350181 price:0.0000000322
+Transazione non trovata
+Errore nel parsing della transazione di acquisto: { valid: false }
+Acquisto rilevato wallet Bot:
+          buy Token:[Platinum X DAO] sol:(0.00986930) Price:(0.0000000322)  -> from CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG
+❌ Errore nel parsing: ReferenceError: updateBuyPrice is not defined
+    at WebSocket.onMessage (file:///Pumpfun/index.js:278:9)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/Pumpfun/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/Pumpfun/node_modules/ws/lib/receiver.js:596:14)
+    at Receiver.getData (/Pumpfun/node_modules/ws/lib/receiver.js:496:10)
+    at Receiver.startLoop (/Pumpfun/node_modules/ws/lib/receiver.js:167:16)
+    at Receiver._write (/Pumpfun/node_modules/ws/lib/receiver.js:94:10)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)

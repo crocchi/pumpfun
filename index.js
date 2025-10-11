@@ -8,7 +8,7 @@ import { onError, onClose,onOpen,lastMessageTimeSet,startTimeout } from "./webso
 import { parseTrx } from './utility/anchor/solana-transaction-parser.js';
 
 
-import { startHttpServer, logToken, updateToken, buyTokenLog } from './httpServer.js';
+import { startHttpServer, logToken, updateToken, buyTokenLog, updateBuyPrice } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
 import { getHour } from './utility/time.js';
@@ -149,6 +149,7 @@ const onMessage = async (data) => {
           setTimeout(() => {
             parseTrx(buyTokenSignature).then(data => {
               if(data.valid!==true){
+                
                 return console.log("Errore nel parsing della transazione di acquisto:",data)
               
               }
@@ -257,7 +258,7 @@ const onMessage = async (data) => {
         return; // quando c'e evento di creazione,poi esci..nn ce
         // bisogno di continuare o no?, 
       }// fine if (parsed.txType === 'create')
-
+//fine funzione crezione token
 
 
       liquidityCheck()
@@ -275,6 +276,7 @@ const onMessage = async (data) => {
         console.log(`Acquisto rilevato wallet Bot:
           buy Token:[${tokenLog.token?.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
         tokenLog.buyPrice = prezzo;
+        console.log(parsed)
         updateBuyPrice(parsed.mint, { buyPrice: prezzo });
         buyTokenLog(parsed.mint, parsed.tokenAmount, parsed.solAmount, prezzo)
       }
