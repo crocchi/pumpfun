@@ -46,6 +46,7 @@ import { webSock } from "./index.js";
     
     // this.trxArray = [];
     this.safeProblem = [];
+    this.sellPercent=0;
   }
 
   linked(ob){

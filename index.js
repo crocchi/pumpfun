@@ -119,7 +119,7 @@ const onMessage = async (data) => {
         }
   */
         let buyTokenSignature = await buyToken(token);
-        liquidityCheck()
+        //liquidityCheck()
         console.log("Token:", token);
 
         console.log(`-----------------------------------------------`);
@@ -140,7 +140,7 @@ const onMessage = async (data) => {
         console.log(`👤 Creatore: ${token.traderPublicKey}`);
         console.log(`📦 URI: ${token.uri}`);
         console.log(`🌊 Pool: ${token.pool}`);
-        console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
+        //console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
         
         const tokenLog = getInstanceForTokenLogger(token);// iniz istanza di TokenLogger
         if (buyTokenSignature) {
@@ -171,9 +171,13 @@ const onMessage = async (data) => {
     mint: quote_token_mint.pubkey.toBase58(),
   } */
             })
-          }, 800); // Avvia il timeout di inattività  
+          }, 700); // Avvia il timeout di inattività  
         }else {
-          console.log(`❌ Acquisto demo - ${token.name}.`);
+          
+          setTimeout(() => {
+            tokenLog.buyPrice = tokenLog.LivePrice;
+           console.log(`❌ Acquisto demo - ${token.name} a ${tokenLog.LivePrice}.`);
+          }, 800);
           //return
         }
 
