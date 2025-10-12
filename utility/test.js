@@ -38,8 +38,8 @@ const PUMP_FUN_PROGRAM_ID = '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';
 const LETSBONK_PROGRAM_ID = 'FfYek5vEz23cMkWsdJwG2oa6EphsvXSHrGpdALN4g6W1'
 // Lista dei Program ID da monitorare
 const PROGRAM_IDS = [
-  // '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P', // pump.fun
-  'LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj',   // Raydium Launchpad (letsbonk.fun)
+   '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P', // pump.fun
+   'LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj',   // Raydium Launchpad (letsbonk.fun)
   //'11111111111111111111111111111111'              // System Program (esempio)
 ];
 
@@ -56,8 +56,8 @@ if (attivo) {
         id: i + 1,
         method: 'logsSubscribe',
         params: [
-          { mentions: [programId] },
-          { commitment: 'confirmed', encoding: 'jsonParsed', maxSupportedTransactionVersion: '0' }
+          { mentions: [programId] },//confirmed 
+          { commitment: 'processed', encoding: 'jsonParsed', maxSupportedTransactionVersion: '0' }
         ]
       };
       wshelius.send(JSON.stringify(msg));
@@ -103,6 +103,7 @@ if (attivo) {
          console.log("🆕 Token creato su Pump.fun!");
          //console.log("🔗 Mint:", mint);
          console.log("🔗 TX:", `https://solscan.io/tx/${signature}`);
+         console.log("------------------------------");
          /*
          try {
            decoded = decodeProgramData(dataP);
@@ -114,7 +115,7 @@ if (attivo) {
          */
        }
 
-      if (mint_token_helius && logs.some(line => line.includes(PROGRAM_IDS[0])) && logs.some(line => line.includes("Instruction: InitializeMint2"))) {
+      if (mint_token_helius && logs.some(line => line.includes(PROGRAM_IDS[1])) && logs.some(line => line.includes("Instruction: InitializeMint2"))) {
 
         const programData = logs.find(line => line.includes("Program data: "));
         const dataP = programData?.split("Program data: ")[1];
@@ -124,7 +125,7 @@ if (attivo) {
         console.log(buf.toString("utf8")); // a volte ci sono pezzi leggibili
         console.log(buf); // dump raw bytes
         console.log(dataP)
-        const decoded = await decodeFromLogs(dataP);
+        //const decoded = await decodeFromLogs(dataP);
        
         //const decoded = decodeAnchorProgramData(dataP);
        

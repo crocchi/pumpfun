@@ -173,14 +173,14 @@ const onMessage = async (data) => {
             })
           }, 700); // Avvia il timeout di inattività  
         }else {
-          
+          if (safer.fastBuy) {
           setTimeout(() => {
             tokenLog.buyPrice = tokenLog.LivePrice;
              updateBuyPrice(token.mint, {
                 buyPrice: tokenLog.LivePrice,
               })
            console.log(`❌ Acquisto demo - ${token.name} a ${tokenLog.LivePrice}.`);
-          }, 700);
+          }, 600);}
           //return
         }
 
