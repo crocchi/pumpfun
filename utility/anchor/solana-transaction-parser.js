@@ -164,13 +164,13 @@ export async function parseTrx(signature, poolDecodeTrx = "pumpfun") {
 
   // Decodifica le istruzioni
   const parsed = parserPump.parseTransactionWithInnerInstructions(tx);
-  console.log("Transaction:", parsed);
+  //console.log("Transaction:", parsed);
   //filtra tutti i transfer
   const transfers = parsed.filter(ix => ix.name === "transfer");
 
   //analizza le istruzioni.
   //console.log(transfers)
-  console.log("Transaction:", transfers);
+  console.log("Transaction:", JSON.stringify(transfers, null, 2));
   // controlla jito fee
   let jitoFee = transfers[0]//transfers.find(ix => ix?.accounts.some(account => account?.pubkey === "ADuUkR4vqLUMWXxW9gh6D6L8pMSawimctcNZ5pGwDcEt"));
   //console.log('jitofee:',jitoFee)

@@ -176,8 +176,11 @@ const onMessage = async (data) => {
           
           setTimeout(() => {
             tokenLog.buyPrice = tokenLog.LivePrice;
+             updateBuyPrice(token.mint, {
+                buyPrice: tokenLog.LivePrice,
+              })
            console.log(`❌ Acquisto demo - ${token.name} a ${tokenLog.LivePrice}.`);
-          }, 800);
+          }, 700);
           //return
         }
 
