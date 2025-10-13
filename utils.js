@@ -218,7 +218,7 @@ if(blacklist.length >= 80){ blacklist.shift() }
   const twitterCheck= checkTwitterMatch(metadata,token);
   //console.log("check Twitter:",twitterCheck);
   if (twitterCheck.valid !== true) {
-    safeProblem.push(twitterCheck.reason);
+    if(botOptions.hasTwitterOrTelegram_filter){safeProblem.push(twitterCheck.reason);}
     
   }else if (twitterCheck.valid === true) {
     console.log("✅ Twitter OK:", metadata.twitter);
