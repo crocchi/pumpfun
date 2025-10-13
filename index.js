@@ -175,12 +175,13 @@ const onMessage = async (data) => {
         }else {
           if (safer.fastBuy) {
           setTimeout(() => {
-            tokenLog.buyPrice = tokenLog.LivePrice;
+            let prz= tokenLog.LivePrice || prezzo;
+            tokenLog.buyPrice = prz;
              updateBuyPrice(token.mint, {
-                buyPrice: tokenLog.LivePrice,
+                buyPrice: prz,
               })
            console.log(`❌ Acquisto demo - ${token.name} a ${tokenLog.LivePrice}.`);
-          }, 600);}
+          }, 700);}
           //return
         }
 
