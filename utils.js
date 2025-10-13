@@ -261,7 +261,7 @@ if(blacklist.length >= 80){ blacklist.shift() }
   }else if (websiteCheck.valid === true && botOptions.hasWebCheck_filter) {
     console.log("✅ Sito OK:", metadata.website);
      if(!websiteCheck.finpage.found){ 
-      safeProblem.push(websiteCheck.finpage.reason);
+      if(botOptions.hasWeb_filter){ safeProblem.push(websiteCheck.finpage.reason);}
       console.log("❌ Contratto token Non trovato nella pagina: ", websiteCheck.finpage.reason);
      } else if(websiteCheck.finpage.found){
         let msg=(' ✅ Indirizzo contratto trovato nella pagina...')
