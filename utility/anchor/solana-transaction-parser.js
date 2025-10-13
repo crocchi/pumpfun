@@ -1105,7 +1105,56 @@ return {
     
 
 
+////bonk
 
+
+Transaction: [
+  {
+    "name": "transfer",
+    "accounts": [
+      {
+        "name": "from",
+        "pubkey": "CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG",
+        "isSigner": true,
+        "isWritable": true
+      },
+      {
+        "name": "to",
+        "pubkey": "ADuUkR4vqLUMWXxW9gh6D6L8pMSawimctcNZ5pGwDcEt",
+        "isWritable": true,
+        "isSigner": false
+      }
+    ],
+    "args": {
+      "lamports": "88b8"
+    },
+    "programId": "11111111111111111111111111111111"
+  }
+]
+  ToT Acquistato: 10 
+  Qnt Acquistata: -1 SOL
+  Prezzo per token: -0.1000000000 SOL
+  TokenMint: 2UsbaJGTsSGSRAJCHuoCeik8uR1i1YZo9ELCCTgJbonk
+  Fee Jito6: 0.000035 SOL
+  
+  
+  
+parse: {
+  valid: true,
+  totBuyToken: 10,
+  totBuySol: -1,
+  priceBuy: '-0.1000000000',
+  feeJito6: 0.000035,
+  mint: '2UsbaJGTsSGSRAJCHuoCeik8uR1i1YZo9ELCCTgJbonk'
+}
+(Bonk 2Usb)📊 Trade su 2UsbaJGTsSGSRAJCHuoCeik8uR1i1YZo9ELCCTgJbonk: buy - 660808.3158409595- SOL:0.039184199999999336 price:0.0000000207
+% Sell Off -40%: -100.00002070000001%
+🚫 Unsubscribed da 2UsbaJGTsSGSRAJCHuoCeik8uR1i1YZo9ELCCTgJbonk venduto!!)
+{
+  signature: 'DwmgUsqY5qF7YJcomejLKaQJUWhPuF2AydAnxk5KCb4HU1UL5QkihKSafJZgAo8qEkdHXmFcbnMSbrSfFpqqDgY',
+  errors: []
+}
+✅ Transazione inviata!
 
 
     

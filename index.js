@@ -145,7 +145,8 @@ const onMessage = async (data) => {
         const tokenLog = getInstanceForTokenLogger(token);// iniz istanza di TokenLogger
         if (buyTokenSignature) {
           console.log(`Transazione di acquisto inviata con signature: ${buyTokenSignature}`);
-
+        }
+          /*
           setTimeout(() => {
             parseTrx(buyTokenSignature).then(data => {
               if(data.valid!==true){
@@ -169,11 +170,12 @@ const onMessage = async (data) => {
     priceBuy: (buyAmountQnt / realAmount).toFixed(10),
     feeJito6: jitoFee,
     mint: quote_token_mint.pubkey.toBase58(),
-  } */
+  } */ /*
             })
           }, 700); // Avvia il timeout di inattività  
-        }else {
-          if (safer.fastBuy) {
+        }
+*/
+ if (safer.fastBuy && botOptions.demoVersion) {
           setTimeout(() => {
             let prz= tokenLog.LivePrice || prezzo;
             tokenLog.buyPrice = prz;
@@ -182,9 +184,6 @@ const onMessage = async (data) => {
               })
            console.log(`❌ Acquisto demo - ${token.name} a ${tokenLog.LivePrice}.`);
           }, 700);}
-          //return
-        }
-
         botOptions.botCash = (botOptions.botCash - botOptions.buyAmount)-0.001;//dp fee + slippage+extra
 
         
@@ -281,17 +280,21 @@ const onMessage = async (data) => {
       //controlla la tua transazione
       if (parsed.txType === 'buy' && parsed.traderPublicKey === botOptions.botWallet) {
         liquidityCheck();
-        console.log(`Acquisto rilevato wallet Bot:
+        let msg=(`Acquisto rilevato wallet Bot:
           buy Token:[${tokenLog.token?.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
         tokenLog.buyPrice = prezzo;
-        console.log(parsed)
+        console.log(msg, parsed)
+        sendMessageToClient('event', msg)
         updateBuyPrice(parsed.mint, { buyPrice: prezzo });
         buyTokenLog(parsed.mint, parsed.tokenAmount, parsed.solAmount, prezzo)
       }
 
       if (parsed.txType === 'sell' && parsed.traderPublicKey === botOptions.botWallet) {
         liquidityCheck();
-        console.log(`vendita rilevata wallet Bot:`)
+        let msg=(`Vendita rilevato wallet Bot:
+          sell Token:[${tokenLog.token?.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
+        sendMessageToClient('event', msg)
+        console.log(msg)
         tokenLog.sellPrice = prezzo;
         buyTokenLog(parsed.mint, parsed.tokenAmount, parsed.solAmount, prezzo)
       }
