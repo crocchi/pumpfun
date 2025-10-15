@@ -362,7 +362,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       }
 
          if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy) {
-        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:(${tokenMonitor.volume.toFixed(4)} SOL) TrxNumb:${trxNumm}  volumeNet: ${solValueTrx.toFixed(4)}per ${parsed.mint}. buy at ${prezzo}`);
+        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}]`);
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
@@ -376,7 +376,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       //nuova regola da testare...
       //volume netto superiore al volume impostato
       if (solValueTrx > botOptions.quickBuyVolumeUp && !tokenMonitor.quick && botOptions.netVolumeUpBuy && trxNumm > botOptions.quickBuyTrxNumb && tokenMonitor.volume > botOptions.quickBuyVolumeMin) {//se il volume tra buy e sell e maggiore di 1.0 SOL e rugpull
-        let msg = (`📈 🚀 volume netto superiore al volume impostato! Netvolume:(${solValueTrx} SOL) TrxNumb:${trxNumm}  volume: ${volume}per ${parsed.mint}. buy at ${prezzo}`);
+        let msg = (`📈 🚀 volume netto superiore al volume impostato! Netvolume:(${solValueTrx} SOL) TrxNumb:${trxNumm}  volume: ${volume} buy at ${prezzo}`);
         console.log(msg);
         sendMessageToClient('event', msg)
 
