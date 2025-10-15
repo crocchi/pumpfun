@@ -191,6 +191,7 @@ mint: quote_token_mint.pubkey.toBase58(),
 
 
       // buyTokenLog
+      /* X ADESSO NON ATTIVIAMO...
       getTopHolders(token.mint).then(holders => {
         console.log(`👥 Top 5 holders:`)
 
@@ -201,6 +202,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         }
 
       });
+      */
 
       // Logga il token nel database
       tokenLog.safeProblem = safer;
@@ -212,6 +214,19 @@ mint: quote_token_mint.pubkey.toBase58(),
       tokenLog.tokenAmount = tokenLog.tokenAmount || botOptions.buyAmount / priceBuy //qnt token comprato
       tokenLog.startSellTimer();
 
+      // 👉 Sottoscrizione ai trade del token appena creato
+      if (!subscribedTokens.has(token.mint)) {
+        console.log(`🔔 Sottoscrizione ai trade del token ${token.mint}`);
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({
+            method: "subscribeTokenTrade",
+            keys: [token.mint]
+          }));
+        } else {
+          console.error(`❌ WebSocket non è aperto. Impossibile sottoscrivere il token ${token.mint}`);
+        }
+        subscribedTokens.add(token.mint);
+      }
 
       logToken({
         mint: token.mint,
@@ -231,19 +246,6 @@ mint: quote_token_mint.pubkey.toBase58(),
         safe: true // o false in base ai filtri //aggiungi array con filtri
       });
 
-      // 👉 Sottoscrizione ai trade del token appena creato
-      if (!subscribedTokens.has(token.mint)) {
-        console.log(`🔔 Sottoscrizione ai trade del token ${token.mint}`);
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({
-            method: "subscribeTokenTrade",
-            keys: [token.mint]
-          }));
-        } else {
-          console.error(`❌ WebSocket non è aperto. Impossibile sottoscrivere il token ${token.mint}`);
-        }
-        subscribedTokens.add(token.mint);
-      }
 
       // Se superiamo i 40 token, rimuoviamo i più vecchi
       if (subscribedTokens.size > MAX_TOKENS_SUBSCRIBED) {
