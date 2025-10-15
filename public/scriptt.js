@@ -160,7 +160,10 @@ async function saveOptions(e) {
 
     marketCapSolUpMode: document.getElementById('marketCapSolUpMode').checked,
     marketCapSolUpQuickBuy: document.getElementById('marketCapSolUpQuickBuy').value,
-
+    
+    priceSolUpMode: document.getElementById('priceSolUpMode').checked,
+    priceSolUpQuickBuy: document.getElementById('priceSolUpQuickBuy').value,
+    priceSolUpModeQuickBuyVolumeMin: document.getElementById('priceSolUpModeQuickBuyVolumeMin').value,
 
     buyAmount: document.getElementById('buyAmount').value,
     sellOffPanic: document.getElementById('sellOffPanic').value,
@@ -227,6 +230,10 @@ async function loadOptions() {
   document.getElementById('marketCapSolUpMode').checked = o.marketCapSolUpMode;
   document.getElementById('marketCapSolUpQuickBuy').value = o.marketCapSolUpQuickBuy;
 
+  document.getElementById('priceSolUpMode').checked = o.priceSolUpMode;
+  document.getElementById('priceSolUpQuickBuy').value = o.priceSolUpQuickBuy;
+  document.getElementById('priceSolUpModeQuickBuyVolumeMin').value = o.priceSolUpModeQuickBuyVolumeMin;
+
   // Imposta il checkbox rugpullxyz
   document.getElementById('website').checked = o.hasWeb_filter;
   document.getElementById('websitecheck').checked = o.hasWebCheck_filter;
@@ -291,6 +298,9 @@ async function saveConfig() {
 
     marketCapSolUpMode: document.getElementById('marketCapSolUpMode').checked,
     marketCapSolUpQuickBuy: document.getElementById('marketCapSolUpQuickBuy').value,
+    priceSolUpMode: document.getElementById('priceSolUpMode').checked,
+    priceSolUpQuickBuy: document.getElementById('priceSolUpQuickBuy').value,
+    priceSolUpModeQuickBuyVolumeMin: document.getElementById('priceSolUpModeQuickBuyVolumeMin').value,
 
     buyAmount: document.getElementById('buyAmount').value,
     sellOffPanic: document.getElementById('sellOffPanic').value,
@@ -356,6 +366,10 @@ const loadConf = async (o) => {
 
    document.getElementById('marketCapSolUpMode').checked = o.marketCapSolUpMode;
   document.getElementById('marketCapSolUpQuickBuy').value = o.marketCapSolUpQuickBuy;
+
+  document.getElementById('priceSolUpMode').checked = o.priceSolUpMode;
+  document.getElementById('priceSolUpQuickBuy').value = o.priceSolUpQuickBuy;
+  document.getElementById('priceSolUpModeQuickBuyVolumeMin').value = o.priceSolUpModeQuickBuyVolumeMin;
 
   // Imposta il checkbox rugpullxyz
   document.getElementById('website').checked = o.hasWeb_filter;

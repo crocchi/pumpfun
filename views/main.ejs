@@ -23,8 +23,12 @@
 							style="font-size: small;"> SniperBot Solana</span> </a>
 
 					<ul class="icons">
-						<svg style='height:2em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 96C92.7 96 64 124.7 64 160L64 448C64 483.3 92.7 512 128 512L512 512C547.3 512 576 483.3 576 448L576 256C576 220.7 547.3 192 512 192L136 192C122.7 192 112 181.3 112 168C112 154.7 122.7 144 136 144L520 144C533.3 144 544 133.3 544 120C544 106.7 533.3 96 520 96L128 96zM480 320C497.7 320 512 334.3 512 352C512 369.7 497.7 384 480 384C462.3 384 448 369.7 448 352C448 334.3 462.3 320 480 320z"/></svg>
-						<span id="walletSol">0.1</span>		
+						<svg style='height:2em' xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+							<path
+								d="M128 96C92.7 96 64 124.7 64 160L64 448C64 483.3 92.7 512 128 512L512 512C547.3 512 576 483.3 576 448L576 256C576 220.7 547.3 192 512 192L136 192C122.7 192 112 181.3 112 168C112 154.7 122.7 144 136 144L520 144C533.3 144 544 133.3 544 120C544 106.7 533.3 96 520 96L128 96zM480 320C497.7 320 512 334.3 512 352C512 369.7 497.7 384 480 384C462.3 384 448 369.7 448 352C448 334.3 462.3 320 480 320z" />
+						</svg>
+						<span id="walletSol">0.1</span>
 					</ul>
 				</header>
 
@@ -331,6 +335,22 @@
 								<label for="marketCapSolUpQuickBuy">Market Cap Sol</label>
 							</div>
 
+							<div class="col-12 cool">
+								<input type="checkbox" id="priceSolUpMode">
+								<label for="priceSolUpMode">Buy Quick if [Price] > </label>
+
+								<input type="number" value="0.0000004" step="0.0000001" id="priceSolUpModeQuickBuy">
+								<label for="priceSolUpModeQuickBuy">Price in SOL</label>
+
+								<input type="number" step="1" id="priceSolUpModeQuickBuyVolumeMin">
+								<label for="priceSolUpModeQuickBuyVolumeMin">Volume Min</label>
+							</div>
+							<div class="col-12">
+
+								<input type="checkbox" checked="true" id="SoundOnOff">
+								<label for="SoundOnOff">Sound Notifyme</label>
+
+							</div>
 
 
 							<div class="col-12">
@@ -452,7 +472,7 @@
 
 		socket.on('wallet', (data) => {
 			//console.log('🆕 Nuovo token monitorato:', token);
-			document.getElementById('walletSol').textContent=`${data.walletSol.toFixed(4)} SOL`
+			document.getElementById('walletSol').textContent = `${data.walletSol.toFixed(4)} SOL`
 			// Qui puoi aggiornare la tua interfaccia utente con i dati del nuovo token
 		});
 
@@ -636,84 +656,84 @@
 			console.log('🔌 Disconnesso dal server');
 		});
 
-function playBeep(frequency, duration = 500) {
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+		function playBeep(frequency, duration = 500) {
+			const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+			const oscillator = audioContext.createOscillator();
+			const gainNode = audioContext.createGain();
 
-    // Configura il tipo di suono e la frequenza
-    oscillator.type = 'sine'; // Puoi provare anche 'square', 'triangle', 'sawtooth'
-    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime); // Frequenza in Hz
+			// Configura il tipo di suono e la frequenza
+			oscillator.type = 'sine'; // Puoi provare anche 'square', 'triangle', 'sawtooth'
+			oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime); // Frequenza in Hz
 
-    // Configura il volume
-    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime); // Volume (0.1 = basso)
+			// Configura il volume
+			gainNode.gain.setValueAtTime(0.5, audioContext.currentTime); // Volume (0.1 = basso)
 
-    // Collega l'oscillatore al gainNode e poi al contesto audio
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+			// Collega l'oscillatore al gainNode e poi al contesto audio
+			oscillator.connect(gainNode);
+			gainNode.connect(audioContext.destination);
 
-    // Avvia il suono
-    oscillator.start();
+			// Avvia il suono
+			oscillator.start();
 
-    // Ferma il suono dopo la durata specificata
-    setTimeout(() => {
-        oscillator.stop();
-        audioContext.close();
-    }, duration);
-}
+			// Ferma il suono dopo la durata specificata
+			setTimeout(() => {
+				oscillator.stop();
+				audioContext.close();
+			}, duration);
+		}
 
-// Esempio: Riproduci una scala musicale
-function playScale() {
-	const notesTwo = [
-		{ frequency: 392.00, duration: 400 }, // Sol
-		{ frequency: 440.00, duration: 400 }, // La
-		{ frequency: 493.88, duration: 400 }, // Si
-		{ frequency: 523.25, duration: 600 }, // Do (ottava successiva)
-		{ frequency: 493.88, duration: 400 }, // Si
-		{ frequency: 440.00, duration: 400 }, // La
-		{ frequency: 392.00, duration: 800 }, // Sol
-		{ frequency: 440.00, duration: 400 }, // La
-		{ frequency: 493.88, duration: 400 }, // Si
-		{ frequency: 523.25, duration: 600 }, // Do (ottava successiva)
-		{ frequency: 587.33, duration: 800 }  // Re
-	];
+		// Esempio: Riproduci una scala musicale
+		function playScale() {
+			const notesTwo = [
+				{ frequency: 392.00, duration: 400 }, // Sol
+				{ frequency: 440.00, duration: 400 }, // La
+				{ frequency: 493.88, duration: 400 }, // Si
+				{ frequency: 523.25, duration: 600 }, // Do (ottava successiva)
+				{ frequency: 493.88, duration: 400 }, // Si
+				{ frequency: 440.00, duration: 400 }, // La
+				{ frequency: 392.00, duration: 800 }, // Sol
+				{ frequency: 440.00, duration: 400 }, // La
+				{ frequency: 493.88, duration: 400 }, // Si
+				{ frequency: 523.25, duration: 600 }, // Do (ottava successiva)
+				{ frequency: 587.33, duration: 800 }  // Re
+			];
 
-	const myMusic = [
-		{ frequency: 392.00, duration: 400 }, // Sol
-        { frequency: 392.00, duration: 200 }, // Sol
-        { frequency: 392.00, duration: 200 }, // Sol
-		{ frequency: 440.00, duration: 400 }, // La
-		{ frequency: 392.00, duration: 800 }, // Sol
-        { frequency: 493.88, duration: 500 }, // Si
-        { frequency: 523.25, duration: 500 }, // Do
+			const myMusic = [
+				{ frequency: 392.00, duration: 400 }, // Sol
+				{ frequency: 392.00, duration: 200 }, // Sol
+				{ frequency: 392.00, duration: 200 }, // Sol
+				{ frequency: 440.00, duration: 400 }, // La
+				{ frequency: 392.00, duration: 800 }, // Sol
+				{ frequency: 493.88, duration: 500 }, // Si
+				{ frequency: 523.25, duration: 500 }, // Do
+
+			];
+
+			let delayTwo = 0;
+			myMusic.forEach(note => {
+				setTimeout(() => playBeep(note.frequency, note.duration), delayTwo);
+				delayTwo += note.duration;
+			});
+			/*
+			const notes = [
+				{ frequency: 261.63, duration: 500 }, // Do
+				{ frequency: 293.66, duration: 500 }, // Re
+				{ frequency: 329.63, duration: 500 }, // Mi
+				{ frequency: 349.23, duration: 500 }, // Fa
+				{ frequency: 392.00, duration: 500 }, // Sol
+				{ frequency: 440.00, duration: 500 }, // La
+				{ frequency: 493.88, duration: 500 }, // Si
+				{ frequency: 523.25, duration: 500 }  // Do (ottava successiva)
+			];
 		
-	];
+			let delay = 0;
+			notes.forEach(note => {
+				setTimeout(() => playBeep(note.frequency, note.duration), delay);
+				delay += note.duration;
+			});*/
+		}
 
-	let delayTwo = 0;
-	myMusic.forEach(note => {
-		setTimeout(() => playBeep(note.frequency, note.duration), delayTwo);
-		delayTwo += note.duration;
-	});
-	/*
-    const notes = [
-        { frequency: 261.63, duration: 500 }, // Do
-        { frequency: 293.66, duration: 500 }, // Re
-        { frequency: 329.63, duration: 500 }, // Mi
-        { frequency: 349.23, duration: 500 }, // Fa
-        { frequency: 392.00, duration: 500 }, // Sol
-        { frequency: 440.00, duration: 500 }, // La
-        { frequency: 493.88, duration: 500 }, // Si
-        { frequency: 523.25, duration: 500 }  // Do (ottava successiva)
-    ];
-
-    let delay = 0;
-    notes.forEach(note => {
-        setTimeout(() => playBeep(note.frequency, note.duration), delay);
-        delay += note.duration;
-    });*/
-}
-
-// Esegui la scala musicale
+		// Esegui la scala musicale
 
 
 	</script>

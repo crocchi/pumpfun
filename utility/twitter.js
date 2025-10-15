@@ -188,7 +188,7 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
    // if (firstPost) { msgg = msgg + ` 1Post: ${firstPost}` }
 
     console.log(msgg);
-    sendMessageToClient('event', msgg)
+    //sendMessageToClient('event', msgg)
     //console.log('Primi 3 post recenti:');
    // sendMessageToClient('event', JSON.stringify(recentPosts))
     //console.log(recentPosts)

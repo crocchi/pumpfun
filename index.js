@@ -361,6 +361,16 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
 
+         if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy) {
+        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:(${tokenMonitor.volume} SOL) TrxNumb:${trxNumm}  volume: ${volume}per ${parsed.mint}. buy at ${prezzo}`);
+        console.log(msg);
+        sendMessageToClient('event', msg)
+        tokenMonitor.quickBuy = prezzo;
+        tokenMonitor.quickSell = msg;
+        tokenMonitor.cancelMonitor();
+        return
+      }
+
 
 
       //nuova regola da testare...

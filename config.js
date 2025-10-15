@@ -71,6 +71,10 @@ export let SOLANA_USD = 200;
     hasTwitterOrTelegram_filter: true,
     hasTwitterCheck_filter: false,
 
+    //parametri compra quick by price
+    priceSolUpMode:false,
+    priceSolUpQuickBuy:0.00000005,
+    priceSolUpModeQuickBuyVolumeMin:20,
 
     //
     SOLANA_USD:200,
