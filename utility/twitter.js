@@ -216,7 +216,7 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
 
   // Verifica se la stringa è presente
   if (htmlContent.includes(searchString)) {
-    let msg=(`Il contratto "${searchString}" è presente nella pagina X!`);
+    let msg=(`Il contratto "${searchString}" del token ${token.name} è presente nella pagina X: ${profileUrl}!`);
     console.log(msg);
     sendMessageToClient('event',msg)
     await browser.close();
@@ -227,7 +227,7 @@ const browser = await chromium.launch({ headless: true }); // headless: false pe
   } else {
      let msg=(`Il contratto "${searchString}" NON è presente nella pagina X!`);
     console.log(msg);
-    sendMessageToClient('event',msg)
+    //sendMessageToClient('event',msg)
     await browser.close();
     return {
         valid: false,
