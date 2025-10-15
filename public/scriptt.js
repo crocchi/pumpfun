@@ -372,7 +372,7 @@ const loadConf = async (o) => {
   document.getElementById('marketCapSolUpQuickBuy').value = o.marketCapSolUpQuickBuy;
 
   document.getElementById('priceSolUpMode').checked = o.priceSolUpMode;
-  document.getElementById('priceSolUpQuickBuy').value = (o.priceSolUpQuickBuy).toFixed(8);
+  document.getElementById('priceSolUpQuickBuy').value = o.priceSolUpQuickBuy?.toFixed(8) || o.priceSolUpQuickBuy;
   document.getElementById('priceSolUpModeQuickBuyVolumeMin').value = o.priceSolUpModeQuickBuyVolumeMin;
   document.getElementById('priceSolUpModeQuickBuyVolumeNetMin').value = o.priceSolUpModeQuickBuyVolumeNetMin;
 
