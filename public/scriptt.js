@@ -326,10 +326,12 @@ const soundOnOff= ()=>{
     // Attiva il suono
     console.log("Suono attivato");
     soundSystem=true;
+    localStorage.setItem("soundSystem", true);
   } else {
     // Disattiva il suono
     console.log("Suono disattivato");
     soundSystem=false;
+    localStorage.setItem("soundSystem", false);
   }
 }
 
@@ -381,6 +383,14 @@ const loadConf = async (o) => {
   document.getElementById('enableTrailing').checked = o.enableTrailing;
   document.getElementById('trailingPercent').value = o.trailingPercent;
   document.getElementById('enablerugpullxyz').checked = o.rugpullxyz;
+
+   if(localStorage.getItem("soundSystem")){
+       soundSystem = localStorage.getItem("soundSystem");
+   }else{
+      soundSystem=document.getElementById('SoundOnOff').checked
+      localStorage.setItem("soundSystem", soundSystem);
+   }
+  //localStorage.setItem("soundSystem", soundSystem);
 }
 
 
