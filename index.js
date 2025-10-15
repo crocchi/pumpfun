@@ -104,7 +104,9 @@ const onMessage = async (data) => {
         let msg = (`✅ Token '${parsed.name}' passato per sicurezza. Procedo con l\'acquisto rapido.`);
         console.log(msg)
         monitor.tradeMonitor = false;// disabilito il monitoraggio
+        monitor.infoSnipe = safer.fastReason
         sendMessageToClient('event', msg)
+        
         //monitor.
       } else {      //modalità monitoraggio   
         let devbott = await monitor.startMonitor();
@@ -364,7 +366,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
 
-         if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy) {
+         if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin ) {
         let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}]`);
         console.log(msg);
         sendMessageToClient('event', msg)

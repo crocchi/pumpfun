@@ -529,7 +529,7 @@ const socket = io();
 								<td> <button onclick="showObject('${token.token.mint}')">info</button></td>
 
 								<td>${gain.toFixed(2)}%</td>
-                <td>${token.strategy}</td>
+                <td class='strat'>${token.strategy}</td>
 								
 							</tr>`;
 				document.getElementById("tokenMonitorBody").innerHTML += html;
