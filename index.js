@@ -294,7 +294,7 @@ mint: quote_token_mint.pubkey.toBase58(),
     if (parsed.txType === 'buy' && parsed.traderPublicKey === botOptions.botWallet) {
       liquidityCheck();
       let msg = (`Acquisto rilevato wallet Bot:
-          buy Token:[${tokenLog.token?.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
+          buy Token:[${tokenLog.token?.name || tokenLog?.name || tokenLog.monitor?.token?.symbol || tokenLog.monitor?.token?.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
       tokenLog.buyPrice = prezzo;
       console.log(msg, parsed)
       sendMessageToClient('event', msg)
@@ -305,7 +305,7 @@ mint: quote_token_mint.pubkey.toBase58(),
     if (parsed.txType === 'sell' && parsed.traderPublicKey === botOptions.botWallet) {
       liquidityCheck();
       let msg = (`Vendita rilevato wallet Bot:
-          sell Token:[${tokenLog.token?.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
+          sell Token:[${tokenLog.token?.name || tokenLog?.name || tokenLog.monitor?.token?.symbol || tokenLog.monitor?.token?.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
       sendMessageToClient('event', msg)
       console.log(msg)
       tokenLog.sellPrice = prezzo;
