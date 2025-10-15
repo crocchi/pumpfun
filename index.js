@@ -362,7 +362,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       }
 
          if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy) {
-        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:(${tokenMonitor.volume} SOL) TrxNumb:${trxNumm}  volume: ${volume}per ${parsed.mint}. buy at ${prezzo}`);
+        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:(${tokenMonitor.volume} SOL) TrxNumb:${trxNumm}  volumeNet: ${solValueTrx}per ${parsed.mint}. buy at ${prezzo}`);
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;

@@ -62,6 +62,7 @@ setInterval(() => {
                 volumeNet:instance.volumeNet,
                 time:instance.time,
                 volume:instance.volume,
+                strategy:instance.quickSell || instance.infoSniper,
             }
            // contToken.push(tmpToken)
            // setInvio=true;
