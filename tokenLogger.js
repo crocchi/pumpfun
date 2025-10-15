@@ -29,7 +29,7 @@ import { webSock } from "./index.js";
     this.activeTrailing = botOptions.enableTrailing;
     this.traderWallet=[]; //ci mettiamo tutti i wallet dei trade
     ////////
-    this.lowPrice = 0; // sol
+    this.lowPrice = 1; // sol
     this.volumeNet = 0;
     this.devWallet=token.traderPublicKey || "Unknown";
     this.holders=0;//numero holders
@@ -48,6 +48,8 @@ import { webSock } from "./index.js";
     this.safeProblem = [];
     this.sellPercent=0;
     this.totTrx=0;
+
+    this.volatility =0;
   }
 
   linked(ob){
@@ -104,10 +106,14 @@ import { webSock } from "./index.js";
       this.highPrice = this.LivePrice;
       this.stop = this.highPrice * (1 - this.trailingPercent / 100);
     }
+    if (this.LivePrice < this.lowPrice) {
+      this.lowPrice = this.LivePrice;
+    }
 
     this.marketCapSol = transaction.marketCapSol || this.marketCapSol;
     this.solTrxNumMonitor++;
     this.solTrxNum++;
+    this.volatility = (this.highPrice - this.lowPrice) / this.lowPrice * 100;
    /* if (this.lowPrice === 0 || transaction.price < this.lowPrice) {
       this.lowPrice = transaction.price;
     }*/
