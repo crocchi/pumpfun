@@ -43,6 +43,7 @@ import { webSock } from "./index.js";
     this.sellOutTimer=new Date();
     this.infoSniper;// informazioni di quando viene accettato
     this.jitoFee=0;
+    this.buyPriceJupiter=0;
     
     // this.trxArray = [];
     this.safeProblem = [];

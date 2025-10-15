@@ -6,6 +6,7 @@ import { sendMessageToClient } from './socketio.js';
 import { onError, onClose, onOpen, lastMessageTimeSet, startTimeout } from "./websocket.js";
 //import { initArbitrage , TOKENS } from "./arbitrage.js";
 import { parseTrx } from './utility/anchor/solana-transaction-parser.js';
+import { getTokenPriceJupiter } from './utility/getPriceJupiter.js';
 
 
 import { startHttpServer, logToken, updateToken, buyTokenLog, updateBuyPrice } from './httpServer.js';
@@ -196,6 +197,14 @@ mint: quote_token_mint.pubkey.toBase58(),
             }
     */
       if (safer.fastBuy && botOptions.demoVersion) {
+        getTokenPriceJupiter(token.mint).then(price => {
+    if (price !== null) {
+        console.log(`The price of the token is $${price}`);
+        let priceSol=price / SOLANA_USD;
+        //tokenLog.buyPrice = price;
+        tokenLog.buyPriceJupiter = priceSol;
+    }
+});
         setTimeout(() => {
           let prz = tokenLog.LivePrice || prezzo;
           tokenLog.buyPrice = prz;
