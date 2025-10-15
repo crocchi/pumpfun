@@ -143,6 +143,21 @@ const onMessage = async (data) => {
       //console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
 
       const tokenLog = getInstanceForTokenLogger(token);// iniz istanza di TokenLogger
+      
+      // 👉 Sottoscrizione ai trade del token appena creato
+      if (!subscribedTokens.has(token.mint)) {
+        console.log(`🔔 Sottoscrizione ai trade del token ${token.mint}`);
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({
+            method: "subscribeTokenTrade",
+            keys: [token.mint]
+          }));
+        } else {
+          console.error(`❌ WebSocket non è aperto. Impossibile sottoscrivere il token ${token.mint}`);
+        }
+        subscribedTokens.add(token.mint);
+      }
+
       if (buyTokenSignature) {
         console.log(`Transazione di acquisto inviata con signature: ${buyTokenSignature}`);
       }
@@ -184,7 +199,7 @@ mint: quote_token_mint.pubkey.toBase58(),
             buyPrice: prz,
           })
           console.log(`❌ Acquisto demo - ${token.name} a ${tokenLog.LivePrice}.`);
-        }, 700);
+        }, 400);
       }
 
       botOptions.botCash = (botOptions.botCash - botOptions.buyAmount) - 0.001;//dp fee + slippage+extra
@@ -214,19 +229,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       tokenLog.tokenAmount = tokenLog.tokenAmount || botOptions.buyAmount / priceBuy //qnt token comprato
       tokenLog.startSellTimer();
 
-      // 👉 Sottoscrizione ai trade del token appena creato
-      if (!subscribedTokens.has(token.mint)) {
-        console.log(`🔔 Sottoscrizione ai trade del token ${token.mint}`);
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({
-            method: "subscribeTokenTrade",
-            keys: [token.mint]
-          }));
-        } else {
-          console.error(`❌ WebSocket non è aperto. Impossibile sottoscrivere il token ${token.mint}`);
-        }
-        subscribedTokens.add(token.mint);
-      }
+ 
 
       logToken({
         mint: token.mint,
