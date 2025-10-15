@@ -159,6 +159,7 @@ async function saveOptions(e) {
     priceSolUpMode: document.getElementById('priceSolUpMode').checked,
     priceSolUpQuickBuy: document.getElementById('priceSolUpQuickBuy').value,
     priceSolUpModeQuickBuyVolumeMin: document.getElementById('priceSolUpModeQuickBuyVolumeMin').value,
+    priceSolUpModeQuickBuyVolumeNetMin: document.getElementById('priceSolUpModeQuickBuyVolumeNetMin').value,
 
     buyAmount: document.getElementById('buyAmount').value,
     sellOffPanic: document.getElementById('sellOffPanic').value,
@@ -228,6 +229,7 @@ async function loadOptions() {
   document.getElementById('priceSolUpMode').checked = o.priceSolUpMode;
   document.getElementById('priceSolUpQuickBuy').value = o.priceSolUpQuickBuy;
   document.getElementById('priceSolUpModeQuickBuyVolumeMin').value = o.priceSolUpModeQuickBuyVolumeMin;
+  document.getElementById('priceSolUpModeQuickBuyVolumeNetMin').value = o.priceSolUpModeQuickBuyVolumeNetMin;
 
   // Imposta il checkbox rugpullxyz
   document.getElementById('website').checked = o.hasWeb_filter;
@@ -286,6 +288,7 @@ async function saveConfig() {
     priceSolUpMode: document.getElementById('priceSolUpMode').checked,
     priceSolUpQuickBuy: document.getElementById('priceSolUpQuickBuy').value,
     priceSolUpModeQuickBuyVolumeMin: document.getElementById('priceSolUpModeQuickBuyVolumeMin').value,
+    priceSolUpModeQuickBuyVolumeNetMin: document.getElementById('priceSolUpModeQuickBuyVolumeNetMin').value,
 
     buyAmount: document.getElementById('buyAmount').value,
     sellOffPanic: document.getElementById('sellOffPanic').value,
@@ -371,6 +374,7 @@ const loadConf = async (o) => {
   document.getElementById('priceSolUpMode').checked = o.priceSolUpMode;
   document.getElementById('priceSolUpQuickBuy').value = o.priceSolUpQuickBuy;
   document.getElementById('priceSolUpModeQuickBuyVolumeMin').value = o.priceSolUpModeQuickBuyVolumeMin;
+  document.getElementById('priceSolUpModeQuickBuyVolumeNetMin').value = o.priceSolUpModeQuickBuyVolumeNetMin;
 
   // Imposta il checkbox rugpullxyz
   document.getElementById('website').checked = o.hasWeb_filter;
@@ -525,7 +529,7 @@ const socket = io();
 								<td> <button onclick="showObject('${token.token.mint}')">info</button></td>
 
 								<td>${gain.toFixed(2)}%</td>
-                <td>${token.strategy}%</td>
+                <td>${token.strategy}</td>
 								
 							</tr>`;
 				document.getElementById("tokenMonitorBody").innerHTML += html;

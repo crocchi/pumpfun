@@ -109,6 +109,7 @@ export function startHttpServer(port = 4000) {
         if ('priceSolUpMode' in body) botOptions.priceSolUpMode = body.priceSolUpMode === 'true' || body.priceSolUpMode === true || false;
         if ('priceSolUpQuickBuy' in body) botOptions.priceSolUpQuickBuy = Number(body.priceSolUpQuickBuy) || botOptions.priceSolUpQuickBuy;
         if ('priceSolUpModeQuickBuyVolumeMin' in body) botOptions.priceSolUpModeQuickBuyVolumeMin = Number(body.priceSolUpModeQuickBuyVolumeMin) || botOptions.priceSolUpModeQuickBuyVolumeMin;
+        if ('priceSolUpModeQuickBuyVolumeNetMin' in body) botOptions.priceSolUpModeQuickBuyVolumeNetMin = Number(body.priceSolUpModeQuickBuyVolumeNetMin) || botOptions.priceSolUpModeQuickBuyVolumeNetMin;
 
         if ('hasWeb_filter' in body) botOptions.hasWeb_filter = body.hasWeb_filter === 'true' || body.hasWeb_filter === true || false;
         if ('hasWebCheck_filter' in body) botOptions.hasWebCheck_filter = body.hasWebCheck_filter === 'true' || body.hasWebCheck_filter === true || false;
