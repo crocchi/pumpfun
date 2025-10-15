@@ -252,22 +252,6 @@ async function loadOptions() {
 let soundbutton;
 let soundSystem;
 
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ Pagina caricata!");
-
-    soundbutton=document.getElementById('SoundOnOff');
-    soundSystem=soundbutton.checked;
-    soundbutton.addEventListener('change', soundOnOff);
-    if(localStorage.getItem("myConfig")){
-      // recupero
-    const savedConfig = JSON.parse(localStorage.getItem("myConfig"));
-    let o=savedConfig;
-    loadConf(o)
-
-    }
-    
-});
-
 
 async function saveConfig() {
 
@@ -399,6 +383,22 @@ const loadConf = async (o) => {
   document.getElementById('enablerugpullxyz').checked = o.rugpullxyz;
 }
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ Pagina caricata!");
+
+    soundbutton=document.getElementById('SoundOnOff');
+    soundSystem=soundbutton.checked;
+    soundbutton.addEventListener('change', soundOnOff);
+    if(localStorage.getItem("myConfig")){
+      // recupero
+    const savedConfig = JSON.parse(localStorage.getItem("myConfig"));
+    let o=savedConfig;
+    loadConf(o)
+
+    }
+    
+});
 
 const socket = io();
 
