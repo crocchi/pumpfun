@@ -47,6 +47,7 @@ import { webSock } from "./index.js";
     // this.trxArray = [];
     this.safeProblem = [];
     this.sellPercent=0;
+    this.totTrx=0;
   }
 
   linked(ob){
@@ -62,6 +63,7 @@ import { webSock } from "./index.js";
     this.volumeNet = ob.solAmount;
     this.time = ob.time;
     this.id=ob.id;
+    this.totTrx=this.solTrxNum + ob.solTrxNumMonitor;
     this.infoSniper=ob.infoSnipe;
     /*if ( ob.highPrez > this.highPrice ) {
       this.highPrice = ob.highPrez;
