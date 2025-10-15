@@ -34,6 +34,9 @@ export const instancesToken = new Map(); // Mappa per memorizzare le istanze di 
           COSE DA FARE
           -controllare la transazione di acquisto, e di vendità
           -aggiungere controllo wallet monete e quantita
+if (volatility > 30%) trailing = 40%;
+else if (volatility > 20%) trailing = 30%;
+else trailing = 20%;
 
 
 */
