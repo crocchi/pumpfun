@@ -125,11 +125,6 @@ function closeConfig() {
       alert('Contratto copiato negli appunti: ' + text);
     }
   }
-  
-  // Funzione per aggiornare la pagina ogni 10 secondi
-setInterval(() => {
-  location.reload(); // Ricarica la pagina
-}, 120000000); // 5000 millisecondi = 5 secondi
 
 
 async function saveOptions(e) {
@@ -254,9 +249,15 @@ async function loadOptions() {
   //refreshMs = o.clientRefreshMs;
 }
 
+let soundbutton;
+let soundSystem;
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ Pagina caricata!");
 
+    soundbutton=document.getElementById('SoundOnOff');
+    soundSystem=soundbutton.checked;
+    soundbutton.addEventListener('change', soundOnOff);
     if(localStorage.getItem("myConfig")){
       // recupero
     const savedConfig = JSON.parse(localStorage.getItem("myConfig"));
@@ -334,9 +335,7 @@ async function loadConfig() {
 
 }
 
-let soundbutton=document.getElementById('SoundOnOff');
-let soundSystem=soundbutton.checked;
-soundbutton.addEventListener('change', soundOnOff);
+
 const soundOnOff= ()=>{
   let soundbutton=document.getElementById('SoundOnOff').checked;
   if(soundbutton){
