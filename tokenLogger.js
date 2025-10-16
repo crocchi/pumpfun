@@ -2,6 +2,7 @@ import TokenMonitor from "./tradeMonitor.js";
 import { botOptions } from "./config.js";
 import { buyToken, sellToken } from './utility/lightTrx.js';
 import { webSock } from "./index.js"; 
+import { getHour } from './utility/time.js';
 
  class TokenLogger extends TokenMonitor{
  constructor(token) {
@@ -92,15 +93,17 @@ import { webSock } from "./index.js";
             trader:transaction.traderPublicKey,
             price: this.LivePrice,
             signature: transaction.signature,
-            time: new Date().toLocaleTimeString()
+            time: getHour()
           });
     //this.solAmount += transaction.amount;
     this.volume += transaction.solAmount;
     if (transaction.txType === 'buy') {
         this.volumeNet += transaction.solAmount;
+        this.buyVolume += transaction.solAmount;//x calcolare net buy pressure
     }
     if (transaction.txType === 'sell') {
         this.volumeNet += -(transaction.solAmount);
+        this.sellVolume += transaction.solAmount;//x calcolare net sell pressure
     }
 
     if (this.LivePrice > this.highPrice) {

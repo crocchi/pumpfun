@@ -29,6 +29,11 @@ class TokenMonitor {
     this.highPrez;
     this.infoSnipe;
 
+    //liquidityChange
+    this.prevSolInPool=null;
+    this.liqDrop=0;
+    this.lastTimeLiq;
+    this.speedLiq=0;
   }
 
   startMonitor(snipeCallback) {
@@ -142,6 +147,31 @@ class TokenMonitor {
   }
   addVolume(value) {
     this.volume += value;
+  }
+  calcLiquidityChange(solInPool){
+    let now=new Date();
+    if (this.prevSolInPool === null) {
+    this.prevSolInPool = solInPool;
+    this.lastTimeLiq=now;
+    return { rate: 0, speed: 0 };
+  }
+  const elapsedSec = (now - this.lastTimeLiq) / 1000;
+  this.liqDrop = ((this.prevSolInPool - solInPool) / this.prevSolInPool) * 100;
+  
+  this.speedLiq = this.liqDrop / elapsedSec; // % per secondo
+  this.prevSolInPool = solInPool;
+  this.lastTimeLiq=now;
+
+  return { rate: this.liqDrop, speed: this.speedLiq };
+/*LCR %	Significato	Azione consigliata
+< 10 %	Normale oscillazione	Nessuna azione
+10–30 %	Vendite moderate	Tieni d’occhio volume e netPressure
+30–50 %	Dump serio	Prepara sell o trailing più stretto
+> 50 %	Rugpull violento	Vendi subito */
+  }
+
+  netBuyPressure(){
+    //this.netPressure = this.buyVolume - this.sellVolume;
   }
   livePrice(priceLive) {
     this.prez = priceLive

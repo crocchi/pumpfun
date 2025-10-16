@@ -39,7 +39,127 @@ if (volatility > 30%) trailing = 40%;
 else if (volatility > 20%) trailing = 30%;
 else trailing = 20%;
 
+Dynamic Trailing Stop (consigliato in JS)
 
+Questo snippet adatta il trailing in base alla volatilità live:
+
+const priceChange = ((highPrice - lowPrice) / lowPrice) * 100;
+let trailing;
+if (priceChange > 35) trailing = 40;
+else if (priceChange > 25) trailing = 30;
+else trailing = 25;
+
+
+
+Dynamic buy amount (scalare in base alla forza)
+if (volumeNet > 50 && trades > 100) buyAmount = 0.1;
+else if (volumeNet > 20) buyAmount = 0.05;
+else buyAmount = 0.02;
+
+
+🧩 1. Cosa significa davvero “intensità di una rugpull”
+
+Una rugpull non è solo “il prezzo che crolla”:
+è una combinazione di fattori di liquidità e attività di rete.
+
+👉 Una rugpull “intensa” = grande quantità di SOL rimossi dal pool in pochi secondi + crollo drastico di nuovi acquirenti.
+👉 Una “fake rug” (finto dump) = prezzo che cala ma liquidità resta quasi invariata + volumi ancora attivi.
+
+⚙️ 2. Le 3 metriche da monitorare in tempo reale
+a. Liquidity Change Rate
+
+Controlla la differenza tra solInPool e tokensInPool ogni 3–5 secondi.
+
+const liqDrop = (prevSolInPool - solInPool) / prevSolInPool * 100;
+
+
+Se liqDrop > 40% in pochi secondi 👉 probabile rugpull
+
+Se liqDrop < 15% ma il prezzo scende 👉 normale correzione
+
+💡 Trucco: imposta un flag per “panic-sell” solo se liquidity drop > 50% e netVolume < 0.
+
+b. Net Buy Pressure (volume netto)
+
+Calcola il saldo tra acquisti e vendite.
+
+netPressure = buyVolume - sellVolume;
+
+
+Se rimane positivo o in lieve calo, il token ha ancora forza → secondo spike possibile
+
+Se passa negativo per più di 2–3 blocchi consecutivi, i dev o i bot stanno uscendo → meglio vendere
+
+👉 Quando un token fa il secondo spike, spesso il netPressure torna positivo per 10–20 secondi dopo il mini crash.
+
+c. Trade Velocity (transazioni / minuto)
+
+Conta le transazioni totali ogni finestra temporale (es. 10 secondi).
+
+const tps = (newTrades - prevTrades) / elapsedSeconds;
+
+
+>3 tx/sec e in aumento → la community sta ancora comprando
+
+<1 tx/sec e in calo → il token sta morendo
+
+💡 Un secondo spike sostenibile ha sempre trade velocity crescente prima del rimbalzo.
+
+📊 3. Formula sintetica per “rug intensity score”
+
+Puoi combinare le metriche in un indicatore unico:
+
+const rugIntensity = (
+  liqDrop * 0.5 +
+  Math.max(0, -netPressure / totalVolume) * 0.3 +
+  (tpsDeclineRate > 0 ? tpsDeclineRate : 0) * 0.2
+);
+
+
+rugIntensity < 30 → normale correzione
+
+30 ≤ rugIntensity < 60 → dump medio, possibile secondo spike
+
+> 60 → rugpull violenta, esci subito
+
+🧠 4. Riconoscere un secondo spike “sano”
+
+Un secondo spike è quasi sempre:
+
+preceduto da una caduta del 20–40 % (mai >60 %);
+
+con liquidità invariata (drop <15 %);
+
+e un ritorno improvviso di trade velocity + netPressure positivo.
+
+📈 Se lo vedi nel grafico:
+
+volume “a V”,
+
+ma la liquidità rimane costante,
+
+allora è un mini-rug (una presa di profitto), non un rugpull vero.
+
+🧮 5. Esempio di logica JS pratica
+if (liqDrop > 50 && netPressure < 0) {
+  // vero rugpull
+  sellNow("rugpull detected");
+} else if (liqDrop < 15 && netPressure > 0 && tps > 2) {
+  // possibile secondo spike
+  holdToken("potential second spike");
+} else if (rugIntensity > 60) {
+  sellNow("intense rugpull");
+}
+
+🧩 6. Extra: segnali di secondo spike manuali (osservabili nei log)
+
+Quando leggi i log dei token che hai tradato, un secondo spike “buono” mostra:
+
+“buys” che tornano sopra il 60–70 % dei trade totali;
+
+“volume in aumento” ma “marketcap ancora sotto 80–100 SOL”;
+
+“liquidity invariata”.
 */
 // Avvia il timeout di inattività
 // Funzione per inizializzare/riconnettere il WebSocket
@@ -345,6 +465,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       console.log(`👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
       sendMessageToClient('logger', `👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`)
 
+      const { rate, speed } = tokenMonitor.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
       // console.log('SOL:',priceInSol);
       //setSolAmount(parsed.solAmount);
       tokenMonitor.addSolAmount(parsed.solAmount);
@@ -366,7 +487,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       //
 
       if (parsed.marketCapSol > botOptions.marketCapSolUpQuickBuy && botOptions.marketCapSolUpMode && trxNumm > 10) {
-        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Market Cap Up Quick Buy! MarketCap:(${parsed.marketCapSol} SOL) TrxNumb:${trxNumm}  volume: ${volume}per ${parsed.mint}. buy at ${prezzo}`);
+        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Market Cap Up Quick Buy! MarketCap:(${parsed.marketCapSol} SOL) TrxNumb:${trxNumm}  volume: ${volume}per ${parsed.mint}. buy at ${prezzo} LiqRate: ${rate}, ${speed}`);
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
@@ -437,10 +558,11 @@ mint: quote_token_mint.pubkey.toBase58(),
     }
 
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
-
+      const { rate, speed } = tokenMonitor.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
+         
       liquidityCheck();
       let msg = (`⚠️ Sell Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo}) - Vendita precoce da ${parsed.traderPublicKey} – `);
-
+      
       console.log(msg);
       sendMessageToClient('logger', msg)
 
@@ -772,6 +894,18 @@ trade: {
   marketCapSol: 28.287230247500666,
   pool: 'pump'
 }
+  {
+  signature: '2AJ9SqDc3fATrK7pe7KLxWnokTW3jpUW1SLnGLMa1KvcEvRWheF8vmntUiDeW5ohRW7F4vZB4nqH85uFckgy6EUi',
+  traderPublicKey: '9NZRot7RNy5TxCmfasHkJ16hRfdcepvTryEmTvSMAbzM',
+  txType: 'create',
+  mint: 'BEhyfhKZ5MEuQ9tsHT43fZYYNmBNSBpkWoHCzhqgbonk',
+  tokensInPool: 995746154.372378,
+  initialBuy: 4253845.627622008,
+  solAmount: 0,
+  newTokenBalance: 4253845.627622,
+  marketCapSol: 28.18065198869252,
+  pool: 'bonk'
+}
 }
 
 
@@ -845,18 +979,7 @@ Raydium LaunchLab
 Raydium LaunchLab
 (LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj)
 
-{
-  signature: '2AJ9SqDc3fATrK7pe7KLxWnokTW3jpUW1SLnGLMa1KvcEvRWheF8vmntUiDeW5ohRW7F4vZB4nqH85uFckgy6EUi',
-  traderPublicKey: '9NZRot7RNy5TxCmfasHkJ16hRfdcepvTryEmTvSMAbzM',
-  txType: 'create',
-  mint: 'BEhyfhKZ5MEuQ9tsHT43fZYYNmBNSBpkWoHCzhqgbonk',
-  tokensInPool: 995746154.372378,
-  initialBuy: 4253845.627622008,
-  solAmount: 0,
-  newTokenBalance: 4253845.627622,
-  marketCapSol: 28.18065198869252,
-  pool: 'bonk'
-}
+
       */
 /*
 
