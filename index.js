@@ -459,8 +459,11 @@ mint: quote_token_mint.pubkey.toBase58(),
 
     }
 
-    // let tradeMintMonitor=getMintMonitor();
+
+    
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
+      
+      tokenMonitor.updateTradeVelocity(Date.now());
       liquidityCheck() //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log(`👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
       sendMessageToClient('logger', `👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`)
@@ -497,7 +500,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       }
 
          if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin ) {
-        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate[${rate.toFixed(2)}],Speed[${speed.toFixed(2)}]`);
+        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate[${rate.toFixed(2)}],Speed[${speed.toFixed(2)}] SpeedTrx 1s[${tokenMonitor.tradesPerSec.toFixed(2)}] 30s[${tokenMonitor.tradesPerMin.toFixed(2)}]`);
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
@@ -562,6 +565,8 @@ mint: quote_token_mint.pubkey.toBase58(),
     }
 
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
+      
+      tokenMonitor.updateTradeVelocity(Date.now());
       const { rate, speed } = tokenMonitor.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
          
       liquidityCheck();

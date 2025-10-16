@@ -36,6 +36,11 @@ class TokenMonitor {
     this.liqDrop=0;
     this.lastTimeLiq;
     this.speedLiq=0;
+
+    //TradeVelocity
+    this.tradeHistory = [];
+    this.tradesPerSec=0;
+    this.tradesPerMin=0;
   }
 
   startMonitor(snipeCallback) {
@@ -175,6 +180,19 @@ class TokenMonitor {
   netBuyPressure(){
     //this.netPressure = this.buyVolume - this.sellVolume;
   }
+
+  updateTradeVelocity(newTradeTimestamp) {
+  const now = Date.now();
+  this.tradeHistory.push(newTradeTimestamp);
+
+  // Mantieni solo le transazioni dell’ultimo minuto - 30 secondi
+  this.tradeHistory = this.tradeHistory.filter(t => now - t < 30000);
+
+  this.tradesPerMin = this.tradeHistory.length;
+  this.tradesPerSec = this.tradesPerMin / 30;
+
+  return { tradesPerMin, tradesPerSec };
+}
   livePrice(priceLive) {
     this.prez = priceLive
 
