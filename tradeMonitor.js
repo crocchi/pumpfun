@@ -191,7 +191,7 @@ class TokenMonitor {
   this.tradesPerMin = this.tradeHistory.length;
   this.tradesPerSec = this.tradesPerMin / 30;
 
-  return { tradesPerMin, tradesPerSec };
+  return { tradesPerMin: this.tradesPerMin, tradesPerSec: this.tradesPerSec };
 }
   livePrice(priceLive) {
     this.prez = priceLive
