@@ -497,7 +497,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       }
 
          if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin ) {
-        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}]`);
+        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate [${rate}, ${speed}]`);
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
