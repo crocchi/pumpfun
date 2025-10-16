@@ -28,6 +28,8 @@ class TokenMonitor {
     this.prez;
     this.highPrez;
     this.infoSnipe;
+    //infoToken By jupiter
+    this.infoJupiter;
 
     //liquidityChange
     this.prevSolInPool=null;

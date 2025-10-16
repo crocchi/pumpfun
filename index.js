@@ -6,7 +6,7 @@ import { sendMessageToClient } from './socketio.js';
 import { onError, onClose, onOpen, lastMessageTimeSet, startTimeout } from "./websocket.js";
 //import { initArbitrage , TOKENS } from "./arbitrage.js";
 import { parseTrx } from './utility/anchor/solana-transaction-parser.js';
-import { getTokenPriceJupiter } from './utility/getPriceJupiter.js';
+import { getTokenPriceJupiter, getTokenInfoJupiter } from './utility/apiJupiter.js';
 
 
 import { startHttpServer, logToken, updateToken, buyTokenLog, updateBuyPrice } from './httpServer.js';
@@ -502,6 +502,10 @@ mint: quote_token_mint.pubkey.toBase58(),
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
         tokenMonitor.quickSell = msg;
+        getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
+        //sendMessageToClient('logger', info)
+        tokenMonitor.infoJupiter=info;
+        })
         tokenMonitor.cancelMonitor();
         return
       }
