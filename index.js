@@ -500,7 +500,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       }
 
          if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin ) {
-        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin}]}`);
+        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
@@ -637,7 +637,11 @@ mint: quote_token_mint.pubkey.toBase58(),
 
       //  console.log('trade:',trade);
 
-      //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
+
+      tokenLog.updateTradeVelocity(Date.now());
+      const { rate, speed } = tokenLog.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
+
+      //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà
       if (trade.solInPool > 0 && trade.tokensInPool > 0) {
         prezzo = (trade.solInPool / trade.tokensInPool).toFixed(10);
       } else if (trade.vSolInBondingCurve > 0 && trade.vTokensInBondingCurve > 0) {
