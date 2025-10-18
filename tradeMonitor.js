@@ -192,7 +192,7 @@ updateTradeVelocity(newTradeTimestamp) {
   this.tradesPerSec = this.tradesPerMin / 60;
   this.tradesPerTenSec = this.tradesPerMin / 6;
 
-  return { tradesPerMin: this.tradesPerMin, tradesPerSec: this.tradesPerSec , tradesPerTenSec: this.tradesPerTenSec}; 
+  return { tradesPerMin: this.tradesPerMin, tradesPerSec: this.tradesPerSec }; 
 }
   livePrice(priceLive) {
     this.prez = priceLive
