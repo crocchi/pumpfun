@@ -507,6 +507,8 @@ const socket = io();
 				//existingRow.cells[12].innerHTML = defiExchange;
 
 				searchEl.cells[13].innerHTML = `${gain.toFixed(2)}%`;
+
+        searchEl.cells[15].innerHTML = `LiqDrop[${token.stats.liqDrop}] Speed[${token.stats.speedLiq}] Trx 1/s[${token.stats.tradesPerSec}]`;
 			} else {
 				// Add a new row for the token
 				let html = `<tr id='log${token.id}'>
@@ -530,7 +532,8 @@ const socket = io();
 
 								<td>${gain.toFixed(2)}%</td>
                 <td class='strat'>${token.strategy}</td>
-								
+                <td >LiqDrop[${token.stats.liqDrop}] Speed[${token.stats.speedLiq}] Trx 1/s[${token.stats.tradesPerSec}]</td>
+
 							</tr>`;
 				document.getElementById("tokenMonitorBody").innerHTML += html;
 			}

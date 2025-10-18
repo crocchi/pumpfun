@@ -499,7 +499,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
 
- if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy && trxNumm < 50 && rate > -1 && speed > -1 && tokenMonitor.tradesPerSec > 1.5) {
+ if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy && trxNumm < 80 && rate < 1 && speed < 1 && tokenMonitor.tradesPerSec > 1) {
         let msg = (`📈 🚀 [${tokenMonitor.token.name}]💧💧 SecondSpike! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec

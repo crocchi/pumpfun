@@ -163,9 +163,9 @@ class TokenMonitor {
     return { rate: 0, speed: 0 };
   }
   const elapsedSec = (now - this.lastTimeLiq) / 1000;
-  this.liqDrop = ((this.prevSolInPool - solInPool) / this.prevSolInPool) * 100;
+  this.liqDrop = Math.abs(((this.prevSolInPool - solInPool) / this.prevSolInPool) * 100);
   
-  this.speedLiq = this.liqDrop / elapsedSec; // % per secondo
+  this.speedLiq = Math.abs(this.liqDrop / elapsedSec); // % per secondo
   this.prevSolInPool = solInPool;
   this.lastTimeLiq=now;
 
@@ -181,7 +181,7 @@ class TokenMonitor {
     //this.netPressure = this.buyVolume - this.sellVolume;
   }
 
-  updateTradeVelocity(newTradeTimestamp) {
+updateTradeVelocity(newTradeTimestamp) {
   const now = Date.now();
   this.tradeHistory.push(newTradeTimestamp);
 
