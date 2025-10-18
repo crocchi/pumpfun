@@ -185,12 +185,12 @@ updateTradeVelocity(newTradeTimestamp) {
   const now = Date.now();
   this.tradeHistory.push(newTradeTimestamp);
 
-  // Mantieni solo le transazioni dell’ultimo minuto - 30 secondi
-  this.tradeHistory = this.tradeHistory.filter(t => now - t < 30000);
+  // Mantieni solo le transazioni dell’ultimo minuto - 60 secondi
+  this.tradeHistory = this.tradeHistory.filter(t => now - t < 60000);
 
   this.tradesPerMin = this.tradeHistory.length;
-  this.tradesPerSec = this.tradesPerMin / 30;
-  this.tradesPerTenSec = this.tradesPerMin / 10;
+  this.tradesPerSec = this.tradesPerMin / 60;
+  this.tradesPerTenSec = this.tradesPerMin / 6;
 
   return { tradesPerMin: this.tradesPerMin, tradesPerSec: this.tradesPerSec , tradesPerTenSec: this.tradesPerTenSec}; 
 }
