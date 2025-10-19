@@ -656,7 +656,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       //  console.log('trade:',trade);
 
 
-      tokenLog.updateTradeVelocity(Date.now());
+      const { tradesPerMin, tradesPerSec }=tokenLog.updateTradeVelocity(Date.now());
       const { rate, speed } = tokenLog.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
 
       //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà
