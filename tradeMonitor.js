@@ -36,11 +36,15 @@ class TokenMonitor {
     this.liqDrop=0;
     this.lastTimeLiq;
     this.speedLiq=0;
+    this.trend=0;
+    this.updateIntervalMs=3000;
+    this.history=[];
 
     //TradeVelocity
     this.tradeHistory = [];
     this.tradesPerSec=0;
     this.tradesPerMin=0;
+    
   }
 
   startMonitor(snipeCallback) {
@@ -160,16 +164,29 @@ class TokenMonitor {
     if (this.prevSolInPool === null) {
     this.prevSolInPool = solInPool;
     this.lastTimeLiq=now;
-    return { rate: 0, speed: 0 };
+    return { rate: 0, speed: 0, trend: 0 };
   }
   const elapsedSec = (now - this.lastTimeLiq) / 1000;
-  this.liqDrop = Math.abs(((this.prevSolInPool - solInPool) / this.prevSolInPool) * 100);
-  
-  this.speedLiq = Math.abs(this.liqDrop / elapsedSec); // % per secondo
+   if (elapsedSec < this.updateIntervalMs / 1000) 
+      return { rate: this.liqDrop, speed: this.speedLiq, trend: this.trend };
+
+  //this.liqDrop = Math.abs(((this.prevSolInPool - solInPool) / this.prevSolInPool) * 100);
+    const delta = solInPool - this.prevSolInPool;
+    const rate = (delta / this.prevSolInPool) * 100;
+    const speed = rate / elapsedSec;
+
+    this.history.push(rate);
+    if (this.history.length > 10) this.history.shift();
+    const trend = this.history.reduce((a, b) => a + b, 0) / this.history.length;
+
+  this.speedLiq=speed;
+  this.liqDrop=rate;
+  this.trend=trend;
+  //this.speedLiq = Math.abs(this.liqDrop / elapsedSec); // % per secondo
   this.prevSolInPool = solInPool;
   this.lastTimeLiq=now;
 
-  return { rate: this.liqDrop, speed: this.speedLiq };
+  return { rate: this.liqDrop, speed: this.speedLiq , trend: this.trend };
 /*LCR %	Significato	Azione consigliata
 < 10 %	Normale oscillazione	Nessuna azione
 10–30 %	Vendite moderate	Tieni d’occhio volume e netPressure
@@ -192,7 +209,7 @@ updateTradeVelocity(newTradeTimestamp) {
   this.tradesPerSec = this.tradesPerMin / 60;
   this.tradesPerTenSec = this.tradesPerMin / 6;
 
-  return { tradesPerMin: this.tradesPerMin, tradesPerSec: this.tradesPerSec }; 
+  return { tradesPerMin: this.tradesPerMin, tradesPerSec: this.tradesPerSec , tradesPerTenSec: this.tradesPerTenSec}; 
 }
   livePrice(priceLive) {
     this.prez = priceLive
