@@ -160,6 +160,24 @@ Quando leggi i log dei token che hai tradato, un secondo spike “buono” mostr
 “volume in aumento” ma “marketcap ancora sotto 80–100 SOL”;
 
 “liquidity invariata”.
+
+
+
+I 5 peggiori (le maggiori perdite)
+
+Poly — −61.55% (MarketCap ≈ 28.77, Volume ≈ 50.28 SOL)
+
+Poly mascot — −59.59% (MarketCap ≈ 29.29, Volume ≈ 31.49 SOL)
+
+Poly mascot (entry diversa) — −59.38% (MarketCap ≈ 28.78, Volume ≈ 43.87 SOL)
+
+Polymarket — −58.33% (MarketCap ≈ 29.01, Volume ≈ 27.42 SOL)
+
+Unused coin — −46.49% (MarketCap ≈ 29.66, Volume ≈ 73.25 SOL)
+
+Nota: vedi ripetute voci “Poly / Poly mascot” — il bot è entrato più volte su varianti dello stesso 
+progetto con risultati molto negativi. Questo segnala la necessità di un cooldown o dedup per 
+evitare multiple entrate su token correlati.
 */
 // Avvia il timeout di inattività
 // Funzione per inizializzare/riconnettere il WebSocket
@@ -463,12 +481,13 @@ mint: quote_token_mint.pubkey.toBase58(),
     
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
       
-      tokenMonitor.updateTradeVelocity(Date.now());
       liquidityCheck() //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log(`👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
       sendMessageToClient('logger', `👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`)
 
-      const { rate, speed } = tokenMonitor.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
+     const { tradesPerMin, tradesPerSec }=tokenLog.updateTradeVelocity(Date.now());
+
+      const { rate, speed, trend } = tokenMonitor.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
       // console.log('SOL:',priceInSol);
       //setSolAmount(parsed.solAmount);
       tokenMonitor.addSolAmount(parsed.solAmount);
@@ -499,7 +518,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
 
- if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy && trxNumm < 150 && rate < 1 && speed < 1 && tokenMonitor.tradesPerSec > 2) {
+ if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy && trxNumm < 150 && rate > 1 && speed < 1 && tokenMonitor.tradesPerSec > 2) {
         let msg = (`📈 🚀 [${tokenMonitor.token.name}]💧💧 SecondSpike! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -657,7 +676,7 @@ mint: quote_token_mint.pubkey.toBase58(),
 
 
       const { tradesPerMin, tradesPerSec }=tokenLog.updateTradeVelocity(Date.now());
-      const { rate, speed } = tokenLog.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
+      const { rate, speed, trend } = tokenLog.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
 
       //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà
       if (trade.solInPool > 0 && trade.tokensInPool > 0) {

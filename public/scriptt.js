@@ -508,7 +508,7 @@ const socket = io();
 
 				searchEl.cells[13].innerHTML = `${gain.toFixed(2)}%`;
 
-        searchEl.cells[15].innerHTML = `LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.liqTrend.toFixed(2)}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}]`;
+        searchEl.cells[15].innerHTML = `LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.trend.toFixed(2)}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}]`;
 			} else {
 				// Add a new row for the token
 				let html = `<tr id='log${token.id}'>
@@ -532,7 +532,7 @@ const socket = io();
 
 								<td>${gain.toFixed(2)}%</td>
                 <td class='strat'>${token.strategy}</td>
-                <td >LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.liqTrend.toFixed(2)}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}]</td>
+                <td >LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.trend.toFixed(2)}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}]</td>
 
 							</tr>`;
 				document.getElementById("tokenMonitorBody").innerHTML += html;
