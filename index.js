@@ -485,7 +485,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       console.log(`👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
       sendMessageToClient('logger', `👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`)
 
-     const { tradesPerMin, tradesPerSec }=tokenLog.updateTradeVelocity(Date.now());
+     const { tradesPerMin, tradesPerSec }=tokenMonitor.updateTradeVelocity(Date.now());
 
       const { rate, speed, trend } = tokenMonitor.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
       // console.log('SOL:',priceInSol);
