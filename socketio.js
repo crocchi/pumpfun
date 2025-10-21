@@ -114,9 +114,8 @@ setInterval(() => {
         walletSol:botOptions.botCash
     }
     sendMessageToClient('wallet', data)//`NumTrx:${instance.solTrxNumMonitor} Volume:${instance.volume} SOL VolumeNet:${instance.volumeNet} SOL Price:${instance.LivePrice} `);
-   
-   const dataLocal=StatsMonitor.returnAllTokens()
-   sendMessageToClient('stats', dataLocal)
+   const yoTemp=getALLTOKENS();
+   sendMessageToClient('stats', yoTemp)
 
 },60000)
 

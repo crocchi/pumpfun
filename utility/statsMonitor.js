@@ -5,6 +5,9 @@
 import fetch from "node-fetch";
 export const ALLTOKENS = new Map();
 
+export const getALLTOKENS=()=>{
+    return ALLTOKENS;
+}
 export default class StatsMonitor {
     constructor(token) {
         this.mint = token.mint;
@@ -27,7 +30,7 @@ export default class StatsMonitor {
             }];
         ALLTOKENS.set(tokenData.mint, data);
     }
-    updateToken(tokenData,priceSold,soldStratgy) {
+     static updateToken(tokenData,priceSold,soldStratgy) {
          if (ALLTOKENS.has(tokenData.mint)) {
             
             const existingData = ALLTOKENS.get(tokenData.mint);
