@@ -465,7 +465,7 @@ const socket = io();
 		});
 
 socket.on('stats', (data) => {
-	console.log('📊 Statistiche aggiornate:', JSON.stringify(data));
+	console.log('📊 Statistiche aggiornate:', data);
 		})
 
 		socket.on('notifyMe', (data) => {
