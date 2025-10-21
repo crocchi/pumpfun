@@ -464,6 +464,10 @@ const socket = io();
 			if (size > 90000) logggerEl.textContent = '0\n';
 		});
 
+socket.on('stats', (data) => {
+	console.log('📊 Statistiche aggiornate:', JSON.stringify(data));
+		})
+
 		socket.on('notifyMe', (data) => {
 			if (!soundSystem) return;
       playScale();
@@ -508,7 +512,7 @@ const socket = io();
 
 				searchEl.cells[13].innerHTML = `${gain.toFixed(2)}%`;
 
-        searchEl.cells[15].innerHTML = `LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.trend}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}]`;
+        searchEl.cells[15].innerHTML = `LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.liqTrend}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}]`;
 			} else {
 				// Add a new row for the token
 				let html = `<tr id='log${token.id}'>

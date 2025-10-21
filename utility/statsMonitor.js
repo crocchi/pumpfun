@@ -3,29 +3,46 @@
 // Dati compatibili con Pump.fun (vSolInBondingCurve)
 
 import fetch from "node-fetch";
+export const ALLTOKENS = new Map();
 
 export default class StatsMonitor {
-    constructor(mint,strategy) {
-        this.mint = mint;
-        this.totNumber=0;
-        this.strategy = strategy || "unknown";
+    constructor(token) {
+        this.mint = token.mint;
+        this.pool = token.pool || "Unknown";
+        this.name = token.name || "Unknown";
+        //this.totNumber=0;
+       // this.strategy = strategy || "unknown";
         this.winner = false; //true o false
         this.gain =0;
-        this.AllTokens = new Map();
+        //this.AllTokens = new Map();
     }
-    initToken(tokenData) {
-        this.AllTokens.set(tokenData.mint, tokenData);
+    initToken(tokenData,strategy,priceBuy) {
+        //this.totNumber++;
+        const data=[{
+             mint: tokenData.mint,
+             pool: tokenData.pool, 
+             name: tokenData.name,
+             buyPrice:priceBuy || 0,
+             strategy: strategy || "unknown",
+            }];
+        ALLTOKENS.set(tokenData.mint, data);
     }
-    updateToken(tokenData,winner,gain) {
-         if (this.AllTokens.has(tokenData.mint)) {
-            this.AllTokens.set(tokenData.mint, tokenData);
-            this.winner = winner;
-            this.gain = gain;
+    updateToken(tokenData,priceSold,soldStratgy) {
+         if (ALLTOKENS.has(tokenData.mint)) {
+            
+            const existingData = ALLTOKENS.get(tokenData.mint);
+            existingData.push(
+                {
+                 PriceSold:priceSold,
+                 strategySold:soldStratgy || "unknown",
+                });
+
+           // ALLTOKENS.set(tokenData.mint, existingData);
          }else{this.initToken(tokenData);}
        // this.AllTokens.set(tokenData.mint, tokenData);
     }
     returnAllTokens(){
-        return this.AllTokens;
+        return ALLTOKENS;
     }
 
 }
