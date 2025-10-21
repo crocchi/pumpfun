@@ -536,7 +536,7 @@ socket.on('stats', (data) => {
 
 								<td>${gain.toFixed(2)}%</td>
                 <td class='strat'>${token.strategy}</td>
-                <td >LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.trend.toFixed(2)}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}]</td>
+                <td >LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.trend}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}]</td>
 
 							</tr>`;
 				document.getElementById("tokenMonitorBody").innerHTML += html;

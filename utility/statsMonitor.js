@@ -2,8 +2,8 @@
 // Monitora in tempo reale Liquidity Change Rate (LCR) + Trade Velocity (TV)
 // Dati compatibili con Pump.fun (vSolInBondingCurve)
 
-import fetch from "node-fetch";
-export const ALLTOKENS = new Map();
+
+const ALLTOKENS = new Map();
 
 export const getALLTOKENS=()=>{
     return ALLTOKENS;
