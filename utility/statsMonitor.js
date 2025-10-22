@@ -5,7 +5,7 @@
 
 const ALLTOKENS = new Map();
 
-export function getALLTOKENS(){
+export function getALLTOKENS() {
     return ALLTOKENS;
 }
 export default class StatsMonitor {
@@ -14,38 +14,43 @@ export default class StatsMonitor {
         this.pool = token.pool || "Unknown";
         this.name = token.name || "Unknown";
         //this.totNumber=0;
-       // this.strategy = strategy || "unknown";
+        // this.strategy = strategy || "unknown";
         this.winner = false; //true o false
-        this.gain =0;
+        this.gain = 0;
         //this.AllTokens = new Map();
     }
-    initToken(tokenData,strategy,priceBuy) {
+    initToken(tokenData, strategy, priceBuy) {
         //this.totNumber++;
-        const data=[{
-             mint: tokenData.mint,
-             pool: tokenData.pool, 
-             name: tokenData.name,
-             buyPrice:priceBuy || 0,
-             strategy: strategy || "unknown",
-            }];
+        const data = [{
+            mint: tokenData.mint,
+            pool: tokenData.pool,
+            name: tokenData.name,
+            buyPrice: priceBuy || 0,
+            strategy: strategy || "unknown",
+        }];
         ALLTOKENS.set(tokenData.mint, data);
     }
-     static updateToken(tokenData,priceSold,soldStratgy) {
-         if (ALLTOKENS.has(tokenData.mint)) {
-            
+    static updateToken(tokenData, priceSold, soldStratgy) {
+        if (ALLTOKENS.has(tokenData.mint)) {
+
             const existingData = ALLTOKENS.get(tokenData.mint);
+            //calcola la percentuale di guadagno
+            const lastBuy = existingData[existingData.length - 1];
+            const gainPercent = ((priceSold - lastBuy.buyPrice) / lastBuy.buyPrice) * 100;
             existingData.push(
                 {
-                 PriceSold:priceSold,
-                 strategySold:soldStratgy || "unknown",
+                    PriceSold: priceSold,
+                    gainPercent: gainPercent.toFixed(2),
+                    winner: gainPercent > 0 ? true : false,
+                    strategySold: soldStratgy || "unknown",
                 });
 
-           // ALLTOKENS.set(tokenData.mint, existingData);
-         }else{this.initToken(tokenData);}
-       // this.AllTokens.set(tokenData.mint, tokenData);
+            // ALLTOKENS.set(tokenData.mint, existingData);
+        } else { this.initToken(tokenData); }
+        // this.AllTokens.set(tokenData.mint, tokenData);
     }
-    returnAllTokens(){
-       // console.log(JSON.stringify(ALLTOKENS));
+    returnAllTokens() {
+        // console.log(JSON.stringify(ALLTOKENS));
         return ALLTOKENS;
     }
 

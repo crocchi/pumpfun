@@ -465,8 +465,25 @@ const socket = io();
 		});
 
 socket.on('stats', (data) => {
-	console.log('📊 Statistiche aggiornate:', data);
-		})
+//	console.log('📊 Statistiche aggiornate:', data);
+ const dataToSend = {
+        totalTokens: totToken,
+        totalWins: totWin,
+        totalLosses: totLose,
+        stats: dataStats
+    };
+    //aggiorna interfaccia
+  let totalWins=data.totalWins;
+  document.getElementById('totWin').textContent = `Wins: ${totalWins}`;
+  
+  let totalLosses=data.totalLosses;
+  document.getElementById('totLose').textContent = `Losses: ${totalLosses}`;
+  let totalTokens=data.totalTokens;
+  document.getElementById('totToken').textContent = `AllToken: ${totalTokens}`;
+	let totalPercent=data.totalPercent;
+  document.getElementById('totPercent').textContent = `Total%: ${totalPercent}%`;
+
+})
 
 		socket.on('notifyMe', (data) => {
 			if (!soundSystem) return;

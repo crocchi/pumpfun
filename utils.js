@@ -22,6 +22,7 @@ const blacklist = [ // o aggiungi dev wallet che hanno creato un token ultimi 20
   'FkeYEXAMPLEdGycd3t7asdfsas', 
   '6QsW5rSMYaQTGJxg9UiwmhxEQ7w1DypdN9kfHQuWoobi'
 ];
+const tokenNameList=[];
 let cont=0
 
 export async function isSafeToken(token) {
@@ -148,10 +149,20 @@ export async function isSafeToken(token) {
         valid: safeProblem.length === 0, // soglia regolabile
       }
     }
+    //controlla se il nome del token è gia stato creato ultimi 200 token
+    if(tokenNameList.includes(token.name)){
+      safeProblem.push("❌ Nome token duplicato.");
+        return {
+        safeProblem,
+        valid: safeProblem.length === 0, // soglia regolabile
+      }
+    }
 //aggiungi dev wallet,ultimi token creati.cosi un dev se lancia 2 token
-// di seguito viene bloccato
+// di seguito viene bloccato - anke il nome del token duplicati
 blacklist.push(token.traderPublicKey);
-if(blacklist.length >= 80){ blacklist.shift() }
+tokenNameList.push(token.name);
+if(tokenNameList.length >= 200){ tokenNameList.shift() }
+if(blacklist.length >= 100){ blacklist.shift() }
 
     // 6. ✅ Controllo metadati (opzionale)
     
