@@ -131,7 +131,7 @@ setInterval(async () => {
         if (instance.length > 1) {
             if (instance[1]['winner']) totWin++;
             else totLose++;
-            totPercent = totPercent + parseFloat(instance[1]['gainPercent']);
+            totPercent = parseFloat(totPercent) + parseFloat(instance[1]['gainPercent']);
             totToken++;
             objj=instance;
         }

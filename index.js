@@ -543,7 +543,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       }
 
 
- if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tradesPerMin > 50) {
+ if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tradesPerMin > 20) {
         let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
