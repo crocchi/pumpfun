@@ -557,6 +557,22 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
 
+       if (trend > 10 && prezzo > botOptions.priceSolUpQuickBuy ) {
+        let msg = (`🔥🔥Trend Token!🔥🔥 [${tokenMonitor.token.name}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
+        //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
+        //rate, speed, tokenMonitor.tradesPerSec
+        console.log(msg);
+        sendMessageToClient('event', msg)
+        tokenMonitor.quickBuy = prezzo;
+        tokenMonitor.quickSell = msg;
+        getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
+        //sendMessageToClient('logger', info)
+        tokenMonitor.infoJupiter=info;
+        })
+        tokenMonitor.cancelMonitor();
+        return
+      }
+
 
 
       //nuova regola da testare...
