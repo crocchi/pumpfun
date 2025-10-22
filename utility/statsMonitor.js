@@ -45,6 +45,7 @@ export default class StatsMonitor {
        // this.AllTokens.set(tokenData.mint, tokenData);
     }
     returnAllTokens(){
+        console.log(JSON.stringify(ALLTOKENS));
         return ALLTOKENS;
     }
 
