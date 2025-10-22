@@ -466,12 +466,7 @@ const socket = io();
 
 socket.on('stats', (data) => {
 //	console.log('📊 Statistiche aggiornate:', data);
- const dataToSend = {
-        totalTokens: totToken,
-        totalWins: totWin,
-        totalLosses: totLose,
-        stats: dataStats
-    };
+
     //aggiorna interfaccia
   let totalWins=data.totalWins;
   document.getElementById('totWin').textContent = `Wins: ${totalWins}`;
