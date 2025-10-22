@@ -481,7 +481,7 @@ socket.on('stats', (data) => {
   let totalTokens=data.totalTokens;
   document.getElementById('totToken').textContent = `AllToken: ${totalTokens}`;
 	let totalPercent=data.totalPercent;
-  document.getElementById('totPercent').textContent = `Total%: ${totalPercent}%`;
+  document.getElementById('totPercent').textContent = `Total: ${totalPercent}%`;
 
 })
 

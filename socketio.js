@@ -110,6 +110,7 @@ setInterval(() => {
 }, 2000);
 
 let contStats = 0;
+let totPercent = 0;
 setInterval(async () => {
     let data = {
         walletSol: botOptions.botCash
@@ -119,7 +120,7 @@ setInterval(async () => {
     let totToken = 0;
     let totWin = 0;
     let totLose = 0;
-    let totPercent = 0;
+    
     dataStats.forEach((instance, key) => {
         if (instance.length === 0) return;
         //aggiungi cont token
