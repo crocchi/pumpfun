@@ -109,6 +109,7 @@ setInterval(() => {
 
 }, 2000);
 
+let contStats = 0;
 setInterval(async () => {
     let data = {
         walletSol: botOptions.botCash
@@ -131,8 +132,6 @@ setInterval(async () => {
             totPercent += parseFloat(instance[1]['gainPercent']);
         }
         //
-
-        instance
     })
     const dataToSend = {
         totalTokens: totToken,
@@ -141,7 +140,10 @@ setInterval(async () => {
         totalPercent: totPercent.toFixed(2),
         stats: dataStats
     };
+if(contStats < totToken){
+    contStats=totToken;
     sendMessageToClient('stats', dataToSend);
+}
 
 }, 120000)
 
