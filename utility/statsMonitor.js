@@ -5,7 +5,7 @@
 
 const ALLTOKENS = new Map();
 
-export const getALLTOKENS=()=>{
+export function getALLTOKENS(){
     return ALLTOKENS;
 }
 export default class StatsMonitor {
@@ -45,7 +45,7 @@ export default class StatsMonitor {
        // this.AllTokens.set(tokenData.mint, tokenData);
     }
     returnAllTokens(){
-        console.log(JSON.stringify(ALLTOKENS));
+       // console.log(JSON.stringify(ALLTOKENS));
         return ALLTOKENS;
     }
 

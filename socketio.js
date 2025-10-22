@@ -1,7 +1,7 @@
 import { Server } from 'socket.io';
 import { botOptions } from './config.js';
 import { instancesToken,instances } from './index.js';
-import StatsMonitor,{returnALLTOKENS} from './utility/statsMonitor.js';
+import StatsMonitor,{getALLTOKENS} from './utility/statsMonitor.js';
 // instances Mappa per memorizzare le istanze di TokenMonitor
 
 let io = null;
@@ -114,7 +114,7 @@ setInterval(async () => {
         walletSol:botOptions.botCash
     }
     sendMessageToClient('wallet', data)//`NumTrx:${instance.solTrxNumMonitor} Volume:${instance.volume} SOL VolumeNet:${instance.volumeNet} SOL Price:${instance.LivePrice} `);
-   returnALLTOKENS().then(yoTemp=>{
+   getALLTOKENS().then(yoTemp=>{
        sendMessageToClient('stats', yoTemp) 
    })
 
