@@ -236,7 +236,7 @@ const onMessage = async (data) => {
         return
 
       }
-
+//      botOptions.demoVersion = true;
       const monitor = getInstanceForTokenMonitor(token)
       monitor.orario()
       if (safer.fastBuy) { // fast buy
@@ -244,7 +244,9 @@ const onMessage = async (data) => {
         console.log(msg)
         monitor.tradeMonitor = false;// disabilito il monitoraggio
         monitor.infoSnipe = safer.fastReason
-        sendMessageToClient('event', msg)
+        monitor.infoSniper=safer.fastBuy;
+        sendMessageToClient('event', msg);
+      //  botOptions.demoVersion = false;
         
         //monitor.
       } else {      //modalità monitoraggio   
@@ -541,7 +543,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       }
 
 
- if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet) {
+ if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tradesPerMin > 50) {
         let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -882,7 +884,7 @@ pool: 'pump'
 
 
 
-function getInstanceForTokenMonitor(token) {
+export function getInstanceForTokenMonitor(token) {
   // Controlla se esiste già un'istanza per questo token
   if (!instances.has(token.mint)) {
     const instance = new TokenMonitor(token);

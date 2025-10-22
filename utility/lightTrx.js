@@ -1,6 +1,7 @@
 import { LIGHT_WALLET_API , botOptions } from '../config.js';
 import {returnTokenLog } from '../httpServer.js'
-import {getInstanceForTokenLogger} from '../index.js'
+import {getInstanceForTokenLogger , getInstanceForTokenMonitor} from '../index.js'
+import { sendMessageToClient } from './socketio.js';
 /*
 const response = await fetch("https://pumpportal.fun/api/trade?api-key=your-api-key-here", {
     method: "POST",
@@ -45,7 +46,16 @@ const TOKEN_AMOUNT = 0; // QNT di token acquistato
 // FUNZIONE PRINCIPALE
 // =======================
 export async function buyToken(token , retryCount = 1, timercount = 1000) {
-if(botOptions.demoVersion) return false
+if(botOptions.demoVersion) {   
+    const monitor = getInstanceForTokenMonitor(token) ;
+    //console.log(monitor.infoSnipe);
+    if(monitor?.infoSniper){
+    let msg=`quasi quasi baio... ${monitor.infoSnipe} `;
+    sendMessageToClient('event', msg);
+    }
+
+    return false
+}
     try {
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${API_KEY}`, {
             method: "POST",
@@ -125,8 +135,11 @@ trade: {
 
 
 export async function sellToken(token ,sol_or_not=false,retryCount = 1, timercount = 1000,amountFallback=false) {
-   if(botOptions.demoVersion) return false;
-   //let tokenLog = await getInstanceForTokenLogger(token);
+   if(botOptions.demoVersion){
+       let tokenLog = await getInstanceForTokenLogger(token);
+    return false;
+   } 
+   //
     try {
         //let totAmountToSell=await returnTokenLog(token.mint);
         //let amountToSell=tokenLog.tokenAmount || totAmountToSell.buySign[1]?.tokenAmount ;

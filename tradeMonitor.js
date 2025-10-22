@@ -28,6 +28,7 @@ class TokenMonitor {
     this.prez;
     this.highPrez;
     this.infoSnipe;
+    this.infoSniper;
     //infoToken By jupiter
     this.infoJupiter;
 
