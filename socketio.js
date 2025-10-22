@@ -124,13 +124,14 @@ setInterval(async () => {
     dataStats.forEach((instance, key) => {
         if (instance.length === 0) return;
         //aggiungi cont token
-        totToken++;
+        
         //controlla se è vincente o perdente
 
         if (instance.length > 1) {
             if (instance[1]['winner']) totWin++;
             else totLose++;
             totPercent += parseFloat(instance[1]['gainPercent']);
+            totToken++;
         }
         //
     })

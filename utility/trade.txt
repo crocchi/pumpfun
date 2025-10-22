@@ -90,6 +90,51 @@ Token: {
 📥 Download
 📤 Upload
 
+💎 Diamond Hands
+📉 Bear Market
+📈 Bull Market
+🚀 To the Moon
+🌕 Full Moon
+🌑 New Moon
+🪙 Coin
+🔗 Blockchain
+⛓️ Chain
+📜 Smart Contract
+🔐 Private Key
+🔓 Public Key
+🖧 Network
+⚡ Lightning Network
+📡 Node
+🛠️ Mining
+⛏️ Pickaxe
+🏦 Exchange
+💱 Swap
+📊 Chart
+📈 Growth
+📉 Decline
+💰 Wallet
+🔑 Key
+🛡️ Security
+📦 Token
+🌐 Decentralized
+🤖 Bot
+🪙 Altcoin
+🐋 Whale
+🐢 Turtle
+🐂 Bull
+🐻 Bear
+🔥 Burn
+🌊 Liquidity
+💸 Airdrop
+🎁 Giveaway
+📈 ATH (All-Time High)
+📉 ATL (All-Time Low)
+🛑 Stop Loss
+📈 FOMO (Fear of Missing Out)
+📉 FUD (Fear, Uncertainty, Doubt)
+🔍 DYOR (Do Your Own Research)
+📜 Whitepaper
+🧾 Ledger
 
 
 
