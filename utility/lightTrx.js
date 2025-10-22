@@ -1,7 +1,7 @@
 import { LIGHT_WALLET_API , botOptions } from '../config.js';
 import {returnTokenLog } from '../httpServer.js'
 import {getInstanceForTokenLogger , getInstanceForTokenMonitor} from '../index.js'
-import { sendMessageToClient } from './socketio.js';
+import { sendMessageToClient } from '../socketio.js';
 /*
 const response = await fetch("https://pumpportal.fun/api/trade?api-key=your-api-key-here", {
     method: "POST",
