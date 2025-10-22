@@ -59,6 +59,7 @@ export let SOLANA_USD = 200;
   
     // trailing sell
     enableTrailing: true,
+    adaptiveTrailingLcrRate: true, //adatta il trailing in base al tasso di cambio di liquidità
     trailingPercent: 25,        // 15% sotto il massimo raggiunto
   
     // refresh client

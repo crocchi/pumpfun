@@ -119,7 +119,7 @@ setInterval(async () => {
     let totWin = 0;
     let totLose = 0;
     let totPercent = 0;
-    instances.forEach((instance, key) => {
+    dataStats.forEach((instance, key) => {
         if (instance.length === 0) return;
         //aggiungi cont token
         totToken++;

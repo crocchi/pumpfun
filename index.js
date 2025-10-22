@@ -767,8 +767,9 @@ pool: 'pump'
             //INSERIAMO IL TRAILING UP QUI..X IL MOMENTO
 
             if (tokenLog.activeTrailing) {
-
               let stopEloss = tokenLog.stop;
+              if(botOptions.adaptiveTrailingLcrRate){
+                 
               if(trend < -2){ // se la liquidità scende lentamente
                 //trailing dinamico 
                // trend = Math.abs(trend) > 10 ? 10 : Math.abs(trend);
@@ -776,6 +777,8 @@ pool: 'pump'
                 let msg = (`🔻 Trailing Stop adattato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} ora a ${stopEloss.toFixed(10)}, HighPrice:${tokenLog.highPrice}, Trend:${trend.toFixed(2)}`);
                // stopEloss = tokenLog.stop * (1 - (trend / 100));
                   sendMessageToClient('event', msg)
+              }
+             
               }
                 
               if (tradeInfo.price <= stopEloss) {

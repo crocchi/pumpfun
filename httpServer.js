@@ -118,6 +118,7 @@ export function startHttpServer(port = 4000) {
         if ('hasTwitterCheck_filter' in body) botOptions.hasTwitterCheck_filter = body.hasTwitterCheck_filter === 'true' || body.hasTwitterCheck_filter === true || false;
 
         if ('enableTrailing' in body) botOptions.enableTrailing = body.enableTrailing === 'true' || body.enableTrailing === true;
+        if ('adaptiveTrailingLcrRate' in body) botOptions.adaptiveTrailingLcrRate = body.adaptiveTrailingLcrRate === 'true' || body.adaptiveTrailingLcrRate === true;
         if ('trailingPercent' in body) botOptions.trailingPercent = Number(body.trailingPercent) || botOptions.trailingPercent;
         if ('clientRefreshMs' in body) botOptions.clientRefreshMs = Math.max(1000, Number(body.clientRefreshMs)) || botOptions.clientRefreshMs;
         if ('demoVersion' in body) botOptions.demoVersion = body.demoVersion;

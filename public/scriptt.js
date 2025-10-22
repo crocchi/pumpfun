@@ -171,8 +171,10 @@ async function saveOptions(e) {
     hasTwitterOrTelegram_filter: document.getElementById('TwitterOrTelegram').checked,
     demoVersion: document.getElementById('demoversion').checked,
     hasTwitterCheck_filter: document.getElementById('TwitterCheck').checked,
-    enableTrailing: document.getElementById('enableTrailing').checked,
+    adaptiveTrailingLcrRate: document.getElementById('adaptiveTrailingLcrRate').checked,
     trailingPercent: document.getElementById('trailingPercent').value,
+    
+
 
 
   };
@@ -241,6 +243,7 @@ async function loadOptions() {
   document.getElementById('demoversion').checked = o.demoVersion;
   document.getElementById('enableTrailing').checked = o.enableTrailing;
   document.getElementById('trailingPercent').value = o.trailingPercent;
+  document.getElementById('adaptiveTrailingLcrRate').checked = o.adaptiveTrailingLcrRate;
   // Imposta il checkbox rugpullxyz
 
   if (o.rugpullxyz === 'true' || o.rugpullxyz === true){
@@ -302,6 +305,7 @@ async function saveConfig() {
     hasTwitterCheck_filter: document.getElementById('TwitterCheck').checked,
     enableTrailing: document.getElementById('enableTrailing').checked,
     trailingPercent: document.getElementById('trailingPercent').value,
+    adaptiveTrailingLcrRate: document.getElementById('adaptiveTrailingLcrRate').checked,
 
 
   };
@@ -385,6 +389,7 @@ const loadConf = async (o) => {
 
   document.getElementById('demoversion').checked = o.demoVersion;
   document.getElementById('enableTrailing').checked = o.enableTrailing;
+  document.getElementById('adaptiveTrailingLcrRate').checked = o.adaptiveTrailingLcrRate;
   document.getElementById('trailingPercent').value = o.trailingPercent;
   document.getElementById('enablerugpullxyz').checked = o.rugpullxyz;
 
@@ -465,7 +470,7 @@ const socket = io();
 		});
 
 socket.on('stats', (data) => {
-//	console.log('📊 Statistiche aggiornate:', data);
+ console.log('📊 Statistiche aggiornate:', data);
 
     //aggiorna interfaccia
   let totalWins=data.totalWins;
