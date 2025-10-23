@@ -158,6 +158,7 @@ async function saveOptions(e) {
     
     priceSolUpMode: document.getElementById('priceSolUpMode').checked,
     priceSolUpQuickBuy: document.getElementById('priceSolUpQuickBuy').value,
+    priceSolUpQuickBuyMax: document.getElementById('priceSolUpQuickBuyMax').value,
     priceSolUpModeQuickBuyVolumeMin: document.getElementById('priceSolUpModeQuickBuyVolumeMin').value,
     priceSolUpModeQuickBuyVolumeNetMin: document.getElementById('priceSolUpModeQuickBuyVolumeNetMin').value,
 
@@ -229,7 +230,8 @@ async function loadOptions() {
   document.getElementById('marketCapSolUpQuickBuy').value = o.marketCapSolUpQuickBuy;
 
   document.getElementById('priceSolUpMode').checked = o.priceSolUpMode;
-  document.getElementById('priceSolUpQuickBuy').value = o.priceSolUpQuickBuy;
+  document.getElementById('priceSolUpQuickBuy').value = o?.priceSolUpQuickBuy?.toFixed(9) || o.priceSolUpQuickBuy;
+  document.getElementById('priceSolUpQuickBuyMax').value = o?.priceSolUpQuickBuyMax?.toFixed(9) || o.priceSolUpQuickBuyMax;
   document.getElementById('priceSolUpModeQuickBuyVolumeMin').value = o.priceSolUpModeQuickBuyVolumeMin;
   document.getElementById('priceSolUpModeQuickBuyVolumeNetMin').value = o.priceSolUpModeQuickBuyVolumeNetMin;
 
@@ -289,6 +291,7 @@ async function saveConfig() {
     marketCapSolUpQuickBuy: document.getElementById('marketCapSolUpQuickBuy').value,
     priceSolUpMode: document.getElementById('priceSolUpMode').checked,
     priceSolUpQuickBuy: document.getElementById('priceSolUpQuickBuy').value,
+    priceSolUpQuickBuyMax: document.getElementById('priceSolUpQuickBuyMax').value,
     priceSolUpModeQuickBuyVolumeMin: document.getElementById('priceSolUpModeQuickBuyVolumeMin').value,
     priceSolUpModeQuickBuyVolumeNetMin: document.getElementById('priceSolUpModeQuickBuyVolumeNetMin').value,
 
@@ -376,6 +379,7 @@ const loadConf = async (o) => {
 
   document.getElementById('priceSolUpMode').checked = o.priceSolUpMode;
   document.getElementById('priceSolUpQuickBuy').value = o.priceSolUpQuickBuy;
+  document.getElementById('priceSolUpQuickBuyMax').value = o.priceSolUpQuickBuyMax;
   document.getElementById('priceSolUpModeQuickBuyVolumeMin').value = o.priceSolUpModeQuickBuyVolumeMin;
   document.getElementById('priceSolUpModeQuickBuyVolumeNetMin').value = o.priceSolUpModeQuickBuyVolumeNetMin;
 
@@ -609,7 +613,7 @@ socket.on('stats', (data) => {
 				searchEl.cells[5].textContent = token.volume;
 				searchEl.cells[6].textContent = token.time;
 				searchEl.cells[7].innerHTML = `${defiExchange}`
-        searchEl.cells[8].innerHTML = `LiqDrop[${token.stats?.liqDrop?.toFixed(2) || 'N/A'}] Speed[${token.stats?.speedLiq?.toFixed(2) || 'N/A'}] Trend[${token.stats?.liqTrend || 'N/A'}] Trx 1/s[${token.stats?.tradesPerSec?.toFixed(2) || 'N/A'}] Trx/m[${token.stats?.tradesPerMin || 'N/A'}]`
+        searchEl.cells[8].innerHTML = `LiqDrop[${token.stats?.liqDrop?.toFixed(2) || 'N/A'}] Speed[${token.stats?.speedLiq?.toFixed(2) || 'N/A'}] Trend[${token.stats?.liqTrend?.toFixed(2) || 'N/A'}] Trx 1/s[${token.stats?.tradesPerSec?.toFixed(2) || 'N/A'}] Trx/m[${token.stats?.tradesPerMin || 'N/A'}]`
 			} else {
 				// Add a new row for the token
 				let html = `<tr id='mon${token.id}'>
@@ -621,7 +625,7 @@ socket.on('stats', (data) => {
 								<td>${token.volume.toFixed(2)} SOL</td>
 								<td>${token.time}</td>
 								<td>${defiExchange}</td>
-								<td >LiqDrop[${token.stats?.liqDrop?.toFixed(2) || 'N/A'}] Speed[${token.stats?.speedLiq?.toFixed(2) || 'N/A'}] Trend[${token.stats?.liqTrend || 'N/A'}] Trx 1/s[${token.stats?.tradesPerSec?.toFixed(2) || 'N/A'}] Trx/m[${token.stats?.tradesPerMin || 'N/A'}]</td>
+								<td >LiqDrop[${token.stats?.liqDrop?.toFixed(2) || 'N/A'}] Speed[${token.stats?.speedLiq?.toFixed(2) || 'N/A'}] Trend[${token.stats?.liqTrend?.toFixed(2) || 'N/A'}] Trx 1/s[${token.stats?.tradesPerSec?.toFixed(2) || 'N/A'}] Trx/m[${token.stats?.tradesPerMin || 'N/A'}]</td>
 
 							</tr>`;
 				document.getElementById("tokenLoggerBody").innerHTML += html;

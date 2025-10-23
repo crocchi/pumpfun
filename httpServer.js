@@ -108,6 +108,7 @@ export function startHttpServer(port = 4000) {
 
         if ('priceSolUpMode' in body) botOptions.priceSolUpMode = body.priceSolUpMode === 'true' || body.priceSolUpMode === true || false;
         if ('priceSolUpQuickBuy' in body) botOptions.priceSolUpQuickBuy = Number(body.priceSolUpQuickBuy) || botOptions.priceSolUpQuickBuy;
+        if ('priceSolUpQuickBuyMax' in body) botOptions.priceSolUpQuickBuyMax = Number(body.priceSolUpQuickBuyMax) || botOptions.priceSolUpQuickBuyMax;
         if ('priceSolUpModeQuickBuyVolumeMin' in body) botOptions.priceSolUpModeQuickBuyVolumeMin = Number(body.priceSolUpModeQuickBuyVolumeMin) || botOptions.priceSolUpModeQuickBuyVolumeMin;
         if ('priceSolUpModeQuickBuyVolumeNetMin' in body) botOptions.priceSolUpModeQuickBuyVolumeNetMin = Number(body.priceSolUpModeQuickBuyVolumeNetMin) || botOptions.priceSolUpModeQuickBuyVolumeNetMin;
 
