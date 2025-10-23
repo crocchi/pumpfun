@@ -46,6 +46,8 @@ class TokenMonitor {
     this.tradesPerSec=0;
     this.tradesPerMin=0;
     
+    //volume
+    this.volumeRulesNet;
   }
 
   startMonitor(snipeCallback) {
@@ -85,6 +87,10 @@ class TokenMonitor {
           console.log(`⛔ [${this.token.name}] Volume Max Superato.:${this.solAmount}`);
           this.suspiciousSellDetected = true;
         }
+        if (this.volumeRulesNet === false) {
+          console.log(`⛔ [${this.token.name}] Volume Net insufficiente rispetto al Volume Totale.`);
+          this.suspiciousSellDetected = true;
+        }
 
         if (this.suspiciousSellDetected || this.solAmount < botOptions.volumeMin || this.volume < botOptions.minVolumeMonitor) {
           ws.send(JSON.stringify({
@@ -97,7 +103,7 @@ class TokenMonitor {
           resolve(false);
           return false
         } else {
-          let msg=`✅ Token (${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}...highPrez:${this.highPrez} Procedo con snipe...`
+          let msg=`🔍 Monitor Token(${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}...highPrez:${this.highPrez} Procedo con snipe...`
           console.log(msg);
           this.infoSnipe=msg;
           this.resetValues();
@@ -183,6 +189,9 @@ class TokenMonitor {
   this.speedLiq=speed;
   this.liqDrop=rate;
   this.trend=trend;
+
+  //calcola trend volume al volo..
+  this.volumeRulesNet=this.solAmount > 0 && (this.solAmount / this.volume) >= 0.15;
   //this.speedLiq = Math.abs(this.liqDrop / elapsedSec); // % per secondo
   this.prevSolInPool = solInPool;
   this.lastTimeLiq=now;
