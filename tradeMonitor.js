@@ -172,7 +172,7 @@ class TokenMonitor {
       return { rate: this.liqDrop, speed: this.speedLiq, trend: this.trend };
 
   //this.liqDrop = Math.abs(((this.prevSolInPool - solInPool) / this.prevSolInPool) * 100);
-    const delta = solInPool - this.prevSolInPool;
+    const delta = this.prevSolInPool - solInPool;
     const rate = (delta / this.prevSolInPool) * 100;
     const speed = rate / elapsedSec;
 
