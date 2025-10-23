@@ -490,7 +490,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       console.log(`👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
       sendMessageToClient('logger', `👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`)
 
-     const { tradesPerMin, tradesPerSec }=tokenMonitor.updateTradeVelocity(Date.now());
+     const { tradesPerMin, tradesPerSec, tradesPerTenSec }=tokenMonitor.updateTradeVelocity(Date.now());
 
       const { rate, speed, trend } = tokenMonitor.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
       // console.log('SOL:',priceInSol);
@@ -559,7 +559,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
 
-       if (trend > 15 && tradesPerMin > 30 && prezzo > botOptions.priceSolUpQuickBuy ) {
+       if (trend < -10 && tradesPerMin > 30 && prezzo > botOptions.priceSolUpQuickBuy ) {
         let msg = (`🔥🔥Trend Token!🔥🔥 [${tokenMonitor.token.name}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -788,7 +788,7 @@ pool: 'pump'
               let stopEloss = tokenLog.stop;
               if(botOptions.adaptiveTrailingLcrRate){
                  
-              if(trend < -0.5){ // se la liquidità scende lentamente
+              if(trend > 1){ // se la liquidità scende lentamente
                 //trailing dinamico 
                // trend = Math.abs(trend) > 10 ? 10 : Math.abs(trend);
                 stopEloss = tokenLog.stop * (1.05 + (Math.abs(trend*2) / 100));
