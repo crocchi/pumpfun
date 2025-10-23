@@ -609,7 +609,7 @@ socket.on('stats', (data) => {
 				searchEl.cells[5].textContent = token.volume;
 				searchEl.cells[6].textContent = token.time;
 				searchEl.cells[7].innerHTML = `${defiExchange}`
-        searchEl.cells[7].innerHTML = `LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.trend}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}]`
+        searchEl.cells[8].innerHTML = `LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.trend}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}]`
 			} else {
 				// Add a new row for the token
 				let html = `<tr id='mon${token.id}'>
