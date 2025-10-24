@@ -76,6 +76,11 @@ export let SOLANA_USD = 200;
     priceSolUpMode:false,
     priceSolUpQuickBuy:   0.000000035,
     priceSolUpQuickBuyMax:0.000000042,
+
+    priceSolUpQuickBuy__:   0.000000095,
+    priceSolUpQuickBuy_:   0.000000035,
+    priceSolUpQuickBuyMax_:0.000000042,
+
     priceSolUpModeQuickBuyVolumeMin:20,
     priceSolUpModeQuickBuyVolumeNetMin:5,
 
