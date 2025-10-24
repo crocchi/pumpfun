@@ -52,6 +52,7 @@ import { getHour } from './utility/time.js';
     this.totTrx=0;
 
     this.volatility =0;
+    //this.perc
   }
 
   linked(ob){
