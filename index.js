@@ -550,7 +550,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
-        tokenMonitor.sellPercentTrailing = 5;
+        tokenMonitor.sellPercentTrailing = 10;
         tokenMonitor.quickSell = msg;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
         //sendMessageToClient('logger', info)
