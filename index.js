@@ -550,7 +550,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
-        //tokenMonitor.sellPercent = 5;
+        tokenMonitor.sellPercentTrailing = 5;
         tokenMonitor.quickSell = msg;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
         //sendMessageToClient('logger', info)
@@ -641,7 +641,7 @@ token.score =
         return
       }
 
-         if (trend < -10 && tradesPerMin > 30 && prezzo > botOptions.priceSolUpQuickBuy__ ) {
+         if (trend < -10 /*&& tradesPerMin > 30 */&& prezzo > botOptions.priceSolUpQuickBuy__ ) {
         let msg = (`🔥🔥BuyHigh Token!🔥🔥 [${tokenMonitor.token.name}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -649,6 +649,7 @@ token.score =
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
         tokenMonitor.quickSell = msg;
+        tokenMonitor.sellPercent = 70;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
         //sendMessageToClient('logger', info)
         tokenMonitor.infoJupiter=info;
@@ -873,16 +874,19 @@ pool: 'pump'
               if(trend > 1){ // se la liquidità scende lentamente
                 //trailing dinamico 
                // trend = Math.abs(trend) > 10 ? 10 : Math.abs(trend);
-                stopEloss = tokenLog.stop * (1 - (Math.abs(trend) / 100));
+                stopEloss = tokenLog.stop * (1 + (Math.abs(trend) / 100));
                 let msg = (`🔻 Trailing Stop adattato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} ora a ${stopEloss.toFixed(10)}, HighPrice:${tokenLog.highPrice}, Trend:${trend.toFixed(2)}`);
                // stopEloss = tokenLog.stop * (1 - (trend / 100));
                   sendMessageToClient('event', msg)
               }
              
               }
-              if(tokenMonitor?.monitor?.sellPercent){
-                  stopEloss= tokenLog.highPrice * (1 - (tokenMonitor.monitor.sellPercent / 100));// 10%
-              }
+              if(tokenLog?.monitor?.sellPercentTrailing){
+                  stopEloss= tokenLog.highPrice * (1 - (tokenLog.monitor.sellPercent / 100));// 10%
+                  let msg = (`🔻 Trailing personalizzato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} ora a ${stopEloss.toFixed(10)}, HighPrice:${tokenLog.highPrice}, Trend:${trend.toFixed(2)}`);
+               // stopEloss = tokenLog.stop * (1 - (trend / 100));
+                  sendMessageToClient('event', msg)
+                }
                 
               if (tradeInfo.price <= stopEloss) {
                 tokenLog.activeTrailing = false;
@@ -912,7 +916,13 @@ pool: 'pump'
               //return { action: "HOLD", currentPrice, highest: tokenLog.highPrice, stop: tokenLog.stop };
             }
 
-            if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * botOptions.quickSellMultiplier && tradeInfo.trxNum > botOptions.quickSellMinTrades) {
+            let prezzoVendita=botOptions.quickSellMultiplier;
+             if(tokenLog?.monitor?.sellPercent){
+              prezzoVendita=1 + (tokenLog.monitor.sellPercent / 100);
+             
+                }
+
+            if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * prezzoVendita && tradeInfo.trxNum > botOptions.quickSellMinTrades) {
               sellToken(trade);
               StatsMonitor.updateToken(trade, tradeInfo.price, '🚀 Quick Sell triggered');
               tokenLog.soldOut = true;

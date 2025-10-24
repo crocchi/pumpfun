@@ -30,7 +30,8 @@ class TokenMonitor {
     this.infoSnipe;
     this.infoSniper;
     //sell percent to sell or trailing
-    this.sellPercent=0;
+    this.sellPercent=null;
+    this.sellPercentTrailing=null;
     //infoToken By jupiter
     this.infoJupiter;
 
