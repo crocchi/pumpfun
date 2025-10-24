@@ -74,7 +74,7 @@ export let SOLANA_USD = 200;
 
     //parametri compra quick by price
     priceSolUpMode:false,
-    priceSolUpQuickBuy:0.00000004,
+    priceSolUpQuickBuy:   0.00000004,
     priceSolUpQuickBuyMax:0.000000055,
     priceSolUpModeQuickBuyVolumeMin:20,
     priceSolUpModeQuickBuyVolumeNetMin:5,

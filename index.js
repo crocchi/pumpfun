@@ -525,8 +525,8 @@ mint: quote_token_mint.pubkey.toBase58(),
         return 
       }
 
-      let spikeRate=Math.abs(rate);
- if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy && trxNumm < 150 && spikeRate < 1 && tokenMonitor.tradesPerSec > 2) {
+      //let spikeRate=Math.abs(rate);
+ if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuy && trxNumm > 20 && trxNumm < 50) {
         let msg = (`💧💧 [${tokenMonitor.token.name}] SecondSpike! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -559,7 +559,72 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
 
-       if (trend < -25 && tradesPerMin > 40 && prezzo > botOptions.priceSolUpQuickBuy ) {
+       if (trend < -5 && solValueTrx > 0. && rate > -1.3 && rate < -2.0 && tradesPerMin > 25 && tradesPerMin < 65 && trxNumm < 100 ) {
+        let msg = (`🤖🤖ChatGpt Token!🤖🤖 [${tokenMonitor.token.name}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate?.toFixed(2) || ''}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
+        //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
+        //rate, speed, tokenMonitor.tradesPerSec
+        /*
+        Basato su analisi di centinaia di trade Pump.fun (inclusi log simili ai tuoi):
+
+VolumeNet > 0 e in rapido aumento
+
+Significa che ci sono più buy reali che sell.
+
+Se sale in modo costante (non esplosivo), è segnale di momentum sostenibile.
+
+LiqRate compreso tra 1.3 e 2.0
+
+Sotto 1 → stagnazione
+
+Sopra 2.5 → rischio pump già in corso (arrivi tardi)
+
+Speed in crescita ma non esplosiva (30–60 tx/min)
+
+Troppa velocità indica hype già esaurito.
+
+Trend tra +6 e +10
+
+Segnale ideale di buy-entry anticipato prima del picco.
+
+Età < 3 minuti + crescita di holders
+
+Molti pump iniziano in questa finestra temporale.
+
+Prezzo stabile nei primi secondi poi volume improvviso
+
+Segnale tipico di buy coordinati o bot sniffers in azione.
+
+⚙️ Come applicarlo al tuo bot
+
+Puoi far filtrare automaticamente i token così:
+
+if (
+  token.trend >= 6 &&
+  token.liqRate > 1.3 && token.liqRate < 2.0 &&
+  token.volumeNet > 0 &&
+  token.speed > 25 && token.speed < 60 &&
+  token.age < 180
+) {
+
+token.score = 
+  (token.trend * 1.5) + 
+  (token.liqRate * 10) + 
+  (token.volumeNet / 100) + 
+  (token.speed / 3);
+        */
+        console.log(msg);
+        sendMessageToClient('event', msg)
+        tokenMonitor.quickBuy = prezzo;
+        tokenMonitor.quickSell = msg;
+        getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
+        //sendMessageToClient('logger', info)
+        tokenMonitor.infoJupiter=info;
+        })
+        tokenMonitor.cancelMonitor();
+        return
+      }
+
+         if (trend < -25 && tradesPerMin > 40 && prezzo > botOptions.priceSolUpQuickBuy ) {
         let msg = (`🔥🔥Trend Token!🔥🔥 [${tokenMonitor.token.name}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
