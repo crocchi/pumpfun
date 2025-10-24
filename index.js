@@ -534,6 +534,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
         tokenMonitor.quickSell = msg;
+        tokenMonitor.sellPercentTrailing = 10;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
         //sendMessageToClient('logger', info)
         tokenMonitor.infoJupiter=info;
@@ -882,7 +883,7 @@ pool: 'pump'
              
               }
               if(tokenLog?.monitor?.sellPercentTrailing){
-                  stopEloss= tokenLog.highPrice * (1 - (tokenLog.monitor.sellPercent / 100));// 10%
+                  stopEloss= tokenLog.highPrice * (1 - (tokenLog.monitor.sellPercentTrailing / 100));// 10%
                   let msg = (`🔻 Trailing personalizzato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} ora a ${stopEloss.toFixed(10)}, HighPrice:${tokenLog.highPrice}, Trend:${trend.toFixed(2)}`);
                // stopEloss = tokenLog.stop * (1 - (trend / 100));
                   sendMessageToClient('event', msg)
