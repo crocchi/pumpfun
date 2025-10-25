@@ -613,7 +613,7 @@ socket.on('stats', (data) => {
 				searchEl.cells[5].textContent = token.volume;
 				searchEl.cells[6].textContent = token.time;
 				searchEl.cells[7].innerHTML = `${defiExchange}`
-        searchEl.cells[8].innerHTML = `LiqDrop[${token.stats?.liqDrop?.toFixed(2) || 'N/A'}] Speed[${token.stats?.speedLiq?.toFixed(2) || 'N/A'}] Trend[${token.stats?.liqTrend?.toFixed(2) || 'N/A'}] Trx 1/s[${token.stats?.tradesPerSec?.toFixed(2) || 'N/A'}] Trx/m[${token.stats?.tradesPerMin || 'N/A'}]`
+        searchEl.cells[8].innerHTML = `LiqDrop[${token.stats?.liqDrop?.toFixed(2) || 'N/A'}] Speed[${token.stats?.speedLiq?.toFixed(2) || 'N/A'}] Trend[${token.stats?.liqTrend?.toFixed(2) || 'N/A'}] Trx 1/s[${token.stats?.tradesPerSec?.toFixed(2) || 'N/A'}] Trx/m[${token.stats?.tradesPerMin || 'N/A'}] Life[${token.stats?.tokenLifeSec || 'N/A'} s]`;
 			} else {
 				// Add a new row for the token
 				let html = `<tr id='mon${token.id}'>
@@ -625,7 +625,7 @@ socket.on('stats', (data) => {
 								<td>${token.volume.toFixed(2)} SOL</td>
 								<td>${token.time}</td>
 								<td>${defiExchange}</td>
-								<td >LiqDrop[${token.stats?.liqDrop?.toFixed(2) || 'N/A'}] Speed[${token.stats?.speedLiq?.toFixed(2) || 'N/A'}] Trend[${token.stats?.liqTrend?.toFixed(2) || 'N/A'}] Trx 1/s[${token.stats?.tradesPerSec?.toFixed(2) || 'N/A'}] Trx/m[${token.stats?.tradesPerMin || 'N/A'}]</td>
+								<td >LiqDrop[${token.stats?.liqDrop?.toFixed(2) || 'N/A'}] Speed[${token.stats?.speedLiq?.toFixed(2) || 'N/A'}] Trend[${token.stats?.liqTrend?.toFixed(2) || 'N/A'}] Trx 1/s[${token.stats?.tradesPerSec?.toFixed(2) || 'N/A'}] Trx/m[${token.stats?.tradesPerMin || 'N/A'}] Life[${token.stats?.tokenLifeSec || 'N/A'} s]</td>
 
 							</tr>`;
 				document.getElementById("tokenLoggerBody").innerHTML += html;
