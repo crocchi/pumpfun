@@ -555,8 +555,8 @@ let infoTrade = (` highPrice:[${highPrice?.toFixed(4) || 'n/a'}] Volume:[${token
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
-        tokenMonitor.sellPercentTrailing = lifeTokenSec;
-        tokenMonitor.sellPercent = lifeTokenSec*2;
+        tokenMonitor.sellPercentTrailing = tokenMonitor.lifeTokenSec;
+        tokenMonitor.sellPercent = tokenMonitor.lifeTokenSec*2;
         tokenMonitor.quickSell = msg;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
         //sendMessageToClient('logger', info)

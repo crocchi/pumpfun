@@ -72,7 +72,7 @@ class TokenMonitor {
 
       setTimeout(() => {
         clearInterval(this.checkTimeToken);
-      }, 120000);
+      }, 240000);
 
       this.timeoutId = setTimeout(async () => {
         if (this.solAmount > 3.0) {
@@ -149,7 +149,6 @@ class TokenMonitor {
     this.suspiciousSellDetected = false;
     this.tradeMonitor = false;
 
-    if(x)clearInterval(this.checkTimeToken);
     /*this.solAmount = 0;
     this.solTrxNumMonitor = 0;
     this.timeoutId = null;
