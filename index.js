@@ -503,6 +503,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       let solValueTrx = tokenMonitor.getSolAmount()
       let trxNumm = tokenMonitor.getSolTrxNumMonitor();
       let volume = tokenMonitor.volume;
+      let highPrice= tokenMonitor.highPrez;
 //Entra solo se volumeNet > 0 e volumeNet / volume ≥ 0.15
       let volumeRulesNet= solValueTrx > 0 && (solValueTrx / volume) >= 0.15;
       tokenMonitor.trxArray.push({
@@ -526,7 +527,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       }
 
       //let spikeRate=Math.abs(rate);
- if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy_ && prezzo < botOptions.priceSolUpQuickBuyMax_ && trxNumm > 20 && trxNumm < 50) {
+ if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy_ && prezzo < botOptions.priceSolUpQuickBuyMax_ && trxNumm > 20 && trxNumm < 60 && highPrice > (botOptions.priceSolUpQuickBuyMax_*1.7) ) {
         let msg = (`💧💧 [${tokenMonitor.token.name}] SecondSpike! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -534,7 +535,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
         tokenMonitor.quickSell = msg;
-        tokenMonitor.sellPercentTrailing = 10;
+        //tokenMonitor.sellPercent = 10;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
         //sendMessageToClient('logger', info)
         tokenMonitor.infoJupiter=info;
@@ -551,7 +552,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
-        tokenMonitor.sellPercentTrailing = 10;
+        //tokenMonitor.sellPercentTrailing = 10;
         tokenMonitor.quickSell = msg;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
         //sendMessageToClient('logger', info)
