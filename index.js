@@ -548,14 +548,15 @@ let infoTrade = (` highPrice:[${highPrice?.toFixed(4) || 'n/a'}] Volume:[${token
       }
 
 
- if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet ) {
+ if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tokenMonitor.lifeTokenSec > 20 ) {
         let msg = (`📈 Price Quick Buy! 🚀 [${tokenMonitor.token.name}] `+infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
-        //tokenMonitor.sellPercentTrailing = 10;
+        tokenMonitor.sellPercentTrailing = lifeTokenSec;
+        tokenMonitor.sellPercent = lifeTokenSec*2;
         tokenMonitor.quickSell = msg;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
         //sendMessageToClient('logger', info)

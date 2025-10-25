@@ -64,7 +64,7 @@ setInterval(() => {
                 time: instance.time,
                 volume: instance.volume,
                 strategy: instance.quickSell || instance.infoSniper,
-                stats: { speedLiq: instance.speedLiq, liqDrop: instance.liqDrop, liqTrend: instance.trend, tradesPerSec: instance.tradesPerSec, tradesPerMin: instance.tradesPerMin },
+                stats: { speedLiq: instance.speedLiq, liqDrop: instance.liqDrop, liqTrend: instance.trend, tradesPerSec: instance.tradesPerSec, tradesPerMin: instance.tradesPerMin, tokenLifeSec: instance.lifeTokenSec },
             }
             // contToken.push(tmpToken)
             // setInvio=true;
@@ -97,7 +97,7 @@ setInterval(() => {
                 volumeNet: instance.solAmount,
                 volume: instance.volume,
                 time: instance.time,
-                stats: { speedLiq: instance.speedLiq, liqDrop: instance.liqDrop, liqTrend: instance.trend, tradesPerSec: instance.tradesPerSec, tradesPerMin: instance.tradesPerMin },
+                stats: { speedLiq: instance.speedLiq, liqDrop: instance.liqDrop, liqTrend: instance.trend, tradesPerSec: instance.tradesPerSec, tradesPerMin: instance.tradesPerMin, tokenLifeSec: instance.lifeTokenSec },
 
                 trxArrayLength: instance.trxArray.length,
             }
