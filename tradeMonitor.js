@@ -48,6 +48,7 @@ class TokenMonitor {
     this.tradeHistory = [];
     this.tradesPerSec=0;
     this.tradesPerMin=0;
+    this.lifeTokenSec=0;
     
     //volume
     this.volumeRulesNet;
@@ -64,6 +65,14 @@ class TokenMonitor {
       
       ws.send(JSON.stringify(payload));
       console.log(`👁️  Monitoraggio trade per ${this.token.symbol} (${this.token.mint}) attivo per ${botOptions.time_monitor / 1000}s`);
+
+      this.checkTimeToken = setInterval(() => {
+        this.lifeTokenSec++;;
+      }, 1000); 
+
+      setTimeout(() => {
+        clearInterval(this.checkTimeToken);
+      }, 120000);
 
       this.timeoutId = setTimeout(async () => {
         if (this.solAmount > 3.0) {
@@ -102,7 +111,7 @@ class TokenMonitor {
           }));
           this.tradeMonitorOff=true;
           console.log(`⛔ Token (${this.token.name}) scartato. ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}`);
-          this.resetValues();
+          this.resetValues(true);
           resolve(false);
           return false
         } else {
@@ -126,7 +135,7 @@ class TokenMonitor {
       console.log(`⏹️ Timer interrotto per il token ${this.token.mint}.`);
       this.resetValues();
      let msg=`✅ Token (${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}...highPrez:${this.highPrez} Procedo con snipe...`
-          console.log(msg);
+       console.log(msg);
           this.infoSnipe=msg;
       if (this.resolve) {
         this.resolve(true);
@@ -136,9 +145,11 @@ class TokenMonitor {
     }
   }
 
-  resetValues() {
+  resetValues(x=null) {
     this.suspiciousSellDetected = false;
     this.tradeMonitor = false;
+
+    if(x)clearInterval(this.checkTimeToken);
     /*this.solAmount = 0;
     this.solTrxNumMonitor = 0;
     this.timeoutId = null;

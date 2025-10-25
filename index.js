@@ -516,6 +516,9 @@ mint: quote_token_mint.pubkey.toBase58(),
 
       //
 
+let infoTrade = (` highPrice:[${highPrice?.toFixed(4) || 'n/a'}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate?.toFixed(2) || ''}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 60s[${tokenMonitor.tradesPerMin.toFixed(1)}] TokenLifeSec[${tokenMonitor.lifeTokenSec}]Sec}`);
+
+
       if (parsed.marketCapSol > botOptions.marketCapSolUpQuickBuy && botOptions.marketCapSolUpMode && trxNumm > 10) {
         let msg = (`📈 🚀 [${tokenMonitor.token.name}] Market Cap Up Quick Buy! MarketCap:(${parsed.marketCapSol} SOL) TrxNumb:${trxNumm}  volume: ${volume}per ${parsed.mint}. buy at ${prezzo} LiqRate: ${rate}, ${speed}`);
         console.log(msg);
@@ -527,8 +530,8 @@ mint: quote_token_mint.pubkey.toBase58(),
       }
 
       //let spikeRate=Math.abs(rate);
- if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy_ && prezzo < botOptions.priceSolUpQuickBuyMax_ && trxNumm > 20 && trxNumm < 60 && highPrice > (botOptions.priceSolUpQuickBuyMax_*1.7) ) {
-        let msg = (`💧💧 [${tokenMonitor.token.name}] SecondSpike! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
+ if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy_ && prezzo < botOptions.priceSolUpQuickBuyMax_ && trxNumm > 20 && trxNumm < 60 && highPrice > (botOptions.priceSolUpQuickBuyMax_*1.6) ) {
+        let msg = (`💧SecondSpike!💧 [${tokenMonitor.token.name}]  `+infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
         console.log(msg);
@@ -546,7 +549,7 @@ mint: quote_token_mint.pubkey.toBase58(),
 
 
  if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet ) {
-        let msg = (`📈 🚀 [${tokenMonitor.token.name}] Price Quick Buy! Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
+        let msg = (`📈 Price Quick Buy! 🚀 [${tokenMonitor.token.name}] `+infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
         console.log(msg);
@@ -562,8 +565,9 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
 
-       if (trend < -5 && solValueTrx > 0. && rate > -1.3 && rate < -2.0 && tradesPerMin > 25 && tradesPerMin < 65 && trxNumm < 100 ) {
-        let msg = (`🤖🤖ChatGpt Token!🤖🤖 [${tokenMonitor.token.name}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate?.toFixed(2) || ''}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
+      let spikeRate=Math.abs(rate);
+       if (trend < -5 && solValueTrx > 0 && rate > -1.3 && rate < -2.0 && tradesPerMin > 25 && tradesPerMin < 65 && trxNumm < 100 ) {
+        let msg = (`🤖🤖ChatGpt Token!🤖🤖 [${tokenMonitor.token.name}] `+infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
         /*
@@ -628,7 +632,7 @@ token.score =
       }
 
          if (trend < -25 && tradesPerMin > 40 && prezzo > botOptions.priceSolUpQuickBuy ) {
-        let msg = (`🔥🔥Trend Token!🔥🔥 [${tokenMonitor.token.name}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
+        let msg = (`🔥🔥Trend Token!🔥🔥 [${tokenMonitor.token.name}] `+infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
         console.log(msg);
@@ -644,7 +648,7 @@ token.score =
       }
 
          if (trend < -10 /*&& tradesPerMin > 30 */&& prezzo > botOptions.priceSolUpQuickBuy__ ) {
-        let msg = (`🔥🔥BuyHigh Token!🔥🔥 [${tokenMonitor.token.name}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate.toFixed(2)}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 30s[${tokenMonitor.tradesPerMin.toFixed(1)}]}`);
+        let msg = (`🔥🔥BuyHigh Token!🔥🔥 [${tokenMonitor.token.name}] `+infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
         console.log(msg);
