@@ -1,8 +1,9 @@
 import TokenMonitor from "./tradeMonitor.js";
 import { botOptions } from "./config.js";
 import { buyToken, sellToken } from './utility/lightTrx.js';
-import { webSock } from "./index.js"; 
+import { webSock , subscribedTokens } from "./index.js"; 
 import { getHour } from './utility/time.js';
+
 
  class TokenLogger extends TokenMonitor{
  constructor(token) {
@@ -171,6 +172,14 @@ import { getHour } from './utility/time.js';
       lowPrice: this.lowPrice,
       transactions: this.trxArray.length,
     };
+  }
+  sellToken(trade,qnt=100){
+    subscribedTokens.delete(trade.mint);
+              sellToken(trade);
+              StatsMonitor.updateToken(trade, tradeInfo.price, '💀 Sell Off Panic triggered');
+              tokenLog.soldOut = true;
+              //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
+              botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount *
   }
   
   startSellTimer() {
