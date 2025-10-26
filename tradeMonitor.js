@@ -148,7 +148,9 @@ class TokenMonitor {
   resetValues(x=null) {
     this.suspiciousSellDetected = false;
     this.tradeMonitor = false;
-
+if(x){
+  clearInterval(this.checkTimeToken);
+}
     /*this.solAmount = 0;
     this.solTrxNumMonitor = 0;
     this.timeoutId = null;
