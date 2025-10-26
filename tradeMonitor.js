@@ -72,7 +72,7 @@ class TokenMonitor {
 
       setTimeout(() => {
         clearInterval(this.checkTimeToken);
-      }, 240000);
+      }, 400000);
 
       this.timeoutId = setTimeout(async () => {
         if (this.solAmount > 3.0) {
