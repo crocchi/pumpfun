@@ -193,6 +193,7 @@ class TokenLogger extends TokenMonitor {
     sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
      console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
      //chiudi timer tokenlife
+     clearInterval(this.monitor.checkTimeToken)
   }
 
   startSellTimer() {

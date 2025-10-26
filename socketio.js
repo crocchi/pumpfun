@@ -64,7 +64,7 @@ setInterval(() => {
                 time: instance.time,
                 volume: instance.volume,
                 strategy: instance.quickSell || instance.infoSniper,
-                stats: { speedLiq: instance.speedLiq, liqDrop: instance.liqDrop, liqTrend: instance.trend, tradesPerSec: instance.tradesPerSec, tradesPerMin: instance.tradesPerMin, tokenLifeSec: instance.monitor.lifeTokenSec },
+                stats: { speedLiq: instance.speedLiq, liqDrop: instance.liqDrop, liqTrend: instance.trend, tradesPerSec: instance.tradesPerSec, tradesPerMin: instance.tradesPerMin, tokenLifeSec: instance.monitor.lifeTokenSec, volatility: instance.volatility },
             }
             // contToken.push(tmpToken)
             // setInvio=true;

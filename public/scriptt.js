@@ -532,7 +532,7 @@ socket.on('stats', (data) => {
 
 				searchEl.cells[13].innerHTML = `${gain.toFixed(2)}%`;
 
-        searchEl.cells[15].innerHTML = `LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.liqTrend.toFixed(2)}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}] Life[${token.stats.tokenLifeSec} s]`;
+        searchEl.cells[15].innerHTML = `LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.liqTrend.toFixed(2)}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}] Life[${token.stats.tokenLifeSec} s] Volat[${token.stats.volatility?.toFixed(2) || 'N/A'}] `;
 			} else {
 				// Add a new row for the token
 				let html = `<tr id='log${token.id}'>
@@ -556,7 +556,7 @@ socket.on('stats', (data) => {
 
 								<td>${gain.toFixed(2)}%</td>
                 <td class='strat'>${token.strategy}</td>
-                <td >LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.trend}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}] Life[${token.stats.tokenLifeSec} s]</td>
+                <td >LiqDrop[${token.stats.liqDrop.toFixed(2)}] Speed[${token.stats.speedLiq.toFixed(2)}] Trend[${token.stats.trend}] Trx 1/s[${token.stats.tradesPerSec.toFixed(2)}] Trx/m[${token.stats.tradesPerMin}] Life[${token.stats.tokenLifeSec} s] Volat[${token.stats.volatility?.toFixed(2) || 'N/A'}]</td>
 
 							</tr>`;
 				document.getElementById("tokenMonitorBody").innerHTML += html;

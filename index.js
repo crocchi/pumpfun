@@ -856,18 +856,11 @@ pool: 'pump'
               console.log(`% Sell Off ${botOptions.sellOffPanic}%: ${change}%`)
               sendMessageToClient('event', `% Sell Off Panic:${tradeInfo.name}  ${botOptions.sellOffPanic}%: ${change}%`)
 
-              subscribedTokens.delete(trade.mint);
-              sellToken(trade);
+
+              tokenLog.sellToken(trade);
+
               StatsMonitor.updateToken(trade, tradeInfo.price, '💀 Sell Off Panic triggered');
-              tokenLog.soldOut = true;
-              //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
-              botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
-              sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
-              console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
-              ws.send(JSON.stringify({
-                method: "unsubscribeTokenTrade",
-                keys: [trade.mint]
-              }));
+             
               return
 
             }
@@ -935,21 +928,9 @@ pool: 'pump'
               //sellToken(trade);
               tokenLog.sellToken(trade)
               StatsMonitor.updateToken(trade, tradeInfo.price, '🚀 Quick Sell triggered');
-              //tokenLog.soldOut = true;
-              //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
-             // botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
-             // sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
-              console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
+            console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
               sendMessageToClient('event', `📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
 
-              /*subscribedTokens.delete(trade.mint);
-
-              console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
-              ws.send(JSON.stringify({
-                method: "unsubscribeTokenTrade",
-                keys: [trade.mint]
-              }));
-              */
               return
 
             }
@@ -965,14 +946,6 @@ pool: 'pump'
               console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
               sendMessageToClient('event', `📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
 
-             /* ws.send(JSON.stringify({
-                method: "unsubscribeTokenTrade",
-                keys: [trade.mint]
-              }));
-
-              subscribedTokens.delete(trade.mint);
-              console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
-              */
             }
           } else return console.error('❌ Errore nel tradeInfo:', tradeInfo);
           //
