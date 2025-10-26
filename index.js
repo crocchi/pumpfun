@@ -555,8 +555,8 @@ let infoTrade = (` highPrice:[${highPrice?.toFixed(4) || 'n/a'}] Volume:[${token
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
-        tokenMonitor.sellPercentTrailing = tokenMonitor.lifeTokenSec;
-        tokenMonitor.sellPercent = tokenMonitor.lifeTokenSec*2;
+       tokenMonitor.sellPercentTrailing = 20;
+       // tokenMonitor.sellPercent = 50;
         tokenMonitor.quickSell = msg;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
         //sendMessageToClient('logger', info)
@@ -648,7 +648,7 @@ token.score =
         return
       }
 
-         if (trend < -10 /*&& tradesPerMin > 30 */&& prezzo > botOptions.priceSolUpQuickBuy__ ) {
+      if (trend < -10 /*&& tradesPerMin > 30 */&& prezzo > botOptions.priceSolUpQuickBuy__ ) {
         let msg = (`🔥🔥BuyHigh Token!🔥🔥 [${tokenMonitor.token.name}] `+infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -902,20 +902,22 @@ pool: 'pump'
                 console.log(msg);
                 sendMessageToClient('event', msg)
 
-                sellToken(trade);
+                //sellToken(trade);
+                tokenLog.sellToken(trade)
                 StatsMonitor.updateToken(trade, tradeInfo.price, msg);
-                tokenLog.soldOut = true;
+               // tokenLog.soldOut = true;
                 //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
-                botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
-                sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
+                //botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
+               // sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
-                subscribedTokens.delete(trade.mint);
+              //  subscribedTokens.delete(trade.mint);
 
-                console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
-                ws.send(JSON.stringify({
+              //  console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
+              /*  ws.send(JSON.stringify({
                   method: "unsubscribeTokenTrade",
                   keys: [trade.mint]
                 }));
+                */
                 return
                 //return { action: "SELL", sellPrice: tradeInfo.price, stop: tokenLog.stop };
               }
@@ -930,43 +932,47 @@ pool: 'pump'
                 }
 
             if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * prezzoVendita && tradeInfo.trxNum > botOptions.quickSellMinTrades) {
-              sellToken(trade);
+              //sellToken(trade);
+              tokenLog.sellToken(trade)
               StatsMonitor.updateToken(trade, tradeInfo.price, '🚀 Quick Sell triggered');
-              tokenLog.soldOut = true;
+              //tokenLog.soldOut = true;
               //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
-              botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
-              sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
+             // botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
+             // sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
               console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
               sendMessageToClient('event', `📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
 
-              subscribedTokens.delete(trade.mint);
+              /*subscribedTokens.delete(trade.mint);
 
               console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
               ws.send(JSON.stringify({
                 method: "unsubscribeTokenTrade",
                 keys: [trade.mint]
               }));
+              */
               return
 
             }
             // Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi
             if (tradeInfo.trxNum > botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.buyPrice * botOptions.rugpullMinGainMultiplier) {
-              sellToken(trade);
+              //sellToken(trade);
+              tokenLog.sellToken(trade)
               StatsMonitor.updateToken(trade, tradeInfo.price, '🚨 RugPull Sell triggered');
-              tokenLog.soldOut = true;
+              //tokenLog.soldOut = true;
               //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
-              botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
-              sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
+             // botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
+             // sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
               console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
               sendMessageToClient('event', `📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
 
-              ws.send(JSON.stringify({
+             /* ws.send(JSON.stringify({
                 method: "unsubscribeTokenTrade",
                 keys: [trade.mint]
               }));
 
               subscribedTokens.delete(trade.mint);
               console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
+              */
             }
           } else return console.error('❌ Errore nel tradeInfo:', tradeInfo);
           //
