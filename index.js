@@ -23,7 +23,7 @@ export function webSock() {
   return ws
 }
 
-const subscribedTokens = new Set();
+export const subscribedTokens = new Set();
 export const instances = new Map(); // Mappa per memorizzare le istanze di TokenMonitor
 export const instancesToken = new Map(); // Mappa per memorizzare le istanze di TokenLogger
 
