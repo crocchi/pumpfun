@@ -97,7 +97,7 @@ setInterval(() => {
                 volumeNet: instance.solAmount,
                 volume: instance.volume,
                 time: instance.time,
-                stats: { speedLiq: instance.speedLiq, liqDrop: instance.liqDrop, liqTrend: instance.trend, tradesPerSec: instance.tradesPerSec, tradesPerMin: instance.tradesPerMin, tokenLifeSec: instance.lifeTokenSec },
+                stats: { speedLiq: instance.speedLiq, liqDrop: instance.liqDrop, liqTrend: instance.trend, tradesPerSec: instance.tradesPerSec, tradesPerMin: instance.tradesPerMin, tokenLifeSec: instance.lifeTokenSec ,volatility: instance.volatility },
 
                 trxArrayLength: instance.trxArray.length,
             }
