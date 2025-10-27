@@ -26,7 +26,7 @@ class TokenMonitor {
     this.quickSell = 0;
     this.rugpullSafe = true;
     this.prez;
-    this.highPrez= -1;
+    this.highPrez= 0.0000000001;
     this.infoSnipe;
     this.infoSniper;
     //sell percent to sell or trailing
