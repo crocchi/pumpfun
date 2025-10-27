@@ -516,7 +516,7 @@ mint: quote_token_mint.pubkey.toBase58(),
 
       //
 
-let infoTrade = (` highPrice:[${highPrice?.toFixed(10) || 'n/a'}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate?.toFixed(2) || ''}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 60s[${tokenMonitor.tradesPerMin.toFixed(1)}] TokenLifeSec[${tokenMonitor.lifeTokenSec}]Sec}`);
+let infoTrade = (` highPrice:[${tokenMonitor.highPrez.toFixed(10) || 'n/a'}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate?.toFixed(2) || ''}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 60s[${tokenMonitor.tradesPerMin.toFixed(1)}] TokenLifeSec[${tokenMonitor.lifeTokenSec}]Sec}`);
 
 
       if (parsed.marketCapSol > botOptions.marketCapSolUpQuickBuy && botOptions.marketCapSolUpMode && trxNumm > 10) {
@@ -880,14 +880,15 @@ pool: 'pump'
                   sendMessageToClient('event', msg)
               }
              
-              }
+              
               if(tokenLog?.monitor?.sellPercentTrailing){
                   stopEloss= tokenLog.highPrice * (1 - (tokenLog.monitor.sellPercentTrailing / 100));// 10%
                   let msg = (`🔻 Trailing personalizzato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} ora a ${stopEloss.toFixed(10)}, HighPrice:${tokenLog.highPrice}, Trend:${trend.toFixed(2)}`);
                // stopEloss = tokenLog.stop * (1 - (trend / 100));
                   sendMessageToClient('event', msg)
                 }
-                
+
+              }
               if (tradeInfo.price <= stopEloss) {
                 tokenLog.activeTrailing = false;
                 let msg = (`🔻 Trailing Stop attivato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${stopEloss?.toFixed(10)} , HighPrice:${tokenLog.highPrice}`);
