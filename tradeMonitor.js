@@ -181,6 +181,9 @@ if(x){
   addVolume(value) {
     this.volume += value;
   }
+  getHighPrice() {
+    return this.highPrez;
+  }
   calcLiquidityChange(solInPool){
     let now=new Date();
     if (this.prevSolInPool === null) {

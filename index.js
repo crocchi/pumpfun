@@ -503,7 +503,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       let solValueTrx = tokenMonitor.getSolAmount()
       let trxNumm = tokenMonitor.getSolTrxNumMonitor();
       let volume = tokenMonitor.volume;
-      let highPrice= tokenMonitor.highPrez;
+      let highPrice= tokenMonitor.getHighPrice();
       let volatility =tokenMonitor.volatility;
 //Entra solo se volumeNet > 0 e volumeNet / volume ≥ 0.15
       let volumeRulesNet= solValueTrx > 0 && (solValueTrx / volume) >= 0.15;
