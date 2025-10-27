@@ -536,7 +536,7 @@ mint: quote_token_mint.pubkey.toBase58(),
 
       //
 
-      let infoTrade = (` highPrice:[${tokenMonitor?.highPrez?.toFixed(10) || 'n/a'}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate?.toFixed(2) || ''}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 60s[${tokenMonitor.tradesPerMin.toFixed(1)}] TokenLifeSec[${tokenMonitor.lifeTokenSec}]Sec} Vol:[${(volatility).toFixed(1)}%]`);
+      let infoTrade = (` highPrice:[${tokenMonitor?.highPrez?.toFixed(10) || 'n/a'}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate?.toFixed(2) || ''}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 60s[${tokenMonitor.tradesPerMin.toFixed(1)}] TokenLifeSec[${tokenMonitor.lifeTokenSec}]Sec} Vol:[${(volatility)?.toFixed(1) || 'n/a'}%]`);
 
 
       if (parsed.marketCapSol > botOptions.marketCapSolUpQuickBuy && botOptions.marketCapSolUpMode && trxNumm > 10) {
