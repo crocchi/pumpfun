@@ -53,8 +53,11 @@ class TokenLogger extends TokenMonitor {
     this.sellPercent = 0;
     this.totTrx = 0;
 
+    //volatility
     this.volatility = 0;
-    //this.perc
+    this.priceHistory = [];   // storico prezzi recenti
+    this.maxHistory = 10;     // numero di tick da usare per la volatilità
+
   }
 
   linked(ob) {
@@ -98,6 +101,11 @@ class TokenLogger extends TokenMonitor {
       signature: transaction.signature,
       time: getHour()
     });
+    this.priceHistory.push(this.LivePrice);
+    
+    if (this.priceHistory.length > this.maxHistory) {//calcola volatilità
+      this.priceHistory.shift(); // elimina il più vecchio
+    }
     //this.solAmount += transaction.amount;
     this.volume += transaction.solAmount;
     if (transaction.txType === 'buy') {
@@ -120,7 +128,7 @@ class TokenLogger extends TokenMonitor {
     this.marketCapSol = transaction.marketCapSol || this.marketCapSol;
     this.solTrxNumMonitor++;
     this.solTrxNum++;
-    this.volatility = (this.highPrice - this.lowPrice) / this.lowPrice * 100;
+    this.volatility = (this.highPrice - this.lowPrice) / this.startPrice * 100;
     /* if (this.lowPrice === 0 || transaction.price < this.lowPrice) {
        this.lowPrice = transaction.price;
      }*/
@@ -139,6 +147,19 @@ class TokenLogger extends TokenMonitor {
     }
     return this.LivePrice;
 
+  }
+  getVolatility() {
+
+    if (this.priceHistory.length >= 3) {
+  const min = Math.min(...this.priceHistory);
+  const max = Math.max(...this.priceHistory);
+  const start = this.priceHistory[0];
+  const volatility = ((max - min) / start) * 100;
+
+  this.volatility = volatility; // salva per uso futuro o visualizzazione
+  return volatility;
+}
+   return 0;
   }
 
   trailingUp() {
@@ -175,25 +196,25 @@ class TokenLogger extends TokenMonitor {
     };
   }
   sellToken(trade, qnt = 100) {
-    
+
     sellToken(trade);
     let ws = webSock();
     subscribedTokens.delete(trade.mint);
-   // StatsMonitor.updateToken(trade, tradeInfo.price, '💀 Sell Off Panic triggered');
+    // StatsMonitor.updateToken(trade, tradeInfo.price, '💀 Sell Off Panic triggered');
     this.soldOut = true;
     this.sellPrice = this.LivePrice;
     //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
     botOptions.botCash = (botOptions.botCash + (this.tokenAmount * this.LivePrice));
-    
-    
+
+
     ws.send(JSON.stringify({
       method: "unsubscribeTokenTrade",
       keys: [trade.mint]
     }));
     sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
-     console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
-     //chiudi timer tokenlife
-     clearInterval(this.monitor.checkTimeToken)
+    console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
+    //chiudi timer tokenlife
+    clearInterval(this.monitor.checkTimeToken)
   }
 
   startSellTimer() {

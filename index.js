@@ -504,6 +504,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       let trxNumm = tokenMonitor.getSolTrxNumMonitor();
       let volume = tokenMonitor.volume;
       let highPrice= tokenMonitor.highPrez;
+      let volatility =tokenMonitor.volatility;
 //Entra solo se volumeNet > 0 e volumeNet / volume ≥ 0.15
       let volumeRulesNet= solValueTrx > 0 && (solValueTrx / volume) >= 0.15;
       tokenMonitor.trxArray.push({
@@ -516,7 +517,7 @@ mint: quote_token_mint.pubkey.toBase58(),
 
       //
 
-let infoTrade = (` highPrice:[${tokenMonitor.highPrez.toFixed(10) || 'n/a'}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate?.toFixed(2) || ''}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 60s[${tokenMonitor.tradesPerMin.toFixed(1)}] TokenLifeSec[${tokenMonitor.lifeTokenSec}]Sec}`);
+let infoTrade = (` highPrice:[${tokenMonitor.highPrez.toFixed(10) || 'n/a'}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate?.toFixed(2) || ''}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 60s[${tokenMonitor.tradesPerMin.toFixed(1)}] TokenLifeSec[${tokenMonitor.lifeTokenSec}]Sec} Vol:[${(volatility).toFixed(1)}%]`);
 
 
       if (parsed.marketCapSol > botOptions.marketCapSolUpQuickBuy && botOptions.marketCapSolUpMode && trxNumm > 10) {
@@ -548,7 +549,7 @@ let infoTrade = (` highPrice:[${tokenMonitor.highPrez.toFixed(10) || 'n/a'}] Vol
       }
 
 
- if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tokenMonitor.lifeTokenSec > 20 ) {
+ if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tokenMonitor.lifeTokenSec > 25 && volatility > 35) {
         let msg = (`📈 Price Quick Buy! 🚀 [${tokenMonitor.token.name}] `+infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
