@@ -26,7 +26,7 @@ class TokenMonitor {
     this.quickSell = 0;
     this.rugpullSafe = true;
     this.prez;
-    this.highPrez=0;
+    this.highPrez= -1;
     this.infoSnipe;
     this.infoSniper;
     //sell percent to sell or trailing
@@ -52,6 +52,12 @@ class TokenMonitor {
     
     //volume
     this.volumeRulesNet;
+    //volatility
+    this.initialPrice=0;
+    this.volatility = 0;
+    this.priceHistory = [];   // storico prezzi recenti
+    this.maxHistory = 10;     // numero di tick da usare per la volatilità
+
   }
 
   startMonitor(snipeCallback) {

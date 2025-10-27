@@ -236,7 +236,7 @@ const onMessage = async (data) => {
         return
 
       }
-//      botOptions.demoVersion = true;
+      //      botOptions.demoVersion = true;
       const monitor = getInstanceForTokenMonitor(token)
       monitor.orario()
       if (safer.fastBuy) { // fast buy
@@ -244,10 +244,10 @@ const onMessage = async (data) => {
         console.log(msg)
         monitor.tradeMonitor = false;// disabilito il monitoraggio
         monitor.infoSnipe = safer.fastReason
-        monitor.infoSniper=safer.fastBuy;
+        monitor.infoSniper = safer.fastBuy;
         sendMessageToClient('event', msg);
-      //  botOptions.demoVersion = false;
-        
+        //  botOptions.demoVersion = false;
+
         //monitor.
       } else {      //modalità monitoraggio   
         let devbott = await monitor.startMonitor();
@@ -278,6 +278,7 @@ const onMessage = async (data) => {
       const marketCapUsd = (token.marketCapSol * SOLANA_USD).toFixed(2);
       const totTokens = token.tokensInPool + token.initialBuy;
       let priceBuy = monitor.lastPrice() || prezzo;
+      monitor.initialPrice = prezzo;
       console.log(`📈 MarketCap (USD): ${marketCapUsd}`);
       console.log(`💰 Price SOL Start: ${prezzo} `);
       console.log(`💰 Price SOL Buy: ${priceBuy} `);
@@ -289,7 +290,7 @@ const onMessage = async (data) => {
       //console.log(`⏱️ Controlla se qualcuno vende troppo presto`);
 
       const tokenLog = getInstanceForTokenLogger(token);// iniz istanza di TokenLogger
-      
+
       // 👉 Sottoscrizione ai trade del token appena creato
       if (!subscribedTokens.has(token.mint)) {
         console.log(`🔔 Sottoscrizione ai trade del token ${token.mint}`);
@@ -332,23 +333,23 @@ priceBuy: (buyAmountQnt / realAmount).toFixed(10),
 feeJito6: jitoFee,
 mint: quote_token_mint.pubkey.toBase58(),
 } */ /*
-                })
-              }, 700); // Avvia il timeout di inattività  
-            }
-    */
+                            })
+                          }, 700); // Avvia il timeout di inattività  
+                        }
+                */
       if (safer.fastBuy && botOptions.demoVersion) {
         getTokenPriceJupiter(token.mint).then(price => {
-    if (price !== null) {
-        console.log(`The price of the token is $${price}`);
-        let priceSol=price / SOLANA_USD;
-        //tokenLog.buyPrice = price;
-        tokenLog.buyPriceJupiter = priceSol;
-    }
-});
+          if (price !== null) {
+            console.log(`The price of the token is $${price}`);
+            let priceSol = price / SOLANA_USD;
+            //tokenLog.buyPrice = price;
+            tokenLog.buyPriceJupiter = priceSol;
+          }
+        });
         setTimeout(() => {
           let prz = tokenLog.LivePrice || prezzo;
           tokenLog.buyPrice = prz;
-          tokenLog.tokenAmount= botOptions.buyAmount / prz //qnt token comprato
+          tokenLog.tokenAmount = botOptions.buyAmount / prz //qnt token comprato
           updateBuyPrice(token.mint, {
             buyPrice: prz,
           })
@@ -358,9 +359,9 @@ mint: quote_token_mint.pubkey.toBase58(),
 
       botOptions.botCash = (botOptions.botCash - botOptions.buyAmount) - 0.001;//dp fee + slippage+extra
 
-      let strateg=safer?.fastReason || monitor.infoSnipe;
-      let startStats=new StatsMonitor(token);
-      startStats.initToken(token,strateg,priceBuy);
+      let strateg = safer?.fastReason || monitor.infoSnipe;
+      let startStats = new StatsMonitor(token);
+      startStats.initToken(token, strateg, priceBuy);
 
       // buyTokenLog
       /* X ADESSO NON ATTIVIAMO...
@@ -386,7 +387,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       tokenLog.tokenAmount = tokenLog.tokenAmount || botOptions.buyAmount / priceBuy //qnt token comprato
       tokenLog.startSellTimer();
 
- 
+
 
       logToken({
         mint: token.mint,
@@ -483,14 +484,14 @@ mint: quote_token_mint.pubkey.toBase58(),
     }
 
 
-    
+
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'buy') {
-      
+
       liquidityCheck() //(parsed.solInPool / parsed.tokensInPool).toFixed(10) || (parsed.vSolInBondingCurve / parsed.vTokensInBondingCurve).toFixed(10);
       console.log(`👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`);
       sendMessageToClient('logger', `👁️ Buy Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(5)}) Price:(${prezzo})  -> from ${parsed.traderPublicKey}`)
 
-     const { tradesPerMin, tradesPerSec, tradesPerTenSec }=tokenMonitor.updateTradeVelocity(Date.now());
+      const { tradesPerMin, tradesPerSec, tradesPerTenSec } = tokenMonitor.updateTradeVelocity(Date.now());
 
       const { rate, speed, trend } = tokenMonitor.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
       // console.log('SOL:',priceInSol);
@@ -503,10 +504,28 @@ mint: quote_token_mint.pubkey.toBase58(),
       let solValueTrx = tokenMonitor.getSolAmount()
       let trxNumm = tokenMonitor.getSolTrxNumMonitor();
       let volume = tokenMonitor.volume;
-      let highPrice= tokenMonitor.getHighPrice();
-      let volatility =tokenMonitor.volatility;
-//Entra solo se volumeNet > 0 e volumeNet / volume ≥ 0.15
-      let volumeRulesNet= solValueTrx > 0 && (solValueTrx / volume) >= 0.15;
+      let highPrice = tokenMonitor.getHighPrice();
+      let volatility=0;
+      //calcola volatilità
+      // --- aggiorna lo storico prezzi ---
+      tokenMonitor.priceHistory.push(prezzo);
+
+      if (tokenMonitor.priceHistory.length > tokenMonitor.maxHistory) {
+        tokenMonitor.priceHistory.shift(); // elimina il più vecchio
+      }
+      // --- calcola la volatilità ---
+      if (tokenMonitor.priceHistory.length >= 3) {
+        const min = Math.min(...tokenMonitor.priceHistory);
+        const max = Math.max(...tokenMonitor.priceHistory);
+        const start = tokenMonitor.priceHistory[0];
+        volatility = ((max - min) / start) * 100;
+
+        tokenMonitor.volatility = volatility; // salva per uso futuro o visualizzazione
+      }
+      //let volatility =tokenMonitor.volatility;
+      //   volatility=(startPrice|highPrice-lowPrice|)×100;
+      //Entra solo se volumeNet > 0 e volumeNet / volume ≥ 0.15
+      let volumeRulesNet = solValueTrx > 0 && (solValueTrx / volume) >= 0.15;
       tokenMonitor.trxArray.push({
         type: parsed.txType,
         amount: parsed.solAmount,
@@ -517,7 +536,7 @@ mint: quote_token_mint.pubkey.toBase58(),
 
       //
 
-let infoTrade = (` highPrice:[${tokenMonitor?.highPrez?.toFixed(10) || 'n/a'}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate?.toFixed(2) || ''}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 60s[${tokenMonitor.tradesPerMin.toFixed(1)}] TokenLifeSec[${tokenMonitor.lifeTokenSec}]Sec} Vol:[${(volatility).toFixed(1)}%]`);
+      let infoTrade = (` highPrice:[${tokenMonitor?.highPrez?.toFixed(10) || 'n/a'}] Volume:[${tokenMonitor.volume.toFixed(4)} SOL] TrxNumb:[${trxNumm}]  volumeNet:[${solValueTrx.toFixed(4)}] buy at [${prezzo}] LiqRate{[${rate?.toFixed(2) || ''}],Speed[${speed.toFixed(1)}],Trend[${trend.toFixed(1)}]} Trade Velocity{1s[${tokenMonitor.tradesPerSec.toFixed(1)}] 10s[${tokenMonitor.tradesPerTenSec.toFixed(1)}] 60s[${tokenMonitor.tradesPerMin.toFixed(1)}] TokenLifeSec[${tokenMonitor.lifeTokenSec}]Sec} Vol:[${(volatility).toFixed(1)}%]`);
 
 
       if (parsed.marketCapSol > botOptions.marketCapSolUpQuickBuy && botOptions.marketCapSolUpMode && trxNumm > 10) {
@@ -527,12 +546,12 @@ let infoTrade = (` highPrice:[${tokenMonitor?.highPrez?.toFixed(10) || 'n/a'}] V
         tokenMonitor.quickBuy = prezzo;
         tokenMonitor.quickSell = msg;
         tokenMonitor.cancelMonitor();
-        return 
+        return
       }
 
       //let spikeRate=Math.abs(rate);
- if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy_ && prezzo < botOptions.priceSolUpQuickBuyMax_ && trxNumm > 20 && trxNumm < 60 && highPrice > (botOptions.priceSolUpQuickBuyMax_*1.6) ) {
-        let msg = (`💧SecondSpike!💧 [${tokenMonitor.token.name}]  `+infoTrade);
+      if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy_ && prezzo < botOptions.priceSolUpQuickBuyMax_ && trxNumm > 20 && trxNumm < 60 && highPrice > (botOptions.priceSolUpQuickBuyMax_ * 1.5)) {
+        let msg = (`💧SecondSpike!💧 [${tokenMonitor.token.name}]  ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
         console.log(msg);
@@ -541,35 +560,35 @@ let infoTrade = (` highPrice:[${tokenMonitor?.highPrez?.toFixed(10) || 'n/a'}] V
         tokenMonitor.quickSell = msg;
         //tokenMonitor.sellPercent = 10;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
-        //sendMessageToClient('logger', info)
-        tokenMonitor.infoJupiter=info;
+          //sendMessageToClient('logger', info)
+          tokenMonitor.infoJupiter = info;
         })
         tokenMonitor.cancelMonitor();
         return
       }
 
 
- if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tokenMonitor.lifeTokenSec > 25 && volatility > 35) {
-        let msg = (`📈 Price Quick Buy! 🚀 [${tokenMonitor.token.name}] `+infoTrade);
+      if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tokenMonitor.lifeTokenSec > 25 && volatility > 35) {
+        let msg = (`📈 Price Quick Buy! 🚀 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
         console.log(msg);
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
-       tokenMonitor.sellPercentTrailing = 20;
-       // tokenMonitor.sellPercent = 50;
+        tokenMonitor.sellPercentTrailing = 20;
+        // tokenMonitor.sellPercent = 50;
         tokenMonitor.quickSell = msg;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
-        //sendMessageToClient('logger', info)
-        tokenMonitor.infoJupiter=info;
+          //sendMessageToClient('logger', info)
+          tokenMonitor.infoJupiter = info;
         })
         tokenMonitor.cancelMonitor();
         return
       }
 
-      let spikeRate=Math.abs(rate);
-       if (trend < -5 && solValueTrx > 0 && rate < -1.3 && rate > -2.0 && tradesPerMin > 25 && tradesPerMin < 65 && trxNumm < 100 ) {
-        let msg = (`🤖🤖ChatGpt Token!🤖🤖 [${tokenMonitor.token.name}] `+infoTrade);
+      let spikeRate = Math.abs(rate);
+      if (trend < -5 && solValueTrx > 0 && rate < -1.3 && rate > -2.0 && tradesPerMin > 25 && tradesPerMin < 65 && trxNumm < 100) {
+        let msg = (`🤖🤖ChatGpt Token!🤖🤖 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
         /*
@@ -626,15 +645,15 @@ token.score =
         tokenMonitor.quickBuy = prezzo;
         tokenMonitor.quickSell = msg;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
-        //sendMessageToClient('logger', info)
-        tokenMonitor.infoJupiter=info;
+          //sendMessageToClient('logger', info)
+          tokenMonitor.infoJupiter = info;
         })
         tokenMonitor.cancelMonitor();
         return
       }
 
-         if (trend < -25 && tradesPerMin > 40 && prezzo > botOptions.priceSolUpQuickBuy ) {
-        let msg = (`🔥🔥Trend Token!🔥🔥 [${tokenMonitor.token.name}] `+infoTrade);
+      if (trend < -25 && tradesPerMin > 40 && prezzo > botOptions.priceSolUpQuickBuy) {
+        let msg = (`🔥🔥Trend Token!🔥🔥 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
         console.log(msg);
@@ -642,15 +661,15 @@ token.score =
         tokenMonitor.quickBuy = prezzo;
         tokenMonitor.quickSell = msg;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
-        //sendMessageToClient('logger', info)
-        tokenMonitor.infoJupiter=info;
+          //sendMessageToClient('logger', info)
+          tokenMonitor.infoJupiter = info;
         })
         tokenMonitor.cancelMonitor();
         return
       }
 
-      if (trend < -10 /*&& tradesPerMin > 30 */&& prezzo > botOptions.priceSolUpQuickBuy__ ) {
-        let msg = (`🔥🔥BuyHigh Token!🔥🔥 [${tokenMonitor.token.name}] `+infoTrade);
+      if (trend < -10 /*&& tradesPerMin > 30 */ && prezzo > botOptions.priceSolUpQuickBuy__) {
+        let msg = (`🔥🔥BuyHigh Token!🔥🔥 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
         console.log(msg);
@@ -659,8 +678,8 @@ token.score =
         tokenMonitor.quickSell = msg;
         tokenMonitor.sellPercent = 70;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
-        //sendMessageToClient('logger', info)
-        tokenMonitor.infoJupiter=info;
+          //sendMessageToClient('logger', info)
+          tokenMonitor.infoJupiter = info;
         })
         tokenMonitor.cancelMonitor();
         return
@@ -718,13 +737,13 @@ token.score =
     }
 
     if (tradeMintMonitor === parsed.mint && parsed.txType === 'sell') {
-      
+
       tokenMonitor.updateTradeVelocity(Date.now());
       const { rate, speed } = tokenMonitor.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
-         
+
       liquidityCheck();
       let msg = (`⚠️ Sell Token:[${tokenMonitor.token.name}] sol:(${parsed.solAmount.toFixed(8)}) Price:(${prezzo}) - Vendita precoce da ${parsed.traderPublicKey} – `);
-      
+
       console.log(msg);
       sendMessageToClient('logger', msg)
 
@@ -791,7 +810,7 @@ token.score =
       //  console.log('trade:',trade);
 
 
-      const { tradesPerMin, tradesPerSec }=tokenLog.updateTradeVelocity(Date.now());
+      const { tradesPerMin, tradesPerSec } = tokenLog.updateTradeVelocity(Date.now());
       const { rate, speed, trend } = tokenLog.calcLiquidityChange(parsed?.solInPool || parsed?.vSolInBondingCurve);
 
       //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà
@@ -861,7 +880,7 @@ pool: 'pump'
               tokenLog.sellToken(trade);
 
               StatsMonitor.updateToken(trade, tradeInfo.price, '💀 Sell Off Panic triggered');
-             
+
               return
 
             }
@@ -870,22 +889,22 @@ pool: 'pump'
 
             if (tokenLog.activeTrailing) {
               let stopEloss = tokenLog.stop;
-              if(botOptions.adaptiveTrailingLcrRate){
-                 
-              if(trend > 1){ // se la liquidità scende lentamente
-                //trailing dinamico 
-               // trend = Math.abs(trend) > 10 ? 10 : Math.abs(trend);
-                stopEloss = tokenLog.stop * (1 + (Math.abs(trend) / 100));
-                let msg = (`🔻 Trailing Stop adattato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} ora a ${stopEloss.toFixed(10)}, HighPrice:${tokenLog.highPrice}, Trend:${trend.toFixed(2)}`);
-               // stopEloss = tokenLog.stop * (1 - (trend / 100));
+              if (botOptions.adaptiveTrailingLcrRate) {
+
+                if (trend > 1) { // se la liquidità scende lentamente
+                  //trailing dinamico 
+                  // trend = Math.abs(trend) > 10 ? 10 : Math.abs(trend);
+                  stopEloss = tokenLog.stop * (1 + (Math.abs(trend) / 100));
+                  let msg = (`🔻 Trailing Stop adattato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} ora a ${stopEloss.toFixed(10)}, HighPrice:${tokenLog.highPrice}, Trend:${trend.toFixed(2)}`);
+                  // stopEloss = tokenLog.stop * (1 - (trend / 100));
                   sendMessageToClient('event', msg)
-              }
-             
-              
-              if(tokenLog?.monitor?.sellPercentTrailing){
-                  stopEloss= tokenLog.highPrice * (1 - (tokenLog.monitor.sellPercentTrailing / 100));// 10%
+                }
+
+
+                if (tokenLog?.monitor?.sellPercentTrailing) {
+                  stopEloss = tokenLog.highPrice * (1 - (tokenLog.monitor.sellPercentTrailing / 100));// 10%
                   let msg = (`🔻 Trailing personalizzato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} ora a ${stopEloss.toFixed(10)}, HighPrice:${tokenLog.highPrice}, Trend:${trend.toFixed(2)}`);
-               // stopEloss = tokenLog.stop * (1 - (trend / 100));
+                  // stopEloss = tokenLog.stop * (1 - (trend / 100));
                   sendMessageToClient('event', msg)
                 }
 
@@ -900,19 +919,19 @@ pool: 'pump'
                 //sellToken(trade);
                 tokenLog.sellToken(trade)
                 StatsMonitor.updateToken(trade, tradeInfo.price, msg);
-               // tokenLog.soldOut = true;
+                // tokenLog.soldOut = true;
                 //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
                 //botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
-               // sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
+                // sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
                 console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
-              //  subscribedTokens.delete(trade.mint);
+                //  subscribedTokens.delete(trade.mint);
 
-              //  console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
-              /*  ws.send(JSON.stringify({
-                  method: "unsubscribeTokenTrade",
-                  keys: [trade.mint]
-                }));
-                */
+                //  console.log(`🚫 Unsubscribed da ${trade.mint} venduto!!)`);
+                /*  ws.send(JSON.stringify({
+                    method: "unsubscribeTokenTrade",
+                    keys: [trade.mint]
+                  }));
+                  */
                 return
                 //return { action: "SELL", sellPrice: tradeInfo.price, stop: tokenLog.stop };
               }
@@ -920,17 +939,17 @@ pool: 'pump'
               //return { action: "HOLD", currentPrice, highest: tokenLog.highPrice, stop: tokenLog.stop };
             }
 
-            let prezzoVendita=botOptions.quickSellMultiplier;
-             if(tokenLog?.monitor?.sellPercent){
-              prezzoVendita=1 + (tokenLog.monitor.sellPercent / 100);
-             
-                }
+            let prezzoVendita = botOptions.quickSellMultiplier;
+            if (tokenLog?.monitor?.sellPercent) {
+              prezzoVendita = 1 + (tokenLog.monitor.sellPercent / 100);
+
+            }
 
             if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * prezzoVendita && tradeInfo.trxNum > botOptions.quickSellMinTrades) {
               //sellToken(trade);
               tokenLog.sellToken(trade)
               StatsMonitor.updateToken(trade, tradeInfo.price, '🚀 Quick Sell triggered');
-            console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
+              console.log(`📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
               sendMessageToClient('event', `📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
 
               return
@@ -943,8 +962,8 @@ pool: 'pump'
               StatsMonitor.updateToken(trade, tradeInfo.price, '🚨 RugPull Sell triggered');
               //tokenLog.soldOut = true;
               //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
-             // botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
-             // sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
+              // botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
+              // sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
               console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
               sendMessageToClient('event', `📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
 
