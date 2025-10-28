@@ -109,8 +109,11 @@ class TokenMonitor {
           console.log(`⛔ [${this.token.name}] Volume Net insufficiente rispetto al Volume Totale.`);
           this.suspiciousSellDetected = true;
         }
+        if (this.volatility < 40) {
+          this.suspiciousSellDetected = true;
+        }
 
-        if (this.suspiciousSellDetected && this.solAmount < botOptions.volumeMin && this.volume < botOptions.minVolumeMonitor && this.volatility < 40) {
+        if (this.suspiciousSellDetected || this.solAmount < botOptions.volumeMin || this.volume < botOptions.minVolumeMonitor) {
           ws.send(JSON.stringify({
             method: "unsubscribeTokenTrade",
             keys: [this.token.mint],
