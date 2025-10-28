@@ -110,7 +110,7 @@ class TokenMonitor {
           this.suspiciousSellDetected = true;
         }
 
-        if (this.suspiciousSellDetected && this.solAmount < botOptions.volumeMin && this.volume < botOptions.minVolumeMonitor) {
+        if (this.suspiciousSellDetected && this.solAmount < botOptions.volumeMin && this.volume < botOptions.minVolumeMonitor && this.volatility < 40) {
           ws.send(JSON.stringify({
             method: "unsubscribeTokenTrade",
             keys: [this.token.mint],
