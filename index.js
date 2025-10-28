@@ -242,6 +242,7 @@ const onMessage = async (data) => {
       if (safer.fastBuy) { // fast buy
         let msg = (`✅ Token '${parsed.name}' passato per sicurezza. Procedo con l\'acquisto rapido.`);
         console.log(msg)
+        monitor.fastMonitor();
         monitor.tradeMonitor = false;// disabilito il monitoraggio
         monitor.infoSnipe = safer.fastReason
         monitor.infoSniper = safer.fastBuy;
@@ -678,7 +679,7 @@ token.score =
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
         tokenMonitor.quickSell = msg;
-        tokenMonitor.sellPercent = 70;
+        //tokenMonitor.sellPercent = 70;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
           //sendMessageToClient('logger', info)
           tokenMonitor.infoJupiter = info;

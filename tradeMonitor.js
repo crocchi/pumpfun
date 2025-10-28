@@ -60,6 +60,19 @@ class TokenMonitor {
 
   }
 
+  fastMonitor() {
+    const ws=webSock();
+      const payload = {
+        method: 'subscribeTokenTrade',
+        keys: [this.token.mint],
+      };
+    ws.send(JSON.stringify(payload));
+      console.log(`👁️  Monitoraggio trade per ${this.token.symbol} (${this.token.mint}) attivo per ${botOptions.time_monitor / 1000}s`);
+
+      this.checkTimeToken = setInterval(() => {
+        this.lifeTokenSec++;
+      }, 1000);
+  }
   startMonitor(snipeCallback) {
     const ws=webSock();
     return new Promise((resolve) => {
