@@ -26,7 +26,7 @@ class TokenMonitor {
     this.quickSell = 0;
     this.rugpullSafe = true;
     this.prez;
-    this.highPrez= 0.0000000001;
+    this.highPrez= -1;
     this.infoSnipe;
     this.infoSniper;
     //sell percent to sell or trailing
@@ -78,7 +78,7 @@ class TokenMonitor {
 
       setTimeout(() => {
         clearInterval(this.checkTimeToken);
-      }, 400000);
+      }, 800000);
 
       this.timeoutId = setTimeout(async () => {
         if (this.solAmount > 3.0) {
@@ -121,7 +121,7 @@ class TokenMonitor {
           resolve(false);
           return false
         } else {
-          let msg=`🔍 Monitor Token(${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}...highPrez:${this.highPrez} Procedo con snipe...`
+          let msg=`🔍 Monitor Token(${this.token.name}) OK! ValoreTrade: (${this.solAmount} SOL) Volume: (${this.volume} SOL) NumTrx:${this.solTrxNumMonitor}...highPrez:${this.highPrez} T/m:[${this.tradesPerMin}] Volat:[${this.volatility}] Procedo con snipe...`
           console.log(msg);
           this.infoSnipe=msg;
           this.resetValues();

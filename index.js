@@ -550,6 +550,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       }
 
       //let spikeRate=Math.abs(rate);
+      /*
       if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy_ && prezzo < botOptions.priceSolUpQuickBuyMax_ && trxNumm > 20 && trxNumm < 60 && highPrice > (botOptions.priceSolUpQuickBuyMax_ * 1.5)) {
         let msg = (`💧SecondSpike!💧 [${tokenMonitor.token.name}]  ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
@@ -566,6 +567,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         tokenMonitor.cancelMonitor();
         return
       }
+        */
 
 
       if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tokenMonitor.lifeTokenSec > 25 && volatility > 35) {
@@ -652,7 +654,7 @@ token.score =
         return
       }
 
-      if (trend < -25 && tradesPerMin > 40 && prezzo > botOptions.priceSolUpQuickBuy) {
+      if (trend < -30 && tradesPerMin > 40 && volatility > 30) {
         let msg = (`🔥🔥Trend Token!🔥🔥 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -668,7 +670,7 @@ token.score =
         return
       }
 
-      if (trend < -10 /*&& tradesPerMin > 30 */ && prezzo > botOptions.priceSolUpQuickBuy__) {
+      if (trend < -10 && tradesPerSec < 1 && prezzo > botOptions.priceSolUpQuickBuy__ && volatility >20) {
         let msg = (`🔥🔥BuyHigh Token!🔥🔥 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
