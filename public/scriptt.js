@@ -3,7 +3,7 @@ async function showObject(mint) {
     const res = await fetch(`/showinfo?mint=${mint}`);
     const txs = await res.json();
     // Crea una nuova finestra o scheda
-    
+
     if(txs==='File not found'){
         alert('Oggetto non trovato nel database.');
         return
@@ -512,6 +512,9 @@ socket.on('stats', (data) => {
 	let totalPercent=data.totalPercent;
   document.getElementById('totPercent').textContent = `Total: ${totalPercent}%`;
 
+  document.getElementById('pumpToken').textContent = `Pump: ${data.pumpToken}`;
+  document.getElementById('bonkToken').textContent = `Bonk: ${data.bonkToken}`;
+  document.getElementById('otherToken').textContent = `Other: ${data.otherToken}`;
 })
 
 		socket.on('notifyMe', (data) => {
