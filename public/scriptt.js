@@ -530,9 +530,9 @@ socket.on('stats', (data) => {
 
 
 			let defiExchange;
-			if (token.token.mint.includes('BONK') || token.token.mint.includes('bonk') || token.pool === 'bonk' || token.pool === 'BONK') {
+			if (token.token.mint.includes('BONK') || token.token.mint.includes('bonk') || token.token.pool === 'bonk' || token.token.pool === 'BONK') {
 				defiExchange = `<a href="https://bonk.fun/token/${token.token.mint}" target="_blank">Apri Pool</a>`;
-			} else if (token.token.mint.includes('PUMP') || token.token.mint.includes('pump') || token.pool === 'pump' || token.pool === 'PUMP') {
+			} else if (token.token.mint.includes('PUMP') || token.token.mint.includes('pump') || token.token.pool === 'pump' || token.token.pool === 'PUMP') {
 				defiExchange = `<a href="https://pump.fun/coin/${token.token.mint}" target="_blank">Apri Pool</a>`;
 			} else {
 				defiExchange = 'N/A';
