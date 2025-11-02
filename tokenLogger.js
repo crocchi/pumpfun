@@ -244,7 +244,7 @@ class TokenLogger extends TokenMonitor {
             console.error(`❌ Errore durante la vendita automatica di ${this.name}:`, error);
           });
       }
-    }, 30 * 60 * 1000);
+    }, 10 * 60 * 1000);
   }
 }
 
