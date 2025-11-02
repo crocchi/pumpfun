@@ -47,7 +47,7 @@ if (!botOptions.pool[pool]) {
     // 1. ✅ Controllo liquidità min 2 max 20
     if(token.mint.includes('bonk') || token.mint.includes('BONK') ) {
       if(token.solAmount ===0){
-        console.log('debug Bonk:',token);
+        //console.log('debug Bonk:',token);
         //getTransaction(token.signature)
          safeProblem.push("❌ Liquidità sconosciuta..."+`: SOL`);
         return {

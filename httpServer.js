@@ -80,6 +80,10 @@ export function startHttpServer(port = 4000) {
         if ('devShare' in body) botOptions.devShare = Math.min(0.5, Math.max(0, Number(body.devShare))) || botOptions.devShare;
         if ('marketcapMin' in body) botOptions.marketcapMin = Math.max(0, Number(body.marketcapMin)) || botOptions.marketcapMin;
         if ('marketcapMax' in body) botOptions.marketcapMax = Math.max(0, Number(body.marketcapMax)) || botOptions.marketcapMax;
+        if('poolPumpfun' in body) botOptions.poolPumpfun = body.poolPumpfun ==='true' || body.poolPumpfun === true || false;
+        if('poolBonkfun' in body) botOptions.poolBonkfun = body.poolBonkfun ==='true' || body.poolBonkfun === true || false;
+        if('poolBonkfunUsdt' in body) botOptions.poolBonkfunUsdt = body.poolBonkfunUsdt ==='true' || body.poolBonkfunUsdt === true || false;
+        if('poolRaydium' in body) botOptions.poolRaydium = body.poolRaydium ==='true' || body.poolRaydium === true || false;
         if ('rugpullxyz' in body) botOptions.rugpullxyz = body.rugpullxyz === 'true' || body.rugpullxyz === true || false;
         if ('quickSellMultiplier' in body) botOptions.quickSellMultiplier = Number(body.quickSellMultiplier) || botOptions.quickSellMultiplier;
         if ('quickSellMinTrades' in body) botOptions.quickSellMinTrades = Number(body.quickSellMinTrades) || botOptions.quickSellMinTrades;
