@@ -153,6 +153,6 @@ if(contStats < totToken){
     contStats=totToken;
     sendMessageToClient('stats', dataToSend);
 }
-
+ sendMessageToClient('stats', dataToSend);
 }, 120000)
 
