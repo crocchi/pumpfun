@@ -36,6 +36,7 @@ const pool= token.pool || token.mint.includes('bonk') ? 'bonk' : token.mint.incl
 console.log(`Po0l: ${pool}`);
 if (!botOptions.pool[pool]) {
   console.log(`Pool ${pool} is disabled in bot options.`);
+  console.log(token);
   return {
     safeProblem: [`❌ Pool ${pool} is disabled.`],
     valid: false,

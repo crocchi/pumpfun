@@ -73,11 +73,12 @@ export let SOLANA_USD = 200;
     hasTwitterCheck_filter: false,
 
     //POOL FILTER
-    pool:{bonk:false,pump:true},
+    
     poolPumpfun:true,
     poolBonkfun:false,
     poolBonkfunUsdt:false,
     poolRaydium:false,
+    pool:{bonk:poolBonkfun,pump:poolPumpfun},
 
     //parametri compra quick by price
     priceSolUpMode:false,
