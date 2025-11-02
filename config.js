@@ -78,7 +78,7 @@ export let SOLANA_USD = 200;
     poolBonkfun:false,
     poolBonkfunUsdt:false,
     poolRaydium:false,
-    pool:{bonk:poolBonkfun,pump:poolPumpfun},
+    pool:{bonk:botOptions.poolBonkfun,pump:botOptions.poolPumpfun},
 
     //parametri compra quick by price
     priceSolUpMode:false,
