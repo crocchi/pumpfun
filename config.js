@@ -95,6 +95,9 @@ export let SOLANA_USD = 200;
     priceSolUpModeQuickBuyVolumeMin:20,
     priceSolUpModeQuickBuyVolumeNetMin:5,
 
+    //parametri bonk.fun strategy
+    bonkMinPrice:0.000000015,
+    bonkMaxPrice:0.000000030,
     //stats semplici
     pumpToken:0,
     bonkToken:0,
