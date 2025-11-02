@@ -508,6 +508,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       let highPrice = tokenMonitor.getHighPrice();
       let volatility=0;
       let pool=tokenMonitor.token.pool;
+      let lifeTokenSec=tokenMonitor.lifeTokenSec;
       //calcola volatilità
       // --- aggiorna lo storico prezzi ---
       tokenMonitor.priceHistory.push(prezzo);
@@ -551,6 +552,21 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
 
+        if (tokenMonitor.token.pool === 'bonk' && volatility > 20 && prezzo > botOptions.bonkMinPrice && prezzo < botOptions.bonkMaxPrice && trend < -15) {
+        let msg = (`🎁🎁 Bonk Strategy! 🎁🎁 [${tokenMonitor.token.name}] ` + infoTrade);
+        //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
+        //rate, speed, tokenMonitor.tradesPerSec
+        console.log(msg);
+        sendMessageToClient('event', msg)
+        tokenMonitor.quickBuy = prezzo;
+        tokenMonitor.quickSell = msg;
+        getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
+          //sendMessageToClient('logger', info)
+          tokenMonitor.infoJupiter = info;
+        })
+        tokenMonitor.cancelMonitor();
+        return
+      }
       //let spikeRate=Math.abs(rate);
       /*
       if (botOptions.priceSolUpMode && prezzo > botOptions.priceSolUpQuickBuy_ && prezzo < botOptions.priceSolUpQuickBuyMax_ && trxNumm > 20 && trxNumm < 60 && highPrice > (botOptions.priceSolUpQuickBuyMax_ * 1.5)) {
@@ -671,23 +687,9 @@ token.score =
         return
       }
 
-      if (tokenMonitor.token.pool === 'bonk' && volatility > 20 && prezzo > botOptions.bonkMinPrice && prezzo < botOptions.bonkMaxPrice && trend < -15) {
-        let msg = (`🎁🎁 Bonk Strategy! 🎁🎁 [${tokenMonitor.token.name}] ` + infoTrade);
-        //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
-        //rate, speed, tokenMonitor.tradesPerSec
-        console.log(msg);
-        sendMessageToClient('event', msg)
-        tokenMonitor.quickBuy = prezzo;
-        tokenMonitor.quickSell = msg;
-        getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
-          //sendMessageToClient('logger', info)
-          tokenMonitor.infoJupiter = info;
-        })
-        tokenMonitor.cancelMonitor();
-        return
-      }
-      
-      if (trend < -10 && tradesPerSec < 1 && prezzo > botOptions.priceBuyHighMinPrice && prezzo < botOptions.priceBuyHighMaxPrice && volatility > 20) {
+
+
+      if (trend < -10 && tradesPerSec < 1 && prezzo > botOptions.priceBuyHighMinPrice && prezzo < botOptions.priceBuyHighMaxPrice && volatility > 20 && lifeTokenSec > 10 ) {
         let msg = (`🔥🔥BuyHigh Token!🔥🔥 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
