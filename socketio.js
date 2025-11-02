@@ -144,7 +144,10 @@ setInterval(async () => {
         totalWins: totWin,
         totalLosses: totLose,
         totalPercent: totPercent.toFixed(2),
-        stats: objj
+        stats: objj,
+        pumpToken: botOptions.pumpToken,
+        bonkToken: botOptions.bonkToken,
+        otherToken: botOptions.otherToken
     };
 if(contStats < totToken){
     contStats=totToken;

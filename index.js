@@ -671,7 +671,7 @@ token.score =
         return
       }
 
-      if (trend < -10 && tradesPerSec < 1 && prezzo > botOptions.priceSolUpQuickBuy__ && volatility >20) {
+      if (trend < -10 && tradesPerSec < 1 && prezzo > botOptions.priceBuyHighMinPrice && prezzo < botOptions.priceBuyHighMaxPrice && volatility > 20) {
         let msg = (`🔥🔥BuyHigh Token!🔥🔥 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec

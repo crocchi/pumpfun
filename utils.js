@@ -34,6 +34,13 @@ export async function isSafeToken(token) {
 //POOL FILTER
 const pool= token.pool || (token.mint.includes('bonk') ? 'bonk' : token.mint.includes('pump') ? 'pump' : 'otherPool');
 console.log(`Pool: ${pool}`);
+if(pool==='pump' || pool==='PUMP'){
+  botOptions.pumpToken++;
+}else if(pool==='bonk' || pool==='BONK'){
+  botOptions.bonkToken++;
+}else{
+  botOptions.otherToken++;
+}
 if (!botOptions.pool[pool]) {
   console.log(`Pool ${pool} is disabled in bot options.`);
   console.log(token);

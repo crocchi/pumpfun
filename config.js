@@ -85,12 +85,20 @@ export let SOLANA_USD = 200;
     priceSolUpQuickBuy:   0.000000035,
     priceSolUpQuickBuyMax:0.000000042,
 
-    priceSolUpQuickBuy__:   0.000000095,
+    //parametri buyHigh
+    priceBuyHighMinPrice:   0.000000095,
+    priceBuyHighMaxPrice:0.00000026,
+
     priceSolUpQuickBuy_:   0.000000035,
     priceSolUpQuickBuyMax_:0.000000042,
 
     priceSolUpModeQuickBuyVolumeMin:20,
     priceSolUpModeQuickBuyVolumeNetMin:5,
+
+    //stats semplici
+    pumpToken:0,
+    bonkToken:0,
+    otherToken:0,
 
     //
     SOLANA_USD:200,
