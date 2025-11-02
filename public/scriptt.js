@@ -3,6 +3,11 @@ async function showObject(mint) {
     const res = await fetch(`/showinfo?mint=${mint}`);
     const txs = await res.json();
     // Crea una nuova finestra o scheda
+    
+    if(txs==='File not found'){
+        alert('Oggetto non trovato nel database.');
+        return
+    }
     const newWindow = window.open('', '_blank');
 
     // Controlla se la finestra è stata bloccata dal browser
@@ -143,6 +148,11 @@ async function saveOptions(e) {
     marketcapMin: document.getElementById('marketcapMin').value,
     marketcapMax: document.getElementById('marketcapMax').value,
     rugpullxyz: document.getElementById('enablerugpullxyz').checked,
+    poolPumpfun: document.getElementById('poolPumpfun').checked,
+    poolRaydium: document.getElementById('poolRaydium').checked,
+    poolBonkfun: document.getElementById('poolBonkfun').checked,
+    poolBonkfunUsdt: document.getElementById('poolBonkfunUsdt').checked,
+
     time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
     volumeMinMonitor: document.getElementById('volumeMinMonitor').value,
     minVolumeMonitor: document.getElementById('minVolumeMonitor').value,
@@ -209,6 +219,11 @@ async function loadOptions() {
   document.getElementById('devShare').value = o.devShare* 100; // Converti in percentuale
   document.getElementById('marketcapMin').value = o.marketcapMin;
   document.getElementById('marketcapMax').value = o.marketcapMax;
+document.getElementById('poolPumpfun').checked = o.poolPumpfun;
+document.getElementById('poolBonkfun').checked = o.poolBonkfun;
+document.getElementById('poolBonkfunUsdt').checked = o.poolBonkfunUsdt;
+document.getElementById('poolRaydium').checked = o.poolRaydium;
+
   document.getElementById('timeMonitor').value = o.time_monitor / 1000; // Converti in secondi
   document.getElementById('volumeMinMonitor').value = o.volumeMin || o.volumeMinMonitor;
   document.getElementById('volumeMax').value = o.volumeMax;
@@ -276,6 +291,11 @@ async function saveConfig() {
     devShare: document.getElementById('devShare').value / 100, // Converti in decimale
     marketcapMin: document.getElementById('marketcapMin').value,
     marketcapMax: document.getElementById('marketcapMax').value,
+
+    poolPumpfun: document.getElementById('poolPumpfun').checked,
+    poolBonkfun: document.getElementById('poolBonkfun').checked,
+    poolBonkfunUsdt: document.getElementById('poolBonkfunUsdt').checked,
+    poolRaydium: document.getElementById('poolRaydium').checked,
     rugpullxyz: document.getElementById('enablerugpullxyz').checked,
     time_monitor: document.getElementById('timeMonitor').value * 1000, // Converti in millisecondi 
     volumeMinMonitor: document.getElementById('volumeMinMonitor').value,
@@ -359,6 +379,12 @@ const loadConf = async (o) => {
   document.getElementById('devShare').value = o.devShare* 100; // Converti in percentuale
   document.getElementById('marketcapMin').value = o.marketcapMin;
   document.getElementById('marketcapMax').value = o.marketcapMax;
+
+  document.getElementById('poolPumpfun').checked = o.poolPumpfun;
+  document.getElementById('poolBonkfun').checked = o.poolBonkfun;
+  document.getElementById('poolBonkfunUsdt').checked = o.poolBonkfunUsdt;
+  document.getElementById('poolRaydium').checked = o.poolRaydium;
+
   document.getElementById('timeMonitor').value = o.time_monitor / 1000; // Converti in secondi
   document.getElementById('volumeMinMonitor').value = o.volumeMin || o.volumeMinMonitor;
   document.getElementById('minVolumeMonitor').value = o.minVolumeMonitor;

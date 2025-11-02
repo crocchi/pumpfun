@@ -30,6 +30,19 @@ export async function isSafeToken(token) {
   let fastReason;
   //console.log(token);
   try {
+
+//POOL FILTER
+const pool= token.pool || token.mint.includes('bonk') ? 'bonk' : token.mint.includes('pump') ? 'pump' : 'other';
+console.log(`Po0l: ${pool}`);
+if (!botOptions.pool[pool]) {
+  console.log(`Pool ${pool} is disabled in bot options.`);
+  return {
+    safeProblem: [`❌ Pool ${pool} is disabled.`],
+    valid: false,
+  };
+}
+
+
     // 1. ✅ Controllo liquidità min 2 max 20
     if(token.mint.includes('bonk') || token.mint.includes('BONK') ) {
       if(token.solAmount ===0){

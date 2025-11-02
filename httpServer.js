@@ -184,6 +184,9 @@ export function startHttpServer(port = 4000) {
       let token;
       if (instancesToken.has(mint)) {
         token = instancesToken.get(mint);
+      }else{
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        return res.end(JSON.stringify('File not found'));
       }
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
