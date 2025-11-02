@@ -154,3 +154,911 @@ Acquisto rilevato wallet Bot:
     at Receiver._write (/Pumpfun/node_modules/ws/lib/receiver.js:94:10)
     at writeOrBuffer (node:internal/streams/writable:572:12)
     at _write (node:internal/streams/writable:501:10)
+
+
+
+
+
+
+
+
+    {
+  signature: '5itU8gqNxY5zojWafaTC94vq5y888v9KngptL1D4dcEhZLfKdyfnnvYqzMo9TXVuaszBVuRkJBrTTf1e43nn3dSJ',
+  mint: '4FzYtGKPbfk2tFdaJTxW8wLxKJNK6Qaz4FpMXKExY7Bh',
+  traderPublicKey: 'bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa',
+  txType: 'create',
+  initialBuy: 153285714.285714,
+  solAmount: 5,
+  bondingCurveKey: '8CxXuWSCWoQxSvvPFcZDHLXGt2P5VDzqsRZq7kPKjEiv',
+  vTokensInBondingCurve: 919714285.714286,
+  vSolInBondingCurve: 34.99999999999999,
+  marketCapSol: 38.05529667598631,
+  name: 'hypergrail',
+  symbol: 'hypergrail',
+  uri: 'http://93.205.10.67:4141/metadata/C9htJ1BB',
+  pool: 'pump',
+  solInPool: 34.99999999999999,
+  tokensInPool: 919714285.714286
+}
+⛔ Token 'hypergrail' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '3pPjSGuZVpEc6SNKKeY2FxQ2k14VesuP5toxUy1m9HqavGyGF1Ct36sDDp3wXVcetdg6YtK7h4DoV4YexoKuN8dQ',
+  mint: 'H88EXbNLLYLHKxWVyBwB5GgM2bn9yh8Fx8mx998pump',
+  traderPublicKey: '4dnWLzmdkLeuDe6hwRBpPqrDbQZ59hpoBu8JLztAescf',
+  txType: 'create',
+  initialBuy: 52714738.510301,
+  solAmount: 1.55,
+  bondingCurveKey: 'CWyMiqiRawtDBEvs5Rg1hyH4tPRqDY3uJwV2xRVQ6Djt',
+  vTokensInBondingCurve: 1020285261.489699,
+  vSolInBondingCurve: 31.549999999999997,
+  marketCapSol: 30.922724448586514,
+  name: 'hypergrail',
+  symbol: 'HYPERGRAIL',
+  uri: 'https://ipfs.io/ipfs/QmQvdVkYY2BawavKmLuWRXTSoT9JGgHGkXNdXwTnKqFHA9',
+  pool: 'pump',
+  solInPool: 31.549999999999997,
+  tokensInPool: 1020285261.489699
+}
+⛔ Token 'hypergrail' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: 'UgyGfxiENhyPEyfwBgSv37cbCNZT71HaqhcohsLPvGiSGTBJYkNjBZX47VV6X4yvLxRDeUY1rdHadJGmizjrd91',
+  mint: '7otd8jph4jWsSrS7xSaFLYhChHoExxDfrRRUrjLPpump',
+  traderPublicKey: 'C4udGwTg6oqcrr8SmSLmkcXDbaFEcopsiaT21KUE4psU',
+  txType: 'create',
+  initialBuy: 96449438.144093,
+  solAmount: 2.962962961,
+  bondingCurveKey: 'Av4Sdouw6HQetKXhkqpNBCZonX23KX1ACpLfaqhYwss5',
+  vTokensInBondingCurve: 976550561.855907,
+  vSolInBondingCurve: 32.962962961,
+  marketCapSol: 33.75448670917235,
+  name: 'BUBBLE7',
+  symbol: 'BUBBLE7',
+  uri: 'https://ipfs.io/ipfs/bafkreih4ssgiskb56adzuph7mqd5ufygprdaqx7gmihoipfnbkhrv6327a',
+  pool: 'pump',
+  solInPool: 32.962962961,
+  tokensInPool: 976550561.855907
+}
+⛔ Token 'BUBBLE7' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '3NTzeimmwk39PqgasLDjphbTiZ8vs5Xov3VRwQN8VDqpdp7uvjyesDMaV3tgQSmEREympuYyWXTndaA8VpuHpyet',
+  mint: 'GdiP24gSc5qtUGmpSa4to2cPWA8BwAxf1bAmyRFupump',
+  traderPublicKey: 'E9ULt8KQxrsUhQXhEUzSR4rLuamezYJEZu5dgkKD66ap',
+  txType: 'create',
+  initialBuy: 17359141.648743,
+  solAmount: 0.493325211,
+  bondingCurveKey: 'DrLgC5G1LDghyDMciE1EedpgQgVPbzoUgywavf2E7G2k',
+  vTokensInBondingCurve: 1055640858.351257,
+  vSolInBondingCurve: 30.493325211261393,
+  marketCapSol: 28.886078982284857,
+  name: 'Giga Figure ',
+  symbol: 'Fitonomy',
+  uri: 'https://ipfs.io/ipfs/QmTPrGgjFaPVGyNYzjQA1LzB43xD4hcPCA1YgzzhayfnD3',
+  pool: 'pump',
+  solInPool: 30.493325211261393,
+  tokensInPool: 1055640858.351257
+}
+⛔ Token 'Giga Figure ' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '25H47L8gkoAPxtufBxnTE16TMMjj9hRS8gAyfNzcx9pCUHMQHh8izqFpeJf1CBU9Y18MZHBi6RMEPFp1K9Y8XAw7',
+  mint: 'EheEKurXjcjEHyzioNvcoXSJ3VgZGfEGidrz1X4hPz2d',
+  traderPublicKey: '2YVUC5e1AR8p7SbK9hQxm7tKTmpmBuUNvH7gd3kbUSWp',
+  txType: 'create',
+  initialBuy: 153285714.285714,
+  solAmount: 5,
+  bondingCurveKey: 'pZMRRTKzwEXvgHY74JDL65eK923KFGSPM6i1S51wNiL',
+  vTokensInBondingCurve: 919714285.714286,
+  vSolInBondingCurve: 34.99999999999999,
+  marketCapSol: 38.05529667598631,
+  name: 'imagination',
+  symbol: 'imaginatio',
+  uri: 'https://j7tracker.com/ipfs/metadata/4ebf8dec877b4024',
+  pool: 'pump',
+  solInPool: 34.99999999999999,
+  tokensInPool: 919714285.714286
+}
+⛔ Token 'imagination' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '5b4bYgdKndEvVJp9rSRxvNzTUk98UQpj2UrYdHUBN5sGGHxinHMAmfDWbmmudqr6HnsHYyypZPKFJuxNJDSY4Bzv',
+  mint: 'Gz7RLkX2g7Fau17i2SQecCdrNz46H4Z7FkhNWWeKpump',
+  traderPublicKey: 'SYVykYTbUyikp53nRxmammZ6fCtXPw8aqHuccWZhYh9',
+  txType: 'create',
+  initialBuy: 66439628.45773,
+  solAmount: 1.980198019,
+  bondingCurveKey: '5wch9aEZN5YLd2Kaud7X86Kf5HskXrfWtdDxGBPyYKTM',
+  vTokensInBondingCurve: 1006560371.54227,
+  vSolInBondingCurve: 31.980198018999996,
+  marketCapSol: 31.77176344623955,
+  name: 'One Month Being',
+  symbol: 'DELUSIONAL',
+  uri: 'https://ipfs.io/ipfs/bafkreif4ttr6f5cylhcju2ji5xlaxqtivzyiyoojznotbua7tbw4pkt5da',
+  pool: 'pump',
+  solInPool: 31.980198018999996,
+  tokensInPool: 1006560371.54227
+}
+⛔ Token 'One Month Being' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '3fysk97MUkSoPCuvhoN6awoQmW7HSGvJurRJeQs8qgKyzPQgqmGNJnGMFKUY33kU3aEzpDEPCaeM1eHckQ3Hg7Gx',
+  mint: 'GbNhjVHZrbkJybuBt4cmQjhZMAsCq8GgKtdDcXhXE7hG',
+  traderPublicKey: 'pumpqhCzTnn3R6rBBaBQcCmCNxi5UZvDuorCEhTcKUm',
+  txType: 'create',
+  initialBuy: 268249999.999999,
+  solAmount: 10,
+  bondingCurveKey: '8BsjfqAUoEUrtdFaBfnP8pF9nMQg5r7BJksFdXXBw6bb',
+  vTokensInBondingCurve: 804750000.000001,
+  vSolInBondingCurve: 39.99999999999995,
+  marketCapSol: 49.70487729108407,
+  name: 'Tesla Openai',
+  symbol: 'TO',
+  uri: 'http://5.224.255.140:4141/metadata/YZAOzcs.json',
+  pool: 'pump',
+  solInPool: 39.99999999999995,
+  tokensInPool: 804750000.000001
+}
+⛔ Token 'Tesla Openai' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: 'arXPBRSHgv53b4G6GJXNJNrx8rtE9ZPwU6zyNRudBnraf5kgHyZ1NCPUdPhvVvHdK4UX4NQUrTs48jQKZFG1SSj',
+  mint: '5NzbpWh5Bs2PmQ7DJdZpHkPPX4ueqQQcQGFAvLMmpump',
+  traderPublicKey: 'HyUbApFcKcdpmQUDGs9SWB62b67keGbAiHz4NtV4EDs8',
+  txType: 'create',
+  initialBuy: 70003385.089489,
+  solAmount: 2.093827159,
+  bondingCurveKey: '8WjudCEe3kmAMKmhRCR8caEshRYSUyV7UZaS8e6YsKDf',
+  vTokensInBondingCurve: 1002996614.910511,
+  vSolInBondingCurve: 32.09382715899998,
+  marketCapSol: 31.997941649946085,
+  name: 'Uplana',
+  symbol: 'Uplana',
+  uri: 'https://ipfs.io/ipfs/bafkreiblb5ihwoclsiir5ihfshcrx3xnksedpu24kyvnpowf3aonkaeelu',
+  pool: 'pump',
+  solInPool: 32.09382715899998,
+  tokensInPool: 1002996614.910511
+}
+⛔ Token 'Uplana' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: 'p89W97gmDacy4PNr61SMLqhJ2cbbioz83t8nWjKn2T6URHBHyeRoDnUUhBb9tmDTGwigjmfnkzNpa5fgc1FCAz3',
+  mint: 'Pn8dmAu2qYjRhBxHtNsYNbqeajqK3cNqC5kGs9wpump',
+  traderPublicKey: '6ujZxnphRxTqveaQtLAQHFoWz16xhLWZbTijcgZN4fRp',
+  txType: 'create',
+  initialBuy: 126235294.117647,
+  solAmount: 4,
+  bondingCurveKey: '9wNd64tt6ooCK4jr4gLuFnv6q15Jroce7E44SpH7TaF8',
+  vTokensInBondingCurve: 946764705.882353,
+  vSolInBondingCurve: 34,
+  marketCapSol: 35.91177384280832,
+  name: 'Elon vs Sam',
+  symbol: 'EvS',
+  uri: 'https://metadata.retlie.com/data/7dbc5c47-7f65-4250-90dd-edf2e7912f1e',
+  pool: 'pump',
+  solInPool: 34,
+  tokensInPool: 946764705.882353
+}
+⛔ Token 'Elon vs Sam' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '2yTaQLy45duBb5UZK7VSA3c9eUq7GDhR9FpwgmkuNLnyW2KMjaRzoRevWNBHgkAz2ezGwrHqaagLr5PAPw3PCrQU',
+  mint: '6UBmtebM3xt8AVGte8bEReJ3Gw4e3w2fuJFnzAYNKRYg',
+  traderPublicKey: 'ANAUcDCU3Jfao3mtxBdttjEH7F3Ja7SyjGBKUa9Cruc5',
+  txType: 'create',
+  initialBuy: 126235294.117647,
+  solAmount: 4,
+  bondingCurveKey: '5nhhGAu47JRcTiG1h6Du6gEDeQQydmDzUsspE27WrmBV',
+  vTokensInBondingCurve: 946764705.882353,
+  vSolInBondingCurve: 34,
+  marketCapSol: 35.91177384280832,
+  name: 'Sam Vs Elon',
+  symbol: 'SAMVSELON',
+  uri: 'https://ipfs.io/ipfs/QmPCe7x8o2Muvu2EsCvhEkMS4ZZVhaDow8kDEKzqArzExo',
+  pool: 'pump',
+  solInPool: 34,
+  tokensInPool: 946764705.882353
+}
+⛔ Token 'Sam Vs Elon' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4gRhRRTwfSunxULd7zzo8GGBSWBNDG53oMhSr7Cg3t6PT75sSEEN7SCyrqH8zw7RAVZ3rRekspte9oEtWcg2rgrQ',
+  mint: '4kwbq22W1m3MCfmKkUxAuYq4iUsSC3Af6oCDtb3Rpump',
+  traderPublicKey: '4dnWLzmdkLeuDe6hwRBpPqrDbQZ59hpoBu8JLztAescf',
+  txType: 'create',
+  initialBuy: 51095238.095238,
+  solAmount: 1.5,
+  bondingCurveKey: 'CovPAqZSgSk8g7HsSodFJ5bSwf6E9MQcN4rtKGKkNY49',
+  vTokensInBondingCurve: 1021904761.904762,
+  vSolInBondingCurve: 31.499999999999996,
+  marketCapSol: 30.82479030754892,
+  name: 'Elon vs Sam',
+  symbol: 'EvS',
+  uri: 'https://ipfs.io/ipfs/QmfFy6NaGRUejXD1mACCFGLCQtDv1vvJ6QpewB1DYSjrX6',
+  pool: 'pump',
+  solInPool: 31.499999999999996,
+  tokensInPool: 1021904761.904762
+}
+⛔ Token 'Elon vs Sam' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '3KXigKnNr9xX7fYJdz4E9VYFDvUgBp2sCW6pybmJ5p61YEaCvtpkeddHw3NaLxp76bjCBRdduHbh7Vn2FPbmYxqT',
+  mint: '8SPuCjDYHXAHP5XPRPSL71cPrnk4tuN2RDSA73qepump',
+  traderPublicKey: '8sE1SkvRHHyaeKgzRxWZJqxUPzeva27FatjKWUBthwRR',
+  txType: 'create',
+  initialBuy: 8063715.014862,
+  solAmount: 0.227160492,
+  bondingCurveKey: '617vWpRNwVVB8BN6MDcn7sh2NoQgFpfZWcjmBH6B7qBB',
+  vTokensInBondingCurve: 1064936284.985138,
+  vSolInBondingCurve: 30.22716049199998,
+  marketCapSol: 28.384008431473273,
+  name: 'Lady dun did it',
+  symbol: 'Ladydidit',
+  uri: 'https://ipfs.io/ipfs/bafkreihb5z5olv3xtgon47yqy4zmaks6vc6bsn4qigcxhk3fh52lkbwhzq',
+  pool: 'pump',
+  solInPool: 30.22716049199998,
+  tokensInPool: 1064936284.985138
+}
+⛔ Token 'Lady dun did it' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '63C7K2hpextxTy4gHXGYT3uiKfrvmF2zGPYTCYw8vxRiTUcbAifrdeYC4HmoLrteT4qsyEg7n34QngYkgtd5GLPE',
+  mint: '6dp3G2tmqf4bLBiqhCN9QSeS6MwSBQeVLdB17TLupump',
+  traderPublicKey: '7VwYwR92jSwDDRBrgeJzQrCuZzKX7jUPma3QmmQDDdqS',
+  txType: 'create',
+  initialBuy: 81596958.130046,
+  solAmount: 2.469135801,
+  bondingCurveKey: 'CQyKmJyXsqyt9Bek7x5kXpoFT1mTre3twgaDPN6cCCuP',
+  vTokensInBondingCurve: 991403041.869954,
+  vSolInBondingCurve: 32.46913580099997,
+  marketCapSol: 32.75069212997136,
+  name: 'POGECOIN',
+  symbol: 'POGE',
+  uri: 'https://ipfs.io/ipfs/bafkreiabhuyjpaudlprx5r43jnvpsao6jsgoo5tzom64axhpglaxc3sevy',
+  pool: 'pump',
+  solInPool: 32.46913580099997,
+  tokensInPool: 991403041.869954
+}
+⛔ Token 'POGECOIN' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4k7Fxfj3FqE3vrp2FsTUc3NycxCRTzf8hVd8D8EXy1QN8912VXWqemB4Uhb27BJBfasVyevMzMsJU36B54eGGJx2',
+  mint: 'D4LgmRTCMbnVqTWjJgxdSsR5G8gZYBGmPmmCTuWypump',
+  traderPublicKey: '5N9jDtqtKDzcjPztdNfTWzzKh646gzATzg7QjHTbMufW',
+  txType: 'create',
+  initialBuy: 34612903.225807,
+  solAmount: 1,
+  bondingCurveKey: '5Azi3ESYN9N3nkkPy9BUqMBd4gPmqeuw8pdymzosXjDC',
+  vTokensInBondingCurve: 1038387096.774193,
+  vSolInBondingCurve: 31.000000000000014,
+  marketCapSol: 29.85399192295747,
+  name: 'SOLANA',
+  symbol: 'SOL',
+  uri: 'https://metadata.rapidlaunch.io/metadata/7d2609a4-6550-44dc-afbc-31a3c9f23c23.json',
+  pool: 'pump',
+  solInPool: 31.000000000000014,
+  tokensInPool: 1038387096.774193
+}
+⛔ Token 'SOLANA' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: 'kYjJBX3d5YmtsWs1rvbrcLdUxhnCiPtGpEx7JVXfWeQ8fmeJRSktHRLA9UZN36ERaMZ6vLEkLRSYnxDfBZ6k7tR',
+  mint: 'WR6qrQkt1HyEk1Z6DeTZ9mgyB9ndJFmLfqZa8Tmpump',
+  traderPublicKey: 'DwSKFYzHCWga7KteoG8befB99erZbKAMnDAVerxm6CBp',
+  txType: 'create',
+  initialBuy: 91597560.975609,
+  solAmount: 2.8,
+  bondingCurveKey: 'Aw6BPbS5c3vNSnrLv5BaHsMmuT3bT3FNugMjwgJ2xubs',
+  vTokensInBondingCurve: 981402439.0243909,
+  vSolInBondingCurve: 32.799999999999976,
+  marketCapSol: 33.42155949052496,
+  name: 'a Doge Mooner',
+  symbol: 'DOGEMOON',
+  uri: 'https://ipfs.io/ipfs/QmVRBSGFydcn9Jcj533y5WTCKa8hYCUVDoyisakcj6LVJa',
+  pool: 'pump',
+  solInPool: 32.799999999999976,
+  tokensInPool: 981402439.0243909
+}
+⛔ Token 'a Doge Mooner' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '5kgSuuwRWzYQQf1uSR3a3FkY2x42swoBzzpwYpu9GrKP3Xzks3pHWnaoWhap4kyuauoAN233BLSJ3XLnqH3Y5TY',
+  mint: '8nJHYspn625vMTx552GEkap1RWpAWCi8ZFAbrAvJpump',
+  traderPublicKey: 'BpxhP2x6KrTWYVrpv3t1aDRoKQ7zLhA7naoF7jU6GyMZ',
+  txType: 'create',
+  initialBuy: 34612903.225806,
+  solAmount: 1,
+  bondingCurveKey: 'Bsgd1o6vnZSkCv6F2xy5SmgdqZD7MNgtYKS32XFKFaSa',
+  vTokensInBondingCurve: 1038387096.774194,
+  vSolInBondingCurve: 30.999999999999986,
+  marketCapSol: 29.853991922957412,
+  name: 'tesla to take openai over',
+  symbol: 'Tesla Ai',
+  uri: 'https://metadata.retlie.com/data/e934036c-bf7d-484e-bf79-1bfe746d7df2',
+  pool: 'pump',
+  solInPool: 30.999999999999986,
+  tokensInPool: 1038387096.774194
+}
+⛔ Token 'tesla to take openai over' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4zoSSy2umj3tuJwNAfUUSaecBnKszqynfNF7QaVdE2xWcpsk3TDFQu4bbjaeEbZLM2oWDwhjXDrPtmLEGD6movuy',
+  mint: '7CGWT3psxqpRi3gRaUdAYxrNQVhgrAE8yeSbZymJpump',
+  traderPublicKey: '6VhAxvSgXZNWvGYHkmK7foU2PjGQWEWwjJidtQYaHPks',
+  txType: 'create',
+  initialBuy: 97545454.545454,
+  solAmount: 3,
+  bondingCurveKey: '5dcLAvN2Lvrx6CbD31R271TnpacFGRZtg7VEacr7MGej',
+  vTokensInBondingCurve: 975454545.454546,
+  vSolInBondingCurve: 32.999999999999986,
+  marketCapSol: 33.830382106244144,
+  name: 'Trenches STRONG',
+  symbol: 'STRONG',
+  uri: 'https://ipfs.io/ipfs/QmeHb3kX4kXmQVmVDveWkf7e938AqxKtzVL3n3g6nPNqfi',
+  pool: 'pump',
+  solInPool: 32.999999999999986,
+  tokensInPool: 975454545.454546
+}
+⛔ Token 'Trenches STRONG' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4tvAeUcwKQ8oybu6MWnH6LLNPLoV2M3ebsZrB9WpPFqHPqr9eANQuqYe4bZfsN5qKrajD6qTQxrAwumYhGh7YCM1',
+  mint: '4A4NTb4f5gdmvNSiugqSdqrYA7zJoyB6kH2eHHWaujDh',
+  traderPublicKey: 'bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa',
+  txType: 'create',
+  initialBuy: 153285714.285714,
+  solAmount: 5,
+  bondingCurveKey: 'A8XdWqcAdLqbMaLYX9x9H7YM2fXnQhp2HtwZSS5jb7ro',
+  vTokensInBondingCurve: 919714285.714286,
+  vSolInBondingCurve: 34.99999999999999,
+  marketCapSol: 38.05529667598631,
+  name: 'Platform vs Platform',
+  symbol: 'PVP',
+  uri: 'http://93.205.10.67:4141/metadata/KmuNes0E',
+  pool: 'pump',
+  solInPool: 34.99999999999999,
+  tokensInPool: 919714285.714286
+}
+⛔ Token 'Platform vs Platform' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '5iNoFPWicoXmGAJJVTSzEiGbXgpH4ZUVqBdn9XKdsNVQDWAFyJzmmQjDfSYeS42gpuE4mw8nsoYTRncsXRATsFJk',
+  mint: 'CDjuuYYY9dGA85iojEhpRwjYhGRv6VAPyoKan5ytpump',
+  traderPublicKey: 'DBmxMiP8xeiZ4T45AviCjZCmmmTFETFU8VtsC8vdJZWy',
+  txType: 'create',
+  initialBuy: 265758513.8939,
+  solAmount: 9.876543208,
+  bondingCurveKey: '2UM4abMa1pPyxonbvUCoYRftnCAsbg5knWaYuQZSv3y9',
+  vTokensInBondingCurve: 807241486.1061,
+  vSolInBondingCurve: 39.876543207999966,
+  marketCapSol: 49.39853054425251,
+  name: 'TrollXRP',
+  symbol: 'TrollXRP',
+  uri: 'https://ipfs.io/ipfs/bafkreiaidotl5qrs4uqextn2eevbkjfbwv2lqfdqoyoikdk3av3hcqefqi',
+  pool: 'pump',
+  solInPool: 39.876543207999966,
+  tokensInPool: 807241486.1061
+}
+⛔ Token 'TrollXRP' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4f8KK8G8NC5Ybkax6x6GGykUy64xtboR5e6oA3MBXpLoiEZZMpFsP8SAAdELyMmaL77LDdMSXrEghfELQ7pvQmCH',
+  mint: 'H6WBByiY3c27xRZXHfjbQ2dWTr3PTxEpfnpiJWNeA1CT',
+  traderPublicKey: 'BoGxGZ5yWanwcqQPYnQyRNHL7rbrX53ry1S6jtMxADb7',
+  txType: 'create',
+  initialBuy: 125595537.577286,
+  solAmount: 3.977040722,
+  bondingCurveKey: '5Z1sHopgf6kkN6sKik4Wdjt6hvvQWLnSWkJR5sHf1J4P',
+  vTokensInBondingCurve: 947404462.422714,
+  vSolInBondingCurve: 33.9770407220622,
+  marketCapSol: 35.863289724407366,
+  name: 'Platform vs Platform',
+  symbol: 'PVP',
+  uri: 'http://93.205.10.67:4141/metadata/KmuNes0E',
+  pool: 'pump',
+  solInPool: 33.9770407220622,
+  tokensInPool: 947404462.422714
+}
+⛔ Token 'Platform vs Platform' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4mBGcZR6mGEbx54DBfPwho62rw9cf5D7dmGpJ3s9ukD14HzkM1oXpKQX2Uumrj2uP7JbiyDi8ZwCrhWn9mPdxRcX',
+  mint: 'B9bpAi4vQM3XBpHTdkC3WDrWLejpgf7pmfGGFGMYpump',
+  traderPublicKey: 'EacbvAat1dV3s3oHGr2bqqjoAuemHL1j8CywmsPtAT6M',
+  txType: 'create',
+  initialBuy: 34199203.154141,
+  solAmount: 0.98765432,
+  bondingCurveKey: '7iNJKxVProfiDo9bhDX7kbbPPXLPQZpYbskJ3WBuiFcn',
+  vTokensInBondingCurve: 1038800796.845859,
+  vSolInBondingCurve: 30.987654319999976,
+  marketCapSol: 29.830218088096093,
+  name: 'inunymous',
+  symbol: 'inun',
+  uri: 'https://ipfs.io/ipfs/bafkreid35ebvvgvc6hkolrwbsbifdvcafi6uels2mj2bqwk5l7of7dqcia',
+  pool: 'pump',
+  solInPool: 30.987654319999976,
+  tokensInPool: 1038800796.845859
+}
+⛔ Token 'inunymous' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '5dNh2hnQfDB1GU5JKdttE9GkwXYyvYYoeS8uL3zZbq5AELbD5sg97F6yxfFeefgcKPsaVc397ZokcVGCiRr3brGm',
+  mint: '5sjDniAA7tz1SNHYGhaxvKtybxCZZCC5F6Dfir6Gpump',
+  traderPublicKey: '8i5U2uNBEuTc4zskYP14zbebDg2RSwrrG8REhEnJb97K',
+  txType: 'create',
+  initialBuy: 67062500,
+  solAmount: 2,
+  bondingCurveKey: 'AenUgqP2tNogyJca1yNPqwrhB2uJZCSE3VhwzV4duLWK',
+  vTokensInBondingCurve: 1005937500,
+  vSolInBondingCurve: 32,
+  marketCapSol: 31.811121466293883,
+  name: 'Team Elon',
+  symbol: 'ELON',
+  uri: 'https://ipfs.filebase.io/ipfs/QmctuGgpYPjkHy1NMWVbVykVAaKCarJWu2w2vK9urx6BuA',
+  pool: 'pump',
+  solInPool: 32,
+  tokensInPool: 1005937500
+}
+⛔ Token 'Team Elon' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4Dq62K7eT94vF52VQy79uTp68R5ghwsF4DdqTBawkjGwq4fkCCyQ5vkFjPYaR9gKgYC6ycY2hToKrfxYDT5CAN9s',
+  mint: '9FLo7mFuCTe3yCzBArJ11n57ZxdzY5YhfJkFCb5Upump',
+  traderPublicKey: '9kxNLKXmdSD2KH8cUgxN1CV2pXgQY6fbRKXUr86UKV96',
+  txType: 'create',
+  initialBuy: 17376518.16691,
+  solAmount: 0.493827159,
+  bondingCurveKey: '2JgcXrd96o39LFeycqK4yc1pzfbjgxuWJSFyu3GcM5LA',
+  vTokensInBondingCurve: 1055623481.83309,
+  vSolInBondingCurve: 30.49382715899998,
+  marketCapSol: 28.88702997213311,
+  name: 'no blacks only big boobs',
+  symbol: 'boobs',
+  uri: 'https://ipfs.io/ipfs/bafkreiajsu4473ytn47xcrtei54ltkbr25idnj7o6mloyaqs76s36n6dqy',
+  pool: 'pump',
+  solInPool: 30.49382715899998,
+  tokensInPool: 1055623481.83309
+}
+⛔ Token 'no blacks only big boobs' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '3q74S7FNDtTmSDvannqd6G7ecuExb41m2yFNrYCJW8uKtM81xdATnyc8GZV4m55sdvYfQaQFvYyrK7411qhaUKYx',
+  mint: 'AKVHE6xFRngn1RwmsdPwvwTGGgaDCvuDryeo6Buppump',
+  traderPublicKey: 'DK4Ffvb6tFjxEkEXUVeZgzqrTsyEVwRzbauvcZavrL3S',
+  txType: 'create',
+  initialBuy: 97545454.545454,
+  solAmount: 3,
+  bondingCurveKey: 'BKRhM9FbV4iqEn82T6ycy7ZX6sgTcc88rSbeSCv6QawS',
+  vTokensInBondingCurve: 975454545.454546,
+  vSolInBondingCurve: 32.999999999999986,
+  marketCapSol: 33.830382106244144,
+  name: 'Elon vs Sam',
+  symbol: 'EvS',
+  uri: 'https://ipfs.io/ipfs/QmaiKyifG8D8CvJxbUSS3vH9iVy3b5AZATQHn4s3HSCYhT',
+  pool: 'pump',
+  solInPool: 32.999999999999986,
+  tokensInPool: 975454545.454546
+}
+⛔ Token 'Elon vs Sam' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4NeHt5LAK569PVuvAWe4kP5gMqKrC6ijyhQc8uQgvyAZnW8GERk9yxGuyeiKXpuLwXgGQ2SBs218owuY5GC8PKr',
+  mint: '8M36WPGn1yKVFPmsW7n9uXXLfM6TNwMyZCJF9jYSpump',
+  traderPublicKey: 'A2rpsw1QcHK8xfqQFGtRkKPhaFwnyM5TgzAGi8ThLLt2',
+  txType: 'create',
+  initialBuy: 34199203.154141,
+  solAmount: 0.98765432,
+  bondingCurveKey: '9BuqvrA1X2mepCvXXcXJYerknwUAnP735z5HvCh3yGHK',
+  vTokensInBondingCurve: 1038800796.845859,
+  vSolInBondingCurve: 30.987654319999976,
+  marketCapSol: 29.830218088096093,
+  name: 'Masters Agility Championship',
+  symbol: 'WKC',
+  uri: 'https://ipfs.io/ipfs/bafkreifwakirvu62mpq6yyrtoofjtrh4oszuqqvwjth7u2v4hkq52srmju',
+  pool: 'pump',
+  solInPool: 30.987654319999976,
+  tokensInPool: 1038800796.845859
+}
+⛔ Token 'Masters Agility Championship' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4FFxLBBP6bM9FD8xJbr2cafBwtsE3dccp7fTEbZtmSzA2KxkdGHiCQCkfkCDww866Kr8kNT8VBtVsSMeVSRCVm3F',
+  mint: 'GTGczTFjzcBMpwUBquFeyBEWXNeihevU1HdWTUAbpump',
+  traderPublicKey: '4dnWLzmdkLeuDe6hwRBpPqrDbQZ59hpoBu8JLztAescf',
+  txType: 'create',
+  initialBuy: 51095238.095238,
+  solAmount: 1.5,
+  bondingCurveKey: '99NDGGivcLJcXN2NaDFTzgEHfUskFvpNP15AWcLx6pji',
+  vTokensInBondingCurve: 1021904761.904762,
+  vSolInBondingCurve: 31.499999999999996,
+  marketCapSol: 30.82479030754892,
+  name: 'Justice for Sammy the Saint',
+  symbol: 'Sammy',
+  uri: 'https://ipfs.io/ipfs/QmRXAj3xA5tm9tehuAvv2XsrcNjj7DjZbPoiUNSuPCdHXk',
+  pool: 'pump',
+  solInPool: 31.499999999999996,
+  tokensInPool: 1021904761.904762
+}
+⛔ Token 'Justice for Sammy the Saint' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4iCWnsJ6QnqgVyoY8K9ypBguGsG7QhKonWRePnmq5t7MCkx7SNFBqjSp1SdUt9Wtvk7ocRsg1VdrH9YhHobqpHCw',
+  mint: 'CuUAxPdtCAHCrgJiQwGDiP3pUxzGttVDbB3h4gdLpump',
+  traderPublicKey: '53vSHcCaNZ9WaCEQboocFUeaC4Bd98pMDxskBBJnkAUj',
+  txType: 'create',
+  initialBuy: 30000000,
+  solAmount: 0.862895494,
+  bondingCurveKey: 'FpzJoqWLqmW28Lu7S2ZmDJTthaXRhCtwu15yZ7Gs7rAF',
+  vTokensInBondingCurve: 1043000000,
+  vSolInBondingCurve: 30.862895493767976,
+  marketCapSol: 29.59050382911599,
+  name: 'clickymcclickface',
+  symbol: 'CLICKER',
+  uri: 'https://ipfs.io/ipfs/bafkreic7qpfvr6bhsubeutwzjtifm5mzgnteeelaquffj3q7wykmgqaote',
+  pool: 'pump',
+  solInPool: 30.862895493767976,
+  tokensInPool: 1043000000
+}
+⛔ Token 'clickymcclickface' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4bEkrpav8Xf7kxZLd5a7EV6Lhiy8yRxdrWnTuCQ6P4zTxeSuDPhpArrCrw4Yv3wvBRhBDZBKWbd252nLNdyaJNXQ',
+  mint: '3SVvVSHVHr1FNZTNXKd3FaXZLyZnSQ8DEZBrNxoRpump',
+  traderPublicKey: '4dnWLzmdkLeuDe6hwRBpPqrDbQZ59hpoBu8JLztAescf',
+  txType: 'create',
+  initialBuy: 357547.484171,
+  solAmount: 0.01,
+  bondingCurveKey: 'GZL7nJTcukETXCty7eTPTZuJd3DSXfwYE4hJYE5oKVep',
+  vTokensInBondingCurve: 1072642452.515829,
+  vSolInBondingCurve: 30.009999999999973,
+  marketCapSol: 27.977635911773792,
+  name: 'Justice for Sammy the Saint',
+  symbol: 'Sammy',
+  uri: 'https://ipfs.io/ipfs/QmRXAj3xA5tm9tehuAvv2XsrcNjj7DjZbPoiUNSuPCdHXk',
+  pool: 'pump',
+  solInPool: 30.009999999999973,
+  tokensInPool: 1072642452.515829
+}
+⛔ Token 'Justice for Sammy the Saint' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4CMkshResVbnN9qcqDuejrM9nzoRRChs7vzfUJgL3neCmaRUwJN9rCNrydxBBubC3ZNa2A4626tADw3A7Tjm89da',
+  mint: 'E4yCHL3paQ3bHrM9AGWQ4NLfjdtoTytRtTuxaUjQpump',
+  traderPublicKey: 'pDh4tE6hisXYDuMgxHmvZNhqGogm7nB5PJbCzpiaZt3',
+  txType: 'create',
+  initialBuy: 97545454.545454,
+  solAmount: 3,
+  bondingCurveKey: '3KoLChEVmVRkZJ5U6NzyvrUc7V58v349uMSzZjcdmFMe',
+  vTokensInBondingCurve: 975454545.454546,
+  vSolInBondingCurve: 32.999999999999986,
+  marketCapSol: 33.830382106244144,
+  name: 'non-profit coin',
+  symbol: 'NPC',
+  uri: 'https://metadata.retlie.com/data/492cd956-2cef-4143-8bda-92741abd3514',
+  pool: 'pump',
+  solInPool: 32.999999999999986,
+  tokensInPool: 975454545.454546
+}
+⛔ Token 'non-profit coin' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+🔌 Nuovo client connesso: YB1glz5u0Z_m1-g9AAAB
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4TdADuLqWUL8jfD7XLacSdsqup8Yt6xRVK3vSCJ9uWpfPXerG8dQGdXCbmpoENTBNCtzvewNqzH9PN7b6f3e9NdU',
+  mint: 'At2iGKH8uH49m5A7A5N3rTE1jDee9gCqnebiy4bvpump',
+  traderPublicKey: 'FgQYPMBJeMgroqkGYuZ6J2MwzdaGgoJUkm7bvqYQoguT',
+  txType: 'create',
+  initialBuy: 104297020.76437,
+  solAmount: 3.23,
+  bondingCurveKey: '63iPpKGcj1WipmA6xbY2YGwELzQsJRQqhNZG2cqCwygE',
+  vTokensInBondingCurve: 968702979.23563,
+  vSolInBondingCurve: 33.23000000000001,
+  marketCapSol: 34.3036004970488,
+  name: 'def not',
+  symbol: 'DN',
+  uri: 'https://metadata.rapidlaunch.io/metadata/d7bed486-05cf-4764-a681-fa7f92d4fe2f.json',
+  pool: 'pump',
+  solInPool: 33.23000000000001,
+  tokensInPool: 968702979.23563
+}
+⛔ Token 'def not' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '5ExRihCTUgZpfQWP84DM45aJSQzG7LXabJvetMoUBzYpbuwdzhS3D4TbpH38Xi5zoaDdubXw83giQjQ2Bp28Mqdm',
+  mint: '62HFjfjy9dVgvL6fPZjwNkemUu8fo9EvszLdnMwfpump',
+  traderPublicKey: '9SDnxVkcmvKUNiQFcB8aokBrCkKkkLSNptFNyVhyZGKW',
+  txType: 'create',
+  initialBuy: 97545454.545455,
+  solAmount: 3,
+  bondingCurveKey: '8EyYTCzfi1VZeo6Dafr9HAwuCWqxXL3NR9g4AxrHmwSw',
+  vTokensInBondingCurve: 975454545.454545,
+  vSolInBondingCurve: 33.000000000000014,
+  marketCapSol: 33.8303821062442,
+  name: 'Predla',
+  symbol: 'Predla',
+  uri: 'https://metadata.rapidlaunch.io/metadata/28d391f1-1bfc-400e-ac0e-152fc5ab73da.json',
+  pool: 'pump',
+  solInPool: 33.000000000000014,
+  tokensInPool: 975454545.454545
+}
+⛔ Token 'Predla' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '5XLegN31mynBuE9Es84Wk5qak1PLBCDjh3hy98VYjQ5dzTBnzH4Si7kCym6KgC9awuK1V27RzUVkabKGxtNd5XaH',
+  mint: '9MR9pJp7BhkDDDEtwWfVHhVpdHQguZ6u1mkvK3tRpump',
+  traderPublicKey: 'C4udGwTg6oqcrr8SmSLmkcXDbaFEcopsiaT21KUE4psU',
+  txType: 'create',
+  initialBuy: 96449438.144093,
+  solAmount: 2.962962961,
+  bondingCurveKey: '5rL75M1ndT37VuiFPQzKMcuz5wvp7PEj37st5VBqvBiF',
+  vTokensInBondingCurve: 976550561.855907,
+  vSolInBondingCurve: 32.962962961,
+  marketCapSol: 33.75448670917235,
+  name: 'BUBBLE7',
+  symbol: 'BUBBLE7',
+  uri: 'https://ipfs.io/ipfs/bafkreih4ssgiskb56adzuph7mqd5ufygprdaqx7gmihoipfnbkhrv6327a',
+  pool: 'pump',
+  solInPool: 32.962962961,
+  tokensInPool: 976550561.855907
+}
+⛔ Token 'BUBBLE7' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: 'NDot9MkehETo7odnT9Q6MRnk6CeKR6i1pCQhCqaPfuzjsS3VhmB48bBsBkxQtq8ThfWgKy4uEEdxiZ4bHoP7irQ',
+  mint: '4RWKvpfuYcfERdLvcLoPmA9W4RKNUeCSpXKNVMompump',
+  traderPublicKey: 'F8nBx9n9dy9ccqxGBeTEEiELxHA9SeG9CTEEMPHN2QZy',
+  txType: 'create',
+  initialBuy: 97545454.545454,
+  solAmount: 3,
+  bondingCurveKey: '9fXGp7vn37MLirkbX2NWTRD2uaoZxdwHErCuqYibQewH',
+  vTokensInBondingCurve: 975454545.454546,
+  vSolInBondingCurve: 32.999999999999986,
+  marketCapSol: 33.830382106244144,
+  name: 'The Secret Pumpfun Flag',
+  symbol: 'TSPF',
+  uri: 'https://ipfs.io/ipfs/QmYb823ibias9RC4fzzEHE7JwFMMGixN2X7aRccf7AZ1Ar',
+  pool: 'pump',
+  solInPool: 32.999999999999986,
+  tokensInPool: 975454545.454546
+}
+⛔ Token 'The Secret Pumpfun Flag' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '6YkXwL8z6xwsTH5uUX9kLkwwbJwh31u5cc6CaY9zSiLY95qZQWA4Ny4Z4n3cwN6oHRRtRoTmfyDGq3xn1rGxt6M',
+  mint: '5Uv9X8PSwwUKzwE2tGC44cHfy7xNpyH6jzeQ9EjFpump',
+  traderPublicKey: 'FgQYPMBJeMgroqkGYuZ6J2MwzdaGgoJUkm7bvqYQoguT',
+  txType: 'create',
+  initialBuy: 104297020.76437,
+  solAmount: 3.23,
+  bondingCurveKey: 'FF8H14Lx56rzDinoLnMmqQ4c7RtoiaBBQuJNQ2hopMcJ',
+  vTokensInBondingCurve: 968702979.23563,
+  vSolInBondingCurve: 33.23000000000001,
+  marketCapSol: 34.3036004970488,
+  name: 'OpenALIE',
+  symbol: 'OpenALIE',
+  uri: 'https://metadata.rapidlaunch.io/metadata/f6d6f81d-e580-4ce8-8dc7-2f2c24d2c0d0.json',
+  pool: 'pump',
+  solInPool: 33.23000000000001,
+  tokensInPool: 968702979.23563
+}
+⛔ Token 'OpenALIE' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: 'ULk8spDrnHFramNrAgbdhEL5NLMMADzbQS8PHYCLi7wzNBMPMmPpYCjEu2N3rYhWTmuUf7UVNRbn7WqfuuhKegp',
+  mint: 'Fx2vktCYy6rTtxNMEieSzeWz4kho8ytfYMoi5Sqqpump',
+  traderPublicKey: '78N177fzNJpp8pG49xDv1efYcTMSzo9tPTKEA9mAVkh2',
+  txType: 'create',
+  initialBuy: 97545454.545454,
+  solAmount: 3,
+  bondingCurveKey: 'EQ3p59Digdhj2Upyn28wFC3qR2cFrgsuocB3PHo4DQfQ',
+  vTokensInBondingCurve: 975454545.454546,
+  vSolInBondingCurve: 32.999999999999986,
+  marketCapSol: 33.830382106244144,
+  name: 'OpenLie',
+  symbol: 'OpenLie',
+  uri: 'https://ipfs.io/ipfs/QmWq6oVTAx3fypAJH88a61mndRjNMqPronKGpQvjoFQCLv',
+  pool: 'pump',
+  solInPool: 32.999999999999986,
+  tokensInPool: 975454545.454546
+}
+⛔ Token 'OpenLie' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '5gYxASod9iR2fCBahbYBDbRhQpNcaq7bXsNFCNSHRu8S2sLoPmoQTPbgQ2HLJxteREhVVJozfzChn7JfEWUnGVQK',
+  mint: 'CfY8uD3K3pJkdYWMMor3uZk2JkYAG9uwV4KenWgipump',
+  traderPublicKey: '78dKTGuKkFRuKNr3JYgDdTRwo54RyeTkvMiCQ9j5wYAU',
+  txType: 'create',
+  initialBuy: 97545454.545454,
+  solAmount: 3,
+  bondingCurveKey: 'B53GrPzXV48SKveDt81YmeWrkhaSPMK87UN5TwupxKuq',
+  vTokensInBondingCurve: 975454545.454546,
+  vSolInBondingCurve: 32.999999999999986,
+  marketCapSol: 33.830382106244144,
+  name: 'Homer Simpson Die Lit',
+  symbol: 'DIE LIT',
+  uri: 'https://metadata.retlie.com/data/f2ca9b4b-ec20-4cd7-b797-a85fa91e8c05',
+  pool: 'pump',
+  solInPool: 32.999999999999986,
+  tokensInPool: 975454545.454546
+}
+⛔ Token 'Homer Simpson Die Lit' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '2M8vDYybViHnf8Fr2noTpQakE27dHGKiazEWo7RbUF3r7yzneGkYjuVygGsAowgRQV2EkAYenmk4ATVdZRSC5Eht',
+  mint: '9uYzAxm9oMc6haeWhQFenw8aqrvttZee1uQYvQ1Spump',
+  traderPublicKey: 'FaBGrHWjcJ8vKnbgUtsdpZjvF7YAAajtQTWmmEHiKtQr',
+  txType: 'create',
+  initialBuy: 97545454.545455,
+  solAmount: 3,
+  bondingCurveKey: 'CkxbaQi6m4iRpa5zDiJepZDBQUqRDiKY2SNFn4ov48NU',
+  vTokensInBondingCurve: 975454545.454545,
+  vSolInBondingCurve: 33.000000000000014,
+  marketCapSol: 33.8303821062442,
+  name: 'Freddy',
+  symbol: 'Freddy',
+  uri: 'https://metadata.rapidlaunch.io/metadata/a4da3c62-bdab-4b51-a1ff-3d6fedac85b7.json',
+  pool: 'pump',
+  solInPool: 33.000000000000014,
+  tokensInPool: 975454545.454545
+}
+⛔ Token 'Freddy' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '4w1GgHuXosVpFYZM8HQLcdMAvpBnRLqYRsi6PRgYs3a6STmJfcpgPRvhntxzNZvnUwngppjUVyN7qpQ2UnzWbJPf',
+  mint: 'A1oNU66rw19AJQxEheZDqfyzewcCxikanMw346FDpump',
+  traderPublicKey: '8uHpt6fYeF9SUKuqmoXqc1M9ZyB1iugaEKScY6VRY7t1',
+  txType: 'create',
+  initialBuy: 30877697.777999,
+  solAmount: 0.888888887,
+  bondingCurveKey: '4xS2RakEf4dvkF8qhyKgLpXNWqGv48zDPFmTGio2FvfF',
+  vTokensInBondingCurve: 1042122302.222001,
+  vSolInBondingCurve: 30.88888888699998,
+  marketCapSol: 29.640368334061225,
+  name: 'Forklift',
+  symbol: 'FORK',
+  uri: 'https://ipfs.io/ipfs/bafkreigibbn2zwffquuydrijsnoujy2lzjdkfigifhgmr4aybb2pcbzu2u',
+  pool: 'pump',
+  solInPool: 30.88888888699998,
+  tokensInPool: 1042122302.222001
+}
+⛔ Token 'Forklift' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '3LXMh6C8DpEg1NwUnMVzYCD4WVqLeiFRjs1GDPRdHyYxRTvF7iw5ZqoKhCKnUiw96vb6Kudj5guHGCnwMduH3xR5',
+  mint: 'HGZU31ujYHbYu4swnwrrWbkqzjEk6Q2MJa7HHj9jpump',
+  traderPublicKey: '6jA2vDeWH99A3Ufh6XufZwwY3VPy1nTeEXMo9efeBtiY',
+  txType: 'create',
+  initialBuy: 67062499.999999,
+  solAmount: 2,
+  bondingCurveKey: 'HSN7SXWv4M7xpXnKFFsnqWRYKF1rYpzW7Sfj43jveMhy',
+  vTokensInBondingCurve: 1005937500.000001,
+  vSolInBondingCurve: 31.999999999999968,
+  marketCapSol: 31.811121466293816,
+  name: 'Bliss man',
+  symbol: 'bliss',
+  uri: 'https://ipfs.io/ipfs/QmRhfwTdPxNuBXjbVUjF6dM9KqDoR5y3agYyvmwhT4sg4Q',
+  pool: 'pump',
+  solInPool: 31.999999999999968,
+  tokensInPool: 1005937500.000001
+}
+⛔ Token 'Bliss man' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: '5MrWBTk4hPc9Jkj7ZAR1dgQiGDsbdiT7doQS2FSCS6m3zwk7BhzRB7qtRaNEz8nXk2fjB1gQ2pDyTqPAwKxKrQUD',
+  mint: 'yGmmryMpkBA3hPbLgcHEwiHtmaETf14tmv5K4LApump',
+  traderPublicKey: 'DawLd7XWrJ3rHKSQ6y5XAssNggRBVgyhNnL1jt1tkq91',
+  txType: 'create',
+  initialBuy: 67062499.999999,
+  solAmount: 2,
+  bondingCurveKey: 'BZZ1s4qo1VNpN9JVwTdr6Kw264ziWDmcPHQypbrKEGJg',
+  vTokensInBondingCurve: 1005937500.000001,
+  vSolInBondingCurve: 31.999999999999968,
+  marketCapSol: 31.811121466293816,
+  name: 'Lying Language Model',
+  symbol: 'LLM',
+  uri: 'https://metadata.retlie.com/data/d3c5056b-ddfd-460e-a5a1-921a54edeaba',
+  pool: 'pump',
+  solInPool: 31.999999999999968,
+  tokensInPool: 1005937500.000001
+}
+⛔ Token 'Lying Language Model' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+--------------------------------------------
+Po0l: bonk
+Pool bonk is disabled in bot options.
+{
+  signature: 'waWTcq1cCWAUSSkdM7LXEGueyECLBZEmx7ADdy9kbVeGtbGEG4aNDJjXb3g9hc52ytiZbdpx3m1G5LZ5c5E6Fha',
+  mint: 'BAiSj7LXq9Yj9tcTd2dYWJsyLZwR7XV1oJXfE1bTpump',
+  traderPublicKey: 'UPz2W1D44uNdG4HAs7i7e53vSg12xVgwcpEjFryAZso',
+  txType: 'create',
+  initialBuy: 97545454.545454,
+  solAmount: 3,
+  bondingCurveKey: '7J6x5LvxTcdob3VsScVC8yg7ex4qmNa58bc9CTSZjv3u',
+  vTokensInBondingCurve: 975454545.454546,
+  vSolInBondingCurve: 32.999999999999986,
+  marketCapSol: 33.830382106244144,
+  name: 'tst',
+  symbol: 'tst',
+  uri: 'https://metadata.retlie.com/data/78c64cfd-1215-4995-a8b2-495f2f1823d8',
+  pool: 'pump',
+  solInPool: 32.999999999999986,
+  tokensInPool: 975454545.454546
+}
+⛔ Token 'tst' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
