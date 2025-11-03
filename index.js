@@ -588,8 +588,8 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
         */
-
-      if (pump &&botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tokenMonitor.lifeTokenSec > 25 && volatility > 45) {
+/*
+      if (pump && botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tokenMonitor.lifeTokenSec > 25 && volatility > 45) {
         let msg = (`📈 Price Quick Buy! 🚀 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -606,6 +606,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         tokenMonitor.cancelMonitor();
         return
       }
+        */
 
       let spikeRate = Math.abs(rate);
       if (trend < -5 && solValueTrx > 0 && rate < -1.3 && rate > -2.0 && tradesPerMin > 25 && tradesPerMin < 65 && trxNumm < 100) {

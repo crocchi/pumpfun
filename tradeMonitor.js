@@ -57,7 +57,7 @@ class TokenMonitor {
     this.volatility = 0;
     this.priceHistory = [];   // storico prezzi recenti
     this.maxHistory = 10;     // numero di tick da usare per la volatilità
-
+    this.momentumScore = 0;
   }
 
   fastMonitor() {
@@ -264,6 +264,8 @@ updateTradeVelocity(newTradeTimestamp) {
   this.tradesPerMin = this.tradeHistory.length;
   this.tradesPerSec = this.tradesPerMin / 60;
   this.tradesPerTenSec = this.tradesPerMin / 6;
+
+  this.momentumScore = (this.volatility * (this.tradesPerMin / 10)) + this.liqDrop;
 
   return { tradesPerMin: this.tradesPerMin, tradesPerSec: this.tradesPerSec , tradesPerTenSec: this.tradesPerTenSec}; 
 }
