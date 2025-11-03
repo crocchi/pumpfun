@@ -507,7 +507,9 @@ mint: quote_token_mint.pubkey.toBase58(),
       let volume = tokenMonitor.volume;
       let highPrice = tokenMonitor.getHighPrice();
       let volatility=0;
-      let pool=tokenMonitor.token.pool;
+      //setta la pool strategy
+      let bonk=tokenMonitor.token.pool === 'bonk';
+      let pump=tokenMonitor.token.pool === 'pump';
       let lifeTokenSec=tokenMonitor.lifeTokenSec;
       //calcola volatilità
       // --- aggiorna lo storico prezzi ---
@@ -552,7 +554,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
 
-        if (tokenMonitor.token.pool === 'bonk' && volatility > 20 && prezzo > botOptions.bonkMinPrice && prezzo < botOptions.bonkMaxPrice && trend < -15) {
+        if (bonk && volatility > 20 && prezzo > botOptions.bonkMinPrice && prezzo < botOptions.bonkMaxPrice && trend < -15) {
         let msg = (`🎁🎁 Bonk Strategy! 🎁🎁 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -587,7 +589,7 @@ mint: quote_token_mint.pubkey.toBase58(),
       }
         */
 
-      if (botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tokenMonitor.lifeTokenSec > 25 && volatility > 40) {
+      if (pump &&botOptions.priceSolUpMode && tokenMonitor.volume > botOptions.priceSolUpModeQuickBuyVolumeMin && prezzo > botOptions.priceSolUpQuickBuy && prezzo < botOptions.priceSolUpQuickBuyMax && solValueTrx > botOptions.priceSolUpModeQuickBuyVolumeNetMin && volumeRulesNet && tokenMonitor.lifeTokenSec > 25 && volatility > 45) {
         let msg = (`📈 Price Quick Buy! 🚀 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -689,7 +691,7 @@ token.score =
 
 
 
-      if (trend < -10 && tradesPerSec < 1 && prezzo > botOptions.priceBuyHighMinPrice && prezzo < botOptions.priceBuyHighMaxPrice && volatility > 20 && lifeTokenSec > 8 ) {
+      if (pump && trend < -10 && tradesPerSec < 1 && prezzo > botOptions.priceBuyHighMinPrice && prezzo < botOptions.priceBuyHighMaxPrice && volatility > 20 && lifeTokenSec > 8 ) {
         let msg = (`🔥🔥BuyHigh Token!🔥🔥 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
