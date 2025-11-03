@@ -72,6 +72,12 @@ class TokenMonitor {
       this.checkTimeToken = setInterval(() => {
         this.lifeTokenSec++;
       }, 1000);
+
+      setTimeout(() => {
+        clearInterval(this.checkTimeToken);
+      }, 7 * 60 * 1000);
+      // 8 * 60 * 1000
+
   }
   startMonitor(snipeCallback) {
     const ws=webSock();

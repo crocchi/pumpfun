@@ -219,12 +219,21 @@ class TokenLogger extends TokenMonitor {
 
   startSellTimer() {
     //console.log(`⏳ Timer di 30 minuti avviato per ${this.name}.`);
-
+/*
+⏰ Timer scaduto per KittoFi. Il token non è stato venduto. Vendita automatica in corso...
+❌ Errore durante la vendita automatica di KittoFi: TypeError: Cannot read properties of undefined (reading 'slice')
+    at new TokenMonitor (file:///Pumpfun/tradeMonitor.js:10:29)
+    at new TokenLogger (file:///Pumpfun/tokenLogger.js:11:5)
+    at getInstanceForTokenLogger (file:///Pumpfun/index.js:1010:22)
+    at sellToken (file:///Pumpfun/utility/lightTrx.js:139:29)
+    at Timeout._onTimeout (file:///Pumpfun/tokenLogger.js:229:9)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) */
     // Imposta un timer di 30 minuti (30 * 60 * 1000 millisecondi)
     setTimeout(() => {
       if (!this.soldOut) {
         console.log(`⏰ Timer scaduto per ${this.name}. Il token non è stato venduto. Vendita automatica in corso...`);
-
+        clearInterval(this.monitor.checkTimeToken);
         // Esegui la vendita automatica
         sellToken(this.token.mint)
           .then((result) => {

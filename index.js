@@ -1022,7 +1022,10 @@ export function getInstanceForTokenMonitor(token) {
 
 
 export function getInstanceForTokenLogger(token) {
-  if (!token) { return null }
+   if (!token || !token.mint) {
+    console.error("Token non valido passato a getInstanceForTokenLogger:", token);
+    return null;
+  }
 
   if (!instancesToken.has(token.mint)) {
     const instance = new TokenLogger(token);
