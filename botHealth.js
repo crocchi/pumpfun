@@ -1,7 +1,6 @@
 import cron from 'node-cron';
-import { botOptions } from './config';
+import { botOptions } from './config.js';
 import { webSock,connect } from './index.js';
-import { onOpen } from './websocket.js';
 import { sendMessageToClient } from './socketio.js';
 
 // 1. Ogni minuto (test)
