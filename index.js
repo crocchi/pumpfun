@@ -1054,11 +1054,12 @@ export function getInstanceForTokenLogger(token) {
 
 startTimeout();
 connect();
-jobBotHealth.start().then(() => {
+try {
+  await jobBotHealth.start();
   console.log(' 🛡️ JobBotHealth started 🛡️');
-}).catch(err => {
+} catch (err) {
   console.error('Errore nell\'avvio del Job Bot Health:', err);
-});
+}
 
 
 /*{
