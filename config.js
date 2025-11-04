@@ -116,14 +116,14 @@ export let SOLANA_USD = 200;
 
 
   async function fetchSolPrice() {
-  
-   let priceSol=await getQuote(["SOL" ,"BTC"], "USD");
+
+   let priceSol=await getQuote(["BTC","SOL"], "USD");
 
       SOLANA_USD = Number(priceSol[0].price) || SOLANA_USD;
       botOptions.SOLANA_USD=SOLANA_USD;
       botOptions.solanaInfo=priceSol[0];
       botOptions.btcInfo=priceSol[1];
-      console.log(`📈 Prezzo SOL aggiornato: $${SOLANA_USD} 1h($${priceSol[0].percent_change_1h})`);
+      console.log(`📈 Prezzo SOL aggiornato: $${SOLANA_USD} 1h(${priceSol[0].percent_change_1h}%)`);
       return SOLANA_USD
   }
 
