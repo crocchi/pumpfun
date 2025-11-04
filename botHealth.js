@@ -30,33 +30,42 @@ cron.schedule('*\/10 * * * * *', heartbeat);
 */
 
 
-export const jobBotHealth = cron.schedule('* 10 * * *', async () => {
+export const jobBotHealth = cron.schedule('* */10 * * *', async () => {
   console.log('🛡️  Check Price Status 1h...');
   let btc=botOptions.btcInfo.price || 0;
-  let btc_1h=botOptions.btcInfo.percent_change_1h || 0;
+  let btc_1h=Number(botOptions.btcInfo.percent_change_1h) || 0;
   console.log(`📈 Prezzo BTC aggiornato: $${btc} 1h($${btc_1h})`);
   let sol=botOptions.solanaInfo.price || 0;
-  let sol_1h=botOptions.solanaInfo.percent_change_1h || 0;
+  let sol_1h=Number(botOptions.solanaInfo.percent_change_1h) || 0;
   console.log(`📈 Prezzo SOL aggiornato: $${sol} 1h($${sol_1h})`);
 
-  if(btc_1h < -1){
+  if(btc_1h < -1 && botOptions.botSleep===false){
     botOptions.botSleep=true;
-    let msg=('⚠️  Attenzione: BTC in calo oltre il 2% nell\'ultima ora. Considera di sospendere le operazioni di trading.');
+    let msg=(`⚠️  Attenzione: BTC in calo oltre il 1% nell\'ultima ora. 
+       prezzo: $${btc} 1h($${btc_1h}) Considera di sospendere le operazioni di trading.`);
     sendMessageToClient('event', msg);
     closeWebSocket();
- }else{
+    return
+ }
+ if(btc_1h >= -1 && botOptions.botSleep===true){
    botOptions.botSleep=false;
-   console.log('✅ BTC stabile. Il bot continua le operazioni di trading.');
+   let msg=(`✅ BTC stabile. Prezzo: $${btc} 1h($${btc_1h}). Il bot continua le operazioni di trading.`);
+   sendMessageToClient('event', msg);
    connect();
+   return
 }
-  if(sol_1h < -1){
+  if(sol_1h < -1 && botOptions.botSleep===false){
     botOptions.botSleep=true;
-    let msg=('⚠️  Attenzione: SOL in calo oltre il 2% nell\'ultima ora. Considera di sospendere le operazioni di trading.');
+    let msg=(`⚠️  Attenzione: SOL in calo oltre il 1% nell\'ultima ora. 
+       prezzo: $${sol} 1h($${sol_1h}) Considera di sospendere le operazioni di trading.`);
     sendMessageToClient('event', msg);
     closeWebSocket();
-  }else{
+    return
+  }
+  if(sol_1h >= -1 && botOptions.botSleep===true){
     botOptions.botSleep=false;
-    console.log('✅ SOL stabile. Il bot continua le operazioni di trading.');
+    let msg=(`✅ SOL stabile. Prezzo: $${sol} 1h($${sol_1h}). Il bot continua le operazioni di trading.`);
+    sendMessageToClient('event', msg);
     connect();
   }
 
