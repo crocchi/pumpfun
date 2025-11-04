@@ -40,6 +40,10 @@ export const lastMessageTimeSet = () => {lastMessageTime = Date.now()}
 
 export function startTimeout() {
   timeoutId = setInterval(() => {
+    if(botOptions.botSleep){
+      console.log('🤖 Bot in modalità sleep. Timeout inattività non attivo.');
+      return;
+    }
     const lastMessageTimeNow = Date.now();
     let result = lastMessageTimeNow - lastMessageTime;
     if (result > 100000) {

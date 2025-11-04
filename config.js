@@ -106,8 +106,10 @@ export let SOLANA_USD = 200;
     //
     SOLANA_USD:200,
     solanaInfo:{},
+    btcInfo:{},
     botWallet:'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG',
-    botCash:2
+    botCash:2,
+    botSleep:false
   
   };
 
@@ -115,14 +117,15 @@ export let SOLANA_USD = 200;
 
   async function fetchSolPrice() {
   
-   let priceSol=await getQuote(["SOL"], "USD");
+   let priceSol=await getQuote(["SOL" ,"BTC"], "USD");
 
       SOLANA_USD = Number(priceSol[0].price) || SOLANA_USD;
       botOptions.SOLANA_USD=SOLANA_USD;
       botOptions.solanaInfo=priceSol[0];
-      console.log(`📈 Prezzo SOL aggiornato: $${SOLANA_USD}`);
+      botOptions.btcInfo=priceSol[1];
+      console.log(`📈 Prezzo SOL aggiornato: $${SOLANA_USD} 1h($${priceSol[0].percent_change_1h})`);
       return SOLANA_USD
   }
-  
-  setInterval(fetchSolPrice, 3000000); // ogni 5 minuti
+
+  setInterval(fetchSolPrice, 5 * 60 * 1000); // ogni 5 minuti
   fetchSolPrice(); // chiamata iniziale

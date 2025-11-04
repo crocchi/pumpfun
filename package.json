@@ -29,6 +29,9 @@
     "socket.io": "^4.7.2",
     "playwright": "^1.47.0",
     "@coral-xyz/anchor": "^0.31.1",
-    "@shyft-to/solana-transaction-parser": "^2.0.1"
+    "@shyft-to/solana-transaction-parser": "^2.0.1",
+    "node-cron": "^4.2.1"
+
+
   }
 }

@@ -14,6 +14,7 @@ import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
 import { getHour } from './utility/time.js';
 import { buyToken, sellToken } from './utility/lightTrx.js';
+import { jobBotHealth } from './botHealth.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
@@ -1052,7 +1053,14 @@ export function getInstanceForTokenLogger(token) {
 }
 
 startTimeout();
-connect()
+connect();
+jobBotHealth.start().then(() => {
+  console.log(' 🛡️ JobBotHealth started 🛡️');
+}).catch(err => {
+  console.error('Errore nell\'avvio del Job Bot Health:', err);
+});
+
+
 /*{
   signature: '5i4GzuYha8LiJwB8VQHEQcH5d1pUV3TMsctcZa3hvLDJCWU3tBwddyi8z8V26R1GU4jrcvzLfNGVtoLUeCWEYRRj',
   mint: '2bTEEruUggcJh119Q6ygSmgkHbJdyPoE9kd6HWA9pump',
