@@ -27,6 +27,24 @@ cron.schedule('*\/10 * * * * *', heartbeat);
 │ │ │ │ │ │
 * * * * * *
 */
+cron.schedule('30 3 * * *', async () => {
+    console.log('🛡️  good night')
+    jobBotHealth.stop();
+    botOptions.botSleep=true
+    closeWebSocket();
+    }, { 
+    timezone: 'Europe/Rome'
+});
+
+cron.schedule('0 6 * * *', async () => {
+    console.log('🛡️  good day')
+    jobBotHealth.start();
+    botOptions.botSleep=false;
+    connect();
+
+    }, { 
+    timezone: 'Europe/Rome'
+});
 
 
 export const jobBotHealth = cron.schedule('* */10 * * *', async () => {
@@ -91,7 +109,7 @@ const closeWebSocket = async () => {
   if (ws) {
     ws.removeAllListeners(); // Rimuovi listener per evitare memory leak
     ws.close(1000, 'Riavvio manuale o inattività');
-    botOptions.botSleep=true;
+    //botOptions.botSleep=true;
     console.log('🛑 Bot in modalità sleep. Connessione WebSocket chiusa.');
   }
 }
