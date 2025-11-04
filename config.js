@@ -119,7 +119,7 @@ export let SOLANA_USD = 200;
 
    let priceSol=await getQuote(["BTC","SOL"], "USD");
 
-      SOLANA_USD = Number(priceSol[0].price) || SOLANA_USD;
+      SOLANA_USD = Number(priceSol[1].price) || SOLANA_USD;
       botOptions.SOLANA_USD=SOLANA_USD;
       botOptions.solanaInfo=priceSol[1];
       botOptions.btcInfo=priceSol[0];
