@@ -29,6 +29,8 @@ cron.schedule('*\/10 * * * * *', heartbeat);
 */
 cron.schedule('30 3 * * *', async () => {
     console.log('🛡️  good night')
+    let msg = '🛌 Buonanotte! Il bot si sta addormentando...';
+    sendMessageToClient('event', msg);
     jobBotHealth.stop();
     botOptions.botSleep=true
     closeWebSocket();
@@ -38,6 +40,8 @@ cron.schedule('30 3 * * *', async () => {
 
 cron.schedule('0 6 * * *', async () => {
     console.log('🛡️  good day')
+    let msg = '🌅 Buongiorno! Il bot si sta svegliando...';
+    sendMessageToClient('event', msg);
     jobBotHealth.start();
     botOptions.botSleep=false;
     connect();
