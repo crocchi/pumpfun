@@ -111,6 +111,25 @@ setInterval(() => {
 }, 2000);
 
 let contStats = 0;
+let strategy=[
+        'Bonk Strategy',
+        'BuyHigh Token',
+        'Indirizzo contratto trovato nella pagina',
+        'Trovato contratto sulla pagina Twitter',
+        'ChatGpt Token',
+        '💀 Sell Off Panic triggered',
+        'Trend Token!'
+    ];
+
+    let strategyy=[
+        {strategy:'Bonk Strategy',cont:0},
+        {strategy:'BuyHigh Token',cont:0},
+        {strategy:'Indirizzo contratto trovato nella pagina',cont:0},
+        {strategy:'Trovato contratto sulla pagina Twitter',cont:0},
+        {strategy:'ChatGpt Token',cont:0},
+        {strategy:'💀 Sell Off Panic triggered',cont:0},
+        {strategy:'Trend Token!',cont:0}
+    ];
 
 setInterval(async () => {
     let data = {
@@ -123,7 +142,9 @@ setInterval(async () => {
     let totLose = 0;
     let objj;
     let totPercent = 0;
-    
+
+
+    //STRATEGY instance.strategy
     dataStats.forEach((instance, key) => {
         if (instance.length === 0) return;
         //aggiungi cont token
@@ -136,6 +157,12 @@ setInterval(async () => {
             totPercent = parseFloat(totPercent) + parseFloat(instance[1]['gainPercent']);
             totToken++;
             objj=instance;
+            strategyy.forEach((stratObj) => {
+                if (instance[0].strategy.includes(stratObj.strategy)) {
+                   // instance.strategy = stratObj.strategy;
+                    stratObj.cont++;
+                }
+            });
         }
         //
     })
@@ -147,7 +174,8 @@ setInterval(async () => {
         stats: objj,
         pumpToken: botOptions.pumpToken,
         bonkToken: botOptions.bonkToken,
-        otherToken: botOptions.otherToken
+        otherToken: botOptions.otherToken,
+        strategyCount: strategyy
     };
 if(contStats < totToken){
     contStats=totToken;

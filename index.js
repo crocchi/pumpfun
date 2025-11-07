@@ -973,7 +973,7 @@ pool: 'pump'
             //vendi se supera 70 secondi dal primo acquisto e > 20% di guadagno
 
 
-            if (tradeInfo.price > tradeInfo.buyPrice * 1.2 && tokenLog.monitor.lifeTokenSec > 85) {
+            if (tradeInfo.price > tradeInfo.buyPrice * 1.2 && tokenLog.monitor.lifeTokenSec > 120) {
               //sellToken(trade);
               tokenLog.sellToken(trade)
               StatsMonitor.updateToken(trade, tradeInfo.price, '🚀 100sec away triggered');
