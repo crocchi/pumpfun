@@ -122,13 +122,13 @@ let strategy=[
     ];
 
     let strategyy=[
-        {strategy:'Bonk Strategy',cont:0},
-        {strategy:'BuyHigh Token',cont:0},
-        {strategy:'Indirizzo contratto trovato nella pagina',cont:0},
-        {strategy:'Trovato contratto sulla pagina Twitter',cont:0},
-        {strategy:'ChatGpt Token',cont:0},
-        {strategy:'💀 Sell Off Panic triggered',cont:0},
-        {strategy:'Trend Token!',cont:0}
+        {strategy:'Bonk Strategy',cont:0,win:0,lose:0},
+        {strategy:'BuyHigh Token',cont:0,win:0,lose:0},
+        {strategy:'Indirizzo contratto trovato nella pagina',cont:0,win:0,lose:0},
+        {strategy:'Trovato contratto sulla pagina Twitter',cont:0,win:0,lose:0},
+        {strategy:'ChatGpt Token',cont:0,win:0,lose:0},
+        {strategy:'💀 Sell Off Panic triggered',cont:0,win:0,lose:0},
+        {strategy:'Trend Token!',cont:0,win:0,lose:0}
     ];
 
 setInterval(async () => {
@@ -152,8 +152,13 @@ setInterval(async () => {
         //controlla se è vincente o perdente
 
         if (instance.length > 1) {
-            if (instance[1]['winner']) totWin++;
-            else totLose++;
+            let winOrLose = false;
+            if (instance[1]['winner']) {
+                totWin++;
+                winOrLose = true;
+            } else {
+                totLose++;
+            }
             totPercent = parseFloat(totPercent) + parseFloat(instance[1]['gainPercent']);
             totToken++;
             objj=instance;
@@ -161,6 +166,11 @@ setInterval(async () => {
                 if (instance[0].strategy.includes(stratObj.strategy)) {
                    // instance.strategy = stratObj.strategy;
                     stratObj.cont++;
+                    if (winOrLose) {
+                        stratObj.win++;
+                    } else {
+                        stratObj.lose++;
+                    }
                 }
             });
         }
