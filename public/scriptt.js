@@ -515,6 +515,7 @@ socket.on('stats', (data) => {
   document.getElementById('pumpToken').textContent = `Pump: ${data.pumpToken}`;
   document.getElementById('bonkToken').textContent = `Bonk: ${data.bonkToken}`;
   document.getElementById('otherToken').textContent = `Other: ${data.otherToken}`;
+  document.getElementById('solpriceup').textContent = `SOL:$${data.solpriceup} 1h[${data.percent_change_1h}%] 24h[${data.percent_change_24h}%]`;
 })
 
 		socket.on('notifyMe', (data) => {

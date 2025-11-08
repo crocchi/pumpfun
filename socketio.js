@@ -209,7 +209,10 @@ setInterval(async () => {
         pumpToken: botOptions.pumpToken,
         bonkToken: botOptions.bonkToken,
         otherToken: botOptions.otherToken,
-        strategyCount: strategyy
+        strategyCount: strategyy,
+        solpriceup: botOptions.solanaInfo.price,
+        percent_change_1h: botOptions.solanaInfo.percent_change_1h,
+        percent_change_24h: botOptions.solanaInfo.percent_change_24h,
     };
  sendMessageToClient('stats', dataToSend);
 }, 120000)
