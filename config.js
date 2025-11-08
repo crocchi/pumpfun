@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import axios from 'axios';
-import { getQuote } from './utility/coinMarketCap.js';
+import { getQuote, getFearAndGreed } from './utility/coinMarketCap.js';
 
 export const MORALIS_API_KEY= process.env.MORALIS_API_KEY;
 export const RPC_URL_SOLANA = process.env.RPC_URL_SOLANA;
@@ -106,6 +106,7 @@ export let SOLANA_USD = 200;
     //
     SOLANA_USD:200,
     solanaInfo:{},
+    fearAndGreed:0,
     btcInfo:{},
     botWallet:'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG',
     botCash:2,
@@ -124,6 +125,16 @@ export let SOLANA_USD = 200;
       botOptions.solanaInfo=priceSol[1];
       botOptions.btcInfo=priceSol[0];
       console.log(`📈 Prezzo SOL aggiornato: $${SOLANA_USD} 1h(${priceSol[0].percent_change_1h}%)`);
+
+      getFearAndGreed().then(fngData => {
+        if (fngData) {
+          console.log(`📊 Indice Fear and Greed: ${fngData.value} (${fngData.value_classification}) - Ultimo aggiornamento: ${fngData.last_updated}`);
+          botOptions.fearAndGreed=fngData.value;
+        }
+      }).catch(err => {
+        console.error("Errore nel recupero dell'indice Fear and Greed:", err);
+      });
+
       return SOLANA_USD
   }
 

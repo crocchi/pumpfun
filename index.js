@@ -248,6 +248,9 @@ const onMessage = async (data) => {
         monitor.infoSnipe = safer.fastReason;
         monitor.quickSell = safer.fastReason;
         monitor.infoSniper = safer.fastBuy;
+        getTokenInfoJupiter(token.mint).then(info => {
+          monitor.tokenInfoJupiter = info;
+        });
         sendMessageToClient('event', msg);
         //  botOptions.demoVersion = false;
 

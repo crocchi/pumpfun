@@ -106,12 +106,54 @@ async function getQuote(symbols = ["BTC", "ETH","SOL"], convert = "USD") {
 })();
 */
 
-export { getTop10Tokens , getQuote};
 
+const getFearAndGreed = async () => {
+  const URL = "https://pro-api.coinmarketcap.com/v3/fear-and-greed/latest";
 
+  try {
+    const response = await axios.get(URL, {
+      headers: {
+        "X-CMC_PRO_API_KEY": CMC_API_KEY,
+      },
+    });
 
+    if (response && response.data && response.data.data) {
+      const { value, value_classification, update_time } = response.data.data;
+      return {
+        value,
+        value_classification,
+        update_time,
+      };
+    } else {
+      console.log("No data available for Fear and Greed Index");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching Fear and Greed Index:", error.response?.data || error.message);
+    return null;
+  }
+};
+
+export { getTop10Tokens , getQuote , getFearAndGreed};
+//https://pro-api.coinmarketcap.com/v3/fear-and-greed/latest
 
 /*
+
+{
+"data": {
+"value ": 40,
+"value_classification": "Neutral",
+"update_time": "2024-09-19T02:54:56.017Z"
+},
+"status": {
+"timestamp": "2025-11-02T02:11:49.252Z",
+"error_code": 0,
+"error_message": "",
+"elapsed": 10,
+"credit_count": 1,
+"notice": ""
+}
+}
 CoinMarketCap 100 Index Latest
 https://pro-api.coinmarketcap.com/v3/index/cmc100-latest
 {
