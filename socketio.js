@@ -212,7 +212,7 @@ setInterval(async () => {
         strategyCount: strategyy,
         solpriceup: botOptions.solanaInfo.price,
         percent_change_1h: botOptions.solanaInfo.percent_change_1h,
-        percent_change_24h: botOptions.solanaInfo.percent_change_24h,
+        percent_change_24h: botOptions.solanaInfo.percent_change_24h.toFixed(2),
     };
  sendMessageToClient('stats', dataToSend);
 }, 120000)

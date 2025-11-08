@@ -245,7 +245,8 @@ const onMessage = async (data) => {
         console.log(msg)
         monitor.fastMonitor();
         monitor.tradeMonitor = false;// disabilito il monitoraggio
-        monitor.infoSnipe = safer.fastReason
+        monitor.infoSnipe = safer.fastReason;
+        monitor.quickSell = safer.fastReason;
         monitor.infoSniper = safer.fastBuy;
         sendMessageToClient('event', msg);
         //  botOptions.demoVersion = false;
@@ -610,7 +611,7 @@ mint: quote_token_mint.pubkey.toBase58(),
               */
 
       let spikeRate = Math.abs(rate);
-      if (trend < -5 && solValueTrx > 0 && rate < -1.3 && rate > -2.0 && tradesPerMin > 25 && tradesPerMin < 65 && trxNumm < 100) {
+      if (pump && trend < -5 && solValueTrx > 0 && rate < -1.3 && rate > -2.0 && tradesPerMin > 25 && tradesPerMin < 65 && trxNumm < 100) {
         let msg = (`🤖🤖ChatGpt Token!🤖🤖 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
