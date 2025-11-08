@@ -109,7 +109,6 @@ setInterval(() => {
 
 
 }, 2000);
-
 let contStats = 0;
 let totToken = 0;
 let totWin = 0;
@@ -133,8 +132,9 @@ setInterval(async () => {
     }
     sendMessageToClient('wallet', data)//`NumTrx:${instance.solTrxNumMonitor} Volume:${instance.volume} SOL VolumeNet:${instance.volumeNet} SOL Price:${instance.LivePrice} `);
     let dataStats = getALLTOKENS();
-    
-    if(dataStats.length > contStats) {
+    console.log(`📊 Invio statistiche al client. Totale token monitorati: ${dataStats.size} `);
+
+    if(dataStats.size > contStats) {
         totToken++
          totPercent = parseFloat(totPercent) + parseFloat(dataStats[contStats][1]['gainPercent']);
         objj=dataStats[contStats];
@@ -157,7 +157,7 @@ setInterval(async () => {
                     }
                 }
             });
-        contStats=dataStats.length
+        contStats=dataStats.size;
     }
 
     //STRATEGY instance.strategy
@@ -174,4 +174,3 @@ setInterval(async () => {
     };
  sendMessageToClient('stats', dataToSend);
 }, 120000)
-
