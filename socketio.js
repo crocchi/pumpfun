@@ -111,6 +111,11 @@ setInterval(() => {
 }, 2000);
 
 let contStats = 0;
+let totToken = 0;
+let totWin = 0;
+let totLose = 0;
+let totPercent = 0;
+let objj;
 
     let strategyy=[
         {strategy:'Bonk Strategy',cont:0,win:0,lose:0},
@@ -128,33 +133,21 @@ setInterval(async () => {
     }
     sendMessageToClient('wallet', data)//`NumTrx:${instance.solTrxNumMonitor} Volume:${instance.volume} SOL VolumeNet:${instance.volumeNet} SOL Price:${instance.LivePrice} `);
     let dataStats = getALLTOKENS();
-    let totToken = 0;
-    let totWin = 0;
-    let totLose = 0;
-    let objj;
-    let totPercent = 0;
-
-
-    //STRATEGY instance.strategy
-    dataStats.forEach((instance, key) => {
-        if (instance.length === 0) return;
-        //aggiungi cont token
-         totPercent = parseFloat(totPercent) + parseFloat(instance[1]['gainPercent']);
-            totToken++;
-            objj=instance;
-        //controlla se è vincente o perdente
-if(contStats < totToken){
-        if (instance.length > 1) {
-            let winOrLose = false;
-            if (instance[1]['winner']) {
+    
+    if(dataStats.length > contStats) {
+        totToken++
+         totPercent = parseFloat(totPercent) + parseFloat(dataStats[contStats][1]['gainPercent']);
+        objj=dataStats[contStats];
+        let winOrLose = false;
+            if (dataStats[contStats][1]['winner']) {
                 totWin++;
                 winOrLose = true;
             } else {
                 totLose++;
             }
-           
-            strategyy.forEach((stratObj) => {
-                if (instance[0].strategy.includes(stratObj.strategy)) {
+
+        strategyy.forEach((stratObj) => {
+                if (dataStats[contStats].strategy.includes(stratObj.strategy)) {
                    // instance.strategy = stratObj.strategy;
                     stratObj.cont++;
                     if (winOrLose) {
@@ -164,10 +157,10 @@ if(contStats < totToken){
                     }
                 }
             });
-        }
-        //
+        contStats=dataStats.length
     }
-    })
+
+    //STRATEGY instance.strategy
     const dataToSend = {
         totalTokens: totToken,
         totalWins: totWin,
@@ -179,10 +172,6 @@ if(contStats < totToken){
         otherToken: botOptions.otherToken,
         strategyCount: strategyy
     };
-if(contStats < totToken){
-    contStats=totToken;
-    sendMessageToClient('stats', dataToSend);
-}
  sendMessageToClient('stats', dataToSend);
 }, 120000)
 
