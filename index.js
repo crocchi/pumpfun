@@ -361,7 +361,7 @@ mint: quote_token_mint.pubkey.toBase58(),
 
       botOptions.botCash = (botOptions.botCash - botOptions.buyAmount) - 0.001;//dp fee + slippage+extra
 
-      let strateg = safer?.fastReason || monitor.infoSnipe;
+      let strateg = safer?.fastReason || monitor?.quickSell || monitor.infoSnipe;
       let startStats = new StatsMonitor(token);
       startStats.initToken(token, strateg, priceBuy);
 
