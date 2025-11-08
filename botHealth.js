@@ -62,7 +62,7 @@ export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
   console.log(`📈 Prezzo SOL aggiornato: $${sol} 1h(${sol_1h}%)`);
 
   //sol_1h= -1.57 btc_1h= -0.65
-  if(btc_1h < -1.1 && botOptions.botSleep===false){
+  if(btc_1h < -1.1 && botOptions.botSleep===false && !btc){
     btc=true;
     botOptions.botSleep=true;
     let msg=(`⚠️  Attenzione: BTC in calo oltre il 1% nell\'ultima ora. 
@@ -81,7 +81,7 @@ export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
    connect();
    return
 }
-  if(sol_1h < -1 && botOptions.botSleep===false){
+  if(sol_1h < -1 && botOptions.botSleep===false && !sol){
     botOptions.botSleep=true;
     sol=true;
     let msg=(`⚠️  Attenzione: SOL in calo oltre il 1% nell\'ultima ora. 
