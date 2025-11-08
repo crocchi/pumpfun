@@ -132,11 +132,48 @@ setInterval(async () => {
     }
     sendMessageToClient('wallet', data)//`NumTrx:${instance.solTrxNumMonitor} Volume:${instance.volume} SOL VolumeNet:${instance.volumeNet} SOL Price:${instance.LivePrice} `);
     let dataStats = getALLTOKENS();
-    console.log(`📊 Invio statistiche al client. Totale token monitorati: ${dataStats.size} `);
+   // console.log(`📊 Invio statistiche al client. Totale token monitorati: ${dataStats.size} `);
 
+
+    if (dataStats.size > contStats) {
+    let index = 0;
+    // Scorri la mappa per trovare l'elemento ,senza ridoppiarlo
+    // all'indice contStats
+    for (const [key, value] of dataStats) {
+        if (index === contStats) {
+            totToken++;
+            totPercent = parseFloat(totPercent) + parseFloat(value[value.length - 1]['gainPercent']);
+            objj = value[value.length - 1];
+            let winOrLose = false;
+
+            if (value[value.length - 1]['winner']) {
+                totWin++;
+                winOrLose = true;
+            } else {
+                totLose++;
+            }
+
+            strategyy.forEach((stratObj) => {
+                if (value[value.length - 1].strategySold.includes(stratObj.strategy)) {
+                    stratObj.cont++;
+                    if (winOrLose) {
+                        stratObj.win++;
+                    } else {
+                        stratObj.lose++;
+                    }
+                }
+            });
+
+           // break; // Esci dal ciclo dopo aver trovato l'elemento
+        }
+        index++;
+    }
+    contStats = dataStats.size;
+}
+    /*
     if(dataStats.size > contStats) {
         totToken++
-         totPercent = parseFloat(totPercent) + parseFloat(dataStats[contStats][1]['gainPercent']);
+        totPercent = parseFloat(totPercent) + parseFloat(dataStats[contStats][1]['gainPercent']);
         objj=dataStats[contStats];
         let winOrLose = false;
             if (dataStats[contStats][1]['winner']) {
@@ -158,7 +195,7 @@ setInterval(async () => {
                 }
             });
         contStats=dataStats.size;
-    }
+    }*/
 
     //STRATEGY instance.strategy
     const dataToSend = {
