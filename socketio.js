@@ -141,12 +141,13 @@ setInterval(async () => {
     // all'indice contStats
     for (const [key, value] of dataStats) {
         if (index === contStats) {
+            console.log(value); // Questo è l'elemento che stai cercando
             totToken++;
-            totPercent = parseFloat(totPercent) + parseFloat(value[value.length - 1]['gainPercent']);
-            objj = value[value.length - 1];
+            totPercent = parseFloat(totPercent) + parseFloat(value[1]['gainPercent']);
+            objj = value;
             let winOrLose = false;
 
-            if (value[value.length - 1]['winner']) {
+            if (value[1]['winner']) {
                 totWin++;
                 winOrLose = true;
             } else {
@@ -154,7 +155,7 @@ setInterval(async () => {
             }
 
             strategyy.forEach((stratObj) => {
-                if (value[value.length - 1].strategySold.includes(stratObj.strategy)) {
+                if (value[0].strategySold.includes(stratObj.strategy)) {
                     stratObj.cont++;
                     if (winOrLose) {
                         stratObj.win++;
