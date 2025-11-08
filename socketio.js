@@ -155,7 +155,7 @@ setInterval(async () => {
             }
 
             strategyy.forEach((stratObj) => {
-                if (value[0].strategySold.includes(stratObj.strategy)) {
+                if (value[0].strategy.includes(stratObj.strategy)) {
                     stratObj.cont++;
                     if (winOrLose) {
                         stratObj.win++;
