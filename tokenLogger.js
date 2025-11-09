@@ -236,7 +236,7 @@ class TokenLogger extends TokenMonitor {
         console.log(`⏰ Timer scaduto per ${this.name}. Il token non è stato venduto. Vendita automatica in corso...`);
         clearInterval(this.monitor.checkTimeToken);
         // Esegui la vendita automatica
-        sellToken(this.token.mint)
+        sellToken(this.token)
           .then((result) => {
             let ws = webSock();
             let msg = `✅ Vendita automatica completata per ${this.name}. Dettagli: ${JSON.stringify(result)}`;
@@ -258,7 +258,7 @@ class TokenLogger extends TokenMonitor {
             console.error(`❌ Errore durante la vendita automatica di ${this.name}:`, error);
           });
       }
-    }, 9 * 60 * 1000);
+    }, 6 * 60 * 1000);
   }
 }
 
