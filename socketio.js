@@ -137,13 +137,13 @@ setInterval(async () => {
 
     if (dataStats.size > contStats) {
     let index = 0;
-    let settato=true;
+    //let settato=false;
     // Scorri la mappa per trovare l'elemento ,senza ridoppiarlo
     // all'indice contStats
     for (const [key, value] of dataStats) {
-        if(value.length < 2 || value[1] === undefined){console.log('socketstat -elemento anora nn pronto-',value);settato=false;break}
+        if(value.length < 2 || value[1] === undefined){console.log('socketstat -elemento anora nn pronto-',value);break}
         if (index === contStats) {
-            console.log('socketstat'+`$${key} -`,value); // Questo è l'elemento che stai cercando
+            console.log('socketstat '+`$${key} -`,value); // Questo è l'elemento che stai cercando
             totToken++;
             totPercent = parseFloat(totPercent) + parseFloat(value[1]['gainPercent']);
             objj = value;
@@ -166,12 +166,12 @@ setInterval(async () => {
                     }
                 }
             });
-
+            contStats++;
            // break; // Esci dal ciclo dopo aver trovato l'elemento
         }
         index++;
     }
-    if(settato) contStats = dataStats.size;
+    //if(settato) contStats = dataStats.size;
 }
     /*
     if(dataStats.size > contStats) {
