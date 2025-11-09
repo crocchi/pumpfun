@@ -142,7 +142,7 @@ setInterval(async () => {
     for (const [key, value] of dataStats) {
         if(value[1] === null){console.log('socketstat -elemento anora nn pronto-',value);return}
         if (index === contStats) {
-            console.log('socketstat',value); // Questo è l'elemento che stai cercando
+            console.log('socketstat'+`$${key} -`,value); // Questo è l'elemento che stai cercando
             totToken++;
             totPercent = parseFloat(totPercent) + parseFloat(value[1]['gainPercent']);
             objj = value;
