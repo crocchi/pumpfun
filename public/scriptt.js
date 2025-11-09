@@ -19,7 +19,8 @@ async function showObject(mint) {
     // Crea il contenuto HTML per la nuova pagina
     const htmlContent = `
       <!DOCTYPE html>
-      <html lang="en">
+      <html lang="it">
+      <title>${txs.token.name || 'Dettagli Oggetto'}</title>
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,9 +58,11 @@ async function showObject(mint) {
           <tbody>
             ${Object.entries(txs).map(([key, value]) => `
               <tr>
+                
                 <td>${key}</td>
-                <td>${JSON.stringify(value, null, 2)}</td>
-              </tr>
+                <td>${key === 'trxArray' ? '</td>' : `${JSON.stringify(value, null, 2)}</td>`}
+               
+                </tr>
             `).join('')}
           </tbody>
         </table>
