@@ -976,17 +976,16 @@ pool: 'pump'
 
             //vendi se supera 70 secondi dal primo acquisto e > 20% di guadagno
 
-
-            if (tradeInfo.price > tradeInfo.buyPrice * 1.2 && tokenLog.monitor.lifeTokenSec > 120) {
+/*
+            if (tradeInfo.price > tradeInfo.buyPrice * 1.5 && tokenLog.monitor.lifeTokenSec > 120) {
               //sellToken(trade);
               tokenLog.sellToken(trade)
               StatsMonitor.updateToken(trade, tradeInfo.price, '🚀 100sec away triggered');
               console.log(`🚀 100sec away triggered 📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
               sendMessageToClient('event', `📊 vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price} 🚀 100sec away triggered`)
-
               return
-
             }
+              */
 
             if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * prezzoVendita && tradeInfo.trxNum > botOptions.quickSellMinTrades && tokenLog.volatility < 400) {
               //sellToken(trade);

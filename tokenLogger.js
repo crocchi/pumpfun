@@ -4,6 +4,7 @@ import { buyToken, sellToken } from './utility/lightTrx.js';
 import { webSock, subscribedTokens } from "./index.js";
 import { getHour } from './utility/time.js';
 import { sendMessageToClient } from './socketio.js';
+import StatsMonitor from './utility/statsMonitor.js';
 
 
 class TokenLogger extends TokenMonitor {
@@ -244,6 +245,7 @@ class TokenLogger extends TokenMonitor {
             this.sellPrice = this.LivePrice;
             this.infoSniper = `Venduto automaticamente dopo 30 minuti a ${new Date().toLocaleTimeString()}`;
             botOptions.botCash = (botOptions.botCash + this.tokenAmount);
+            StatsMonitor.updateToken(this.token, this.sellPrice, this.monitor.quickSell + ' -- ' + this.infoSniper);
             ws.send(JSON.stringify({
               method: "unsubscribeTokenTrade",
               keys: [this.token.mint]
@@ -253,7 +255,7 @@ class TokenLogger extends TokenMonitor {
             console.error(`❌ Errore durante la vendita automatica di ${this.name}:`, error);
           });
       }
-    }, 8 * 60 * 1000);
+    }, 9 * 60 * 1000);
   }
 }
 
