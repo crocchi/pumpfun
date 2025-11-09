@@ -27,7 +27,7 @@ cron.schedule('*\/10 * * * * *', heartbeat);
 │ │ │ │ │ │
 * * * * * *
 */
-cron.schedule('30 3 * * *', async () => {
+cron.schedule('29 3 * * *', async () => {
     console.log('🛡️  good night')
     let msg = '🛌 Buonanotte! Il bot si sta addormentando...';
     sendMessageToClient('event', msg);
@@ -50,8 +50,8 @@ cron.schedule('30 6 * * *', async () => {
     timezone: 'Europe/Rome'
 });
 
-let btc=false;
-let sol=false;
+let btc_activity=false;
+let sol_activity=false;
 export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
   console.log('🛡️ JobBotHealth Check Price Status 15m...');
   let btc=botOptions.btcInfo.price || 0;
@@ -62,8 +62,8 @@ export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
   console.log(`📈 Prezzo SOL aggiornato: $${sol} 1h(${sol_1h}%)`);
 
   //sol_1h= -1.57 btc_1h= -0.65
-  if(btc_1h < -1.1 && botOptions.botSleep===false && !btc){
-    btc=true;
+  if(btc_1h < -1.1 && botOptions.botSleep===false && !btc_activity){
+    btc_activity=true;
     botOptions.botSleep=true;
     let msg=(`⚠️  Attenzione: BTC in calo oltre il 1% nell\'ultima ora. 
        prezzo: $${btc} 1h($${btc_1h}) Considera di sospendere le operazioni di trading.`);
@@ -72,18 +72,18 @@ export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
     closeWebSocket();
     return
  }
- if(btc_1h >= -1 && botOptions.botSleep===true && btc){
+ if(btc_1h >= -1 && botOptions.botSleep===true && btc_activity){
    botOptions.botSleep=false;
-   btc=false;
+   btc_activity=false;
    let msg=(`✅ BTC stabile. Prezzo: $${btc} 1h($${btc_1h}). Il bot continua le operazioni di trading.`);
    sendMessageToClient('event', msg);
    console.log(msg);
    connect();
    return
 }
-  if(sol_1h < -1 && botOptions.botSleep===false && !sol){
+  if(sol_1h < -1 && botOptions.botSleep===false && !sol_activity){
     botOptions.botSleep=true;
-    sol=true;
+    sol_activity=true;
     let msg=(`⚠️  Attenzione: SOL in calo oltre il 1% nell\'ultima ora. 
        prezzo: $${sol} 1h($${sol_1h}) Considera di sospendere le operazioni di trading.`);
     sendMessageToClient('event', msg);
@@ -91,9 +91,9 @@ export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
     closeWebSocket();
     return
   }
-  if(sol_1h >= -1 && botOptions.botSleep===true && sol){
+  if(sol_1h >= -1 && botOptions.botSleep===true && sol_activity){
     botOptions.botSleep=false;
-    sol=false;
+    sol_activity=false;
     let msg=(`✅ SOL stabile. Prezzo: $${sol} 1h($${sol_1h}). Il bot continua le operazioni di trading.`);
     sendMessageToClient('event', msg);
     console.log(msg);
