@@ -172,3 +172,9 @@ ul#txList {
 .col-12.pool {
     display: grid!important;
 }
+span#solPrice {
+    display: flow;
+}
+span#solStats {
+    display: flow;;
+}

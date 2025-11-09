@@ -503,7 +503,6 @@ const socket = io();
 
 socket.on('stats', (data) => {
  console.log('📊 Statistiche aggiornate:', data);
-
     //aggiorna interfaccia
   let totalWins=data.totalWins;
   document.getElementById('totWin').textContent = `Wins: ${totalWins}`;
@@ -518,7 +517,9 @@ socket.on('stats', (data) => {
   document.getElementById('pumpToken').textContent = `Pump: ${data.pumpToken}`;
   document.getElementById('bonkToken').textContent = `Bonk: ${data.bonkToken}`;
   document.getElementById('otherToken').textContent = `Other: ${data.otherToken}`;
-  document.getElementById('solpriceup').textContent = `SOL:$${data.solpriceup} 1h[${data.percent_change_1h}%] 24h[${data.percent_change_24h}%] fear&greed[${data.fearAndGreed}]`;
+  document.getElementById('solpriceup').textContent = `Fear&Greed[${data.fearAndGreed}] btc 1h[${data.btc.percent_change_1h}%] 24h[${data.btc.percent_change_24h?.toFixed(2)}%]`;
+  document.getElementById('solPrice').textContent = `Sol:$${data.solpriceup}`;
+  document.getElementById('solStats').textContent = `1h[${data.percent_change_1h}%] 24h[${data.percent_change_24h}%]`;
 })
 
 		socket.on('notifyMe', (data) => {
