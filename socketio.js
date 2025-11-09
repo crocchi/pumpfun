@@ -140,7 +140,7 @@ setInterval(async () => {
     // Scorri la mappa per trovare l'elemento ,senza ridoppiarlo
     // all'indice contStats
     for (const [key, value] of dataStats) {
-        if(value[1] === null){console.log('socketstat -elemento anora nn pronto-',value);continue}
+        if(value.length < 2 || value[1] === undefined){console.log('socketstat -elemento anora nn pronto-',value);continue}
         if (index === contStats) {
             console.log('socketstat'+`$${key} -`,value); // Questo è l'elemento che stai cercando
             totToken++;
