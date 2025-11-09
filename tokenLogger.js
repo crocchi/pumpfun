@@ -239,11 +239,14 @@ class TokenLogger extends TokenMonitor {
         sellToken(this.token.mint)
           .then((result) => {
             let ws = webSock();
-            console.log(`✅ Vendita automatica completata per ${this.name}. Dettagli:`, result);
+            let msg = `✅ Vendita automatica completata per ${this.name}. Dettagli: ${JSON.stringify(result)}`;
+            console.log(msg);
+            sendMessageToClient('event', msg);
+            subscribedTokens.delete(this.token.mint);
             this.soldOut = true; // Imposta lo stato a venduto
             this.tokenAmount = (this.tokenAmount * this.LivePrice);
             this.sellPrice = this.LivePrice;
-            this.infoSniper = `Venduto automaticamente dopo 30 minuti a ${new Date().toLocaleTimeString()}`;
+            this.infoSniper = `Venduto automaticamente dopo 9 minuti a ${new Date().toLocaleTimeString()}`;
             botOptions.botCash = (botOptions.botCash + this.tokenAmount);
             StatsMonitor.updateToken(this.token, this.sellPrice, this.monitor.quickSell + ' -- ' + this.infoSniper);
             ws.send(JSON.stringify({

@@ -428,7 +428,12 @@ mint: quote_token_mint.pubkey.toBase58(),
       if (instances.size > 10) { // Limite di istanze TokenMonitor
         const lastMint = [...instances.keys()].shift()
         instances.delete(lastMint);
-        console.log(`🗑️ Rimossa l'ultima istanza per il token ${lastMint} (limite superato).`);
+      //  console.log(`🗑️ Rimossa l'ultima istanza per il token ${lastMint} (limite superato).`);
+      }
+      if (instancesToken.size > 50) { // Limite di istanze TokenLogger
+        const lastMint = [...instancesToken.keys()].shift()
+        instancesToken.delete(lastMint);
+      //  console.log(`🗑️ Rimossa l'ultima istanza per il token ${lastMint} (limite superato).`);
       }
 
 

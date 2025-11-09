@@ -75,7 +75,7 @@ class TokenMonitor {
 
       setTimeout(() => {
         clearInterval(this.checkTimeToken);
-      }, 7 * 60 * 1000);
+      }, 10 * 60 * 1000);
       // 8 * 60 * 1000
 
   }
