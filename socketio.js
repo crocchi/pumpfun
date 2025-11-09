@@ -123,7 +123,8 @@ let objj;
         {strategy:'pagina Twitter',cont:0,win:0,lose:0},
         {strategy:'ChatGpt Token',cont:0,win:0,lose:0},
         {strategy:'💀 Sell Off Panic triggered',cont:0,win:0,lose:0},
-        {strategy:'Trend Token!',cont:0,win:0,lose:0}
+        {strategy:'Trend Token!',cont:0,win:0,lose:0},
+        {strategy:'Monitor Token',cont:0,win:0,lose:0},
     ];
 
 setInterval(async () => {
