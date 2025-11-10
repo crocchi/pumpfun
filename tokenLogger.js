@@ -246,7 +246,7 @@ class TokenLogger extends TokenMonitor {
             this.soldOut = true; // Imposta lo stato a venduto
             this.tokenAmount = (this.tokenAmount * this.LivePrice);
             this.sellPrice = this.LivePrice;
-            this.infoSniper = `Venduto automaticamente dopo 9 minuti a ${new Date().toLocaleTimeString()}`;
+            this.infoSniper = `Venduto automaticamente dopo 6 minuti a ${new Date().toLocaleTimeString()}`;
             botOptions.botCash = (botOptions.botCash + this.tokenAmount);
             StatsMonitor.updateToken(this.token, this.sellPrice, this.monitor.quickSell + ' -- ' + this.infoSniper);
             ws.send(JSON.stringify({
