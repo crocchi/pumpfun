@@ -564,7 +564,7 @@ mint: quote_token_mint.pubkey.toBase58(),
         return
       }
 
-      if (bonk && volatility > 110 && prezzo > botOptions.bonkMinPrice && prezzo < botOptions.bonkMaxPrice && trend < -15) {
+      if (bonk && volatility > 110 && prezzo > botOptions.bonkMinPrice && prezzo < botOptions.bonkMaxPrice && trend < -15 && lifeTokenSec >15 && trxNumm > 15) {
         let msg = (`🎁🎁 Bonk Strategy! 🎁🎁 [${tokenMonitor.token.name}] ` + infoTrade);
         //] LiqRate{[-0.64],Speed[-0.7]} Trade Velocity{1s[2.6] 10s[7.7] 30s[77.0]}
         //rate, speed, tokenMonitor.tradesPerSec
@@ -992,7 +992,7 @@ pool: 'pump'
             }
               */
 
-            if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * prezzoVendita && tradeInfo.trxNum > botOptions.quickSellMinTrades && tokenLog.volatility < 400) {
+            if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * prezzoVendita && tradeInfo.trxNum > botOptions.quickSellMinTrades && tokenLog.volatility < 600 || tradeInfo.price > tradeInfo.buyPrice * 10) {
               //sellToken(trade);
               tokenLog.sellToken(trade)
               StatsMonitor.updateToken(trade, tradeInfo.price, '🚀 Quick Sell triggered');

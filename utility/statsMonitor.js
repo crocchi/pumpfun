@@ -2,6 +2,8 @@
 // Monitora in tempo reale Liquidity Change Rate (LCR) + Trade Velocity (TV)
 // Dati compatibili con Pump.fun (vSolInBondingCurve)
 
+import { sendMessageToClient } from "../socketio";
+
 
 const ALLTOKENS = new Map();
 
@@ -36,6 +38,9 @@ export default class StatsMonitor {
             const existingData = ALLTOKENS.get(tokenData.mint);
             //calcola la percentuale di guadagno
             const lastBuy = existingData[existingData.length - 1];
+            let msg=(`🔄 stats ${tokenData.name} - Prezzo Vendita: ${priceSold} - Prezzo Acquisto: ${lastBuy.buyPrice}`);
+            console.log(msg);
+            sendMessageToClient('event', msg);
             const gainPercent = ((priceSold - lastBuy.buyPrice) / lastBuy.buyPrice) * 100;
             existingData.push(
                 {
