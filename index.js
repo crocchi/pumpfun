@@ -196,7 +196,7 @@ export function connect() {
 
 
 const onMessage = async (data) => {
-  //console.log(JSON.parse(data));
+  if (parsed.txType !== 'buy' && parsed.txType !== 'create') console.log(JSON.parse(data));
   lastMessageTimeSet()
   if (!data) return
   try {
