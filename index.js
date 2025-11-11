@@ -196,15 +196,15 @@ export function connect() {
 
 
 const onMessage = async (data) => {
-  if (parsed.txType !== 'buy' && parsed.txType !== 'create') console.log(JSON.parse(data));
-  lastMessageTimeSet()
+ lastMessageTimeSet()
   if (!data) return
   try {
     const parsed = JSON.parse(data);
     //console.log(parsed);
     const token = parsed;
     let prezzo;
-
+ if (parsed.txType !== 'buy' && parsed.txType !== 'create') console.log('migration event:',parsed);
+  
     const liquidityCheck = async (tok) => {
       // if(!tok) {tok=token}else {token=tok}
       //CONTROLLO PREZZO QUANDO NN CE LIQUIDITà 
