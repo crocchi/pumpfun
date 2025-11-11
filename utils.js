@@ -296,8 +296,8 @@ if(blacklist.length >= 100){ blacklist.shift() }
       if(botOptions.hasWeb_filter){ safeProblem.push(websiteCheck.finpage.reason);}
       console.log("❌ Contratto token Non trovato nella pagina: ", websiteCheck.finpage.reason);
      } else if(websiteCheck.finpage.found){
-        let msg=(' ✅ Indirizzo contratto trovato nella pagina...')
-        console.log(msg)
+        let msg=(`✅ Indirizzo contratto trovato nella pagina: ${websiteCheck.finpage.src}`)
+        console.log(msg);
     safeProblem=[];
     return {
       safeProblem,

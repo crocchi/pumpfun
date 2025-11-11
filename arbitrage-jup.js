@@ -26,19 +26,30 @@ const RPC_URL = process.env.RPC_URL || "https://api.mainnet-beta.solana.com";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || null; // JSON array of secretKey bytes
 const USER_PUBLIC_KEY = process.env.USER_PUBLIC_KEY || null;
 const AMOUNT_LAMPORTS = Number(process.env.AMOUNT_LAMPORTS || 0.1 * 1e9); // default 0.1 SOL
-const MIN_PROFIT_PCT = Number(process.env.MIN_PROFIT_PCT || 0.3); // 0.3%
-const SLIPPAGE_BPS = Number(process.env.SLIPPAGE_BPS || 50);
-const RATE_DELAY_MS = Number(process.env.RATE_DELAY_MS || 1000); // 1 request/sec throttle
-const CACHE_TTL_MS = Number(process.env.CACHE_TTL_MS || 3000); // cache TTL for quote/instr
+const MIN_PROFIT_PCT = Number(0.3); // 0.3%
+const SLIPPAGE_BPS = Number(50);
+const RATE_DELAY_MS = Number(1000); // 1 request/sec throttle
+const CACHE_TTL_MS = Number(3000); // cache TTL for quote/instr
 
 // Example token set (customize)
 const TOKENS = {
   SOL: "So11111111111111111111111111111111111111112",
   USDC: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-  USDT: "Es9vMFrzaCERZ6M6Xb4Rcs2M3e6L5x5n3v3FqzYfAkBj",
-  BONK: "DezXzjvE55Sda3EaG8hJZz37Q5XrQpJrRgnT1rcwxrMi",
-  WIF:  "Wif6Pr9PHTbqZmSW7tqPbQ2zdmznz3kY2oJz2ZPWwAD",
+  USDT: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+  BONK:"DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+  JUP: "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
+  TRUMP: "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
+  PUMP: "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
+  WFLI:"WLFinEv6ypjkczcS83FZqFpgFZYwQXutRbxGe7oC16g"
 };
+const TOKENS_JUP={
+    MET: "METvsvVRapdj9cFLzq4Tr43xK4tAjQfwX76z3n6mWQL",
+    META: "METAwkXcqyXKy1AtsSgJ8JiUHwGCafnZL38n3vYmeta",
+    AVICI:"BANKJmvhT8tiJRsBSS1n2HryMBPvT5Ze4HU95DUAmeta",
+    POPCAT:"7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+    UMBRA:"PRVT6TB7uss3FrUd2D9xs2zqDBsa3GbMJMwCQsgmeta",
+    USCR:"USCRdwZP5UkKhJzhWuD7XjTUviHBtZJbLG7XpbKng9S"
+}
 
 // Jupiter endpoints (v6)
 const JUP_QUOTE = "https://quote-api.jup.ag/v6/quote";
