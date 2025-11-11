@@ -991,8 +991,11 @@ pool: 'pump'
               return
             }
               */
+             //vendi se supera la soglia di volatilità alta o bassa
+             let sellVolatityThreshold = tokenLog.volatility < 600 || tokenLog.volatility > 2000;
+           
 
-            if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * prezzoVendita && tradeInfo.trxNum > botOptions.quickSellMinTrades && tokenLog.volatility < 600 || tradeInfo.price > tradeInfo.buyPrice * 10) {
+            if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * prezzoVendita && tradeInfo.trxNum > botOptions.quickSellMinTrades && sellVolatityThreshold || tradeInfo.price > tradeInfo.buyPrice * 7) {
               //sellToken(trade);
               tokenLog.sellToken(trade)
               StatsMonitor.updateToken(trade, tradeInfo.price, '🚀 Quick Sell triggered');
