@@ -2,7 +2,7 @@
 // Monitora in tempo reale Liquidity Change Rate (LCR) + Trade Velocity (TV)
 // Dati compatibili con Pump.fun (vSolInBondingCurve)
 
-import { sendMessageToClient } from "../socketio";
+import { sendMessageToClient } from "../socketio.js";
 
 
 const ALLTOKENS = new Map();
