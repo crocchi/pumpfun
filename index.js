@@ -676,6 +676,7 @@ token.score =
         sendMessageToClient('event', msg)
         tokenMonitor.quickBuy = prezzo;
         tokenMonitor.quickSell = msg;
+        tokenMonitor.sellPercentTrailing = 40;
         getTokenInfoJupiter(tokenMonitor.token.mint).then(info => {
           //sendMessageToClient('logger', info)
           tokenMonitor.infoJupiter = info;
@@ -992,7 +993,7 @@ pool: 'pump'
             }
               */
              //vendi se supera la soglia di volatilità alta o bassa
-             let sellVolatityThreshold = tokenLog.volatility < 600 || tokenLog.volatility > 2000;
+             let sellVolatityThreshold = tokenLog.volatility < 600 || tokenLog.volatility > 2500;
            
 
             if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * prezzoVendita && tradeInfo.trxNum > botOptions.quickSellMinTrades && sellVolatityThreshold || tradeInfo.price > tradeInfo.buyPrice * 7) {
