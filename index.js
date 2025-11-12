@@ -238,7 +238,9 @@ const onMessage = async (data) => {
         console.log('--------------------------------------------')
         return
 
-      }
+      } 
+      appendToFile(`Monitoraggio per il token ${token.name}`, { safer });
+        
       //      botOptions.demoVersion = true;
       const monitor = getInstanceForTokenMonitor(token)
       monitor.orario()
@@ -259,7 +261,7 @@ const onMessage = async (data) => {
         //monitor.
       } else {      //modalità monitoraggio   
         let devbott = await monitor.startMonitor();
-        if (!devbott) {
+       if (!devbott) {
           console.log(`✅ Token '${parsed.name}' non sicuro e monitorato per vendite sospette.`);
           return;
         }

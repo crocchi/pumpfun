@@ -27,7 +27,11 @@ cron.schedule('*\/10 * * * * *', heartbeat);
 │ │ │ │ │ │
 * * * * * *
 */
-cron.schedule('29 3 * * *', async () => {
+
+let timerOn='29 4 * * *'; //ogni giorno alle 3:29
+let timerOff='00 6 * * *'; //ogni giorno alle 6:30
+
+cron.schedule(timerOn, async () => {
     console.log('🛡️  good night')
     let msg = '🛌 Buonanotte! Il bot si sta addormentando...';
     sendMessageToClient('event', msg);
@@ -38,7 +42,7 @@ cron.schedule('29 3 * * *', async () => {
     timezone: 'Europe/Rome'
 });
 
-cron.schedule('30 6 * * *', async () => {
+cron.schedule(timerOff, async () => {
     console.log('🛡️  good day')
     let msg = '🌅 Buongiorno! Il bot si sta svegliando...';
     sendMessageToClient('event', msg);
@@ -49,6 +53,7 @@ cron.schedule('30 6 * * *', async () => {
     }, { 
     timezone: 'Europe/Rome'
 });
+
 
 let btc_activity=false;
 let sol_activity=false;
