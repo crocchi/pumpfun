@@ -8,7 +8,7 @@ import { onError, onClose, onOpen, lastMessageTimeSet, startTimeout } from "./we
 import { parseTrx } from './utility/anchor/solana-transaction-parser.js';
 import { getTokenPriceJupiter, getTokenInfoJupiter } from './utility/apiJupiter.js';
 import StatsMonitor from './utility/statsMonitor.js';
-import {waitMe} from './toolss.js;
+import { waitMe } from './tools.js';
 
 import { startHttpServer, logToken, updateToken, buyTokenLog, updateBuyPrice } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions,LIGHT_WALLET_API } from './config.js';
@@ -253,12 +253,12 @@ const onMessage = async (data) => {
         monitor.infoSnipe = safer.fastReason;
         monitor.quickSell = safer.fastReason;
         monitor.infoSniper = safer.fastBuy;
-        wait(3);
+        waitMe(3);
        
-        getTokenInfoJupiter(token.mint).then(info => {
-          monitor.tokenInfoJupiter = info;
-          monitor.quickSell = monitor.quickSell + `OrganicScore:${info[0].organicScore || "no"} - STATS:${info[0].stats5m || "no"} `
-        });
+        let dataJup= await getTokenInfoJupiter(token.mint)
+        monitor.tokenInfoJupiter = dataJup;
+        monitor.quickSell = monitor.quickSell + `OrganicScore:${dataJup[0].organicScore || "no"} - STATS:${dataJup[0].stats5m || "no"} `
+   
         sendMessageToClient('event', msg);
         //  botOptions.demoVersion = false;
 
