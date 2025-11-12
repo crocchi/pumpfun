@@ -253,6 +253,7 @@ const onMessage = async (data) => {
         monitor.infoSnipe = safer.fastReason;
         monitor.quickSell = safer.fastReason;
         monitor.infoSniper = safer.fastBuy;
+        wait(3)
         getTokenInfoJupiter(token.mint).then(info => {
           monitor.tokenInfoJupiter = info;
         });
