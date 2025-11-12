@@ -1,5 +1,5 @@
 // Funzione di attesa
-export function wait(seconds) {
+export function waitMe(seconds) {
   return new Promise(resolve => {
     setTimeout(resolve, seconds * 1000);
   });
