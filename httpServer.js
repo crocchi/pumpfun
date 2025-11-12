@@ -168,7 +168,7 @@ export function startHttpServer(port = 4000) {
       const html = await ejs.renderFile(templatePath, { tokens: tokenLog });
       res.writeHead(200, { 'Content-Type': 'text/html' });
       res.end(html);*/
-      const filePath = path.join(__dirname, 'logger.txt');
+      const filePath = path.join('/cro', 'logger.txt');
       if (fs.existsSync(filePath)) {
         const content = fs.readFileSync(filePath, 'utf8');
         res.writeHead(200, { 'Content-Type': 'text/plain' });
