@@ -8,7 +8,7 @@ import { onError, onClose, onOpen, lastMessageTimeSet, startTimeout } from "./we
 import { parseTrx } from './utility/anchor/solana-transaction-parser.js';
 import { getTokenPriceJupiter, getTokenInfoJupiter } from './utility/apiJupiter.js';
 import StatsMonitor from './utility/statsMonitor.js';
-import {waitMe} from './tools.js;
+import {waitMe} from './toolss.js;
 
 import { startHttpServer, logToken, updateToken, buyTokenLog, updateBuyPrice } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions,LIGHT_WALLET_API } from './config.js';
