@@ -19,7 +19,7 @@ if(object){
     content += ' \n\n' + JSON.stringify(object);
 }
 
-    const filePath = path.join(__dirname, fileName);
+    const filePath = path.join('/cro', fileName);
 
     fs.appendFile(filePath, content + '\n', (err) => {
         if (err) {
