@@ -946,9 +946,9 @@ pool: 'pump'
 
                 if (tokenLog?.monitor?.sellPercentTrailing) {
                   stopEloss = tokenLog.highPrice * (1 - (tokenLog.monitor.sellPercentTrailing / 100));// 10%
-                  let msg = (`🔻 Trailing personalizzato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} ora a ${stopEloss.toFixed(10)}, HighPrice:${tokenLog.highPrice}, Trend:${trend.toFixed(2)}`);
+                 // let msg = (`🔻 Trailing personalizzato per ${tradeInfo.name} a prezzo ${tradeInfo.price}, stop era a ${tokenLog.stop.toFixed(10)} ora a ${stopEloss.toFixed(10)}, HighPrice:${tokenLog.highPrice}, Trend:${trend.toFixed(2)}`);
                   // stopEloss = tokenLog.stop * (1 - (trend / 100));
-                  sendMessageToClient('event', msg)
+                  //sendMessageToClient('event', msg)
                 }
 
               }
