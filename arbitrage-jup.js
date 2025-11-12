@@ -10,6 +10,8 @@
  *  - Testa su devnet prima di mainnet.
  *  - Proteggi la PRIVATE_KEY (use secret manager).
  */
+import { sendMessageToClient } from "./socketio.js";
+import {JUPITER_API_KEY} from './config.js';
 
 import fetch from "node-fetch";
 import {
@@ -22,10 +24,10 @@ import {
 } from "@solana/web3.js";
 
 // ---------------- CONFIG ----------------
-const RPC_URL = process.env.RPC_URL || "https://api.mainnet-beta.solana.com";
+const RPC_URL = "https://api.mainnet-beta.solana.com";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || null; // JSON array of secretKey bytes
 const USER_PUBLIC_KEY = process.env.USER_PUBLIC_KEY || null;
-const AMOUNT_LAMPORTS = Number(process.env.AMOUNT_LAMPORTS || 0.1 * 1e9); // default 0.1 SOL
+const AMOUNT_LAMPORTS = Number(0.1 * 1e9); // default 0.1 SOL
 const MIN_PROFIT_PCT = Number(0.3); // 0.3%
 const SLIPPAGE_BPS = Number(50);
 const RATE_DELAY_MS = Number(1000); // 1 request/sec throttle
@@ -52,10 +54,11 @@ const TOKENS_JUP={
 }
 
 // Jupiter endpoints (v6)
-const JUP_QUOTE = "https://quote-api.jup.ag/v6/quote";
-const JUP_SWAP_INSTRUCTIONS = "https://quote-api.jup.ag/v6/swap-instructions";
+const JUP_QUOTE = "https://api.jup.ag/ultra/swap/v1/quote";
+const JUP_SWAP_INSTRUCTIONS = "https://api.jup.ag/ultra/swap/v1/swap-instructions";
 
 // ---------------- Init & guards ----------------
+/*
 if (!PRIVATE_KEY) {
   console.error("🔴 Set PRIVATE_KEY (JSON array) as env var before running.");
   process.exit(1);
@@ -72,6 +75,7 @@ try {
 }
 const USER_PUBKEY = USER_PUBLIC_KEY || payer.publicKey.toBase58();
 console.log("Using payer:", payer.publicKey.toBase58());
+*/
 
 // ---------------- Throttler (global) ----------------
 let lastRequestTime = 0;
@@ -212,8 +216,10 @@ async function tryAtomicTriangle(A, B, C, amountLamports = AMOUNT_LAMPORTS) {
       return { profitPct, executed: false };
     }
 
-    console.log(`Candidate triangle profit ${profitPct.toFixed(4)}% — building atomic tx...`);
+    let msg = (`Candidate triangle profit ${profitPct.toFixed(4)}% — building atomic tx...`);
 
+
+     return { profitPct, executed: true };
     // Get swap-instructions for each hop (we ask Jupiter to return instructions instead of full tx)
     const siAB = await getSwapInstructionsCached(qAB, USER_PUBKEY, true);
     const siBC = await getSwapInstructionsCached(qBC, USER_PUBKEY, true);

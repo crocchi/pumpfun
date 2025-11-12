@@ -10,6 +10,7 @@ export const DESEARCH_API = process.env.DESEARCH_API;
 export const LIGHT_WALLET_API = process.env.LIGHT_WALLET_API;
 export const CMC_API_KEY = process.env.CMC_API_KEY;
 export const BITQUERY_API= process.env.BITQUERY;
+export const JUPITER_API_KEY= process.env.JUPITER_API_KEY;
 
 export const MAX_TOKENS_SUBSCRIBED = 40;
 
