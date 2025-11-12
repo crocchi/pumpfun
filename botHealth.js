@@ -57,6 +57,8 @@ cron.schedule(timerOff, async () => {
 
 let btc_activity=false;
 let sol_activity=false;
+let btc_change_percent= -1.5; //percentuale di calo per attivare la sospensione
+let sol_change_percent= -1.5; //percentuale di calo per attivare la sospensione
 export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
   console.log('🛡️ JobBotHealth Check Price Status 15m...');
   let btc=botOptions.btcInfo.price || 0;
@@ -67,7 +69,7 @@ export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
   console.log(`📈 Prezzo SOL aggiornato: $${sol} 1h(${sol_1h}%)`);
 
   //sol_1h= -1.57 btc_1h= -0.65
-  if(btc_1h < -1.1 && botOptions.botSleep===false && !btc_activity){
+  if(btc_1h < btc_change_percent && botOptions.botSleep===false && !btc_activity){
     btc_activity=true;
     botOptions.botSleep=true;
     let msg=(`⚠️  Attenzione: BTC in calo oltre il 1% nell\'ultima ora. 
@@ -77,7 +79,7 @@ export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
     closeWebSocket();
     return
  }
- if(btc_1h >= -1 && botOptions.botSleep===true && btc_activity){
+ if(btc_1h >= btc_change_percent && botOptions.botSleep===true && btc_activity){
    botOptions.botSleep=false;
    btc_activity=false;
    let msg=(`✅ BTC stabile. Prezzo: $${btc} 1h($${btc_1h}). Il bot continua le operazioni di trading.`);
@@ -86,7 +88,7 @@ export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
    connect();
    return
 }
-  if(sol_1h < -1 && botOptions.botSleep===false && !sol_activity){
+  if(sol_1h < sol_change_percent && botOptions.botSleep===false && !sol_activity){
     botOptions.botSleep=true;
     sol_activity=true;
     let msg=(`⚠️  Attenzione: SOL in calo oltre il 1% nell\'ultima ora. 
@@ -96,7 +98,7 @@ export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
     closeWebSocket();
     return
   }
-  if(sol_1h >= -1 && botOptions.botSleep===true && sol_activity){
+  if(sol_1h >= sol_change_percent && botOptions.botSleep===true && sol_activity){
     botOptions.botSleep=false;
     sol_activity=false;
     let msg=(`✅ SOL stabile. Prezzo: $${sol} 1h($${sol_1h}). Il bot continua le operazioni di trading.`);

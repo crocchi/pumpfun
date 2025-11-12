@@ -16,7 +16,7 @@ const fileName = 'logger.txt';
  */
 export function appendToFile(content, object=false) {
 if(object){
-    content += ' \n' + JSON.stringify(object);
+    content += ' \n\n' + JSON.stringify(object);
 }
 
     const filePath = path.join(__dirname, fileName);
@@ -25,7 +25,7 @@ if(object){
         if (err) {
             console.error('Error appending to file:', err);
         } else {
-            console.log(`Content appended to "${fileName}.txt" at ${filePath}`);
+            console.log(`Content appended to "${fileName}" at ${filePath}`);
         }
     });
 }
