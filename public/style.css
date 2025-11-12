@@ -173,8 +173,8 @@ ul#txList {
     display: grid!important;
 }
 span#solPrice {
-    display: flow;
+    display: flow!important;
 }
 span#solStats {
-    display: flow;;
+    display: flow!important;
 }
