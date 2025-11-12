@@ -30,7 +30,7 @@ export const initSocket = (server) => {
 }//fine initSocket
 
 export const sendMessageToClient = (type = 'newToken', message, data) => {
-    appendToFile(`[SOCKETIO] Tipo: ${type} - Messaggio: ${JSON.stringify(message)}`);
+  //  appendToFile(`[SOCKETIO] Tipo: ${type} - Messaggio: ${JSON.stringify(message)}`);
     if (io) {
         io.emit(type, message);
         //console.log('📤 Messaggio inviato al client:', message);
