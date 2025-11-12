@@ -239,7 +239,7 @@ const onMessage = async (data) => {
         return
 
       } 
-      appendToFile(`Monitoraggio per il token ${token.name}`, { safer });
+      //appendToFile(`Monitoraggio per il token ${token.name}`, { safer });
         
       //      botOptions.demoVersion = true;
       const monitor = getInstanceForTokenMonitor(token)
