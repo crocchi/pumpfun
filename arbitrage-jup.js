@@ -12,6 +12,7 @@
  */
 import { sendMessageToClient } from "./socketio.js";
 import {JUPITER_API_KEY} from './config.js';
+import cron from 'node-cron';
 
 import fetch from "node-fetch";
 import {
@@ -27,11 +28,11 @@ import {
 const RPC_URL = "https://api.mainnet-beta.solana.com";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || null; // JSON array of secretKey bytes
 const USER_PUBLIC_KEY = process.env.USER_PUBLIC_KEY || null;
-const AMOUNT_LAMPORTS = Number(0.1 * 1e9); // default 0.1 SOL
+const AMOUNT_LAMPORTS = Number(0.3 * 1e9); // default 0.3 SOL
 const MIN_PROFIT_PCT = Number(0.3); // 0.3%
 const SLIPPAGE_BPS = Number(50);
 const RATE_DELAY_MS = Number(1000); // 1 request/sec throttle
-const CACHE_TTL_MS = Number(3000); // cache TTL for quote/instr
+const CACHE_TTL_MS = Number(2500); // cache TTL for quote/instr
 
 // Example token set (customize)
 const TOKENS = {
@@ -122,7 +123,12 @@ async function getQuoteCached(inputMint, outputMint, amountRaw, slippageBps = SL
 
   await throttle();
   const url = `${JUP_QUOTE}?inputMint=${inputMint}&outputMint=${outputMint}&amount=${Math.floor(amountRaw)}&slippageBps=${slippageBps}`;
-  const res = await fetch(url);
+  const res = await fetch(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': JUPITER_API_KEY
+    }
+  });
   if (!res.ok) {
     const txt = await res.text().catch(() => "");
     throw new Error(`Jupiter quote error ${res.status} ${txt}`);
@@ -217,7 +223,7 @@ async function tryAtomicTriangle(A, B, C, amountLamports = AMOUNT_LAMPORTS) {
     }
 
     let msg = (`Candidate triangle profit ${profitPct.toFixed(4)}% — building atomic tx...`);
-
+   sendMessageToClient('event', msg);
 
      return { profitPct, executed: true };
     // Get swap-instructions for each hop (we ask Jupiter to return instructions instead of full tx)
@@ -283,17 +289,21 @@ async function runScanner(useTokenKeys = Object.keys(TOKENS)) {
     }
   }
 
-  console.log(`Scanning ${triples.length} triples...`);
+ // console.log(`Scanning ${triples.length} triples...`);
+  sendMessageToClient('event', `Scanning ${triples.length} triples...`);
   for (const [a, b, c] of triples) {
     console.log(`Checking ${a} → ${b} → ${c} → ${a}`);
+    sendMessageToClient('event', `Checking ${a} → ${b} → ${c} → ${a}`);
     const A = TOKENS[a], B = TOKENS[b], C = TOKENS[c];
     const res = await tryAtomicTriangle(A, B, C, AMOUNT_LAMPORTS);
     if (res && res.executed) {
       console.log("✅ Executed atomic triangular swap:", res);
+      sendMessageToClient('event', `✅ Executed atomic triangular swap: Profit ${res.profitPct.toFixed(4)}%`);
       // Optionally break or continue depending on strategy
       // break;
     } else if (res && res.profitPct !== undefined) {
       console.log(`  -> Profit % ${res.profitPct.toFixed(4)} (below threshold or not executed)`);
+      sendMessageToClient('event', `  -> Profit % ${res.profitPct.toFixed(4)} (below threshold or not executed)`);
     } else {
       // error or no route
       // console.log("  -> no route or error");
@@ -303,13 +313,14 @@ async function runScanner(useTokenKeys = Object.keys(TOKENS)) {
 }
 
 // ---------------- Start ----------------
-(async () => {
-  try {
-    await runScanner(Object.keys(TOKENS));
-  } catch (err) {
-    console.error("Fatal:", err);
-  }
-})();
+
+
+let timerScan='*/10 * * * *'; //ogni 10 minuti
+
+cron.schedule(timerScan, async () => {
+    console.log('🛡️  scanner avviato ');
+    runScanner(Object.keys(TOKENS));
+});
 
 
 

@@ -59,6 +59,7 @@ let btc_activity=false;
 let sol_activity=false;
 let btc_change_percent= -1.5; //percentuale di calo per attivare la sospensione
 let sol_change_percent= -1.5; //percentuale di calo per attivare la sospensione
+
 export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
   console.log('🛡️ JobBotHealth Check Price Status 15m...');
   let btc=botOptions.btcInfo.price || 0;
