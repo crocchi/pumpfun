@@ -23,11 +23,6 @@ export const onOpen = () => {
   }
   ws=webSock();
   ws.send(JSON.stringify(payload));
- //  # Subscribing to migration events
-  let migrationPayload = {
-          "method": "subscribeMigration",
-    }
-        ws.send(JSON.stringify(migrationPayload));
 
     // Subscribing to trades made by accounts
   let payyload = {

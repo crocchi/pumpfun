@@ -10,7 +10,7 @@ import { getTokenPriceJupiter, getTokenInfoJupiter } from './utility/apiJupiter.
 import StatsMonitor from './utility/statsMonitor.js';
 
 import { startHttpServer, logToken, updateToken, buyTokenLog, updateBuyPrice } from './httpServer.js';
-import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions } from './config.js';
+import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions,LIGHT_WALLET_API } from './config.js';
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
 import { getHour } from './utility/time.js';
 import { buyToken, sellToken } from './utility/lightTrx.js';
@@ -182,10 +182,11 @@ evitare multiple entrate su token correlati.
 */
 // Avvia il timeout di inattività
 // Funzione per inizializzare/riconnettere il WebSocket
+
 export function connect() {
   console.log('📡 Connessione al WebSocket di Pump.fun...');
   // avvia websocket
-  ws = new WebSocket('wss://pumpportal.fun/api/data');
+  ws = new WebSocket('wss://pumpportal.fun/api/data?api-key=' + LIGHT_WALLET_API);
 
   // Associa le callback
   ws.on('open', onOpen);
@@ -203,7 +204,7 @@ const onMessage = async (data) => {
     //console.log(parsed);
     const token = parsed;
     let prezzo;
- if (parsed.txType !== 'buy' && parsed.txType !== 'create') console.log('migration event:',parsed);
+// if (parsed.txType !== 'buy' && parsed.txType !== 'create') console.log('migration event:',parsed);
   
     const liquidityCheck = async (tok) => {
       // if(!tok) {tok=token}else {token=tok}
