@@ -7,6 +7,8 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const fileName = 'logger.txt';
+import { getDateTime } from './utility/time.js'; // Adjust the path as necessary
+
 
 /**
  * Appends a given string to a .txt file on the server.
@@ -16,7 +18,7 @@ const fileName = 'logger.txt';
  */
 export function appendToFile(content, object=false) {
 if(object){
-    content += ' \n\n' + JSON.stringify(object);
+    content += ' \n\n ' + getDateTime() + ' ' + JSON.stringify(object);
 }
 
     const filePath = path.join('/cro', fileName);
