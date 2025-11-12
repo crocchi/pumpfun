@@ -141,7 +141,7 @@ export async function sellToken(token ,sol_or_not=false,retryCount = 1, timercou
    } 
    //
    let tokenLog = await getInstanceForTokenLogger(token);
-   tokenLog.LivePrice>0.0000004 ? token.pool='auto' : "";
+   if(tokenLog.LivePrice>0.0000004) token.pool='auto';
     try {
         //let totAmountToSell=await returnTokenLog(token.mint);
         //let amountToSell=tokenLog.tokenAmount || totAmountToSell.buySign[1]?.tokenAmount ;

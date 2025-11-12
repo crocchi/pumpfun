@@ -15,6 +15,7 @@ import { wshelius, target_mint, getTopHolders } from './utility/test.js';
 import { getHour } from './utility/time.js';
 import { buyToken, sellToken } from './utility/lightTrx.js';
 import { jobBotHealth } from './botHealth.js';
+import { appendToFile } from './loggerWrite.js';
 
 // Avvia HTTP server
 startHttpServer(process.env.PORT);
@@ -1008,16 +1009,19 @@ pool: 'pump'
 
             }
             // Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi
-            if (tradeInfo.trxNum > botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.buyPrice * botOptions.rugpullMinGainMultiplier) {
+            // oppure se scende sotto la soglia di 10 transazioni al minuto vende..
+            let sellSlowMarket= tokenLog.lifeTokenSec > 60 && tradesPerMin < 15;
+            if (sellSlowMarket ||tradeInfo.trxNum > botOptions.rugpullMaxTrades && tradeInfo.price > tradeInfo.buyPrice * botOptions.rugpullMinGainMultiplier) {
               //sellToken(trade);
-              tokenLog.sellToken(trade)
-              StatsMonitor.updateToken(trade, tradeInfo.price, '🚨 RugPull Sell triggered');
-              //tokenLog.soldOut = true;
-              //tokenLog.tokenAmount=(tokenLog.tokenAmount * prezzo);
-              // botOptions.botCash = (botOptions.botCash + (tokenLog.tokenAmount * prezzo));
-              // sendMessageToClient('event', `BotCash [${botOptions.botCash}]SOL`)
-              console.log(`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
-              sendMessageToClient('event', `📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`)
+              tokenLog.sellToken(trade);
+              let msg = (`📊 RUgPool - vendi ${tradeInfo.name}: gain  buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`);
+             if(sellSlowMarket){
+              msg=`📉 Slow Market - vendi ${tradeInfo.name}: buy at ${tradeInfo.buyPrice} -- sold at  ${tradeInfo.price}`;
+             }
+              StatsMonitor.updateToken(trade, tradeInfo.price, msg);
+              
+              console.log(msg);
+              sendMessageToClient('event', msg)
 
             }
           } else return console.error('❌ Errore nel tradeInfo:', tradeInfo);

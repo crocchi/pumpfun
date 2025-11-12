@@ -162,6 +162,22 @@ export function startHttpServer(port = 4000) {
       res.writeHead(200, { 'Content-Type': 'text/html' });
       return res.end(html);
     }
+     if (parsed.pathname === '/logger' && req.method === 'GET') {
+      /*
+      const templatePath = path.join(__dirname, 'views', 'status.ejs');
+      const html = await ejs.renderFile(templatePath, { tokens: tokenLog });
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(html);*/
+      const filePath = path.join(__dirname, 'logger.txt');
+      if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, 'utf8');
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        return res.end(content);
+      } else {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        return res.end('File not found');
+      }
+    }
 
     else if (parsed.pathname === '/transactions') {
       const mint = parsed.query.mint;

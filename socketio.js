@@ -2,6 +2,7 @@ import { Server } from 'socket.io';
 import { botOptions } from './config.js';
 import { instancesToken, instances } from './index.js';
 import StatsMonitor, { getALLTOKENS } from './utility/statsMonitor.js';
+import { appendToFile } from './loggerWrite.js';
 // instances Mappa per memorizzare le istanze di TokenMonitor
 
 let io = null;
@@ -21,7 +22,7 @@ export const initSocket = (server) => {
             console.log('📩 Messaggio dal client:', data);
         });
 
-        socket.emit('message', 'Benvenuto al server con socket.io!');
+        socket.emit('message', 'Benvenuto Nello SrokkoServer!');
 
 
     });//fine io.on connection
@@ -29,6 +30,7 @@ export const initSocket = (server) => {
 }//fine initSocket
 
 export const sendMessageToClient = (type = 'newToken', message, data) => {
+    appendToFile(`[SOCKETIO] Tipo: ${type} - Messaggio: ${JSON.stringify(message)}`);
     if (io) {
         io.emit(type, message);
         //console.log('📤 Messaggio inviato al client:', message);
