@@ -1002,6 +1002,14 @@ pool: 'pump'
               */
              //vendi se supera la soglia di volatilità alta o bassa
              let sellVolatityThreshold = tokenLog.volatility < 600 || tokenLog.volatility > 2500;
+             if(botOptions.fearAndGreed<30){
+              
+
+               let sellPercent = botOptions.fearAndGreed / 100;
+                sellPercent = Math.max(0.0, Math.pow(sellPercent, 0.6));
+                prezzoVendita = 1 + sellPercent
+    
+             }
            
 
             if (tradeInfo.price > /*tradeInfo.startPrice*/tradeInfo.buyPrice * prezzoVendita && tradeInfo.trxNum > botOptions.quickSellMinTrades && sellVolatityThreshold || tradeInfo.price > tradeInfo.buyPrice * 7) {
@@ -1014,6 +1022,8 @@ pool: 'pump'
               return
 
             }
+
+            
             // Se il numero di transazioni supera 20 e il prezzo è superiore al 20% del prezzo iniziale, vendi
             // oppure se scende sotto la soglia di 10 transazioni al minuto vende..
             let sellSlowMarket= tokenLog.lifeTokenSec > 60 && tradesPerMin < 15;
