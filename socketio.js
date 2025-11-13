@@ -227,3 +227,32 @@ setInterval(async () => {
     };
  sendMessageToClient('stats', dataToSend);
 }, 130000)
+
+/*  SOLANA_USD: 144.37,
+  solanaInfo: {
+    id: 5426,
+    name: 'Solana',
+    symbol: 'SOL',
+    price: '144.37',
+    market_cap: 79986548632.66222,
+    volume_24h: 7125752150.099027,
+    percent_change_1h: '1.93',
+    percent_change_24h: -5.91576676,
+    last_updated: '2025-11-13T22:47:00.000Z'
+  },
+  fearAndGreed: 25,
+  btcInfo: {
+    id: 1,
+    name: 'Bitcoin',
+    symbol: 'BTC',
+    price: '99774.61',
+    market_cap: 1990328077141.117,
+    volume_24h: 99842345572.55193,
+    percent_change_1h: '1.07',
+    percent_change_24h: -1.98951102,
+    last_updated: '2025-11-13T22:46:00.000Z'
+  },
+  botWallet: 'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG',
+  botCash: 2,
+  botSleep: false
+} */

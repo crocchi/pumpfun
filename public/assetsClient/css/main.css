@@ -2299,3 +2299,10 @@ button,
 .col-12.pool {
     display: grid!important;
 }
+
+span#solPrice {
+    display: flow!important;
+}
+span#solStats {
+    display: flow!important;
+}

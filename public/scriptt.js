@@ -520,7 +520,7 @@ socket.on('stats', (data) => {
   document.getElementById('solpriceup').textContent = `Fear&Greed[${data.fearAndGreed}] `;
   document.getElementById('solPrice').textContent = `Sol:$${data.solpriceup}`;
   document.getElementById('solStats').textContent = `1h[${data.percent_change_1h}%] 24h[${data.percent_change_24h}%]`;
-  document.getElementById('btcpriceup').textContent = `BTC[$ ${data.btc.price.toFixed()}]: btc 1h[${data.btc.percent_change_1h}%] 24h[${data.btc.percent_change_24h?.toFixed(2)}%] `;
+  document.getElementById('btcpriceup').textContent = `BTC[$ ${Number(data.btc.price).toFixed()}]: btc 1h[${data.btc.percent_change_1h}%] 24h[${data.btc.percent_change_24h?.toFixed(2)}%] `;
 })
 
 		socket.on('notifyMe', (data) => {
