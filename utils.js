@@ -159,7 +159,18 @@ if (!botOptions.pool[pool]) {
       safeProblem.push("❌ Nome o simbolo sospetti.");
       //return false;
     }
-      }else { token.name='Bonk '+token.mint.slice(0,4); token.symbol=token.mint.slice(0,4)}
+      }else {
+        let name='';
+        if(token.pool==='bonk' || token.pool==='BONK'){
+          name='Bonk '+token.mint.slice(0,4);
+        }else if(token.pool==='pump' || token.pool==='PUMP'){
+          name='Pump '+token.mint.slice(0,4);
+        }else{
+          name='Token '+token.mint.slice(0,4);
+        }
+        token.name=name;
+        token.symbol=token.mint.slice(0,4);
+      }
 
     // 5. ✅ Dev non in blacklist
     if (blacklist.includes(token.traderPublicKey)) {

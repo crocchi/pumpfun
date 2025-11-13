@@ -240,11 +240,32 @@ const onMessage = async (data) => {
         return
 
       } 
+
       //appendToFile(`Monitoraggio per il token ${token.name}`, { safer });
         
       //      botOptions.demoVersion = true;
-      const monitor = getInstanceForTokenMonitor(token)
-      monitor.orario()
+      const monitor = getInstanceForTokenMonitor(token);
+      monitor.orario();
+      monitor.tokenInfoJupiter = getTokenInfoJupiter(token.mint).then(dataJup => {
+        monitor.token.name = dataJup[0]?.name || token.name;
+        monitor.token.symbol = dataJup[0]?.symbol || token.symbol;
+        monitor.token.launchpad = dataJup[0]?.launchpad || 'n/a';
+        monitor.token.holderCount = dataJup[0]?.holderCount || 0;
+        monitor.quickSell = monitor.quickSell + ` OrganicScore:${dataJup[0].organicScore || "no"} - STATS:NumBuys:${dataJup[0].stats5m.numBuys || "no"} NumSells:${dataJup[0].stats5m.numSells || "no"} `
+
+      });
+/*
+ [ { "id": "GuNBKBVoa3b7MWnuGMeGVP4LGkeKx51ro4cCPJMapump", "name": "Milkshake",
+    "symbol": "MILKSHAKE", "icon": "https://ipfs.io/ipfs/bafkreie73eytqkd3ujkqhqaty6isyqjgxfpjqkpllhzwzuxrya3z7rm7he", 
+    "decimals": 6, "twitter": "https://x.com/i/communities/1988784475627540942", "website": "https://milkshakeofsol.fun/",
+     "dev": "DPiQs7yP5WnBxN7RwttMKkrndmeTzeVZ69sxeAswxm8r", "circSupply": 1000000000, "totalSupply": 1000000000, 
+     "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb", "launchpad": "pump.fun", "firstPool": { "id": "GuNBKBVoa3b7MWnuGMeGVP4LGkeKx51ro4cCPJMapump", "createdAt": "2025-11-13T17:38:43Z" },
+      "holderCount": 25, "audit": { "mintAuthorityDisabled": true, "freezeAuthorityDisabled": true, "topHoldersPercentage": 50.98216761780381, "devBalancePercentage": 8.1596958130046, "devMigrations": 8 }, 
+      "organicScore": 0, "organicScoreLabel": "low", "tags": [ "token-2022" ], "createdAt": "2025-11-13T17:38:43Z", "fdv": 14669.824917286061, "mcap": 14669.824917286061, "usdPrice": 0.000014669824917286062,
+       "priceBlockId": 379854141, "liquidity": 8471.917187930867, "stats5m": { "liquidityChange": 5.177853682913148,
+        "buyVolume": 2795.323661313661, "sellVolume": 1871.559562632927, "numBuys": 15, "numSells": 6, "numTraders": 17, "numNetBuyers": 13 }, "stats1h": { "liquidityChange": 5.177853682913148, "buyVolume": 2795.323661313661, "sellVolume": 1871.559562632927, "numBuys": 15, "numSells": 6, "numTraders": 17, "numNetBuyers": 13 }, "stats6h": { "liquidityChange": 5.177853682913148, "buyVolume": 2795.323661313661, "sellVolume": 1871.559562632927, "numBuys": 15, "numSells": 6, "numTraders": 17, "numNetBuyers": 13 }, "stats24h": { "liquidityChange": 5.177853682913148, "buyVolume": 2795.323661313661, "sellVolume": 1871.559562632927, "numBuys": 15, "numSells": 6, "numTraders": 17, "numNetBuyers": 13 }, "bondingCurve": 63.54503550721158, "updatedAt": "2025-11-13T17:38:50.576934308Z" } ] } */
+
+
       if (safer.fastBuy) { // fast buy
         let msg = (`✅ Token '${parsed.name}' passato per sicurezza. Procedo con l\'acquisto rapido.`);
         console.log(msg)
@@ -254,9 +275,9 @@ const onMessage = async (data) => {
         monitor.quickSell = safer.fastReason;
         monitor.infoSniper = safer.fastBuy;
        
-        let dataJup= await getTokenInfoJupiter(token.mint)
-        monitor.tokenInfoJupiter = dataJup;
-        monitor.quickSell = monitor.quickSell + `OrganicScore:${dataJup[0].organicScore || "no"} - STATS:${dataJup[0].stats5m || "no"} `
+       // let dataJup= await getTokenInfoJupiter(token.mint)
+        //monitor.tokenInfoJupiter = dataJup;
+        //monitor.quickSell = monitor.quickSell + `OrganicScore:${dataJup[0].organicScore || "no"} - STATS:${dataJup[0].stats5m || "no"} `
    
         sendMessageToClient('event', msg);
         //  botOptions.demoVersion = false;
@@ -1065,7 +1086,7 @@ export function getInstanceForTokenMonitor(token) {
 
     console.log(`Nuova istanza creata per il token ${token.mint}`);
   } else {
-    console.log(`Riutilizzo dell'istanza esistente per il token ${token.mint}:`, instances.get(token.mint));
+    console.log(`Riutilizzo dell'istanza esistente per il token ${token.mint}:`);
   }
   return instances.get(token.mint);
 }
