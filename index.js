@@ -251,7 +251,7 @@ const onMessage = async (data) => {
         monitor.token.symbol = dataJup[0]?.symbol || token.symbol;
         monitor.token.launchpad = dataJup[0]?.launchpad || 'n/a';
         monitor.token.holderCount = dataJup[0]?.holderCount || 0;
-        monitor.quickSell = monitor.quickSell + ` OrganicScore:${dataJup[0]?.organicScore || "no"} - STATS:NumBuys:${dataJup[0]?.stats5m.numBuys || "no"} NumSells:${dataJup[0]?.stats5m.numSells || "no"} `
+        monitor.quickSell = monitor.quickSell + ` OrganicScore:${dataJup[0]?.organicScore || "no"} - STATS:NumBuys:${dataJup[0]?.stats5m?.numBuys || "no"} NumSells:${dataJup[0]?.stats5m?.numSells || "no"} `
 
       });
 /*
