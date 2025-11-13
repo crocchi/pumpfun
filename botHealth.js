@@ -74,10 +74,7 @@ export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
   //FEAR AND GREED INDEX
   let fearAndGreed=botOptions.fearAndGreed || 0;
   console.log(`📊 Fear And Greed Index: ${fearAndGreed}/100`); 
-  if(fearAndGreed<30){
-    console.log(`⚠️  Attenzione: Fear And Greed Index basso (${fearAndGreed}). Considera di sospendere le operazioni di trading.`);
-  
-  }
+
 if(fearAndGreed < fear_level && botOptions.botSleep===false && !fear_activity){
     botOptions.botSleep=true;
     fear_activity=true;
