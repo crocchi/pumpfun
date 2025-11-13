@@ -58,6 +58,7 @@ cron.schedule(timerOff, async () => {
 let btc_activity=false;
 let sol_activity=false;
 let fear_activity=false;
+let fear_level=25;
 let btc_change_percent= -1.5; //percentuale di calo per attivare la sospensione
 let sol_change_percent= -1.5; //percentuale di calo per attivare la sospensione
 
@@ -77,7 +78,7 @@ export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
     console.log(`⚠️  Attenzione: Fear And Greed Index basso (${fearAndGreed}). Considera di sospendere le operazioni di trading.`);
   
   }
-if(fearAndGreed < 28 && botOptions.botSleep===false && !fear_activity){
+if(fearAndGreed < fear_level && botOptions.botSleep===false && !fear_activity){
     botOptions.botSleep=true;
     fear_activity=true;
     let msg=(`⚠️  Attenzione: Fear And Greed Index basso (${fearAndGreed}). Considera di sospendere le operazioni di trading.`);
@@ -86,9 +87,9 @@ if(fearAndGreed < 28 && botOptions.botSleep===false && !fear_activity){
     closeWebSocket();
     return
  }
- if(fearAndGreed >= 28 && botOptions.botSleep===true && fear_activity){
+ if(fearAndGreed >= fear_level && botOptions.botSleep===true && fear_activity){
    botOptions.botSleep=false;
-   btc_activity=false;
+   fear_activity=false;
    let msg=(`✅ Fear And Greed Index stabile (${fearAndGreed}). Il bot continua le operazioni di trading.`);
    sendMessageToClient('event', msg);
    console.log(msg);
