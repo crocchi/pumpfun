@@ -18,7 +18,7 @@ import { getDateTime } from './utility/time.js'; // Adjust the path as necessary
  */
 export function appendToFile(content, object=false) {
 if(object){
-    content += ' \n\n ' + getDateTime() + ' ' + JSON.stringify(object);
+    content += ' \n\n [' + getDateTime() +`] [${object[0].name}]` + JSON.stringify(object);
 }
 
     const filePath = path.join('/cro', fileName);

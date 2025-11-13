@@ -2289,3 +2289,13 @@ button,
 .insi {
     width: 6em;
 }
+.stats {
+    grid-template-columns: repeat(4, auto);
+    background-color: aliceblue;
+    padding: 0.5em;
+    display: grid;
+}
+
+.col-12.pool {
+    display: grid!important;
+}
