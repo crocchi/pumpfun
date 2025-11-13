@@ -184,9 +184,10 @@ evitare multiple entrate su token correlati.
 */
 // Avvia il timeout di inattività
 // Funzione per inizializzare/riconnettere il WebSocket
-
+appendToFile('Starting Server...', {info:"START"});
 export function connect() {
   console.log('📡 Connessione al WebSocket di Pump.fun...');
+  appendToFile('📡 Connessione al WebSocket di Pump.fun...');
   // avvia websocket
   ws = new WebSocket('wss://pumpportal.fun/api/data?api-key=' + LIGHT_WALLET_API);
 
