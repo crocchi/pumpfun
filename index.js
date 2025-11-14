@@ -247,7 +247,9 @@ const onMessage = async (data) => {
       //      botOptions.demoVersion = true;
       const monitor = getInstanceForTokenMonitor(token);
       monitor.orario();
-      monitor.tokenInfoJupiter = getTokenInfoJupiter(token.mint).then(dataJup => {
+      
+      getTokenInfoJupiter(token.mint).then(dataJup => {
+        monitor.tokenInfoJupiter = dataJup;
         monitor.token.name = dataJup[0]?.name || token.name;
         monitor.token.symbol = dataJup[0]?.symbol || token.symbol;
         monitor.token.launchpad = dataJup[0]?.launchpad || 'n/a';
@@ -389,7 +391,7 @@ mint: quote_token_mint.pubkey.toBase58(),
             buyPrice: prz,
           })
           console.log(`❌ Acquisto demo - ${token.name} a ${tokenLog.LivePrice}.`);
-        }, 400);
+        }, 200);
       }
 
       botOptions.botCash = (botOptions.botCash - botOptions.buyAmount) - 0.001;//dp fee + slippage+extra
@@ -1023,13 +1025,12 @@ pool: 'pump'
               */
              //vendi se supera la soglia di volatilità alta o bassa
              let sellVolatityThreshold = tokenLog.volatility < 600 || tokenLog.volatility > 2500;
-             if(botOptions.fearAndGreed<30){
-              
+             if(botOptions.fearAndGreed<30 && botOptions.fearegreedSellPercent ){
 
                let sellPercent = botOptions.fearAndGreed / 100;
                 sellPercent = Math.max(0.0, Math.pow(sellPercent, 0.6));
-                prezzoVendita = 1 + sellPercent
-    
+                prezzoVendita = 1 + sellPercent;
+
              }
            
 

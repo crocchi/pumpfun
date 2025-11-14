@@ -190,6 +190,7 @@ async function saveOptions(e) {
 
     fearAndGreedOnOff: document.getElementById('fearegreed').checked,
     fearAndGreedStop: document.getElementById('fearegreedStop').value,
+    fearegreedSellPercent: document.getElementById('fearegreedSellPercent').checked,
 
 
 
@@ -269,6 +270,7 @@ document.getElementById('poolRaydium').checked = o.poolRaydium;
   
   document.getElementById('fearegreed').checked = o.fearAndGreedOnOff;
   document.getElementById('fearegreedStop').value = o.fearegreedStop;
+  document.getElementById('fearegreedSellPercent').checked = o.fearegreedSellPercent;
 
   if (o.rugpullxyz === 'true' || o.rugpullxyz === true){
     o.rugpullxyz = true; // Imposta default se non presente
@@ -338,6 +340,7 @@ async function saveConfig() {
 
     fearAndGreedOnOff: document.getElementById('fearegreed').checked,
     fearAndGreedStop: document.getElementById('fearegreedStop').value,
+    fearegreedSellPercent: document.getElementById('fearegreedSellPercent').checked,
 
 
   };
@@ -434,6 +437,7 @@ const loadConf = async (o) => {
 
   document.getElementById('fearegreed').checked = o.fearAndGreedOnOff;
   document.getElementById('fearegreedStop').value = o.fearegreedStop;
+  document.getElementById('fearegreedSellPercent').checked = o.fearegreedSellPercent;
 
    if(localStorage.getItem("soundSystem")){
        soundSystem = localStorage.getItem("soundSystem");

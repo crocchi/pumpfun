@@ -108,6 +108,7 @@ export let SOLANA_USD = 200;
     fearAndGreedOnOff:true,//attiva-true o disattiva il controllo fear and greed
     fearegreedStop:24,//sotto questo valore il bot si ferma
     fearAndGreed:0,//valore attuale
+    fearegreedSellPercent:true,//vende in base al valore fear and greed
 
     //
     SOLANA_USD:200,

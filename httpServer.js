@@ -130,7 +130,8 @@ export function startHttpServer(port = 4000) {
 
         if ('fearAndGreedOnOff' in body) botOptions.fearAndGreedOnOff = body.fearAndGreedOnOff === 'true' || body.fearAndGreedOnOff === true || false;
         if ('fearAndGreedStop' in body) botOptions.fearegreedStop = Number(body.fearAndGreedStop) || botOptions.fearegreedStop;
-        
+        if ('fearegreedSellPercent' in body) botOptions.fearegreedSellPercent = body.fearegreedSellPercent === 'true' || body.fearegreedSellPercent === true || false;
+
         console.log(" botOptions config live:", botOptions);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         return res.end(JSON.stringify({ ok: true, botOptions }, null, 2));
