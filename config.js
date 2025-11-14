@@ -120,6 +120,9 @@ export let SOLANA_USD = 200;
   async function fetchSolPrice() {
 
    let priceSol=await getQuote(["BTC","SOL"], "USD");
+    if(!priceSol){ 
+      console.log("errore getquote")
+      return null}
 
       SOLANA_USD = Number(priceSol[1].price) || SOLANA_USD;
       botOptions.SOLANA_USD=SOLANA_USD;
@@ -139,5 +142,5 @@ export let SOLANA_USD = 200;
       return SOLANA_USD
   }
 
-  setInterval(fetchSolPrice, 5 * 60 * 1000); // ogni 5 minuti
+  setInterval(fetchSolPrice, 6 * 60 * 1000); // ogni 5 minuti
   fetchSolPrice(); // chiamata iniziale
