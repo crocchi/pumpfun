@@ -23,7 +23,7 @@ export let SOLANA_USD = 200;
   //SLIPPAGE: parseFloat(process.env.SLIPPAGE),
   export const botOptions = {
     //filtri token
-    liquidityMin: 1.5,
+    liquidityMin: 1,
     liquidityMax: 35,
     devShare:0.36,
     marketcapMin: 5,
@@ -33,9 +33,9 @@ export let SOLANA_USD = 200;
     //monitor token
     time_monitor: 60000, // 60 secondi
     volumeMin: 5, // volume netto minimo in SOL per considerare il token
-    volumeMax: 12,
+    volumeMax: 10,
     minVolumeMonitor:15, //volume generale
-    maxTrxNumMonitor:100, // numero massimo di transazioni sospette per considerare il token un rugpull
+    maxTrxNumMonitor:300, // numero massimo di transazioni sospette per considerare il token un rugpull
     minTrxNumMonitor:65,
 
     netVolumeUpBuy:false, // se il volume netto tra buy e sell supera volumeMin allora compra
@@ -48,7 +48,7 @@ export let SOLANA_USD = 200;
     //acquisto token
     buyAmount: 0.04, // quantità di SOL da acquistare
     demoVersion:true, // (true)non compra/vende - false - on compra/vende
-    sellOffPanic: -40, // % vendi se vao oltre -25% dal prezzo di acquisto
+    sellOffPanic: -50, // % vendi se vao oltre -25% dal prezzo di acquisto
 
     // vendita rapida
     quickSellMultiplier: 3,     // vendi se price >= startPrice * 3.5 ...
@@ -61,8 +61,8 @@ export let SOLANA_USD = 200;
     // trailing sell
     enableTrailing: true,
     adaptiveTrailingLcrRate: true, //adatta il trailing in base al tasso di cambio di liquidità
-    trailingPercent: 25,        // 15% sotto il massimo raggiunto
-  
+    trailingPercent: 40,        // 40% sotto il massimo raggiunto
+
     // refresh client
     clientRefreshMs: 4000,
 
@@ -104,10 +104,15 @@ export let SOLANA_USD = 200;
     bonkToken:0,
     otherToken:0,
 
+    //bot health
+    fearAndGreedOnOff:true,//attiva-true o disattiva il controllo fear and greed
+    fearegreedStop:24,//sotto questo valore il bot si ferma
+    fearAndGreed:0,//valore attuale
+
     //
     SOLANA_USD:200,
     solanaInfo:{},
-    fearAndGreed:0,
+    
     btcInfo:{},
     botWallet:'CsaevkbQLYnHeu3LnEMz1ZiL95sPU8ezEryJrr1AaniG',
     botCash:2,

@@ -122,12 +122,15 @@ export function startHttpServer(port = 4000) {
         if ('hasTwitterOrTelegram_filter' in body) botOptions.hasTwitterOrTelegram_filter = body.hasTwitterOrTelegram_filter === 'true' || body.hasTwitterOrTelegram_filter === true || false;
         if ('hasTwitterCheck_filter' in body) botOptions.hasTwitterCheck_filter = body.hasTwitterCheck_filter === 'true' || body.hasTwitterCheck_filter === true || false;
 
-        if ('enableTrailing' in body) botOptions.enableTrailing = body.enableTrailing === 'true' || body.enableTrailing === true;
-        if ('adaptiveTrailingLcrRate' in body) botOptions.adaptiveTrailingLcrRate = body.adaptiveTrailingLcrRate === 'true' || body.adaptiveTrailingLcrRate === true;
+        if ('enableTrailing' in body) botOptions.enableTrailing = body.enableTrailing === 'true' || body.enableTrailing === true || false;
+        if ('adaptiveTrailingLcrRate' in body) botOptions.adaptiveTrailingLcrRate = body.adaptiveTrailingLcrRate === 'true' || body.adaptiveTrailingLcrRate === true || false;
         if ('trailingPercent' in body) botOptions.trailingPercent = Number(body.trailingPercent) || botOptions.trailingPercent;
         if ('clientRefreshMs' in body) botOptions.clientRefreshMs = Math.max(1000, Number(body.clientRefreshMs)) || botOptions.clientRefreshMs;
         if ('demoVersion' in body) botOptions.demoVersion = body.demoVersion;
 
+        if ('fearAndGreedOnOff' in body) botOptions.fearAndGreedOnOff = body.fearAndGreedOnOff === 'true' || body.fearAndGreedOnOff === true || false;
+        if ('fearAndGreedStop' in body) botOptions.fearegreedStop = Number(body.fearegreedStop) || botOptions.fearegreedStop;
+        
         console.log(" botOptions config live:", botOptions);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         return res.end(JSON.stringify({ ok: true, botOptions }, null, 2));

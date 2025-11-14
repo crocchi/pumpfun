@@ -187,7 +187,9 @@ async function saveOptions(e) {
     hasTwitterCheck_filter: document.getElementById('TwitterCheck').checked,
     adaptiveTrailingLcrRate: document.getElementById('adaptiveTrailingLcrRate').checked,
     trailingPercent: document.getElementById('trailingPercent').value,
-    
+
+    fearAndGreedOnOff: document.getElementById('fearegreed').checked,
+    fearAndGreedStop: document.getElementById('fearegreedStop').value,
 
 
 
@@ -264,7 +266,9 @@ document.getElementById('poolRaydium').checked = o.poolRaydium;
   document.getElementById('enableTrailing').checked = o.enableTrailing;
   document.getElementById('trailingPercent').value = o.trailingPercent;
   document.getElementById('adaptiveTrailingLcrRate').checked = o.adaptiveTrailingLcrRate;
-  // Imposta il checkbox rugpullxyz
+  
+  document.getElementById('fearegreed').checked = o.fearAndGreedOnOff;
+  document.getElementById('fearegreedStop').value = o.fearegreedStop;
 
   if (o.rugpullxyz === 'true' || o.rugpullxyz === true){
     o.rugpullxyz = true; // Imposta default se non presente
@@ -331,6 +335,9 @@ async function saveConfig() {
     enableTrailing: document.getElementById('enableTrailing').checked,
     trailingPercent: document.getElementById('trailingPercent').value,
     adaptiveTrailingLcrRate: document.getElementById('adaptiveTrailingLcrRate').checked,
+
+    fearAndGreedOnOff: document.getElementById('fearegreed').checked,
+    fearAndGreedStop: document.getElementById('fearegreedStop').value,
 
 
   };
@@ -424,6 +431,9 @@ const loadConf = async (o) => {
   document.getElementById('adaptiveTrailingLcrRate').checked = o.adaptiveTrailingLcrRate;
   document.getElementById('trailingPercent').value = o.trailingPercent;
   document.getElementById('enablerugpullxyz').checked = o.rugpullxyz;
+
+  document.getElementById('fearegreed').checked = o.fearAndGreedOnOff;
+  document.getElementById('fearegreedStop').value = o.fearegreedStop;
 
    if(localStorage.getItem("soundSystem")){
        soundSystem = localStorage.getItem("soundSystem");
