@@ -50,7 +50,7 @@ export default class StatsMonitor {
                     winner: gainPercent > 0 ? true : false,
                     strategySold: soldStratgy || "unknown",
                 });
-            appendToFile(msg, { existingData});
+            appendToFile(msg, existingData);
             // ALLTOKENS.set(tokenData.mint, existingData);
         } else { this.initToken(tokenData); }
         // this.AllTokens.set(tokenData.mint, tokenData);
