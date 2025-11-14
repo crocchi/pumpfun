@@ -475,20 +475,26 @@
 							<div class="col-12">
 								<input type="checkbox" id="botsleep" value="botsleep">
 								<label for="botsleep">BotSleeping Mode</label>
-							</div>
-							<div class="col-12">
-								<input type="checkbox" id="Description" value="Description">
-								<label for="Description">hasDescription</label>
-							</div>
-							<div class="col-12">
-								<input type="checkbox" id="TwitterOrTelegram" value="TwitterOrTelegram">
-								<label for="TwitterOrTelegram">hasTwitterOrTelegram</label>
-							</div>
-							<div class="col-12">
-								<input type="checkbox" id="TwitterCheck" value="TwitterCheck">
-								<label for="TwitterCheck">hasTwitter Contract check(buyQuick)</label>
-							</div>
+<label for="botsleeptimer">Choose a time for sleep:</label>
 
+<input
+  type="time"
+  id="botsleeptimer"
+  name="botsleeptimer"
+  value="03:30" 
+  required />
+
+<label for="botsleeptimeroff">Choose a time for wakeup:</label>
+
+<input
+  type="time"
+  id="botsleeptimeroff"
+  name="botsleeptimeroff"
+  value="06:30" 
+  required />
+
+
+							</div>
 
 							<div class="col-12">
 								<hr>
@@ -554,3 +560,4 @@
 
 
 </html>
+
