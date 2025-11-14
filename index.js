@@ -13,7 +13,7 @@ import { waitMe } from './tools.js';
 import { startHttpServer, logToken, updateToken, buyTokenLog, updateBuyPrice } from './httpServer.js';
 import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions,LIGHT_WALLET_API } from './config.js';
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
-import { getHour } from './utility/time.js';
+import { getHour, getDateTime } from './utility/time.js';
 import { buyToken, sellToken } from './utility/lightTrx.js';
 import { jobBotHealth } from './botHealth.js';
 import { appendToFile } from './loggerWrite.js';
@@ -184,7 +184,7 @@ evitare multiple entrate su token correlati.
 */
 // Avvia il timeout di inattività
 // Funzione per inizializzare/riconnettere il WebSocket
-appendToFile('Starting Server...', {info:"START"});
+appendToFile('Starting Server...', {info:"START",time:getDateTime()});
 export function connect() {
   console.log('📡 Connessione al WebSocket di Pump.fun...');
   appendToFile('📡 Connessione al WebSocket di Pump.fun...');
