@@ -450,7 +450,7 @@ const loadConf = async (o) => {
   document.getElementById('enablerugpullxyz').checked = o.rugpullxyz;
 
   document.getElementById('fearegreed').checked = o.fearAndGreedOnOff;
-  document.getElementById('fearegreedStop').value = o.fearegreedStop;
+  document.getElementById('fearegreedStop').value = o.fearAndGreedStop;
   document.getElementById('fearegreedSellPercent').checked = o.fearegreedSellPercent;
   document.getElementById('botSleepHealth').checked= o.botSleepHealth;
   document.getElementById('botSleepStart').value = o.botSleepStart;
