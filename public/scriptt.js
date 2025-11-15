@@ -278,8 +278,8 @@ document.getElementById('poolRaydium').checked = o.poolRaydium;
   document.getElementById('fearegreedSellPercent').checked = o.fearegreedSellPercent;
 
   document.getElementById('botSleep').checked = o.botSleep;
-  document.getElementById('botSleepStart').checked = o.botSleepStart;
-  document.getElementById('botSleepStop').checked = o.botSleepStop;
+  document.getElementById('botSleepStart').value = o.botSleepStart;
+  document.getElementById('botSleepStop').value = o.botSleepStop;
 	
 
   if (o.rugpullxyz === 'true' || o.rugpullxyz === true){
