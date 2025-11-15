@@ -7,7 +7,7 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const fileName = 'logger.txt';
-import { getDateTime } from './utility/time.js'; // Adjust the path as necessary
+import { getDateTime } from './utility/time.js'; 
 
 
 /**
@@ -27,7 +27,7 @@ if(object){
         if (err) {
             console.error('Error appending to file:', err);
         } else {
-            console.log(`Content appended to "${fileName}" at ${filePath}`);
+          //  console.log(`Content appended to "${fileName}" at ${filePath}`);
         }
     });
 }

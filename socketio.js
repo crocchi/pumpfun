@@ -3,6 +3,7 @@ import { botOptions } from './config.js';
 import { instancesToken, instances } from './index.js';
 import StatsMonitor, { getALLTOKENS } from './utility/statsMonitor.js';
 import { appendToFile } from './loggerWrite.js';
+import { getDateTime } from './utility/time.js'; 
 // instances Mappa per memorizzare le istanze di TokenMonitor
 
 let io = null;
@@ -32,8 +33,10 @@ export const initSocket = (server) => {
 export const sendMessageToClient = (type = 'newToken', message, data) => {
   
     if(type==='event'){
-        appendToFile(`[EVENT] Messaggio: ${message}`, data);
-        
+        appendToFile(`[EVENT] Messaggio: ${message}`, data);   
+    }else if(type==='eventLogger'){
+        appendToFile(`[${getDateTime()}] [eventLogger] Messaggio: ${message}`, data); 
+        type='event';  
     }
     //  appendToFile(`[SOCKETIO] Tipo: ${type} - Messaggio: ${JSON.stringify(message)}`);
     if (io) {

@@ -1,5 +1,6 @@
 import { webSock,connect } from './index.js';
 import { botOptions } from './config.js';
+import { sendMessageToClient } from './socketio.js';
 
 let ws;
 
@@ -48,6 +49,7 @@ export function startTimeout() {
     let result = lastMessageTimeNow - lastMessageTime;
     if (result > 100000) {
       console.log('Inattività rilevata per 100 Secondi. Riavvio della connessione...');
+      sendMessageToClient('eventLogger', '⏳ Inattività rilevata per 100 Secondi. Riavvio della connessione...');
       console.log(ws);
       if (ws) {
         ws.removeAllListeners(); // Rimuovi listener per evitare memory leak

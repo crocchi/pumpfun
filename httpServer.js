@@ -135,7 +135,10 @@ export function startHttpServer(port = 4000) {
 
         if ('botSleepHealth' in body){
           botOptions.botSleepHealth= body.botSleepHealth=== 'true' || body.botSleepHealth=== true || false;
-          createTimerOn();
+          if(botOptions.botSleepHealth !== body.botSleepHealth  ){
+            createTimerOn();
+          }
+          
         } 
          if ('botSleepStart' in body) botOptions.botSleepStart= body.botSleepStart;
          if ('botSleepStop' in body) botOptions.botSleepStop= body.botSleepStop;

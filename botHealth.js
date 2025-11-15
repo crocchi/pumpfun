@@ -42,7 +42,9 @@ export const createTimerOn = () => {
         jobSleepStop=null;
   }
   if(!botOptions.botSleepHealth){
-   
+   let msg=`⏰ Timer Bot Sleep Mode disattivato`;
+console.log(msg);
+sendMessageToClient('eventLogger', msg);
     return; // Se il bot non è in modalità sleep, non creare il job
   }
   
@@ -55,7 +57,7 @@ sendMessageToClient('event', msg);
   jobSleepStop = cron.schedule(timerOff, async () => {
     console.log('🛡️  good night')
     let msg = '🛌 Buonanotte! Il bot si sta addormentando...';
-    sendMessageToClient('event', msg);
+    sendMessageToClient('eventLogger', msg);
     jobBotHealth.stop();
     botOptions.botSleep=true
     closeWebSocket();
@@ -67,7 +69,7 @@ sendMessageToClient('event', msg);
   jobSleepStart = cron.schedule(timerOn, async () => {
     console.log('🛡️  good day')
     let msg = '🌅 Buongiorno! Il bot si sta svegliando...';
-    sendMessageToClient('event', msg);
+    sendMessageToClient('eventLogger', msg);
     jobBotHealth.start();
     botOptions.botSleep=false;
     connect();
