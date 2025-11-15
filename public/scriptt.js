@@ -191,6 +191,11 @@ async function saveOptions(e) {
     fearAndGreedOnOff: document.getElementById('fearegreed').checked,
     fearAndGreedStop: document.getElementById('fearegreedStop').value,
     fearegreedSellPercent: document.getElementById('fearegreedSellPercent').checked,
+	
+	  botSleep:document.getElementById('botSleep').checked,
+	  botSleepStart: document.getElementById('botSleepStart').value,
+	  botSleepStop: document.getElementById('botSleepStop').value,
+	  
 
 
 
@@ -272,6 +277,11 @@ document.getElementById('poolRaydium').checked = o.poolRaydium;
   document.getElementById('fearegreedStop').value = o.fearegreedStop;
   document.getElementById('fearegreedSellPercent').checked = o.fearegreedSellPercent;
 
+  document.getElementById('botSleep').checked = o.botSleep;
+  document.getElementById('botSleepStart').checked = o.botSleepStart;
+  document.getElementById('botSleepStop').checked = o.botSleepStop;
+	
+
   if (o.rugpullxyz === 'true' || o.rugpullxyz === true){
     o.rugpullxyz = true; // Imposta default se non presente
     document.getElementById('enablerugpullxyz').checked = true;
@@ -341,6 +351,10 @@ async function saveConfig() {
     fearAndGreedOnOff: document.getElementById('fearegreed').checked,
     fearAndGreedStop: document.getElementById('fearegreedStop').value,
     fearegreedSellPercent: document.getElementById('fearegreedSellPercent').checked,
+
+	  botSleep:document.getElementById('botSleep').checked,
+	  botSleepStart: document.getElementById('botSleepStart').value,
+	  botSleepStop: document.getElementById('botSleepStop').value,
 
 
   };
@@ -438,6 +452,9 @@ const loadConf = async (o) => {
   document.getElementById('fearegreed').checked = o.fearAndGreedOnOff;
   document.getElementById('fearegreedStop').value = o.fearegreedStop;
   document.getElementById('fearegreedSellPercent').checked = o.fearegreedSellPercent;
+  document.getElementById('botSleep').checked= o.botSleep;
+  document.getElementById('botSleepStart').value = o.botSleepStart;
+  document.getElementById('botSleepStop').value= o.botSleepStop;
 
    if(localStorage.getItem("soundSystem")){
        soundSystem = localStorage.getItem("soundSystem");
