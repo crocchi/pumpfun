@@ -132,6 +132,11 @@ export function startHttpServer(port = 4000) {
         if ('fearAndGreedStop' in body) botOptions.fearegreedStop = Number(body.fearAndGreedStop) || botOptions.fearegreedStop;
         if ('fearegreedSellPercent' in body) botOptions.fearegreedSellPercent = body.fearegreedSellPercent === 'true' || body.fearegreedSellPercent === true || false;
 
+          if ('botSleep' in body) botOptions.botSleep= body.botSleep=== 'true' || body.botSleep=== true || false;
+
+         if ('botSleepStart' in body) botOptions.botSleepStart= body.botSleepStart;
+         if ('botSleepStop' in body) botOptions.botSleepStop= body.botSleepStop;
+
         console.log(" botOptions config live:", botOptions);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         return res.end(JSON.stringify({ ok: true, botOptions }, null, 2));
