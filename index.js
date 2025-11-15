@@ -15,7 +15,7 @@ import { MAX_TOKENS_SUBSCRIBED, SOLANA_USD, botOptions,LIGHT_WALLET_API } from '
 import { wshelius, target_mint, getTopHolders } from './utility/test.js';
 import { getHour, getDateTime } from './utility/time.js';
 import { buyToken, sellToken } from './utility/lightTrx.js';
-import { jobBotHealth } from './botHealth.js';
+import { jobBotHealth,createTimerOn } from './botHealth.js';
 import { appendToFile } from './loggerWrite.js';
 
 // Avvia HTTP server
@@ -249,6 +249,7 @@ const onMessage = async (data) => {
       monitor.orario();
       
       getTokenInfoJupiter(token.mint).then(dataJup => {
+        if(dataJup===null || dataJup.length === 0) return;
         monitor.tokenInfoJupiter = dataJup;
         monitor.token.name = dataJup[0]?.name || token.name;
         monitor.token.symbol = dataJup[0]?.symbol || token.symbol;

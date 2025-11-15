@@ -191,8 +191,8 @@ async function saveOptions(e) {
     fearAndGreedOnOff: document.getElementById('fearegreed').checked,
     fearAndGreedStop: document.getElementById('fearegreedStop').value,
     fearegreedSellPercent: document.getElementById('fearegreedSellPercent').checked,
-	
-	  botSleep:document.getElementById('botSleep').checked,
+
+	  botSleepHealth:document.getElementById('botSleepHealth').checked,
 	  botSleepStart: document.getElementById('botSleepStart').value,
 	  botSleepStop: document.getElementById('botSleepStop').value,
 	  
@@ -277,7 +277,7 @@ document.getElementById('poolRaydium').checked = o.poolRaydium;
   document.getElementById('fearegreedStop').value = o.fearegreedStop;
   document.getElementById('fearegreedSellPercent').checked = o.fearegreedSellPercent;
 
-  document.getElementById('botSleep').checked = o.botSleep;
+  document.getElementById('botSleepHealth').checked = o.botSleepHealth;
   document.getElementById('botSleepStart').value = o.botSleepStart;
   document.getElementById('botSleepStop').value = o.botSleepStop;
 	
@@ -352,7 +352,7 @@ async function saveConfig() {
     fearAndGreedStop: document.getElementById('fearegreedStop').value,
     fearegreedSellPercent: document.getElementById('fearegreedSellPercent').checked,
 
-	  botSleep:document.getElementById('botSleep').checked,
+	  botSleepHealth:document.getElementById('botSleepHealth').checked,
 	  botSleepStart: document.getElementById('botSleepStart').value,
 	  botSleepStop: document.getElementById('botSleepStop').value,
 
@@ -452,7 +452,7 @@ const loadConf = async (o) => {
   document.getElementById('fearegreed').checked = o.fearAndGreedOnOff;
   document.getElementById('fearegreedStop').value = o.fearegreedStop;
   document.getElementById('fearegreedSellPercent').checked = o.fearegreedSellPercent;
-  document.getElementById('botSleep').checked= o.botSleep;
+  document.getElementById('botSleepHealth').checked= o.botSleepHealth;
   document.getElementById('botSleepStart').value = o.botSleepStart;
   document.getElementById('botSleepStop').value= o.botSleepStop;
 

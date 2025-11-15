@@ -109,9 +109,9 @@ export let SOLANA_USD = 200;
     fearegreedStop:24,//sotto questo valore il bot si ferma
     fearAndGreed:0,//valore attuale
     fearegreedSellPercent:true,//vende in base al valore fear and greed
-    botSleep:true,
-    botSleepStart:"3:30",
-    botSleepStop:"6:30",
+    botSleepHealth:true,
+    botSleepStop:"3:30",
+    botSleepStart:"6:00",
 
     //
     SOLANA_USD:200,

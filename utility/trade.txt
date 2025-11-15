@@ -1062,3 +1062,32 @@ Pool bonk is disabled in bot options.
   tokensInPool: 975454545.454546
 }
 ⛔ Token 'tst' scartato per sicurezza. {"safeProblem":["❌ Pool bonk is disabled."],"valid":false}
+
+
+🔥🔥BuyHigh Token!🔥🔥 [unhinged carter]  highPrice:[0.0000001094] Volume:[33.2517 SOL] TrxNumb:[36]  volumeNet:[26.3902] buy at [0.0000001094] LiqRate{[-8.32],Speed[-2.3],Trend[-35.7]} Trade Velocity{1s[0.6] 10s[6.0] 60s[36.0] TokenLifeSec[10]Sec} Vol:[23.5%] Moment:[_87.9_]
+⏹️ Timer interrotto per il token HZhue7uCJ3GqT3TNbfArbNry4zJDaZfXE6voY24vpump.
+✅ Token (unhinged carter) OK! ValoreTrade: (26.390215891 SOL) Volume: (33.251749278999995 SOL) NumTrx:36...highPrez:0.0000001094 Procedo con snipe...
+Nuova istanzaToken creata per HZhue7uCJ3GqT3TNbfArbNry4zJDaZfXE6voY24vpump
+❌ Errore nel tradeInfo: undefined
+❌ Errore nel tradeInfo: undefined
+✅ Transazione inviata!
+Signature: EBGWwJPM9T3e62ya9TRqkhrcQHT44sqk3hzCuJFXZ5H73j2sgqHfs12myBZ3jXH8VeVP6xATANNYddmoQVWadtv
+Token: {
+  signature: '5dDZjBx73sni5MyXaAC2WR4vj4YeqeHnv8M4Rbbg3WdwWeSiKB8uWyqYLwL2ii84CyAuF7p6dtd4ZxYsUPhdzadP',
+  mint: 'HZhue7uCJ3GqT3TNbfArbNry4zJDaZfXE6voY24vpump',
+  traderPublicKey: 'HAERvs2zWTbmxd3VmC8RoZqDxs9dHtxfNKv86Wftyi4j',
+  txType: 'create',
+  initialBuy: 50494117.59894,
+  solAmount: 1.48148148,
+  bondingCurveKey: '8QqASx1mxDuZEu8sJt6H1aH3FMyyVVcNNv3hWPvPg2ob',
+  vTokensInBondingCurve: 1022505882.40106,
+  vSolInBondingCurve: 31.481481479999974,
+  marketCapSol: 30.788557818439926,
+  name: 'unhinged carter',
+  symbol: 'carter',
+  uri: 'https://ipfs.io/ipfs/bafkreia3urlg4vlex4e53n4txxldbga7uoqc4nerr2upeawwsfbmxfptcy',
+  pool: 'pump',
+  solInPool: 31.481481479999974,
+  tokensInPool: 1022505882.40106
+}
+---------------------------------------------

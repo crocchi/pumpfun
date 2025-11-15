@@ -132,8 +132,10 @@ export function startHttpServer(port = 4000) {
         if ('fearAndGreedStop' in body) botOptions.fearegreedStop = Number(body.fearAndGreedStop) || botOptions.fearegreedStop;
         if ('fearegreedSellPercent' in body) botOptions.fearegreedSellPercent = body.fearegreedSellPercent === 'true' || body.fearegreedSellPercent === true || false;
 
-          if ('botSleep' in body) botOptions.botSleep= body.botSleep=== 'true' || body.botSleep=== true || false;
-
+        if ('botSleepHealth' in body){
+          botOptions.botSleepHealth= body.botSleepHealth=== 'true' || body.botSleepHealth=== true || false;
+          createTimerOn();
+        } 
          if ('botSleepStart' in body) botOptions.botSleepStart= body.botSleepStart;
          if ('botSleepStop' in body) botOptions.botSleepStop= body.botSleepStop;
 

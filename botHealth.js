@@ -28,9 +28,61 @@ cron.schedule('*\/10 * * * * *', heartbeat);
 * * * * * *
 */
 
-let timerOn='29 4 * * *'; //ogni giorno alle 3:29
-let timerOff='00 6 * * *'; //ogni giorno alle 6:30
 
+let timerOff='29 4 * * *'; //ogni giorno alle 3:29
+let timerOn='00 6 * * *'; //ogni giorno alle 6:30
+let jobSleepStop=null,jobSleepStart=null,timerOnJob;
+
+export const createTimerOn = () => {
+
+   if(jobSleepStart){
+        jobSleepStop.destroy(); // Rimuovi il job esistente
+        jobSleepStart.destroy(); // Rimuovi il job esistente
+        jobSleepStart=null;
+        jobSleepStop=null;
+  }
+  if(!botOptions.botSleepHealth){
+   
+    return; // Se il bot non è in modalità sleep, non creare il job
+  }
+  
+timerOn=`${botOptions.botSleepStart.split(':')[1]} ${botOptions.botSleepStart.split(':')[0]} * * *`;
+timerOff=`${botOptions.botSleepStop.split(':')[1]} ${botOptions.botSleepStop.split(':')[0]} * * *`;
+let msg=`⏰ Timer Bot Sleep Mode impostato: Sleep dalle ${botOptions.botSleepStart} alle ${botOptions.botSleepStop}`;
+console.log(msg);
+sendMessageToClient('event', msg);
+
+  jobSleepStop = cron.schedule(timerOff, async () => {
+    console.log('🛡️  good night')
+    let msg = '🛌 Buonanotte! Il bot si sta addormentando...';
+    sendMessageToClient('event', msg);
+    jobBotHealth.stop();
+    botOptions.botSleep=true
+    closeWebSocket();
+    }, { 
+    timezone: 'Europe/Rome',
+     scheduled: false,
+});
+
+  jobSleepStart = cron.schedule(timerOn, async () => {
+    console.log('🛡️  good day')
+    let msg = '🌅 Buongiorno! Il bot si sta svegliando...';
+    sendMessageToClient('event', msg);
+    jobBotHealth.start();
+    botOptions.botSleep=false;
+    connect();
+
+    }, { 
+    timezone: 'Europe/Rome',
+     scheduled: false,
+});
+
+jobSleepStart.start();
+jobSleepStop.start();
+
+}
+
+/*
 cron.schedule(timerOn, async () => {
     console.log('🛡️  good night')
     let msg = '🛌 Buonanotte! Il bot si sta addormentando...';
@@ -53,6 +105,7 @@ cron.schedule(timerOff, async () => {
     }, { 
     timezone: 'Europe/Rome'
 });
+*/
 
 
 let btc_activity=false;
@@ -62,8 +115,8 @@ let fear_activity=false;
 let btc_change_percent= -1.5; //percentuale di calo per attivare la sospensione
 let sol_change_percent= -1.5; //percentuale di calo per attivare la sospensione
 
-export const jobBotHealth = cron.schedule('*/15 * * * *', async () => {
-  console.log('🛡️ JobBotHealth Check Price Status 15m...');
+export const jobBotHealth = cron.schedule('*/20 * * * *', async () => {
+  console.log('🛡️ JobBotHealth Check Price Status 20m...');
   let btc=botOptions.btcInfo.price || 0;
   let btc_1h=Number(botOptions.btcInfo.percent_change_1h) || 0;
   console.log(`📈 Prezzo BTC aggiornato: $${btc} 1h(${btc_1h}%)`);
@@ -174,3 +227,5 @@ const closeWebSocket = async () => {
     console.log('🛑 Bot in modalità sleep. Connessione WebSocket chiusa.');
   }
 }
+
+createTimerOn();
