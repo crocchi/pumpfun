@@ -8,6 +8,7 @@ import { checkPrice } from './moralis.js';
 import { botOptions } from './config.js';
 import { instancesToken, instances } from './index.js';
 import { initSocket } from './socketio.js';
+import { createTimerOn } from './botHealth.js';
 
 let tokenLog = [];
 
