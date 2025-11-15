@@ -48,7 +48,7 @@ export const createTimerOn = () => {
   
 timerOn=`${botOptions.botSleepStart.split(':')[1]} ${botOptions.botSleepStart.split(':')[0]} * * *`;
 timerOff=`${botOptions.botSleepStop.split(':')[1]} ${botOptions.botSleepStop.split(':')[0]} * * *`;
-let msg=`⏰ Timer Bot Sleep Mode impostato: Sleep dalle ${botOptions.botSleepStart} alle ${botOptions.botSleepStop}`;
+let msg=`⏰ Timer Bot Sleep Mode impostato: Sleep dalle ${botOptions.botSleepStop} alle ${botOptions.botSleepStart}`;
 console.log(msg);
 sendMessageToClient('event', msg);
 
